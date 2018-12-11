@@ -4,10 +4,16 @@
     <Filter Include="BHive">
       <UniqueIdentifier>{F39AD20C-5FAF-FABD-2831-9E1D9404F7EE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\Events">
+      <UniqueIdentifier>{771794D4-637A-2379-0C00-5C2FF841EFFB}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BHive.h" />
     <ClInclude Include="src\BHive\Application.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\BHivePCH.h">
       <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core.h">
@@ -16,12 +22,18 @@
     <ClInclude Include="src\BHive\EntryPoint.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Events\Event.h">
+      <Filter>BHive\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Log.h">
       <Filter>BHive</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\BHivePCH.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Log.cpp">

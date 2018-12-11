@@ -1,3 +1,4 @@
+#include "BHivePCH.h"
 #include "Application.h"
 
 namespace BHive

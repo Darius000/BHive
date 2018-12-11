@@ -18,6 +18,9 @@ project "BHive"
 	targetdir ("bin/" ..outputdir.. "/%{prj.name}")
 	objdir ("bin-int/" ..outputdir.. "/%{prj.name}")
 
+	pchheader "BHivePCH.h"
+	pchsource "BHive/src/BHive/BHivePCH.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
