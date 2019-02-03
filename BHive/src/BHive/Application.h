@@ -20,6 +20,11 @@ namespace BHive
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+		void PopLayer(Layer* layer);
+		void PopOverlay(Layer* layer);
+
+		static inline Application& Get() { return *s_Instance; }
+		inline Window& GetWindow() { return *m_Window; }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
@@ -28,6 +33,8 @@ namespace BHive
 
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+	private:
+		static Application* s_Instance;
 	};
 
 	//defined in client

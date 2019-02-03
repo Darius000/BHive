@@ -9,12 +9,17 @@
 namespace BHive
 {
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+
+
+	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
 	{
+		BH_CORE_ASSERT(!s_Instance, "Application Already Exists!");
+		s_Instance = this;
+
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		m_Window->SetEventCallback(BH_BIND_EVENT_FN(&Application::OnEvent));
 	}
 
 
@@ -25,7 +30,7 @@ namespace BHive
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
+		dispatcher.Dispatch<WindowCloseEvent>(BH_BIND_EVENT_FN(&Application::OnWindowClosed));
 
 		BH_CORE_TRACE("{0}", e.ToString());
 
@@ -42,11 +47,25 @@ namespace BHive
 	void Application::PushLayer(Layer* layer)
 	{
 		m_LayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
 		m_LayerStack.PushOverlay(layer);
+		layer->OnAttach();
+	}
+
+	void Application::PopLayer(Layer * layer)
+	{
+		m_LayerStack.PopLayer(layer);
+		layer->OnDetach();
+	}
+
+	void Application::PopOverlay(Layer* layer)
+	{
+		m_LayerStack.PopOverlay(layer);
+		layer->OnDetach();
 	}
 
 	void Application::Run()

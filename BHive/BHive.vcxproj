@@ -80,7 +80,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;BH_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -103,7 +103,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;BH_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -130,7 +130,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;BH_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -161,9 +161,11 @@
     <ClInclude Include="src\BHive\Events\Event.h" />
     <ClInclude Include="src\BHive\Events\KeyEvent.h" />
     <ClInclude Include="src\BHive\Events\MouseEvent.h" />
+    <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Layer.h" />
     <ClInclude Include="src\BHive\LayerStack.h" />
     <ClInclude Include="src\BHive\Log.h" />
+    <ClInclude Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h" />
     <ClInclude Include="src\BHive\Window.h" />
   </ItemGroup>
@@ -172,9 +174,11 @@
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\Layer.cpp" />
     <ClCompile Include="src\BHive\LayerStack.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
+    <ClCompile Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -183,6 +187,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\glad\Glad.vcxproj">
       <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

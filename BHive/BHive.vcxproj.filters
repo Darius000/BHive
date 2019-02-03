@@ -7,8 +7,14 @@
     <Filter Include="BHive\Events">
       <UniqueIdentifier>{771794D4-637A-2379-0C00-5C2FF841EFFB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\ImGui">
+      <UniqueIdentifier>{5D3A6EEF-C9EF-E6E4-52E4-E0BBBE98DDE8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BHive\Platforms">
       <UniqueIdentifier>{FAEDD028-6679-3EED-6F8A-C1E1DB949AED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Platforms\Opengl">
+      <UniqueIdentifier>{2EDE8AAB-1AD8-B3FD-0345-4A0EEFDD196A}</UniqueIdentifier>
     </Filter>
     <Filter Include="BHive\Platforms\Windows">
       <UniqueIdentifier>{34F20175-A029-4A0C-A933-AE2F15EA7005}</UniqueIdentifier>
@@ -40,6 +46,9 @@
     <ClInclude Include="src\BHive\Events\MouseEvent.h">
       <Filter>BHive\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h">
+      <Filter>BHive\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Layer.h">
       <Filter>BHive</Filter>
     </ClInclude>
@@ -48,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Log.h">
       <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.h">
+      <Filter>BHive\Platforms\Opengl</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h">
       <Filter>BHive\Platforms\Windows</Filter>
@@ -63,6 +75,9 @@
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp">
+      <Filter>BHive\ImGui</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Layer.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
@@ -71,6 +86,9 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.cpp">
+      <Filter>BHive\Platforms\Opengl</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp">
       <Filter>BHive\Platforms\Windows</Filter>
