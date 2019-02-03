@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 
 	int s = 56;
 
-	BH_CLIENT_INFO("Var={0}", s);
+	BH_INFO("Var={0}", s);
 
 	//printf("BHive Engine Started!");
 	auto app = BHive::CreateApplication();

@@ -14,7 +14,7 @@
 #include <map>
 #include <set>
 
-
+#include "BHive/Log.h"
 
 #ifdef BH_PLATFORM_WINDOWS
 	#include <Windows.h>

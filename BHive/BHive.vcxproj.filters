@@ -7,6 +7,12 @@
     <Filter Include="BHive\Events">
       <UniqueIdentifier>{771794D4-637A-2379-0C00-5C2FF841EFFB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\Platforms">
+      <UniqueIdentifier>{FAEDD028-6679-3EED-6F8A-C1E1DB949AED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Platforms\Windows">
+      <UniqueIdentifier>{34F20175-A029-4A0C-A933-AE2F15EA7005}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BHive.h" />
@@ -22,10 +28,31 @@
     <ClInclude Include="src\BHive\EntryPoint.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Events\ApplicationEvent.h">
+      <Filter>BHive\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Events\Event.h">
       <Filter>BHive\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Events\KeyEvent.h">
+      <Filter>BHive\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Events\MouseEvent.h">
+      <Filter>BHive\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Layer.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\LayerStack.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Log.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h">
+      <Filter>BHive\Platforms\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Window.h">
       <Filter>BHive</Filter>
     </ClInclude>
   </ItemGroup>
@@ -36,8 +63,17 @@
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Layer.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\LayerStack.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp">
+      <Filter>BHive\Platforms\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

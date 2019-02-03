@@ -27,8 +27,8 @@ namespace BHive
 #define BH_CORE_FATAL(...)	:: BHive::Log::GetCoreLogger()->fatal(__VA_ARGS__)
 
 //Client Log Macros
-#define BH_CLIENT_TRACE(...)	:: BHive::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define BH_CLIENT_INFO(...)	:: BHive::Log::GetClientLogger()->info(__VA_ARGS__)
-#define BH_CLIENT_WARN(...)	:: BHive::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define BH_CLIENT_ERROR(...)	:: BHive::Log::GetClientLogger()->error(__VA_ARGS__)
-#define BH_CLIENT_FATAL(...)	:: BHive::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define BH_TRACE(...)	:: BHive::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define BH_INFO(...)	:: BHive::Log::GetClientLogger()->info(__VA_ARGS__)
+#define BH_WARN(...)	:: BHive::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define BH_ERROR(...)	:: BHive::Log::GetClientLogger()->error(__VA_ARGS__)
+#define BH_FATAL(...)	:: BHive::Log::GetClientLogger()->fatal(__VA_ARGS__)

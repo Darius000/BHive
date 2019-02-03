@@ -10,6 +10,11 @@ workspace "BHive"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "BHive/vendor/glfw/include"
+
+include "BHive/vendor/glfw"
+
 project "BHive"
 	location "BHive"
 	kind "SharedLib"
@@ -29,13 +34,21 @@ project "BHive"
 
 	includedirs
 	{
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter"system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
-		systemversion "10.0.17134.0"
+		systemversion "latest"
 
 		defines
 		{
@@ -50,14 +63,17 @@ project "BHive"
 
 		filter "configurations:Debug"
 			defines "BH_DEBUG"
+			buildoptions "/MDd"
 			symbols "On"
 
 		filter "configurations:Release"
 			defines "BH_RELEASE"
+			buildoptions "/MD"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "BH_DIST"
+			buildoptions "/MD"
 			optimize "On"
 
 project "Sandbox"
@@ -88,7 +104,7 @@ project "Sandbox"
 	filter"system:windows"
 		cppdialect "C++17"
 		staticruntime "On"
-		systemversion "10.0.17134.0"
+		systemversion "latest"
 
 		defines
 		{
@@ -97,14 +113,17 @@ project "Sandbox"
 
 		filter "configurations:Debug"
 			defines "BH_DEBUG"
+			buildoptions "/MDd"
 			symbols "On"
 
 		filter "configurations:Release"
 			defines "BH_RELEASE"
+			buildoptions "/MD"
 			optimize "On"
 
 		filter "configurations:Dist"
 			defines "BH_DIST"
+			buildoptions "/MD"
 			optimize "On"
 
 		
