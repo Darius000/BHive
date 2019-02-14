@@ -70,6 +70,7 @@
     <ClInclude Include="src\BHive\Input.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\BHive\Rendering\RenderLayer.h" />
+    <ClInclude Include="src\BHive\Time\Time.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -98,5 +99,6 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\BHive\Rendering\RenderLayer.cpp" />
+    <ClCompile Include="src\BHive\Time\Time.cpp" />
   </ItemGroup>
 </Project>

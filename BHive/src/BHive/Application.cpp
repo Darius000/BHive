@@ -7,12 +7,10 @@
 #include <glad/glad.h>
 
 #include "Input.h"
+#include "BHive/Time/Time.h"
 
 namespace BHive
 {
-
-
-
 	Application* Application::s_Instance = nullptr;
 
 	Application::Application()
@@ -76,6 +74,10 @@ namespace BHive
 		{
 			glClearColor(1, .5, 0, 1);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			Time::Update();
+
+			BH_CORE_TRACE("{0},{1}", Time::GetTime(), Time::GetDeltaTime());
 
 			for (Layer* layer : m_LayerStack)
 			{

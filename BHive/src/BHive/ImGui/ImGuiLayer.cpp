@@ -8,6 +8,7 @@
 //TEMP
 #include "GLFW/glfw3.h"
 #include <glad/glad.h>
+#include "BHive/Time/Time.h"
 
 namespace BHive
 {
@@ -68,9 +69,7 @@ namespace BHive
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
-		m_Time = time;
+		io.DeltaTime = Time::GetDeltaTime();
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui::NewFrame();
