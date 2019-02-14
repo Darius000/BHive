@@ -32,7 +32,7 @@ namespace BHive
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(BH_BIND_EVENT_FN(&Application::OnWindowClosed));
 
-		BH_CORE_TRACE("{0}", e.ToString());
+		//BH_CORE_TRACE("{0}", e.ToString());
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -77,15 +77,15 @@ namespace BHive
 
 			Time::Update();
 
-			BH_CORE_TRACE("{0},{1}", Time::GetTime(), Time::GetDeltaTime());
+			//BH_CORE_TRACE("{0},{1}", Time::GetTime(), Time::GetDeltaTime());
 
 			for (Layer* layer : m_LayerStack)
 			{
 				layer->OnUpdate();
 			}
 
-			auto[x, y] = Input::GetMousePosition();
-			BH_CORE_TRACE("{0},{1}", x, y);
+			//auto[x, y] = Input::GetMousePosition();
+			//BH_CORE_TRACE("{0},{1}", x, y);
 
 			m_Window->OnUpdate();
 		}

@@ -11,10 +11,6 @@ int main(int argc, char** argv)
 	BHive::Log::Init();
 	BH_CORE_WARN("Initialized Core Logger!");
 
-	int s = 56;
-
-	BH_INFO("Var={0}", s);
-
 	//printf("BHive Engine Started!");
 	auto app = BHive::CreateApplication();
 	app->Run();

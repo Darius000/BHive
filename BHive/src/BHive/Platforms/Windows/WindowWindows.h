@@ -21,6 +21,8 @@ namespace BHive
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		void SetWindowHints();
+
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 
 	private:

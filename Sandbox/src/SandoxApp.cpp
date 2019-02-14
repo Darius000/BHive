@@ -11,12 +11,12 @@ public:
 
 	void OnUpdate() override
 	{
-		BH_INFO("ExampleLayer::Update");
+		//BH_INFO("ExampleLayer::Update");
 	}
 
 	void OnEvent(BHive::Event& event) override
 	{
-		BH_TRACE("{0}", event.ToString());
+		//BH_TRACE("{0}", event.ToString());
 	}
 };
 
