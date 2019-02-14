@@ -77,6 +77,15 @@ namespace BHive
 		static bool show = true;
 		ImGui::ShowDemoWindow(&show);
 
+		ImGui::BeginMainMenuBar();
+		ImGui::MenuItem("File", "F");
+		ImGui::EndMainMenuBar();
+
+		static bool showStyleEditor = true;
+		ImGui::Begin("ImGui Style Editor", &showStyleEditor);
+		ImGui::ShowStyleEditor();
+		ImGui::End();
+
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
