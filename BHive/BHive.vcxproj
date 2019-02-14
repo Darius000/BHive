@@ -162,11 +162,14 @@
     <ClInclude Include="src\BHive\Events\KeyEvent.h" />
     <ClInclude Include="src\BHive\Events\MouseEvent.h" />
     <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\BHive\Input.h" />
     <ClInclude Include="src\BHive\Layer.h" />
     <ClInclude Include="src\BHive\LayerStack.h" />
     <ClInclude Include="src\BHive\Log.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.h" />
+    <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h" />
+    <ClInclude Include="src\BHive\Rendering\RenderLayer.h" />
     <ClInclude Include="src\BHive\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -179,7 +182,9 @@
     <ClCompile Include="src\BHive\LayerStack.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.cpp" />
+    <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
+    <ClCompile Include="src\BHive\Rendering\RenderLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">

@@ -67,6 +67,9 @@
     <ClInclude Include="src\BHive\Window.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Input.h" />
+    <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
+    <ClInclude Include="src\BHive\Rendering\RenderLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -93,5 +96,7 @@
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\BHive\Rendering\RenderLayer.cpp" />
   </ItemGroup>
 </Project>

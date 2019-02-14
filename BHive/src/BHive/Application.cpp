@@ -6,6 +6,8 @@
 
 #include <glad/glad.h>
 
+#include "Input.h"
+
 namespace BHive
 {
 
@@ -79,6 +81,9 @@ namespace BHive
 			{
 				layer->OnUpdate();
 			}
+
+			auto[x, y] = Input::GetMousePosition();
+			BH_CORE_TRACE("{0},{1}", x, y);
 
 			m_Window->OnUpdate();
 		}

@@ -26,6 +26,7 @@ public:
 	Sandbox()
 	{
 		PushLayer(new ExampleLayer());
+		PushLayer(new BHive::RenderLayer());
 		PushOverlay(new BHive::ImGuiLayer());
 	}
 	~Sandbox()
