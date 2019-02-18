@@ -71,6 +71,8 @@
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\BHive\Rendering\RenderLayer.h" />
     <ClInclude Include="src\BHive\Time\Time.h" />
+    <ClInclude Include="src\BHive\KeyCodes.h" />
+    <ClInclude Include="src\BHive\MouseCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">

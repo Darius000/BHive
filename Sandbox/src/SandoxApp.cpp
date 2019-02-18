@@ -12,11 +12,20 @@ public:
 	void OnUpdate() override
 	{
 		//BH_INFO("ExampleLayer::Update");
+		if (BHive::Input::IsKeyPressed(BH_KEY_TAB))
+			BH_INFO("Tab key is pressed(POLL");
 	}
 
 	void OnEvent(BHive::Event& event) override
 	{
-		//BH_TRACE("{0}", event.ToString());
+		if (event.GetEventType() == BHive::EventType::KeyPressed)
+		
+		{
+			BHive::KeyPressedEvent& e = (BHive::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == BH_KEY_TAB)
+				BH_INFO("Tab key is pressed(Event)");
+			BH_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 };
 
