@@ -163,9 +163,11 @@
     <ClInclude Include="src\BHive\Events\MouseEvent.h" />
     <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Input.h" />
+    <ClInclude Include="src\BHive\KeyCodes.h" />
     <ClInclude Include="src\BHive\Layer.h" />
     <ClInclude Include="src\BHive\LayerStack.h" />
     <ClInclude Include="src\BHive\Log.h" />
+    <ClInclude Include="src\BHive\MouseCodes.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h" />
