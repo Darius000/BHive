@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <iostream>
 #include <utility>
 #include <algorithm>
@@ -8,13 +9,19 @@
 
 #include <string>
 #include <sstream>
+#include <fstream>
+#include <ostream>
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
 #include <set>
 
+
 #include "BHive/Log.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #ifdef BH_PLATFORM_WINDOWS
 	#include <Windows.h>

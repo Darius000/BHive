@@ -1,12 +1,19 @@
 #include <BHive.h>
 
+#include "imgui/imgui.h"
+
+
 class ExampleLayer : public BHive::Layer
 {
 public:
 	ExampleLayer()
 		:Layer("Example")
 	{
+		
+	}
 
+	void OnAttach() override
+	{
 	}
 
 	void OnUpdate() override
@@ -14,6 +21,13 @@ public:
 		//BH_INFO("ExampleLayer::Update");
 		if (BHive::Input::IsKeyPressed(BH_KEY_TAB))
 			BH_INFO("Tab key is pressed(POLL");
+	}
+
+	void OnImGuiRender() override
+	{
+		ImGui::Begin("Example");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 	void OnEvent(BHive::Event& event) override
@@ -25,6 +39,7 @@ public:
 			if (e.GetKeyCode() == BH_KEY_TAB)
 				BH_INFO("Tab key is pressed(Event)");
 			BH_TRACE("{0}", (char)e.GetKeyCode());
+			//BH_TRACE("{0}", event.ToString());
 		}
 	}
 };
@@ -34,14 +49,18 @@ class Sandbox : public BHive::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		world = new BHive::World();
 		PushLayer(new BHive::RenderLayer());
-		PushOverlay(new BHive::ImGuiLayer());
+		PushLayer(new ExampleLayer());
+		//PushOverlay(new BHive::ImGuiLayer());
+		
 	}
 	~Sandbox()
 	{
 
 	}
+
+	BHive::World* world;
 };
 
 BHive::Application* BHive::CreateApplication()

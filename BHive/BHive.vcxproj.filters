@@ -4,20 +4,35 @@
     <Filter Include="BHive">
       <UniqueIdentifier>{F39AD20C-5FAF-FABD-2831-9E1D9404F7EE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\Assets">
+      <UniqueIdentifier>{75B210CB-6115-A06F-0A9B-D825F6DC6BF2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Cameras">
+      <UniqueIdentifier>{DE01B29C-4AC2-2DD3-13FD-76507F7C72AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Components">
+      <UniqueIdentifier>{28E2EC5F-14DB-0BB2-3D0D-F1362965EBBD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BHive\Events">
       <UniqueIdentifier>{771794D4-637A-2379-0C00-5C2FF841EFFB}</UniqueIdentifier>
     </Filter>
     <Filter Include="BHive\ImGui">
       <UniqueIdentifier>{5D3A6EEF-C9EF-E6E4-52E4-E0BBBE98DDE8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\Layers">
+      <UniqueIdentifier>{520277E3-3E65-0688-E7EA-3E3ED32CD20A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Layers\Rendering">
+      <UniqueIdentifier>{1F5A479D-0B54-70EF-F4C0-0600E059D65B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BHive\Platforms">
       <UniqueIdentifier>{FAEDD028-6679-3EED-6F8A-C1E1DB949AED}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BHive\Platforms\Opengl">
-      <UniqueIdentifier>{2EDE8AAB-1AD8-B3FD-0345-4A0EEFDD196A}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BHive\Platforms\Windows">
       <UniqueIdentifier>{34F20175-A029-4A0C-A933-AE2F15EA7005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BHive\Types">
+      <UniqueIdentifier>{D7883CF0-433E-B5E5-CC32-AFBC38E7ABE9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -25,10 +40,49 @@
     <ClInclude Include="src\BHive\Application.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Assets\Mesh.h">
+      <Filter>BHive\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Assets\Shader.h">
+      <Filter>BHive\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Assets\Texture2D.h">
+      <Filter>BHive\Assets</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\BHivePCH.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Cameras\Camera.h">
+      <Filter>BHive\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Cameras\FPSCamera.h">
+      <Filter>BHive\Cameras</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\BillboardComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\CollisionComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\MeshComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\ObjectComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\ParticleEmitter.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\RenderComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\TransformComponent.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\EditorTime.h">
       <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\EntryPoint.h">
@@ -46,8 +100,23 @@
     <ClInclude Include="src\BHive\Events\MouseEvent.h">
       <Filter>BHive\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\GameObject.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\GameStatics.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h">
       <Filter>BHive\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Image.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Input.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\KeyCodes.h">
+      <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Layer.h">
       <Filter>BHive</Filter>
@@ -55,33 +124,93 @@
     <ClInclude Include="src\BHive\LayerStack.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Layers\Rendering\RenderLayer.h">
+      <Filter>BHive\Layers\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Log.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.h">
-      <Filter>BHive\Platforms\Opengl</Filter>
+    <ClInclude Include="src\BHive\MouseCodes.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Object.h">
+      <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h">
+      <Filter>BHive\Platforms\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Types\FString.h">
+      <Filter>BHive\Types</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Window.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Input.h" />
-    <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
-    <ClInclude Include="src\BHive\Rendering\RenderLayer.h" />
-    <ClInclude Include="src\BHive\Time\Time.h" />
-    <ClInclude Include="src\BHive\KeyCodes.h" />
-    <ClInclude Include="src\BHive\MouseCodes.h" />
+    <ClInclude Include="src\BHive\World.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\stb_image.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Assets\Mesh.cpp">
+      <Filter>BHive\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Assets\Shader.cpp">
+      <Filter>BHive\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Assets\Texture2D.cpp">
+      <Filter>BHive\Assets</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Cameras\Camera.cpp">
+      <Filter>BHive\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Cameras\FPSCamera.cpp">
+      <Filter>BHive\Cameras</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\BillboardComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\CollisionComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\MeshComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\ObjectComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\ParticleEmitter.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\RenderComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\EditorTime.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\GameObject.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\GameStatics.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp">
+      <Filter>BHive\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp">
       <Filter>BHive\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Layer.cpp">
@@ -90,17 +219,26 @@
     <ClCompile Include="src\BHive\LayerStack.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Layers\Rendering\RenderLayer.cpp">
+      <Filter>BHive\Layers\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Platforms\Opengl\imguiOpenglRenderer.cpp">
-      <Filter>BHive\Platforms\Opengl</Filter>
+    <ClCompile Include="src\BHive\Object.cpp">
+      <Filter>BHive</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\BHive\Rendering\RenderLayer.cpp" />
-    <ClCompile Include="src\BHive\Time\Time.cpp" />
+    <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp">
+      <Filter>BHive\Platforms\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Types\FString.cpp">
+      <Filter>BHive\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\World.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
