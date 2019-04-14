@@ -14,6 +14,8 @@ namespace BHive
 	Shader::Shader(const char* vertexPath, const char* fragmentPath)
 		:Shader()
 	{
+		vertexFilePath = vertexPath;
+
 		//get source code form filepath
 		std::string vertexCode;
 		std::string fragmentCode;
@@ -42,11 +44,11 @@ namespace BHive
 			vertexCode = vShaderStream.str();
 			fragmentCode = fShaderStream.str();
 
-			std::cout << "SHADER::FILE_LOADED_SUCCESFULLY" << std::endl;
+			std::cout << vertexFilePath << " SHADER::FILE_LOADED_SUCCESFULLY" << std::endl;
 		}
 		catch (std::ifstream::failure e)
 		{
-			std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+			std::cout << vertexFilePath << " ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
 		}
 
 		const char* vShaderCode = vertexCode.c_str();
@@ -166,7 +168,7 @@ namespace BHive
 				shaderType = "FRAGMENT";
 			}
 
-			std::cout << "ERROR::SHADER::" << shaderType << "::COMPILATION_FAILED\n" << infoLog << std::endl;
+			std::cout << vertexFilePath << " ERROR::SHADER::" << shaderType << "::COMPILATION_FAILED\n" << infoLog << std::endl;
 		}
 	}
 
@@ -176,7 +178,7 @@ namespace BHive
 		if (!success)
 		{
 			glGetProgramInfoLog(ShaderProgram, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+			std::cout << vertexFilePath << " ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 		}
 	}
 }

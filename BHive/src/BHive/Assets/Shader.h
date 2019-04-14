@@ -42,5 +42,6 @@ namespace BHive
 		int success;
 		char infoLog[512];
 		int shaderFileType;
+		const char* vertexFilePath;
 	};
 }

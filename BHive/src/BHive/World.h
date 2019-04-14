@@ -1,16 +1,11 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Cameras/FPSCamera.h"
-#include "Components/MeshComponent.h"
-#include "Assets/Shader.h"
 
 namespace BHive
 {
 	class BHive_API World
 	{
-	public:
-		static FPSCamera* DefaultCamera;
 
 	public:
 		World();
@@ -31,9 +26,6 @@ namespace BHive
 		void InitChildren();
 
 		void SetActive();	
-
-		MeshComponent* m_Mesh;
-		Shader* m_Shader;
 	};
 
 	template<class T> 

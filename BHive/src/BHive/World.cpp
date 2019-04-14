@@ -1,20 +1,10 @@
 #include "BHivePCH.h"
 #include "World.h"
-#include "Components/RenderComponent.h"
-#include "Components/BillboardComponent.h"
-#include "Assets/Shader.h"
-#include "Assets/Texture2D.h"
-#include "Image.h"
-#include "Components/ParticleEmitter.h"
-#include "Components/MeshComponent.h"
 #include "Application.h"
 #include "GameStatics.h"
 
 namespace BHive
 {
-
-	BHive::FPSCamera* World::DefaultCamera;
-
 	World::World()
 	{
 		if (!GameStatics::GetWorld())
@@ -39,33 +29,7 @@ namespace BHive
 
 	void World::CreateWorld()
 	{
-		DefaultCamera = AddChild<FPSCamera>();
-		DefaultCamera->aspectRatio = Application::Get().GetWindow().GetAspectRatio();
-		DefaultCamera->GetRootComponent()->SetPosition(glm::vec3(0.0f, 0.0f, 5.0f));
-		DefaultCamera->GetRootComponent()->SetScale(1.0f);
-		DefaultCamera->GetRootComponent()->SetRotation(0.0f, 0.0f, 0.0f);
-
-		m_Mesh = AddChild<MeshComponent>();
-		m_Mesh->LoadResource("Resources/Meshes/cube.obj");
-		m_Shader = new Shader("Shaders/Default.vs", "Shaders/model_loading.fs");
-
-		//GameObject* Cube = AddChild<GameObject>();
-		//BillboardComponent* BillboardComp = Cube->AddComponent<BillboardComponent>("Billboard");
-		////BillboardComp->SetShader(SHD_Billboard);
-		////BillboardComp->SetTexture(&T2D_Smoke);
-		//BillboardComp->SetBlendMode(2);
-		//BillboardComp->SetSize(100.0f);
-		//BillboardComp->SetColor(glm::vec4(0.6f, 0.3f, 0.0f, 1.0f));
-		//BillboardComp->SetPosition(2.0f, 2.0f, 0.0f);
-		//BillboardComp->SetScale(.5f);
-		//BillboardComp->SetRotation(25.f, 0.0f, 0.0f);
-
-		/*GameObject* Particles = new GameObject();
-		ParticleEmitter* SmokeEmitter = Particles->AddComponent<ParticleEmitter>("Particle Example");
-		SmokeEmitter->SetParticleShader(SHD_Billboard);
-		SmokeEmitter->SetParticleTexture(&T2D_Smoke);
-		SmokeEmitter->SetParticleColor(glm::vec4(.3f, .2f, 0.0f, 1.0f));
-		AddChild(Particles);*/
+		BH_INFO("Created World");
 	}
 
 	void World::RenderChildren(float deltaTime)
@@ -83,8 +47,6 @@ namespace BHive
 			}
 
 		}
-
-		m_Mesh->Draw(m_Shader);
 	}
 
 	void World::InitChildren()

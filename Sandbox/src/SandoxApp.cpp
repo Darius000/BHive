@@ -2,7 +2,6 @@
 
 #include "imgui/imgui.h"
 
-
 class ExampleLayer : public BHive::Layer
 {
 public:
@@ -49,18 +48,13 @@ class Sandbox : public BHive::Application
 public:
 	Sandbox()
 	{
-		world = new BHive::World();
 		PushLayer(new BHive::RenderLayer());
 		PushLayer(new ExampleLayer());
-		//PushOverlay(new BHive::ImGuiLayer());
-		
 	}
 	~Sandbox()
 	{
 
 	}
-
-	BHive::World* world;
 };
 
 BHive::Application* BHive::CreateApplication()
