@@ -105,7 +105,7 @@ namespace BHive
 		glm::vec3 random = glm::vec3((rand() % 100), (rand() % 100), (rand() % 100));
 		glm::vec4 pcolor = color * ((rand() % 100) / 100.0f);
 		particle->SetShader(shader);
-		particle->SetPosition(GetParent()->GetRootComponent()->GetPosition() * random);
+		particle->SetPosition(GetParent()->GetComponent<TransformComponent>()->GetPosition() * random);
 		particle->SetColor(pcolor);
 		particle->SetTexture(texture);
 

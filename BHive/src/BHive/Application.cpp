@@ -1,13 +1,16 @@
 #include "BHivePCH.h"
 #include "Application.h"
 
-
 #include "BHive/Log.h"
 
 #include <glad/glad.h>
 
 #include "Input.h"
 #include "BHive/EditorTime.h"
+#include "Layers/EditorRenderLayer.h"
+#include "Layers/RenderLayer.h"
+#include "Managers/AssetManager.h"
+#include "Layers/AssetManagerLayer.h"
 
 namespace BHive
 {
@@ -23,6 +26,12 @@ namespace BHive
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+
+		PushLayer(new RenderLayer());
+
+		PushLayer(new AssetManagerLayer());
+
+		PushLayer(new EditorRenderLayer());
 	}
 
 

@@ -4,16 +4,12 @@
 
 namespace BHive
 {
-	TransformComponent::TransformComponent()
+	void TransformComponent::ComponentInit()
 	{
 		SetPosition(0.0f, 0.0f, 0.0f);
 		SetScale(1.0f);
 		SetRotation(0.0f, 0.0f, 0.0f);
 		UpdateMatrix();
-	}
-
-	TransformComponent::~TransformComponent()
-	{
 	}
 
 	void TransformComponent::SetPosition(glm::vec3 InPos)
@@ -95,7 +91,7 @@ namespace BHive
 		return glm::normalize(glm::vec3(M[0][1], M[1][1], M[2][1]));
 	}
 
-	glm::mat4 TransformComponent::GetMeshComponentMatrix()
+	glm::mat4 TransformComponent::GetMatrix()
 	{
 		return M;
 	}

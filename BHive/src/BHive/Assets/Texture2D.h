@@ -1,17 +1,19 @@
 #pragma once
 
-#include "BHive/Core.h"
+#include "Core.h"
+#include "Asset.h"
 #include <glad/glad.h>
+
 
 
 namespace BHive
 {
-	enum class EWrapping
+	enum class EWrapping : int
 	{
-		REPEAT,
-		MIRROREDREPEAT,
-		CLAMP,
-		CLAMPBORDER
+		REPEAT = 0,
+		MIRROREDREPEAT = 1,
+		CLAMP = 2,
+		CLAMPBORDER = 3
 	};
 
 	enum class EFilter
@@ -37,32 +39,36 @@ namespace BHive
 		EMISSION
 	};
 
-	class BHive_API Texture2D
+	class BHive_API Texture2D : public Asset
 	{
 	public:
 		Texture2D();
 		Texture2D(const std::string fileName, const std::string &directory, ETextureType InType, bool gamma = false, EWrapping wrapping = EWrapping::REPEAT, EMipMap mipmap = EMipMap::LINEAR, EFilter filter = EFilter::LINEAR, glm::vec3 borderColor = glm::vec3(1.0f));
 		virtual ~Texture2D();
 
-		void LoadTexture(const std::string fileName, const std::string &directory, bool gamma = false);
-
+		bool Load(std::string name, std::string path) override;
 		void Use(int activeTexture = 0);
+		virtual void CreateEditorWindow() override;
 
-		EWrapping Wrapping;
+		int Wrapping;
+		//EWrapping Wrapping;
 		EFilter Filter;
 		EMipMap MipMap;
 		ETextureType Type;
 
 		glm::vec3 BorderColor;
 
-	private:
-		unsigned int ID;
+		void SetTextureParameters();
 
-		std::string Name;
+		virtual void OnSave(std::fstream& file) override;
+
+
+		virtual void OnLoad(std::fstream& file) override;
+
+	private:
+		unsigned char* data;//btyes of image
 
 		int width, height, numChannels;
-
-		void SetTextureParameters();
 
 		friend class MeshComponent;
 	};

@@ -3,20 +3,6 @@
 
 namespace BHive
 {
-
-	GameStatics::GameStatics()
-	{
-		if (!s_Instance)
-		{
-			s_Instance = this;
-		}
-	}
-
-	GameStatics::~GameStatics()
-	{
-
-	}
-
 	Camera* GameStatics::GetActiveCamera()
 	{
 		return currentCamera;
@@ -37,9 +23,7 @@ namespace BHive
 		currentWorld = world;
 	}
 
-	Camera* GameStatics::currentCamera;
+	Camera* GameStatics::currentCamera = nullptr;
 
-	World* GameStatics::currentWorld;
-
-	GameStatics* GameStatics::s_Instance;
+	World* GameStatics::currentWorld = nullptr;
 }

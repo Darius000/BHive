@@ -2,7 +2,7 @@
 
 #include "BHivePCH.h"
 #include "Core.h"
-#include "BHive/Events/Event.h"
+#include "Events/Event.h"
 
 namespace BHive
 {
@@ -13,8 +13,8 @@ namespace BHive
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "BHive Engine",
-			unsigned int width = 1280,
-			unsigned int height = 720)
+			unsigned int width = 800,
+			unsigned int height = 600)
 			:Title(title), Width(width), Height(height)
 		{
 

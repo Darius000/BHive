@@ -91,7 +91,7 @@ namespace BHive
 		shader->SetVector3("boundsColor", color);
 		shader->SetMatrix4("view", GameStatics::GetActiveCamera()->GetViewMatrix());
 		shader->SetMatrix4("projection", GameStatics::GetActiveCamera()->GetProjectionMatrix());
-		shader->SetMatrix4("model", meshComponent->GetRootComponent()->GetMeshComponentMatrix());
+		shader->SetMatrix4("model", meshComponent->GetRootComponent()->GetMatrix());
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -284,7 +284,7 @@ namespace BHive
 			bool skip = false;
 			for (unsigned int j = 0; j < textures_loaded.size(); j++)
 			{
-				if (std::strcmp(textures_loaded[j].Name.data(), str.C_Str()) == 0)
+				if (std::strcmp(textures_loaded[j].GetDisplayName().data(), str.C_Str()) == 0)
 				{
 					texures.push_back(textures_loaded[j]);
 					skip = true;

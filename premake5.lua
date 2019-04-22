@@ -46,14 +46,14 @@ project "BHive"
     includedirs
     {
         "%{prj.name}/src",
-        "%{prj.name}/src/BHIve",
+        "%{prj.name}/src/BHive",
         "%{prj.name}/vendor/spdlog/include",
         "%{prj.name}/vendor/glm/include",
         "%{prj.name}/Shaders",
         "%{prj.name}/vendor/assimp/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}",
+        "%{IncludeDir.ImGui}"
     }
     
     libdirs {"%{prj.name}/vendor/assimp/lib"}
@@ -114,10 +114,12 @@ project "Sandbox"
     {
         "BHive/vendor/spdlog/include",
         "BHive/vendor/glm/include",
+		"BHive/vendor/imgui",
         "BHive/vendor/assimp/include",
         "BHive/vendor/glad/include",
         "BHive/vendor",
-        "BHive/src"
+        "BHive/src",
+		"BHive/src/BHive"
     }
     
     links

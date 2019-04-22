@@ -104,9 +104,9 @@ namespace BHive
 
 	void BillboardComponent::SetTexture(std::string fileName, std::string path)
 	{
-		texture = new Texture2D();
+		/*texture = new Texture2D();
 		texture->LoadTexture(fileName, path);
-		texture->Type = ETextureType::DIFFUSE;
+		texture->Type = ETextureType::DIFFUSE;*/
 	}
 
 	void BillboardComponent::SetTexture(Texture2D* InTexture)

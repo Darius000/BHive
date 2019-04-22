@@ -47,7 +47,7 @@ namespace BHive
 		shader->Use();
 		shader->SetMatrix4("PVM",
 			GameStatics::GetActiveCamera()->GetProjectionMatrix() *
-			GameStatics::GetActiveCamera()->GetViewMatrix() * GetMeshComponentMatrix());
+			GameStatics::GetActiveCamera()->GetViewMatrix() * GetMatrix());
 	}
 
 	void RenderComponent::SetShader(Shader* shader)

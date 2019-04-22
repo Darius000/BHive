@@ -6,56 +6,47 @@ namespace BHive
 {
 	class BHive_API Object
 	{
+
 	public:
 		Object();
-		virtual ~Object();
-
-	private:
-		std::string displayName;
-		bool destroyed;
+		Object(String name);
+		virtual ~Object() {};
 
 	public:
+		String mDisplayName;
+	private:
+		bool mDestroyed;
+		bool mEnabled;
+		bool mActive;
+		bool mSelected;
+		unsigned int objectID;
+		static unsigned int unusedID;
 
-		std::string GetDisplayName();
-		std::string GetClassDisplayName();
+	public:
+		String GetDisplayName() const;
+		String GetClassDisplayName() const;
 
-		void SetDisplayName(const std::string& string);
+		void Select();
+		void UnSelect();
+		void SetEnabled(bool enable);
+		bool IsEnabled() const;
+		bool IsActive() const;
+		bool IsSelected() const;
+		void SetDisplayName(const String& name);
+		virtual void OnSelection(bool selected);
+		virtual void CreateContextMenuItems() {};
+	public:
 		void Destroy();
-		bool IsDestroyed();
+		bool IsDestroyed() const;
 
 	protected:
 		virtual void OnDestroyed();
-	};
 
-	template <class T>
-	struct ErasePredicateShared
-	{
-		ErasePredicateShared(const T& inPointer)
-			:Pointer(inPointer)
+		bool operator==(const Object& a) const
 		{
-
-		}
-
-		const T& Pointer;
-
-		bool operator()(const std::shared_ptr<T>& SharedPointer) const {
-			return SharedPointer.get() == &Pointer;
+			return (a.objectID == objectID);
 		}
 	};
 
-	template <class T>
-	struct ErasePredicateUnique
-	{
-		ErasePredicateUnique(const T& inPointer)
-			:Pointer(inPointer)
-		{
-
-		}
-
-		const T& Pointer;
-
-		bool operator()(const std::unique_ptr<T>& UniquePointer) const {
-			return UniquePointer.get() == &Pointer;
-		}
-	};
+	
 }

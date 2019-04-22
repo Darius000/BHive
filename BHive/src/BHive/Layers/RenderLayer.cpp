@@ -6,11 +6,10 @@
 
 namespace BHive
 {
-
 	RenderLayer::RenderLayer()
 		:Layer("RenderLayer")
 	{
-
+		mDefaultWorld = new World();
 	}
 
 	RenderLayer::~RenderLayer()
@@ -23,7 +22,7 @@ namespace BHive
 		SetOpenGLStates();
 		PrintMaxVertexAttributes();
 		PrintOpenglInfo();
-		//GameStatics::GetWorld()->InitChildren();
+		GameStatics::GetWorld()->Start();
 	}
 
 	void RenderLayer::OnDetach()
@@ -33,7 +32,7 @@ namespace BHive
 
 	void RenderLayer::OnUpdate()
 	{
-		GameStatics::GetWorld()->RenderChildren(Time::GetDeltaTime());
+		GameStatics::GetWorld()->Update(Time::GetDeltaTime());
 	}
 
 	void RenderLayer::OnEvent(Event& event)

@@ -1,11 +1,12 @@
 #pragma once
 
 #include "Core.h"
+#include "Asset.h"
 #include <glad/glad.h>
 
 namespace BHive
 {
-	class BHive_API Shader
+	class BHive_API Shader : public Asset
 	{
 	public:
 		Shader();

@@ -4,6 +4,7 @@
 
 namespace BHive
 {
+
 	class BHive_API KeyEvent : public Event
 	{
 	public:

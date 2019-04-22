@@ -1,6 +1,9 @@
 #include <BHive.h>
 
 #include "imgui/imgui.h"
+#include "GameObject.h"
+#include "World.h"
+#include "Components/BillboardComponent.h"
 
 class ExampleLayer : public BHive::Layer
 {
@@ -17,7 +20,6 @@ public:
 
 	void OnUpdate() override
 	{
-		//BH_INFO("ExampleLayer::Update");
 		if (BHive::Input::IsKeyPressed(BH_KEY_TAB))
 			BH_INFO("Tab key is pressed(POLL");
 	}
@@ -43,12 +45,26 @@ public:
 	}
 };
 
+class WorldOne : public BHive::World
+{
+
+public:
+	virtual void CreateWorld() override
+	{
+		BH_INFO("Created World 1");
+		/*BHive::Camera* MainCam = AddEntity<BHive::Camera>();
+		BHive::GameObject* Box = AddEntity<BHive::GameObject>();
+		Box->AddComponent<BHive::BillboardComponent>();*/
+	}
+};
+
 class Sandbox : public BHive::Application
 {
 public:
 	Sandbox()
 	{
-		PushLayer(new BHive::RenderLayer());
+		WorldOne* w = new WorldOne();
+		w->SetActive();
 		PushLayer(new ExampleLayer());
 	}
 	~Sandbox()

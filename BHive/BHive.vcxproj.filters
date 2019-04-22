@@ -13,6 +13,9 @@
     <Filter Include="BHive\Components">
       <UniqueIdentifier>{28E2EC5F-14DB-0BB2-3D0D-F1362965EBBD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BHive\Editors">
+      <UniqueIdentifier>{5CC2653D-C882-E173-91BD-2AF1FD3C2650}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BHive\Events">
       <UniqueIdentifier>{771794D4-637A-2379-0C00-5C2FF841EFFB}</UniqueIdentifier>
     </Filter>
@@ -22,8 +25,8 @@
     <Filter Include="BHive\Layers">
       <UniqueIdentifier>{520277E3-3E65-0688-E7EA-3E3ED32CD20A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BHive\Layers\Rendering">
-      <UniqueIdentifier>{1F5A479D-0B54-70EF-F4C0-0600E059D65B}</UniqueIdentifier>
+    <Filter Include="BHive\Managers">
+      <UniqueIdentifier>{305E8B6F-1C2C-7F75-05C0-EF9BF12C5BDA}</UniqueIdentifier>
     </Filter>
     <Filter Include="BHive\Platforms">
       <UniqueIdentifier>{FAEDD028-6679-3EED-6F8A-C1E1DB949AED}</UniqueIdentifier>
@@ -31,14 +34,14 @@
     <Filter Include="BHive\Platforms\Windows">
       <UniqueIdentifier>{34F20175-A029-4A0C-A933-AE2F15EA7005}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BHive\Types">
-      <UniqueIdentifier>{D7883CF0-433E-B5E5-CC32-AFBC38E7ABE9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BHive.h" />
     <ClInclude Include="src\BHive\Application.h">
       <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Assets\Asset.h">
+      <Filter>BHive\Assets</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Assets\Mesh.h">
       <Filter>BHive\Assets</Filter>
@@ -82,8 +85,17 @@
     <ClInclude Include="src\BHive\Core.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\ECS.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\EditorTime.h">
       <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Editors\AssetEditor.h">
+      <Filter>BHive\Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Editors\TextureEditor.h">
+      <Filter>BHive\Editors</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\EntryPoint.h">
       <Filter>BHive</Filter>
@@ -124,11 +136,17 @@
     <ClInclude Include="src\BHive\LayerStack.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Layers\Rendering\RenderLayer.h">
-      <Filter>BHive\Layers\Rendering</Filter>
+    <ClInclude Include="src\BHive\Layers\AssetManagerLayer.h">
+      <Filter>BHive\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Layers\RenderLayer.h">
+      <Filter>BHive\Layers</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Log.h">
       <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Managers\AssetManager.h">
+      <Filter>BHive\Managers</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\MouseCodes.h">
       <Filter>BHive</Filter>
@@ -142,9 +160,6 @@
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Types\FString.h">
-      <Filter>BHive\Types</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Window.h">
       <Filter>BHive</Filter>
     </ClInclude>
@@ -154,10 +169,21 @@
     <ClInclude Include="src\BHive\stb_image.h">
       <Filter>BHive</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Layers\EditorRenderLayer.h" />
+    <ClInclude Include="src\BHive\Managers\ObjectManager.h" />
+    <ClInclude Include="src\BHive\Singleton.h" />
+    <ClInclude Include="src\BHive\Interfaces\Serializable.h" />
+    <ClInclude Include="src\BHive\DataStructures\NodeGraph.h" />
+    <ClInclude Include="src\BHive\DataStructures\DirectoryGraph.h" />
+    <ClInclude Include="src\BHive\Interfaces\IGuiInterface.h" />
+    <ClInclude Include="src\BHive\Interfaces\Interface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
       <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Assets\Asset.cpp">
+      <Filter>BHive\Assets</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Assets\Mesh.cpp">
       <Filter>BHive\Assets</Filter>
@@ -198,8 +224,17 @@
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\ECS.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\EditorTime.cpp">
       <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Editors\AssetEditor.cpp">
+      <Filter>BHive\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Editors\TextureEditor.cpp">
+      <Filter>BHive\Editors</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\GameObject.cpp">
       <Filter>BHive</Filter>
@@ -219,11 +254,17 @@
     <ClCompile Include="src\BHive\LayerStack.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Layers\Rendering\RenderLayer.cpp">
-      <Filter>BHive\Layers\Rendering</Filter>
+    <ClCompile Include="src\BHive\Layers\AssetManagerLayer.cpp">
+      <Filter>BHive\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Layers\RenderLayer.cpp">
+      <Filter>BHive\Layers</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Managers\AssetManager.cpp">
+      <Filter>BHive\Managers</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Object.cpp">
       <Filter>BHive</Filter>
@@ -234,11 +275,17 @@
     <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Types\FString.cpp">
-      <Filter>BHive\Types</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\World.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\stb_image.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Layers\EditorRenderLayer.cpp" />
+    <ClCompile Include="src\BHive\Managers\ObjectManager.cpp" />
+    <ClCompile Include="src\BHive\Singleton.cpp" />
+    <ClCompile Include="src\BHive\Interfaces\Serializable.cpp" />
+    <ClCompile Include="src\BHive\DataStructures\NodeGraph.cpp" />
+    <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
   </ItemGroup>
 </Project>

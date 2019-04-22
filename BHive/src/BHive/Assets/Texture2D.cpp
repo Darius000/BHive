@@ -1,11 +1,13 @@
 #include "BHivePCH.h"
 #include "Texture2D.h"
-#include "stb_image.h"
+#include <stb_image.h>
+#include "imgui.h"
+#include "Editors/TextureEditor.h"
 
 namespace BHive
 {
 	Texture2D::Texture2D()
-		:Wrapping(EWrapping::REPEAT), Filter(EFilter::LINEAR), MipMap(EMipMap::LINEAR), BorderColor(1.0f)
+		:Wrapping(0), Filter(EFilter::LINEAR), MipMap(EMipMap::LINEAR), BorderColor(1.0f)
 	{
 
 	}
@@ -14,10 +16,9 @@ namespace BHive
 	Texture2D::Texture2D(const std::string fileName, const std::string &directory, ETextureType InType, bool gamma, EWrapping wrapping, EMipMap mipmap, EFilter filter, glm::vec3 borderColor)
 		:Texture2D()
 	{
-		LoadTexture(fileName, directory, gamma);
 
 		Type = InType;
-		Wrapping = wrapping;
+		Wrapping = 0;
 		MipMap = mipmap;
 		Filter = filter;
 		BorderColor = borderColor;
@@ -27,22 +28,35 @@ namespace BHive
 	{
 	}
 
-	void Texture2D::LoadTexture(const std::string fileName, const std::string &directory, bool gamma)
+	void Texture2D::Use(int activeTexture)
 	{
-		GLint internalFormat;
+		if (GetData())
+		{
+			glActiveTexture(GL_TEXTURE0 + activeTexture);
+			glBindTexture(GL_TEXTURE_2D, GetData());
+		}
+	}
 
-		std::string filename = std::string(fileName);
-		filename = directory + "/" + filename;
+	void Texture2D::CreateEditorWindow()
+	{
+		new TextureEditor(*this, "Edit " + GetDisplayName());
+	}
 
-		Name = fileName;
+	bool Texture2D::Load(std::string name, std::string path)
+	{
+		Asset::Load(name, path);
 
 		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load(filename.c_str(), &width, &height, &numChannels, 0);
+		data = stbi_load(m_Path.c_str(), &width, &height, &numChannels, 0);
 
-		glGenTextures(1, &ID);
-		glBindTexture(GL_TEXTURE_2D, ID);
+		GLint internalFormat = GL_RGB;
 
-		if (data)
+		glGenTextures(1, &m_Data);
+		glBindTexture(GL_TEXTURE_2D, GetData());
+
+		SetTextureParameters();
+
+		if (data != nullptr)
 		{
 			if (numChannels == 1)
 			{
@@ -59,26 +73,19 @@ namespace BHive
 
 			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
-
-			SetTextureParameters();
-
 		}
 		else
 		{
-			std::cout << "Failed to load texture" << std::endl;
+			BH_ERROR("Failed to load texture");
 
+			return false;
 		}
 
 		stbi_image_free(data);
-	}
 
-	void Texture2D::Use(int activeTexture)
-	{
-		if (ID)
-		{
-			glActiveTexture(GL_TEXTURE0 + activeTexture);
-			glBindTexture(GL_TEXTURE_2D, ID);
-		}
+		//BH_INFO("Loaded Texture");
+
+		return true;
 	}
 
 	void Texture2D::SetTextureParameters()
@@ -89,16 +96,16 @@ namespace BHive
 
 		switch (Wrapping)
 		{
-		case EWrapping::REPEAT:
+		case 0:
 			wrapping = GL_REPEAT;
 			break;
-		case EWrapping::MIRROREDREPEAT:
+		case 1:
 			wrapping = GL_MIRRORED_REPEAT;
 			break;
-		case EWrapping::CLAMP:
+		case 2:
 			wrapping = GL_CLAMP_TO_EDGE;
 			break;
-		case EWrapping::CLAMPBORDER:
+		case 3:
 			wrapping = GL_CLAMP_TO_BORDER;
 			break;
 		default:
@@ -140,7 +147,7 @@ namespace BHive
 			break;
 		}
 
-		if (Wrapping != EWrapping::CLAMPBORDER)
+		if (Wrapping != 3)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapping);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapping);
@@ -153,4 +160,16 @@ namespace BHive
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipMap);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
 	}
+
+	void Texture2D::OnSave(std::fstream& file)
+	{
+		
+		
+	}
+
+	void Texture2D::OnLoad(std::fstream& file)
+	{
+		
+	}
+
 }

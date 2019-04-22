@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\imgui;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;..\BHive\src\BHive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -98,7 +98,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\imgui;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;..\BHive\src\BHive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,7 +121,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>BH_PLATFORM_WINDOWS;BH_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\BHive\vendor\spdlog\include;..\BHive\vendor\glm\include;..\BHive\vendor\imgui;..\BHive\vendor\assimp\include;..\BHive\vendor\glad\include;..\BHive\vendor;..\BHive\src;..\BHive\src\BHive;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

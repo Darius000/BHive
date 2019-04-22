@@ -1,15 +1,13 @@
 #pragma once
 
-#include "ObjectComponent.h"
+#include "ECS.h"
 
 namespace BHive
 {
-	class BHive_API TransformComponent : public ObjectComponent
+	class BHive_API TransformComponent : public Component
 	{
 	public:
-		TransformComponent();
-		virtual ~TransformComponent();
-
+		void ComponentInit() override;
 		void SetPosition(glm::vec3 InPos);
 		void SetPosition(float x, float y, float z);
 		void SetRotation(glm::vec3 InRot);
@@ -26,7 +24,7 @@ namespace BHive
 		glm::vec3 GetRight();
 		glm::vec3 GetUp();
 
-		glm::mat4 GetMeshComponentMatrix();
+		glm::mat4 GetMatrix();
 
 	private:
 		glm::vec3 Position;

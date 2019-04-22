@@ -16,6 +16,8 @@
 #include <unordered_set>
 #include <map>
 #include <set>
+#include <bitset>
+#include <array>
 
 #include "BHive/Log.h"
 #include <glm/glm.hpp>
@@ -26,6 +28,4 @@
 	#include <Windows.h>
 #endif // !BH_PLATFORM_WINDOWS
 
-
-
-
+using String = std::string;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BHive/Layer.h"
+#include "World.h"
 
 namespace BHive
 {
@@ -20,5 +21,7 @@ namespace BHive
 		void PrintOpenglInfo();
 
 		bool openGLInitialized;
+
+		World* mDefaultWorld;
 	};
 }

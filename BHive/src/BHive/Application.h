@@ -2,9 +2,9 @@
 
 #include "Core.h"
 #include "Events/Event.h"
-#include "BHive/Events/ApplicationEvent.h"
-#include "BHive/Window.h"
-#include "BHive/LayerStack.h"
+#include "Events/ApplicationEvent.h"
+#include "Window.h"
+#include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
 
 namespace BHive
@@ -31,6 +31,7 @@ namespace BHive
 		bool OnWindowClosed(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+
 		ImGuiLayer* m_ImGuiLayer;
 
 		bool m_Running = true;

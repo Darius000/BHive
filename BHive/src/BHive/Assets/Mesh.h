@@ -1,5 +1,4 @@
-#ifndef MESH_H
-#define MESH_H
+#pragma once
 
 #include "Core.h"
 #include "Texture2D.h"
@@ -16,13 +15,14 @@ namespace BHive
 		glm::vec2 TexCoord;
 	};
 
-	class BHive_API Mesh
+	class BHive_API Mesh : public Asset
 	{
 	public:
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
 		std::vector<Texture2D> textures;
 
+		Mesh();
 		Mesh(std::vector<Vertex> InVertices, std::vector<unsigned int> InIndices, std::vector<Texture2D> InTextures);
 		void Draw(Shader* shader);
 
@@ -35,5 +35,3 @@ namespace BHive
 		void SetupMesh();
 	};
 }
-
-#endif

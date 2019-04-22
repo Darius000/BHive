@@ -1,45 +1,84 @@
 #include "BHivePCH.h"
 #include "Object.h"
+#include "imgui.h"
+#include "Managers/ObjectManager.h"
 
 namespace BHive
 {
+	
+
+	Object::Object(String name)
+		:mDisplayName(name), mDestroyed(false), mSelected(false), 
+		mActive(false), mEnabled(true), objectID(unusedID)
+	{
+		
+	}
 
 	Object::Object()
-		:displayName("Object"), destroyed(false)
+		:mDisplayName("Object" + std::to_string(unusedID)), mDestroyed(false), mSelected(false),
+		mActive(false), mEnabled(true), objectID(unusedID)
 	{
-
+		unusedID++;
 	}
 
-	Object::~Object()
-	{
+	unsigned int Object::unusedID = 0;
 
+	std::string Object::GetDisplayName() const
+	{
+		return mDisplayName;
 	}
 
-	std::string Object::GetDisplayName()
+	std::string Object::GetClassDisplayName() const
 	{
-		return displayName;
+		return typeid(this).name();
 	}
 
-	std::string Object::GetClassDisplayName()
+	void Object::Select()
 	{
-		return std::string(typeid(this).name());
+		ObjectManager::AddSelectedObject(*this);
+
+		mActive = true;
+
+		mSelected = true;
+
+		OnSelection(true);
 	}
 
-	void Object::SetDisplayName(const std::string& string)
+	bool Object::IsSelected() const
 	{
-		displayName = string;
+		return mSelected;
+	}
+
+	void Object::SetDisplayName(const String& name) 
+	{
+		mDisplayName = name;
+	}
+
+	void Object::OnSelection(bool selected)
+	{
+
 	}
 
 	void Object::Destroy()
 	{
-		destroyed = true;
+		mDestroyed = true;
+
+		if (IsSelected())
+		{
+			ObjectManager::RemoveFromSelected(*this);
+			UnSelect();
+		}
+
+		mEnabled = false;
+
+		mActive = false;
 
 		OnDestroyed();
 	}
 
-	bool Object::IsDestroyed()
+	bool Object::IsDestroyed() const
 	{
-		return destroyed;
+		return mDestroyed;
 	}
 
 	void Object::OnDestroyed()
@@ -47,4 +86,29 @@ namespace BHive
 
 	}
 
+	void Object::UnSelect()
+	{
+		ObjectManager::RemoveFromSelected(*this);
+
+		mActive = false;
+
+		mSelected = false;
+
+		OnSelection(false);
+	}
+
+	void Object::SetEnabled(bool enable)
+	{
+		mEnabled = enable;
+	}
+
+	bool Object::IsEnabled() const
+	{
+		return mEnabled;
+	}
+
+	bool Object::IsActive() const
+	{
+		return mActive;
+	}
 }

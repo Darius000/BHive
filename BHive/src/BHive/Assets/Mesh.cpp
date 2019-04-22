@@ -13,6 +13,11 @@ namespace BHive
 		SetupMesh();
 	}
 
+	Mesh::Mesh()
+	{
+
+	}
+
 	void Mesh::Draw(Shader* shader)
 	{
 		unsigned int diffuseNum = 1;
