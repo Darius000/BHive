@@ -15,7 +15,7 @@ namespace BHive
 		glm::vec2 TexCoord;
 	};
 
-	class BHive_API Mesh : public Asset
+	class BHive_API Mesh : public BResource
 	{
 	public:
 		std::vector<Vertex> vertices;

@@ -2,6 +2,7 @@
 #include "MeshComponent.h"
 #include "GameStatics.h"
 
+
 namespace BHive
 {
 	void BBox::CalculateBounds(const std::vector<glm::vec3> positions)

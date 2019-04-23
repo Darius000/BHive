@@ -9,7 +9,7 @@
 #include "BHive/EditorTime.h"
 #include "Layers/EditorRenderLayer.h"
 #include "Layers/RenderLayer.h"
-#include "Managers/AssetManager.h"
+#include "BResourceManager.h"
 #include "Layers/AssetManagerLayer.h"
 
 namespace BHive

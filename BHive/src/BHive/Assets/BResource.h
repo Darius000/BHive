@@ -8,13 +8,13 @@
 
 namespace BHive
 {
-	class BHive_API Asset : public Object, public ISerializable
+	class BHive_API BResource : public Object
 	{
 	public:
-		Asset();
-		Asset(String name);
+		BResource();
+		BResource(const String& name);
 
-		virtual bool Load(std::string name, std::string path); //Load the asset
+		virtual bool Load(const String& name, const String& path); //Load the asset
 
 		virtual void OnDestroyed() override;
 
@@ -23,16 +23,12 @@ namespace BHive
 		unsigned int GetData() const { return m_Data; }
 
 		String GetPath() const { return m_Path; }
-		void SetPath(String path) { m_Path = path; }
-
-		virtual void OnSave(std::fstream& file) override;
-
-
-		virtual void OnLoad(std::fstream& file) override;
+		void SetPath(const String& path) { m_Path = path; }
 
 	protected:
 		unsigned int m_Data;
 
+	private:
 		String m_Path;
 	};
 }

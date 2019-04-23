@@ -145,7 +145,7 @@
   <ItemGroup>
     <ClInclude Include="src\BHive.h" />
     <ClInclude Include="src\BHive\Application.h" />
-    <ClInclude Include="src\BHive\Assets\Asset.h" />
+    <ClInclude Include="src\BHive\Assets\BResource.h" />
     <ClInclude Include="src\BHive\Assets\Mesh.h" />
     <ClInclude Include="src\BHive\Assets\Shader.h" />
     <ClInclude Include="src\BHive\Assets\Texture2D.h" />
@@ -186,8 +186,7 @@
     <ClInclude Include="src\BHive\Layers\EditorRenderLayer.h" />
     <ClInclude Include="src\BHive\Layers\RenderLayer.h" />
     <ClInclude Include="src\BHive\Log.h" />
-    <ClInclude Include="src\BHive\Managers\AssetManager.h" />
-    <ClInclude Include="src\BHive\Managers\ObjectManager.h" />
+    <ClInclude Include="src\BHive\BResourceManager.h" />
     <ClInclude Include="src\BHive\MouseCodes.h" />
     <ClInclude Include="src\BHive\Object.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h" />
@@ -199,7 +198,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp" />
-    <ClCompile Include="src\BHive\Assets\Asset.cpp" />
+    <ClCompile Include="src\BHive\Assets\BResource.cpp" />
     <ClCompile Include="src\BHive\Assets\Mesh.cpp" />
     <ClCompile Include="src\BHive\Assets\Shader.cpp" />
     <ClCompile Include="src\BHive\Assets\Texture2D.cpp" />
@@ -217,7 +216,6 @@
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
     <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
     <ClCompile Include="src\BHive\DataStructures\NodeGraph.cpp" />
-    <ClCompile Include="src\BHive\ECS.cpp" />
     <ClCompile Include="src\BHive\EditorTime.cpp" />
     <ClCompile Include="src\BHive\Editors\AssetEditor.cpp" />
     <ClCompile Include="src\BHive\Editors\TextureEditor.cpp" />
@@ -232,12 +230,10 @@
     <ClCompile Include="src\BHive\Layers\EditorRenderLayer.cpp" />
     <ClCompile Include="src\BHive\Layers\RenderLayer.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
-    <ClCompile Include="src\BHive\Managers\AssetManager.cpp" />
-    <ClCompile Include="src\BHive\Managers\ObjectManager.cpp" />
+    <ClCompile Include="src\BHive\BResourceManager.cpp" />
     <ClCompile Include="src\BHive\Object.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\BHive\Singleton.cpp" />
     <ClCompile Include="src\BHive\World.cpp" />
     <ClCompile Include="src\BHive\stb_image.cpp" />
   </ItemGroup>

@@ -3,6 +3,7 @@
 #include <stb_image.h>
 #include "imgui.h"
 #include "Editors/TextureEditor.h"
+#include <filesystem>
 
 namespace BHive
 {
@@ -13,7 +14,7 @@ namespace BHive
 	}
 
 
-	Texture2D::Texture2D(const std::string fileName, const std::string &directory, ETextureType InType, bool gamma, EWrapping wrapping, EMipMap mipmap, EFilter filter, glm::vec3 borderColor)
+	Texture2D::Texture2D(const String& fileName, const String& directory, ETextureType InType, bool gamma, EWrapping wrapping, EMipMap mipmap, EFilter filter, glm::vec3 borderColor)
 		:Texture2D()
 	{
 
@@ -42,14 +43,14 @@ namespace BHive
 		new TextureEditor(*this, "Edit " + GetDisplayName());
 	}
 
-	bool Texture2D::Load(std::string name, std::string path)
+	bool Texture2D::Load(const String& name, const String& path)
 	{
-		Asset::Load(name, path);
+		BResource::Load(name, path);
+		
+		GLint internalFormat = GL_RGB;
 
 		stbi_set_flip_vertically_on_load(true);
-		data = stbi_load(m_Path.c_str(), &width, &height, &numChannels, 0);
-
-		GLint internalFormat = GL_RGB;
+		data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
 
 		glGenTextures(1, &m_Data);
 		glBindTexture(GL_TEXTURE_2D, GetData());
@@ -81,9 +82,8 @@ namespace BHive
 			return false;
 		}
 
+		
 		stbi_image_free(data);
-
-		//BH_INFO("Loaded Texture");
 
 		return true;
 	}
@@ -159,17 +159,6 @@ namespace BHive
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, mipMap);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
-	}
-
-	void Texture2D::OnSave(std::fstream& file)
-	{
-		
-		
-	}
-
-	void Texture2D::OnLoad(std::fstream& file)
-	{
-		
 	}
 
 }

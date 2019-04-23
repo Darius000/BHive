@@ -2,9 +2,6 @@
 
 #include "Assets/Shader.h"
 #include "Assets/Mesh.h"
-#include "assimp/Importer.hpp"
-#include "assimp/scene.h"
-#include "assimp/postprocess.h"
 #include "Cameras/Camera.h"
 #include "GameObject.h"
 

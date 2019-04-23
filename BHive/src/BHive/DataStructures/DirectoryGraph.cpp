@@ -1,6 +1,6 @@
 #include "BHivePCH.h"
 #include "DirectoryGraph.h"
-#include "Managers/AssetManager.h"
+#include "BResourceManager.h"
 
 namespace BHive
 {

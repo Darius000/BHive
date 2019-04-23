@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Layer.h"
-#include "Managers/AssetManager.h"
-
+#include "BResourceManager.h"
+#include <commdlg.h>
 
 namespace BHive
 {
@@ -19,9 +19,25 @@ namespace BHive
 		void AssetMenuBar();
 
 	private:
-		AssetManager* mAssetmanager;
-		Asset* mFolderImage;
-		Asset* mBackImage;
+		BResourceManager* mAssetmanager;
+		BResource* mFolderImage;
+		BResource* mBackImage;
 		DirectoryTreeGraph* mDirectoryTreeGraph;
 	};
+
+	struct FileImportInfo
+	{
+		FileImportInfo(String _name, String _path, String _ext)
+			:name(_name), path(_path), ext(_ext)
+		{
+
+		}
+
+		String name;
+		String path;
+		String ext;
+	};
+
+	FileImportInfo OpenFileDialog(wchar_t *filter = L"All Files (*.*)\0*.*\0", HWND owner = NULL);
 }
+

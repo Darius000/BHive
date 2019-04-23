@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BHivePCH.h"
 #include "Object.h"
 
 using ComponentID = std::size_t;

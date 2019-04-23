@@ -8,7 +8,7 @@ namespace BHive
 
 	void AssetManagerLayer::OnAttach()
 	{
-		mAssetmanager = AssetManager::GetInstance();
+		mAssetmanager = BResourceManager::GetInstance();
 		mFolderImage = mAssetmanager->GetAsset("folder.png");
 		mBackImage = mAssetmanager->GetAsset("back.png");
 		mDirectoryTreeGraph = mAssetmanager->mDirectoryGraph.get();
@@ -65,7 +65,7 @@ namespace BHive
 				else
 				{
 					//Display asset icon here
-					Asset* asset = AssetManager::GetInstance()->GetAsset(name);
+					BResource* asset = BResourceManager::GetInstance()->GetAsset(name);
 
 					if (asset)
 					{
@@ -123,6 +123,8 @@ namespace BHive
 		if (ImGui::Button("Import", ButtonSize))
 		{
 			BH_INFO("Import");
+
+			OpenFileDialog();
 		}
 
 		ImGui::PopStyleColor();
@@ -152,6 +154,54 @@ namespace BHive
 
 			//Show window file dialog box here to get the name path and ext of the file
 			//Move a copy of the file to current content folder
+
+			FileImportInfo fileInfo = OpenFileDialog();
+
+			/*Directory* dir = mAssetmanager->mDirectoryGraph->GetSelectedDirectory();
+			std::unique_ptr<FileEntry> fPtr = std::make_unique<FileEntry>(fileName, fileName);
+			mAssetmanager->mDirectoryGraph->AddFile(*dir, , );*/
 		}
 	}
+
+	FileImportInfo OpenFileDialog(wchar_t *filter /*= "All Files (*.*)\0*.*\0*"*/, HWND owner /*= NULL*/)
+	{
+		OPENFILENAME ofn;
+		wchar_t name[MAX_PATH] = L"";
+		ZeroMemory(&ofn, sizeof(ofn));
+
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = owner;
+		ofn.lpstrFilter = filter;
+		ofn.lpstrFile = name;
+		ofn.nMaxFile = MAX_PATH;
+		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+		ofn.lpstrDefExt = TEXT("");
+		ofn.lpstrInitialDir = TEXT("Content\\");
+	
+		
+		std::wstring filenameStr;
+		String filePath = "";
+		String fileName = "";
+		String fileExtension = "";
+
+		if (GetOpenFileName(&ofn))
+		{
+			/*filenameStr = name;
+
+			filePath = String(filenameStr.begin(), filenameStr.end());
+			auto path = std::filesystem::path(filePath);
+			fileName = path.filename().string();
+			fileExtension = path.extension().string();
+
+			std::error_code error;
+			std::error_code error2;
+			auto directory = std::filesystem::relative("\\Content\\", error2);
+			std::filesystem::copy(filePath, directory, error );
+			BH_ERROR("{0}, {1}", error.message(), error.value());
+			BH_ERROR("{0}, {1}", error2.message(), error2.value());*/
+		}
+
+		return FileImportInfo(fileName, filePath, fileExtension );
+	}
+
 }

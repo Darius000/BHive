@@ -3,7 +3,6 @@
 
 #include "ECS.h"
 #include "Components/TransformComponent.h"
-#include <glm/glm.hpp>
 
 namespace BHive
 {

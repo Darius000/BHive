@@ -7,7 +7,7 @@ namespace BHive
 	class TextureEditor : public AssetEditor
 	{
 	public:
-		TextureEditor(Asset& asset, String editorName);
+		TextureEditor(BResource& asset, String editorName);
 	public:
 		void OnImGuiRender() override;
 	};

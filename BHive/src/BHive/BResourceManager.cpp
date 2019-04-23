@@ -1,21 +1,21 @@
 #include "BHivePCH.h"
-#include "AssetManager.h"
+#include "BResourceManager.h"
 
 
 namespace BHive
 {
-	void AssetManager::OnConstruction()
+	void BResourceManager::OnConstruction()
 	{
 		mEngineTreeGraph = std::make_unique<DirectoryTreeGraph>("Resources\\Engine");
-		mEngineTreeGraph->OnFileEvent.AddBinding(BIND_EVENT_THREE_PARAM(&AssetManager::OnLoadAsset));
+		mEngineTreeGraph->OnFileEvent.AddBinding(BIND_EVENT_THREE_PARAM(&BResourceManager::OnLoadAsset));
 		mEngineTreeGraph->Construct();
 
 		mDirectoryGraph = std::make_unique<DirectoryTreeGraph>(m_ContentDirectory);
-		mDirectoryGraph->OnFileEvent.AddBinding(BIND_EVENT_THREE_PARAM(&AssetManager::OnLoadAsset));
+		mDirectoryGraph->OnFileEvent.AddBinding(BIND_EVENT_THREE_PARAM(&BResourceManager::OnLoadAsset));
 		mDirectoryGraph->Construct();	
 	}
 
-	void AssetManager::OnLoadAsset(String name, String path, String ext)
+	void BResourceManager::OnLoadAsset(String name, String path, String ext)
 	{
 		if (ext == ".jpg" || ext == ".png")
 		{
@@ -23,12 +23,12 @@ namespace BHive
 		}
 	}
 
-	Asset* AssetManager::GetAsset(String name)
+	BResource* BResourceManager::GetAsset(String name)
 	{
 		return m_Assets[name].get();
 	}
 
-	bool AssetManager::DeleteAsset(Asset* asset)
+	bool BResourceManager::DeleteAsset(BResource* asset)
 	{
 		int error = std::remove(asset->GetPath().c_str());
 

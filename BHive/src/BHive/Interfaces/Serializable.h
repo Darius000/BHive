@@ -7,14 +7,14 @@ namespace BHive
 	public:
 		ISerializable();
 		virtual ~ISerializable();
-		virtual void OnSave(std::fstream& file) = 0;
-		virtual void OnLoad(std::fstream& file) = 0;
+		virtual void OnSave(std::ofstream& file) = 0;
+		virtual void OnLoad(std::ifstream& file) = 0;
 		static void Serialize(String fileName, ISerializable& serializableObject);
 
 	public:
 		///Functions to save variables
 		///Save an unsigned char to file
-		void SaveUnsignedChar(std::fstream& file, unsigned char*& var);
+		//void SaveUnsignedChar(std::fstream& file, unsigned char*& var);
 
 		String mName;
 
@@ -27,15 +27,25 @@ namespace BHive
 		static String mSaveDirectory;
 
 		template<typename T>
-		void SaveVariable(std::fstream& file, const T& var)
+		void SaveVariable(std::ofstream& file,const T& var)
 		{
-			file.write((char*)(&var), sizeof(var));
+			//file.write((char*)(&var), sizeof(var));
+
+			//file << *var << std::endl;
+
+			//file.write(&var, sizeof(var));
+
+			//size_t size = sizeof(var);
+
+			//file << var << "\0" <<  std::endl;
 		}
 
 		template<typename T>
-		void LoadVariable(std::fstream& file, T& var)
+		void LoadVariable(std::ifstream& file, T& var)
 		{
-			file.read((char*)(var), sizeof(var));
+			//file.read((char*)(var), sizeof(var));
+
+			//file >> var;
 		}
 	};	
 }

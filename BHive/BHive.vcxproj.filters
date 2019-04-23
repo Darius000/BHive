@@ -40,9 +40,6 @@
     <ClInclude Include="src\BHive\Application.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Assets\Asset.h">
-      <Filter>BHive\Assets</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Assets\Mesh.h">
       <Filter>BHive\Assets</Filter>
     </ClInclude>
@@ -145,9 +142,6 @@
     <ClInclude Include="src\BHive\Log.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Managers\AssetManager.h">
-      <Filter>BHive\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\MouseCodes.h">
       <Filter>BHive</Filter>
     </ClInclude>
@@ -170,20 +164,22 @@
       <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Layers\EditorRenderLayer.h" />
-    <ClInclude Include="src\BHive\Managers\ObjectManager.h" />
     <ClInclude Include="src\BHive\Singleton.h" />
     <ClInclude Include="src\BHive\Interfaces\Serializable.h" />
     <ClInclude Include="src\BHive\DataStructures\NodeGraph.h" />
     <ClInclude Include="src\BHive\DataStructures\DirectoryGraph.h" />
     <ClInclude Include="src\BHive\Interfaces\IGuiInterface.h" />
     <ClInclude Include="src\BHive\Interfaces\Interface.h" />
+    <ClInclude Include="src\BHive\Assets\BResource.h">
+      <Filter>BHive\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\BResourceManager.h">
+      <Filter>BHive\Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
       <Filter>BHive</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Assets\Asset.cpp">
-      <Filter>BHive\Assets</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Assets\Mesh.cpp">
       <Filter>BHive\Assets</Filter>
@@ -224,9 +220,6 @@
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\ECS.cpp">
-      <Filter>BHive</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\EditorTime.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
@@ -263,9 +256,6 @@
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Managers\AssetManager.cpp">
-      <Filter>BHive\Managers</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\Object.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
@@ -282,10 +272,14 @@
       <Filter>BHive</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Layers\EditorRenderLayer.cpp" />
-    <ClCompile Include="src\BHive\Managers\ObjectManager.cpp" />
-    <ClCompile Include="src\BHive\Singleton.cpp" />
     <ClCompile Include="src\BHive\Interfaces\Serializable.cpp" />
     <ClCompile Include="src\BHive\DataStructures\NodeGraph.cpp" />
     <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
+    <ClCompile Include="src\BHive\Assets\BResource.cpp">
+      <Filter>BHive\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\BResourceManager.cpp">
+      <Filter>BHive\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

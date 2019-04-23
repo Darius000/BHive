@@ -1,6 +1,6 @@
 #include "BHivePCH.h"
 #include "Shader.h"
-
+#include "glad/glad.h"
 
 
 namespace BHive
@@ -11,10 +11,10 @@ namespace BHive
 	}
 
 
-	Shader::Shader(const char* vertexPath, const char* fragmentPath)
+	Shader::Shader(const String&  vertexPath, const String&  fragmentPath)
 		:Shader()
 	{
-		vertexFilePath = vertexPath;
+		vertexFilePath = vertexPath.c_str();
 
 		//get source code form filepath
 		std::string vertexCode;
@@ -88,62 +88,62 @@ namespace BHive
 		glUseProgram(ID);
 	}
 
-	void Shader::SetBool(const std::string &name, bool value) const
+	void Shader::SetBool(const String& name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 	}
 
-	void Shader::SetInt(const std::string &name, int value) const
+	void Shader::SetInt(const String& name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
-	void Shader::SetFloat(const std::string &name, float value) const
+	void Shader::SetFloat(const String& name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 	}
 
-	void Shader::SetVector2(const std::string &name, float value0, float value1) const
+	void Shader::SetVector2(const String& name, float value0, float value1) const
 	{
 		glUniform2f(glGetUniformLocation(ID, name.c_str()), value0, value1);
 	}
 
-	void Shader::SetVector2(const std::string &name, const glm::vec2 vec) const
+	void Shader::SetVector2(const String& name, const glm::vec2 vec) const
 	{
 		glUniform2fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(vec));
 	}
 
-	void Shader::SetVector3(const std::string &name, float value0, float value1, float value2) const
+	void Shader::SetVector3(const String& name, float value0, float value1, float value2) const
 	{
 		glUniform3f(glGetUniformLocation(ID, name.c_str()), value0, value1, value2);
 	}
 
-	void Shader::SetVector3(const std::string &name, const glm::vec3 vec) const
+	void Shader::SetVector3(const String& name, const glm::vec3 vec) const
 	{
 		glUniform3fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(vec));
 	}
 
-	void Shader::SetVector4(const std::string &name, float value0, float value1, float value2, float value3) const
+	void Shader::SetVector4(const String& name, float value0, float value1, float value2, float value3) const
 	{
 		glUniform4f(glGetUniformLocation(ID, name.c_str()), value0, value1, value2, value3);
 	}
 
-	void Shader::SetVector4(const std::string &name, const glm::vec4 vec) const
+	void Shader::SetVector4(const String& name, const glm::vec4 vec) const
 	{
 		glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, glm::value_ptr(vec));
 	}
 
-	void Shader::SetMatrix2(const std::string &name, const glm::mat2 mat) const
+	void Shader::SetMatrix2(const String& name, const glm::mat2 mat) const
 	{
 		glUniformMatrix2fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void Shader::SetMatrix3(const std::string &name, const glm::mat3 mat) const
+	void Shader::SetMatrix3(const String& name, const glm::mat3 mat) const
 	{
 		glUniformMatrix3fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void Shader::SetMatrix4(const std::string &name, glm::mat4 mat) const
+	void Shader::SetMatrix4(const String& name, glm::mat4 mat) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
 	}

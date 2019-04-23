@@ -24,6 +24,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 #ifdef BH_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif // !BH_PLATFORM_WINDOWS

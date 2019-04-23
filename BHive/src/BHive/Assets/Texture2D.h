@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Asset.h"
+#include "BResource.h"
 #include <glad/glad.h>
 
 
@@ -39,14 +39,14 @@ namespace BHive
 		EMISSION
 	};
 
-	class BHive_API Texture2D : public Asset
+	class BHive_API Texture2D : public BResource
 	{
 	public:
 		Texture2D();
-		Texture2D(const std::string fileName, const std::string &directory, ETextureType InType, bool gamma = false, EWrapping wrapping = EWrapping::REPEAT, EMipMap mipmap = EMipMap::LINEAR, EFilter filter = EFilter::LINEAR, glm::vec3 borderColor = glm::vec3(1.0f));
+		Texture2D(const String& fileName, const String& directory, ETextureType InType, bool gamma = false, EWrapping wrapping = EWrapping::REPEAT, EMipMap mipmap = EMipMap::LINEAR, EFilter filter = EFilter::LINEAR, glm::vec3 borderColor = glm::vec3(1.0f));
 		virtual ~Texture2D();
 
-		bool Load(std::string name, std::string path) override;
+		bool Load(const String& name, const String& path) override;
 		void Use(int activeTexture = 0);
 		virtual void CreateEditorWindow() override;
 
@@ -59,11 +59,6 @@ namespace BHive
 		glm::vec3 BorderColor;
 
 		void SetTextureParameters();
-
-		virtual void OnSave(std::fstream& file) override;
-
-
-		virtual void OnLoad(std::fstream& file) override;
 
 	private:
 		unsigned char* data;//btyes of image

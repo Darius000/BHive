@@ -5,17 +5,17 @@
 
 namespace BHive
 {
-	class Asset;
+	class BResource;
 
 	class AssetEditor
 	{
 	public:
-		AssetEditor(Asset& asset, const std::string& editorName);
+		AssetEditor(BResource& asset, const std::string& editorName);
 		~AssetEditor();
 		AssetEditor(const AssetEditor& assetEditor);
 
 	protected:
-		Asset* m_Asset;
+		BResource* m_Asset;
 
 		std::string m_EditorName;
 

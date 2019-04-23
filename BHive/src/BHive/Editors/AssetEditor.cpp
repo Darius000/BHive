@@ -5,7 +5,7 @@
 namespace BHive
 {
 
-	AssetEditor::AssetEditor(Asset& asset,const std::string& editorName)
+	AssetEditor::AssetEditor(BResource& asset,const std::string& editorName)
 		:m_EditorName(editorName)
 	{
 		m_Asset = &asset;

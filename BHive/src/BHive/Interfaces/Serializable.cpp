@@ -20,18 +20,17 @@ namespace BHive
 
 	void ISerializable::Serialize(String fileName, ISerializable& serializableObject)
 	{
-		std::fstream file;
-
 		if (!std::filesystem::exists(fileName))
 		{
-			file.open(fileName, std::ios::out | std::ios::app);
+			std::ofstream file;
+			file.open(fileName, std::ifstream::binary | std::ifstream::out);
 			serializableObject.OnSave(file);
 			file.close();
 		}
 		else
 		{
-			
-			file.open(fileName, std::ios::in | std::ios::ate);
+			std::ifstream file;
+			file.open(fileName, std::ifstream::binary | std::ifstream::in);
 			serializableObject.OnLoad(file);
 			file.close();
 		}

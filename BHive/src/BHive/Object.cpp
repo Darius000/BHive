@@ -1,11 +1,9 @@
 #include "BHivePCH.h"
 #include "Object.h"
 #include "imgui.h"
-#include "Managers/ObjectManager.h"
 
 namespace BHive
 {
-	
 
 	Object::Object(String name)
 		:mDisplayName(name), mDestroyed(false), mSelected(false), 
@@ -35,8 +33,6 @@ namespace BHive
 
 	void Object::Select()
 	{
-		ObjectManager::AddSelectedObject(*this);
-
 		mActive = true;
 
 		mSelected = true;
@@ -65,7 +61,6 @@ namespace BHive
 
 		if (IsSelected())
 		{
-			ObjectManager::RemoveFromSelected(*this);
 			UnSelect();
 		}
 
@@ -88,7 +83,6 @@ namespace BHive
 
 	void Object::UnSelect()
 	{
-		ObjectManager::RemoveFromSelected(*this);
 
 		mActive = false;
 

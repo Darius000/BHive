@@ -1,12 +1,12 @@
 #include "BHivePCH.h"
 #include "TextureEditor.h"
-#include "Assets/Asset.h"
+#include "Assets/BResource.h"
 #include "Assets/Texture2D.h"
 
 namespace BHive
 {
 
-	TextureEditor::TextureEditor(Asset& asset, String editorName)
+	TextureEditor::TextureEditor(BResource& asset, String editorName)
 		:AssetEditor(asset, editorName)
 	{
 
