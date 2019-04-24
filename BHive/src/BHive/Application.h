@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "LayerStack.h"
 #include "ImGui/ImGuiLayer.h"
+#include "BResourceManager.h"
 
 namespace BHive
 {
@@ -31,6 +32,7 @@ namespace BHive
 		bool OnWindowClosed(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> m_Window;
+		std::unique_ptr<BResourceManager> m_ResourceManager;
 
 		ImGuiLayer* m_ImGuiLayer;
 

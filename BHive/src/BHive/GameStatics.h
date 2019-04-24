@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Core.h"
-#include "Singleton.h"
 #include "World.h"
 #include "Cameras/Camera.h"
 
 namespace BHive
 {
-	class BHive_API GameStatics : public Singleton<GameStatics>
+	class BHive_API GameStatics 
 	{
 	public:
 		static Camera* GetActiveCamera();

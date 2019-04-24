@@ -66,9 +66,6 @@ namespace BHive
 
 	void DirectoryTreeGraph::CreateDirectoryTree(Directory& parent, String name, String directory)
 	{
-		//static String level = "";
-		//String currentLevel = level;
-
 		bool exists = std::filesystem::exists(directory);
 		bool isDirectory = std::filesystem::is_directory(directory);
 
@@ -81,11 +78,6 @@ namespace BHive
 
 				if (std::filesystem::is_directory(entry.status()))
 				{
-					//Add Directory To Graph
-					//BH_TRACE(String(currentLevel + ">{0}").c_str(), entryName );
-
-					//level += "--";
-
 					std::unique_ptr<Directory> dirPtr = std::make_unique<Directory>(entryName, path);
 					Directory* dir = dirPtr.get();
 
@@ -97,8 +89,6 @@ namespace BHive
 				{
 					//Add File to graph
 					String extension = entry.path().extension().string();
-
-					//BH_TRACE("{0}", entryName);
 
 					std::unique_ptr<FileEntry> filePtr = std::make_unique<FileEntry>(entryName, path);
 

@@ -59,6 +59,7 @@ namespace BHive
 		glActiveTexture(GL_TEXTURE0);
 	}
 
+
 	void Mesh::SetupMesh()
 	{
 		glGenVertexArrays(1, &VAO);

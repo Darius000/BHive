@@ -6,12 +6,16 @@
 namespace BHive
 {
 
+	AssetManagerLayer::AssetManagerLayer(BResourceManager& resourceManager)
+		:mAssetmanager(resourceManager)
+	{
+	
+	}
+
 	void AssetManagerLayer::OnAttach()
 	{
-		mAssetmanager = BResourceManager::GetInstance();
-		mFolderImage = mAssetmanager->GetAsset("folder.png");
-		mBackImage = mAssetmanager->GetAsset("back.png");
-		mDirectoryTreeGraph = mAssetmanager->mDirectoryGraph.get();
+		mFolderImage = mAssetmanager.GetAsset("folder.png");
+		mBackImage = mAssetmanager.GetAsset("back.png");
 	}
 
 	void AssetManagerLayer::OnImGuiRender()
@@ -34,20 +38,20 @@ namespace BHive
 		ImVec2 wSize = ImGui::GetContentRegionMax();
 		float columnWidth = wSize.x - (wSize.x / 54.0f);
 
-		mAssetmanager->mDirectoryGraph->OnGUIRender();
+		mAssetmanager.mDirectoryGraph->OnGUIRender();
 		
 		ImGui::SameLine();
 
 		ImGui::PushStyleColor(ImGuiCol_::ImGuiCol_ChildBg, (ImVec4)ImColor(.8f, .8f, .8f));
 		ImGui::BeginChild("Assets", ImVec2(columnWidth, wSize.y), true);
 
-		if (mDirectoryTreeGraph->GetSelectedDirectory())
+		if (mAssetmanager.mDirectoryGraph->GetSelectedDirectory())
 		{
 			static bool showContextMenu = false;
 
 			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 1.0f, 1.0f, 0.0f));
 
-			for (auto& entry : mDirectoryTreeGraph->GetSelectedDirectory()->mChildren)
+			for (auto& entry : mAssetmanager.mDirectoryGraph->GetSelectedDirectory()->mChildren)
 			{
 				String name = entry.second->GetName();
 				bool isDirectory = entry.second->IsDirectory();
@@ -59,20 +63,20 @@ namespace BHive
 					if (ImGui::IsItemClicked(0))
 					{
 						Directory* dir = dynamic_cast<Directory*>(entry.second.get());
-						mDirectoryTreeGraph->SelectDirectory(*dir);
+						mAssetmanager.mDirectoryGraph->SelectDirectory(*dir);
 					}
 				}
 				else
 				{
 					//Display asset icon here
-					BResource* asset = BResourceManager::GetInstance()->GetAsset(name);
+					BResource* asset = mAssetmanager.GetAsset(name);
 
 					if (asset)
 					{
 						ImGui::ImageButton((void*)(intptr_t)asset->GetData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 						if (ImGui::IsItemClicked(1))
 						{
-							mAssetmanager->mSelectedAsset = asset;
+							mAssetmanager.mSelectedAsset = asset;
 							ImGui::OpenPopup("objectContextMenu");
 						}
 						ImGui::Text(asset->mDisplayName.c_str());
@@ -83,7 +87,7 @@ namespace BHive
 
 			if (BeginContextMenu("objectContextMenu"))
 			{
-				CreateObjectContextMenu(*mAssetmanager->mSelectedAsset);
+				CreateObjectContextMenu(*mAssetmanager.mSelectedAsset);
 				EndContextMenu();
 			}
 
@@ -117,17 +121,7 @@ namespace BHive
 
 	void AssetManagerLayer::CreateAssetContextMenu()
 	{
-		ImVec2 ButtonSize = ImVec2(100.0f, 20.0f);
-
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
-		if (ImGui::Button("Import", ButtonSize))
-		{
-			BH_INFO("Import");
-
-			OpenFileDialog();
-		}
-
-		ImGui::PopStyleColor();
+		
 	}
 
 	void AssetManagerLayer::EndContextMenu()
@@ -145,63 +139,18 @@ namespace BHive
 
 		if (backBtnPressed)
 		{
-			mDirectoryTreeGraph->SelectPreviousDirectory();
+			mAssetmanager.mDirectoryGraph->SelectPreviousDirectory();
+
+			BH_INFO("Back");
 		}
 
 		if (importBtnPressed)
 		{
 			BH_INFO("Import");
 
-			//Show window file dialog box here to get the name path and ext of the file
-			//Move a copy of the file to current content folder
+			String importDir = mAssetmanager.mDirectoryGraph->GetSelectedDirectory()->GetPath();
 
-			FileImportInfo fileInfo = OpenFileDialog();
-
-			/*Directory* dir = mAssetmanager->mDirectoryGraph->GetSelectedDirectory();
-			std::unique_ptr<FileEntry> fPtr = std::make_unique<FileEntry>(fileName, fileName);
-			mAssetmanager->mDirectoryGraph->AddFile(*dir, , );*/
+			mAssetmanager.ImportAsset(importDir);
 		}
 	}
-
-	FileImportInfo OpenFileDialog(wchar_t *filter /*= "All Files (*.*)\0*.*\0*"*/, HWND owner /*= NULL*/)
-	{
-		OPENFILENAME ofn;
-		wchar_t name[MAX_PATH] = L"";
-		ZeroMemory(&ofn, sizeof(ofn));
-
-		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = owner;
-		ofn.lpstrFilter = filter;
-		ofn.lpstrFile = name;
-		ofn.nMaxFile = MAX_PATH;
-		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-		ofn.lpstrDefExt = TEXT("");
-		ofn.lpstrInitialDir = TEXT("Content\\");
-	
-		
-		std::wstring filenameStr;
-		String filePath = "";
-		String fileName = "";
-		String fileExtension = "";
-
-		if (GetOpenFileName(&ofn))
-		{
-			/*filenameStr = name;
-
-			filePath = String(filenameStr.begin(), filenameStr.end());
-			auto path = std::filesystem::path(filePath);
-			fileName = path.filename().string();
-			fileExtension = path.extension().string();
-
-			std::error_code error;
-			std::error_code error2;
-			auto directory = std::filesystem::relative("\\Content\\", error2);
-			std::filesystem::copy(filePath, directory, error );
-			BH_ERROR("{0}, {1}", error.message(), error.value());
-			BH_ERROR("{0}, {1}", error2.message(), error2.value());*/
-		}
-
-		return FileImportInfo(fileName, filePath, fileExtension );
-	}
-
 }

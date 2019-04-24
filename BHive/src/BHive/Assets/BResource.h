@@ -11,10 +11,10 @@ namespace BHive
 	class BHive_API BResource : public Object
 	{
 	public:
-		BResource();
+		BResource() = default;
 		BResource(const String& name);
 
-		virtual bool Load(const String& name, const String& path); //Load the asset
+		virtual bool Load(const String& name, const String& path); 
 
 		virtual void OnDestroyed() override;
 
@@ -26,9 +26,10 @@ namespace BHive
 		void SetPath(const String& path) { m_Path = path; }
 
 	protected:
-		unsigned int m_Data;
+		bool DoesAssetFileExist(String file);
 
-	private:
+	protected:
+		unsigned int m_Data;
 		String m_Path;
 	};
 }

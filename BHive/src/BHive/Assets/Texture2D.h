@@ -61,9 +61,9 @@ namespace BHive
 		void SetTextureParameters();
 
 	private:
-		unsigned char* data;//btyes of image
+		unsigned char* data;
 
-		int width, height, numChannels;
+		int width, height, numChannels, size;
 
 		friend class MeshComponent;
 	};

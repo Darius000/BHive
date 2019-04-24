@@ -49,8 +49,44 @@ namespace BHive
 		
 		GLint internalFormat = GL_RGB;
 
+		bool save = false;
+
+		data = nullptr;
+
 		stbi_set_flip_vertically_on_load(true);
-		data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
+
+		if (save)
+		{
+			data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
+			size = numChannels * width * abs(height);
+		}
+
+		if (!save)
+		{
+			String line;
+			//Load data
+			std::ifstream file;
+			file.open("Data\\" + name + ".bAsset", std::ifstream::in | std::ifstream::binary);
+
+			file >> size >> width >> height >> numChannels;
+			//Skip to next line in file
+			getline(file, line);
+			data = new unsigned char[size];
+			file.read(reinterpret_cast<char*>(data), size);
+			//data = reinterpret_cast<unsigned char*>(temp);
+			file.close();
+		}
+
+		if (data != nullptr && save)
+		{			
+			//Save data
+			std::ofstream file;
+			file.open("Data\\" + name + ".bAsset", std::ofstream::out | std::ofstream::binary);
+
+			file << size << " " << width << " " << height << " " << numChannels << std::endl;
+			file.write(reinterpret_cast<const char*>(data), size );
+			file.close();
+		}
 
 		glGenTextures(1, &m_Data);
 		glBindTexture(GL_TEXTURE_2D, GetData());
@@ -73,6 +109,7 @@ namespace BHive
 			}
 
 			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else
@@ -82,7 +119,6 @@ namespace BHive
 			return false;
 		}
 
-		
 		stbi_image_free(data);
 
 		return true;

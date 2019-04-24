@@ -1,17 +1,11 @@
 #include "BHivePCH.h"
 #include "BResource.h"
-#include "BResourceManager.h"
+#include <filesystem>
 
 namespace BHive
 {
 	BResource::BResource(const String& name)
 		:Object(name)
-	{
-
-	}
-
-	BResource::BResource()
-		:Object()
 	{
 
 	}
@@ -50,9 +44,12 @@ namespace BHive
 		if (ImGui::Button("Delete",ButtonSize))
 		{
 			BH_INFO("Delete");
-
-			BResourceManager::GetInstance()->DeleteAsset(this);
 		}
 		ImGui::PopStyleColor();
+	}
+
+	bool BResource::DoesAssetFileExist(String fileName)
+	{
+		return std::filesystem::exists(fileName);
 	}
 }

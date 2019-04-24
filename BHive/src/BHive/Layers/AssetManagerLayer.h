@@ -2,16 +2,15 @@
 
 #include "Layer.h"
 #include "BResourceManager.h"
-#include <commdlg.h>
 
 namespace BHive
 {
 	class AssetManagerLayer : public Layer
 	{
+	public:
+		AssetManagerLayer(BResourceManager& resourceManager);
 		void OnAttach() override;
-
 		void OnImGuiRender() override;
-
 		bool BeginContextMenu(const String& id);
 		void CreateObjectContextMenu(class Object& object);
 		void CreateAssetContextMenu();
@@ -19,25 +18,9 @@ namespace BHive
 		void AssetMenuBar();
 
 	private:
-		BResourceManager* mAssetmanager;
+		BResourceManager& mAssetmanager;
 		BResource* mFolderImage;
 		BResource* mBackImage;
-		DirectoryTreeGraph* mDirectoryTreeGraph;
 	};
-
-	struct FileImportInfo
-	{
-		FileImportInfo(String _name, String _path, String _ext)
-			:name(_name), path(_path), ext(_ext)
-		{
-
-		}
-
-		String name;
-		String path;
-		String ext;
-	};
-
-	FileImportInfo OpenFileDialog(wchar_t *filter = L"All Files (*.*)\0*.*\0", HWND owner = NULL);
 }
 

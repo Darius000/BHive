@@ -164,7 +164,6 @@
       <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Layers\EditorRenderLayer.h" />
-    <ClInclude Include="src\BHive\Singleton.h" />
     <ClInclude Include="src\BHive\Interfaces\Serializable.h" />
     <ClInclude Include="src\BHive\DataStructures\NodeGraph.h" />
     <ClInclude Include="src\BHive\DataStructures\DirectoryGraph.h" />

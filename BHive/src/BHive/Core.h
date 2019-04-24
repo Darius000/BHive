@@ -26,40 +26,49 @@
 
 #define BH_BIND_EVENT_FN(x) std::bind(x, this, std::placeholders::_1)
 
-#define BIND_EVENT_TWO_PARAM(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2)
-#define BIND_EVENT_THREE_PARAM(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
+#define BIND_EVENT_ONE_PARAM(x) std::bind(x, this, std::placeholders::_1)
+#define BIND_EVENT_TWO_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2)
+#define BIND_EVENT_THREE_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
+#define BIND_EVENT_FOUR_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)
+#define BIND_EVENT_FIVE_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5)
+
+
+#define DECLARE_ONE_PARAMETER_EVENT(EventName, type1, parameter1)\
+	class BHive_API F##EventName##Event\
+	{\
+		public:\
+			F##EventName##Event(){}\
+		public:\
+			std::vector< std::function<void(type1)>> bindedFunctions;\
+			void AddBinding(const std::function<void(type1)>& func)\
+			{\
+				bindedFunctions.emplace_back(func);\
+			}\
+			void Broadcast(type1 parameter1)\
+			{\
+				for(auto f : bindedFunctions)\
+				{\
+					f(parameter1);\
+				}\
+			}\
+	};
 
 #define DECLARE_TWO_PARAMETER_EVENT(EventName, type1, parameter1, type2, parameter2)\
 	class BHive_API F##EventName##Event\
 	{\
 		public:\
 			F##EventName##Event(){}\
-			F##EventName##Event(type1 a, type2 b):m##parameter1(a), m##parameter2(b) {}\
-			type1 Get##parameter1() const {return m##parameter1;}\
-			type2 Get##parameter2() const {return m##parameter2;}\
-		private:\
-			type1 m##parameter1;\
-			type2 m##parameter2;\
-		public:\
 			std::vector< std::function<void(type1, type2)>> bindedFunctions;\
 			void AddBinding(const std::function<void(type1, type2)>& func)\
 			{\
 				bindedFunctions.emplace_back(func);\
 			}\
-			void Broadcast(type1 a, type2 b)\
+			void Broadcast(type1 parameter1, type2 parameter2)\
 			{\
-				m##parameter1 = a;\
-				m##parameter2 = b;\
 				for(auto f : bindedFunctions)\
 				{\
-					f(a, b);\
+					f(parameter1, parameter2);\
 				}\
-			}\
-			std::string ToString() const\
-			{\
-				std::stringstream ss;\
-				ss << "F" << #EventName << "Event" << ": param1: " << m##parameter1 << "param2: " <<  m##parameter2;\
-				return ss.str();\
 			}\
 	};
 
@@ -68,27 +77,55 @@
 	{\
 		public:\
 			F##EventName##Event(){}\
-			type1 Get##parameter1() const {return m##parameter1;}\
-			type2 Get##parameter2() const {return m##parameter2;}\
-			type2 Get##parameter3() const {return m##parameter3;}\
-		private:\
-			type1 m##parameter1;\
-			type2 m##parameter2;\
-			type3 m##parameter3;\
-		public:\
 			std::vector< std::function<void(type1, type2, type3)>> bindedFunctions;\
 			void AddBinding(const std::function<void(type1, type2, type3)>& func)\
 			{\
 				bindedFunctions.emplace_back(func);\
 			}\
-			void Broadcast(type1 a, type2 b, type3 c)\
+			void Broadcast(type1 parameter1, type2 parameter2, type3 parameter3)\
 			{\
-				m##parameter1 = a;\
-				m##parameter2 = b;\
-				m##parameter3 = c;\
 				for(auto f : bindedFunctions)\
 				{\
-					f(a, b, c);\
+					f(parameter1, parameter2, parameter3);\
+				}\
+			}\
+	};
+
+#define DECLARE_FOUR_PARAMETER_EVENT(EventName, type1, parameter1, type2, parameter2, type3, parameter3, type4, paramater4)\
+	class BHive_API F##EventName##Event\
+	{\
+		public:\
+			F##EventName##Event(){}\
+			std::vector< std::function<void(type1, type2, type3, type4)>> bindedFunctions;\
+			void AddBinding(const std::function<void(type1, type2, type3, type4)>& func)\
+			{\
+				bindedFunctions.emplace_back(func);\
+			}\
+			void Broadcast(type1 parameter1, type2 parameter2, type3 parameter3, type4 parameter4)\
+			{\
+				for(auto f : bindedFunctions)\
+				{\
+					f(parameter1, parameter2, parameter3, parameter4);\
+				}\
+			}\
+	};
+
+
+#define DECLARE_FIVE_PARAMETER_EVENT(EventName, type1, parameter1, type2, parameter2, type3, parameter3, type4, paramater4, type5, parameter5)\
+	class BHive_API F##EventName##Event\
+	{\
+		public:\
+			F##EventName##Event(){}\
+			std::vector< std::function<void(type1, type2, type3, type4, type5)>> bindedFunctions;\
+			void AddBinding(const std::function<void(type1, type2, type3, type4, type5)>& func)\
+			{\
+				bindedFunctions.emplace_back(func);\
+			}\
+			void Broadcast(type1 parameter1, type2 parameter2, type3 parameter3, type4 parameter4, type5 parameter5)\
+			{\
+				for(auto f : bindedFunctions)\
+				{\
+					f(parameter1, parameter2, parameter3, parameter4, parameter5);\
 				}\
 			}\
 	};

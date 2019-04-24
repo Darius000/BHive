@@ -18,20 +18,20 @@ namespace BHive
 			mSerializables.erase(item);
 	}
 
-	void ISerializable::Serialize(String fileName, ISerializable& serializableObject)
+	void ISerializable::Serialize(String fileName)
 	{
 		if (!std::filesystem::exists(fileName))
 		{
 			std::ofstream file;
-			file.open(fileName, std::ifstream::binary | std::ifstream::out);
-			serializableObject.OnSave(file);
+			file.open(fileName, std::ofstream::binary | std::ofstream::out);
+			OnSave(file);
 			file.close();
 		}
 		else
 		{
 			std::ifstream file;
 			file.open(fileName, std::ifstream::binary | std::ifstream::in);
-			serializableObject.OnLoad(file);
+			OnLoad(file);
 			file.close();
 		}
 	}
@@ -39,6 +39,4 @@ namespace BHive
 	std::vector<ISerializable*> ISerializable::mSerializables;
 
 	int ISerializable::mNumInstances;
-
-	String ISerializable::mSaveDirectory = "";
 }

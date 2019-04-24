@@ -6,7 +6,11 @@
 
 namespace BHive
 {
-	DECLARE_THREE_PARAMETER_EVENT(File, String, FileName, String, Path, String, Ext);
+	DECLARE_ONE_PARAMETER_EVENT(GO, bool, meet)
+	DECLARE_TWO_PARAMETER_EVENT(ME, int, size, bool, run)
+	DECLARE_THREE_PARAMETER_EVENT(File, String, FileName, String, Path, String, Ext)
+	DECLARE_FOUR_PARAMETER_EVENT(Fil2e, String, FileName, String, Path, String, Ext, int, age)
+	DECLARE_FIVE_PARAMETER_EVENT(File3, String, FileName, String, Path, String, Ext, int, age, bool, old)
 
 	class Directory;
 	class FileEntry;
@@ -36,17 +40,10 @@ namespace BHive
 	{
 	public:
 		Directory(String name, String path);
-
-		//Add child entry to directory and set ownership to this
 		void AddChild(std::unique_ptr<Directory>& directory);
 		void AddChild(std::unique_ptr<FileEntry>& file);
-
-		//Remove child entry from directory
 		void RemoveChild(String name);
-
-		//Move entry to another directory
 		void MoveChild(String name, Directory& directory);
-
 		virtual bool IsDirectory() const override { return true; }
 
 	public:
