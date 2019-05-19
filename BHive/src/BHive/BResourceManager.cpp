@@ -1,9 +1,14 @@
 #include "BHivePCH.h"
 #include "BResourceManager.h"
-
+#include "Assets/BResource.h"
+#include "Assets/Texture2D.h"
+#include "Assets/Mesh.h"
+#include "Assets/Shader.h"
 
 namespace BHive
 {
+
+	BResourceManager::BResourceManager() = default;
 
 	void BResourceManager::Create(const String& engineDirectory, const String& contentDirectory)
 	{
@@ -26,7 +31,7 @@ namespace BHive
 	{
 		if (ext == ".jpg" || ext == ".png")
 		{
-			LoadAsset<Texture2D>(name, path);
+			LoadAsset<Texture>(name, path);
 		}
 	}
 
@@ -49,7 +54,7 @@ namespace BHive
 		return false;
 	}
 
-	FileImportInfo BResourceManager::OpenFileDialog(wchar_t *filter , HWND owner )
+	FileImportInfo BResourceManager::OpenFileDialog(wchar_t *filter, HWND owner)
 	{
 		OPENFILENAME ofn;
 		wchar_t name[MAX_PATH] = L"";

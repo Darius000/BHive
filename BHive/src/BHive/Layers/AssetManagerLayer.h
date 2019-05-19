@@ -2,6 +2,7 @@
 
 #include "Layer.h"
 #include "BResourceManager.h"
+#include "BHive/Assets/Texture.h"
 
 namespace BHive
 {

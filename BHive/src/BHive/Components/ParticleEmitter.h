@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+
 #include "BillboardComponent.h"
 
 namespace BHive
@@ -16,7 +16,7 @@ namespace BHive
 		void UpdateColor(float deltaTime);
 
 		float life;
-		glm::vec3 velocity;
+		Vector3 velocity;
 	};
 
 	class BHive_API ParticleEmitter : public RenderComponent

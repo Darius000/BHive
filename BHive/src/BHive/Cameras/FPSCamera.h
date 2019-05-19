@@ -24,7 +24,7 @@ namespace BHive
 	public:
 		FPSCamera();
 		FPSCamera(float AspectRatio);
-		FPSCamera(float AspectRatio, glm::vec3 position, float Zoom = ZOOM, float yaw = YAW, float pitch = PITCH);
+		FPSCamera(float AspectRatio, const Vector3&, float Zoom = ZOOM, float yaw = YAW, float pitch = PITCH);
 
 		//Euler Angles
 		float Yaw;

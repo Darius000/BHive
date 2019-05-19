@@ -92,4 +92,20 @@ namespace BHive
 
 		glBindVertexArray(0);
 	}
+
+	void Mesh::OnSave(std::ofstream& resourceFile, const String& resourceFilePath)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	void Mesh::OnLoad(std::ifstream& resourceFile)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	void Mesh::LoadResource()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
 }

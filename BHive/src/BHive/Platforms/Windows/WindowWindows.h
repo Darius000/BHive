@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BHive/Window.h"
+#include "BHive/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -31,6 +32,8 @@ namespace BHive
 
 	private:
 		GLFWwindow* m_Window;
+
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{

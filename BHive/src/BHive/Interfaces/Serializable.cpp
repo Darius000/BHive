@@ -4,39 +4,66 @@
 
 namespace BHive
 {
-	ISerializable::ISerializable() :mInstanceIndex(mNumInstances)
+	ISerializable::ISerializable()
+		:m_FilePath(""), m_FileName("")
 	{
-		mSerializables.emplace_back(this);
-		//BH_INFO("IsSerialized!");
+
 	}
 
-	ISerializable::~ISerializable()
+	void ISerializable::Serialize()
 	{
-		auto& item = std::find(mSerializables.begin(), mSerializables.end(), this);
-
-		if(item != mSerializables.end())
-			mSerializables.erase(item);
-	}
-
-	void ISerializable::Serialize(String fileName)
-	{
-		if (!std::filesystem::exists(fileName))
+		bool exists = FileExists();
+		if (!exists)
 		{
 			std::ofstream file;
-			file.open(fileName, std::ofstream::binary | std::ofstream::out);
-			OnSave(file);
+			file.open(GetSaveFilePath(), std::ofstream::binary | std::ofstream::out);
+			OnSave(file, GetFilePath());
 			file.close();
 		}
 		else
 		{
 			std::ifstream file;
-			file.open(fileName, std::ifstream::binary | std::ifstream::in);
+			file.open(GetSaveFilePath(), std::ifstream::binary | std::ifstream::in);
 			OnLoad(file);
 			file.close();
 		}
 	}
 
-	std::vector<ISerializable*> ISerializable::mSerializables;
+	void ISerializable::DeleteResourceFile()
+	{
+		if (FileExists())
+		{
+			std::filesystem::remove(m_FilePath);
+		}
+	}
 
-	int ISerializable::mNumInstances;
+	String ISerializable::GetFileName() const
+	{
+		return m_FileName;
+	}
+
+	String ISerializable::GetFilePath() const
+	{
+		return m_FilePath;
+	}
+
+	String ISerializable::GetSaveFilePath()
+	{
+		return "Data\\" + GetFileName() + ".bh";
+	}
+
+	void ISerializable::SetFilePath(const String& resourceFilePath)
+	{
+		m_FilePath = resourceFilePath;
+	}
+
+	void ISerializable::SetFileName(const String& resourceFileName)
+	{
+		m_FileName = resourceFileName;
+	}
+
+	bool ISerializable::FileExists()
+	{
+		return std::filesystem::exists(GetSaveFilePath());
+	}
 }

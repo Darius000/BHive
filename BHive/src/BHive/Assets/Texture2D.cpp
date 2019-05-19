@@ -1,14 +1,13 @@
 #include "BHivePCH.h"
 #include "Texture2D.h"
-#include <stb_image.h>
 #include "imgui.h"
 #include "Editors/TextureEditor.h"
-#include <filesystem>
 
 namespace BHive
 {
 	Texture2D::Texture2D()
-		:Wrapping(0), Filter(EFilter::LINEAR), MipMap(EMipMap::LINEAR), BorderColor(1.0f)
+		:Wrapping(0), Filter(EFilter::LINEAR), MipMap(EMipMap::LINEAR), 
+		BorderColor(1.0f)
 	{
 
 	}
@@ -18,23 +17,18 @@ namespace BHive
 		:Texture2D()
 	{
 
-		Type = InType;
 		Wrapping = 0;
 		MipMap = mipmap;
 		Filter = filter;
 		BorderColor = borderColor;
 	}
 
-	Texture2D::~Texture2D()
-	{
-	}
-
 	void Texture2D::Use(int activeTexture)
 	{
-		if (GetData())
+		if (m_TextureData)
 		{
 			glActiveTexture(GL_TEXTURE0 + activeTexture);
-			glBindTexture(GL_TEXTURE_2D, GetData());
+			glBindTexture(GL_TEXTURE_2D, m_TextureData);
 		}
 	}
 
@@ -43,72 +37,87 @@ namespace BHive
 		new TextureEditor(*this, "Edit " + GetDisplayName());
 	}
 
-	bool Texture2D::Load(const String& name, const String& path)
+	void Texture2D::SetWrapping(GLint wrapping)
+	{
+
+	}
+
+	void Texture2D::SetFilter(EFilter filter)
+	{
+
+	}
+
+	void Texture2D::SetMipMap(EMipMap mipmap)
+	{
+
+	}
+
+
+	/*bool Texture2D::Load(const String& name, const String& path)
 	{
 		BResource::Load(name, path);
 		
-		GLint internalFormat = GL_RGB;
+		String resourceName = "Data\\" + name + ".bh";
+		
+		bool saveExists = std::filesystem::exists(resourceName.c_str());
 
-		bool save = false;
-
-		data = nullptr;
-
-		stbi_set_flip_vertically_on_load(true);
-
-		if (save)
+		if (!saveExists)
 		{
-			data = stbi_load(path.c_str(), &width, &height, &numChannels, 0);
-			size = numChannels * width * abs(height);
+			stbi_set_flip_vertically_on_load(true);
+			m_PixelData = stbi_load(path.c_str(), &m_Width, &m_Height, &m_NumChannels, 0);
+			m_Size = m_NumChannels * m_Width * abs(m_Height);
 		}
 
-		if (!save)
+		if (saveExists)
 		{
 			String line;
 			//Load data
 			std::ifstream file;
-			file.open("Data\\" + name + ".bAsset", std::ifstream::in | std::ifstream::binary);
+			file.open(resourceName, std::ifstream::in | std::ifstream::binary);
 
-			file >> size >> width >> height >> numChannels;
+			file >> m_Size >> m_Width >> m_Height >> m_NumChannels;
 			//Skip to next line in file
 			getline(file, line);
-			data = new unsigned char[size];
-			file.read(reinterpret_cast<char*>(data), size);
+			m_PixelData = new unsigned char[m_Size];
+			file.read(reinterpret_cast<char*>(m_PixelData), m_Size);
 			//data = reinterpret_cast<unsigned char*>(temp);
 			file.close();
 		}
 
-		if (data != nullptr && save)
+		if (m_PixelData != nullptr && !saveExists)
 		{			
 			//Save data
 			std::ofstream file;
-			file.open("Data\\" + name + ".bAsset", std::ofstream::out | std::ofstream::binary);
+			file.open(resourceName, std::ofstream::out | std::ofstream::binary);
 
-			file << size << " " << width << " " << height << " " << numChannels << std::endl;
-			file.write(reinterpret_cast<const char*>(data), size );
+			file << m_Size << " " << m_Width << " " << m_Height << " " << m_NumChannels << std::endl;
+			file.write(reinterpret_cast<const char*>(m_PixelData), m_Size );
 			file.close();
 		}
 
-		glGenTextures(1, &m_Data);
-		glBindTexture(GL_TEXTURE_2D, GetData());
+		glGenTextures(1, &m_TextureData);
+		glBindTexture(GL_TEXTURE_2D, m_TextureData);
 
 		SetTextureParameters();
 
-		if (data != nullptr)
+		GLint internalFormat = GL_RGB;
+
+		if (m_PixelData != nullptr)
 		{
-			if (numChannels == 1)
+			if (m_NumChannels == 1)
 			{
 				internalFormat = GL_RED;
 			}
-			if (numChannels == 3)
+			if (m_NumChannels == 3)
 			{
 				internalFormat = GL_RGB;
 			}
-			if (numChannels == 4)
+			if (m_NumChannels == 4)
 			{
 				internalFormat = GL_RGBA;
 			}
 
-			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, internalFormat, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, internalFormat, GL_UNSIGNED_BYTE, m_PixelData);
 
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
@@ -119,10 +128,10 @@ namespace BHive
 			return false;
 		}
 
-		stbi_image_free(data);
+		stbi_image_free(m_PixelData);
 
 		return true;
-	}
+	}*/
 
 	void Texture2D::SetTextureParameters()
 	{

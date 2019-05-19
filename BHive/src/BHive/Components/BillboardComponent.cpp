@@ -131,8 +131,8 @@ namespace BHive
 
 	float BillboardComponent::CameraDistance(Camera* camera)
 	{
-		glm::vec3 A = GetPosition();
-		glm::vec3 B = camera->GetRootComponent()->GetPosition();
+		Vector3 A = GetTransform().GetPosition();
+		Vector3 B = camera->GetTransform().GetPosition();
 
 		float x = B.x - A.x;
 		float y = B.y - A.y;

@@ -67,22 +67,13 @@
     <ClInclude Include="src\BHive\Components\MeshComponent.h">
       <Filter>BHive\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Components\ObjectComponent.h">
-      <Filter>BHive\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Components\ParticleEmitter.h">
       <Filter>BHive\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Components\RenderComponent.h">
       <Filter>BHive\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Components\TransformComponent.h">
-      <Filter>BHive\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Core.h">
-      <Filter>BHive</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\ECS.h">
       <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\EditorTime.h">
@@ -108,9 +99,6 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Events\MouseEvent.h">
       <Filter>BHive\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\GameObject.h">
-      <Filter>BHive</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\GameStatics.h">
       <Filter>BHive</Filter>
@@ -145,9 +133,6 @@
     <ClInclude Include="src\BHive\MouseCodes.h">
       <Filter>BHive</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Object.h">
-      <Filter>BHive</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClInclude>
@@ -175,6 +160,28 @@
     <ClInclude Include="src\BHive\BResourceManager.h">
       <Filter>BHive\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLContext.h" />
+    <ClInclude Include="src\BHive\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\BHive\Assets\Texture.h" />
+    <ClInclude Include="src\BHive\Events\EventMacros.h" />
+    <ClInclude Include="src\BHive\Object\Object.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Components\Component.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Entities\Entity.h">
+      <Filter>BHive</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Entities\EntityManager.h" />
+    <ClInclude Include="src\BHive\Components\Primitives\Triangle.h" />
+    <ClInclude Include="src\BHive\Components\TransformComponent.h" />
+    <ClInclude Include="src\BHive\DataTypes\Transform.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
+    <ClInclude Include="src\BHive\DataTypes\Vector3.h" />
+    <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -207,16 +214,10 @@
     <ClCompile Include="src\BHive\Components\MeshComponent.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Components\ObjectComponent.cpp">
-      <Filter>BHive\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\Components\ParticleEmitter.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp">
-      <Filter>BHive\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\EditorTime.cpp">
@@ -227,9 +228,6 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Editors\TextureEditor.cpp">
       <Filter>BHive\Editors</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\GameObject.cpp">
-      <Filter>BHive</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\GameStatics.cpp">
       <Filter>BHive</Filter>
@@ -255,9 +253,6 @@
     <ClCompile Include="src\BHive\Log.cpp">
       <Filter>BHive</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Object.cpp">
-      <Filter>BHive</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp">
       <Filter>BHive\Platforms\Windows</Filter>
     </ClCompile>
@@ -280,5 +275,31 @@
     <ClCompile Include="src\BHive\BResourceManager.cpp">
       <Filter>BHive\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
+    <ClCompile Include="src\BHive\Assets\Texture.cpp" />
+    <ClCompile Include="src\BHive\Object\Object.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Components\Component.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Entities\Entity.cpp">
+      <Filter>BHive</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Entities\EntityManager.cpp" />
+    <ClCompile Include="src\BHive\Components\Primitives\Triangle.cpp" />
+    <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Transform.cpp">
+      <Filter>BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\BHive\BResourceManager.inl" />
+    <None Include="src\BHive\Object\Object.inl" />
+    <None Include="src\BHive\Entities\Entity.inl" />
+    <None Include="src\BHive\Entities\EntityManager.inl" />
   </ItemGroup>
 </Project>

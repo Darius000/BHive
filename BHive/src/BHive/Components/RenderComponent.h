@@ -7,6 +7,8 @@ namespace BHive
 {
 	class BHive_API RenderComponent : public TransformComponent
 	{
+		BCLASS(RenderComponent, ComponentCategory, TransformComponent);
+
 	public:
 		RenderComponent();
 		virtual ~RenderComponent();

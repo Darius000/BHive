@@ -1,38 +1,48 @@
 #pragma once
 
-#include "ECS.h"
+#include "Core.h"
+#include "Component.h"
+
+
 
 namespace BHive
 {
-	class BHive_API TransformComponent : public Component
+	class TransformComponent;
+
+	using ChildComponents = std::vector<std::unique_ptr<TransformComponent>>;
+
+	class BHive_API TransformComponent : public Component 
 	{
-	public:
-		void ComponentInit() override;
-		void SetPosition(glm::vec3 InPos);
-		void SetPosition(float x, float y, float z);
-		void SetRotation(glm::vec3 InRot);
-		void SetRotation(float x, float y, float z);
-		void SetScale(glm::vec3 InScale);
-		void SetScale(float size);
-		void SetScale(float x, float y, float z);
-
-		glm::vec3 GetPosition();
-		glm::vec3 GetRotation();
-		glm::vec3 GetScale();
-
-		glm::vec3 GetForward();
-		glm::vec3 GetRight();
-		glm::vec3 GetUp();
-
-		glm::mat4 GetMatrix();
+		BCLASS(TransformComponent, ComponentCategory, Component)
 
 	private:
-		glm::vec3 Position;
-		glm::vec3 Rotation;
-		glm::vec3 Scale;
+		TransformComponent* m_Parent;
+		Transform m_Transform;
 
-		void UpdateMatrix();
+	public:
 
-		glm::mat4 T, R, S, M;
+		TransformComponent();
+
+		// Get the component's transform
+		Transform GetTransform() const { return m_Transform; }
+
+		//Get the components transform relative to its parent
+		Vector3 GetRelativePosition() const;
+
+		//Get the parent component
+		TransformComponent* GetParentComponent() const { return m_Parent; }
+
+		//Implement the ability to add child transform components
+		ChildComponents children;
+
+		//Add component as child to this
+		//void AddChild(std::unique_ptr<TransformComponent> child);
+		//void RemoveChild(TransformComponent* child);
+		//TransformComponent* GetChildAtIndex(unsigned int index);
+		//TransformComponent* GetChildWithName(String name);
+
+	private:
+		//Called when the component's transform is updated
+		void OnTransformUpdated(const Transform& newTranform);
 	};
 }

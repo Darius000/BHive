@@ -1,9 +1,11 @@
 #include <BHive.h>
 
 #include "imgui/imgui.h"
-#include "GameObject.h"
+#include "BHive/Entities/Entity.h"
+#include "BHive/Components/Primitives/Triangle.h"
 #include "World.h"
 #include "Components/BillboardComponent.h"
+
 
 class ExampleLayer : public BHive::Layer
 {
@@ -55,6 +57,15 @@ public:
 		/*BHive::Camera* MainCam = AddEntity<BHive::Camera>();
 		BHive::GameObject* Box = AddEntity<BHive::GameObject>();
 		Box->AddComponent<BHive::BillboardComponent>();*/
+
+		BHive::Entity* E0 = AddEntity<BHive::Entity>();
+		E0->GetTransform().SetPosition(0.0f, 50.0f, 0.0f);
+
+		BHive::Triangle* T0 = E0->AddComponent<BHive::Triangle>();
+		T0->SetPoints(BHive::Vector3(-0.25f, -0.25f, -0.0f), BHive::Vector3(0.25f, -0.25f, 0.0f), BHive::Vector3(0.0f, 0.1f, 0.0f));
+
+		BHive::Matrix Mat;
+		BH_TRACE("Matrix:{0}", Mat.ToString());
 	}
 };
 

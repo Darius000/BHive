@@ -3,7 +3,7 @@
 #include "Assets/Shader.h"
 #include "Assets/Mesh.h"
 #include "Cameras/Camera.h"
-#include "GameObject.h"
+#include "BHive/Entities/Entity.h"
 
 namespace BHive
 {
@@ -52,7 +52,7 @@ namespace BHive
 		Shader* shader;
 	};
 
-	class BHive_API MeshComponent : public GameObject
+	class BHive_API MeshComponent : public Entity
 	{
 	public:
 		MeshComponent();

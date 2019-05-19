@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Object.h"
+#include "BHive/Object/Object.h"
 #include "Interfaces/IGuiInterface.h"
 
 namespace BHive

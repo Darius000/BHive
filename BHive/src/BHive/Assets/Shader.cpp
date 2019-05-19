@@ -5,12 +5,6 @@
 
 namespace BHive
 {
-	Shader::Shader()
-	{
-
-	}
-
-
 	Shader::Shader(const String&  vertexPath, const String&  fragmentPath)
 		:Shader()
 	{
@@ -181,4 +175,20 @@ namespace BHive
 			std::cout << vertexFilePath << " ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 		}
 	}
+
+	void Shader::OnSave(std::ofstream& resourceFile, const String& resourceFilePath)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	void Shader::OnLoad(std::ifstream& resourceFile)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	void Shader::LoadResource()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
 }

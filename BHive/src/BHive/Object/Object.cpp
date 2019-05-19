@@ -4,31 +4,33 @@
 
 namespace BHive
 {
-
-	Object::Object(String name)
-		:mDisplayName(name), mDestroyed(false), mSelected(false), 
-		mActive(false), mEnabled(true), objectID(unusedID)
+	Object::Object()
+		:mDisplayName(GetClass() + std::to_string(unusedID)), mDestroyed(false), mSelected(false),
+		mActive(false), mEnabled(true), mObjectID(GetNextID())
 	{
 		
 	}
 
-	Object::Object()
-		:mDisplayName("Object" + std::to_string(unusedID)), mDestroyed(false), mSelected(false),
-		mActive(false), mEnabled(true), objectID(unusedID)
-	{
-		unusedID++;
-	}
-
 	unsigned int Object::unusedID = 0;
+
+	std::vector<unsigned int> Object::deletedIDs;
+
+	unsigned int Object::GetNextID()
+	{
+		if (deletedIDs.size() > 0)
+		{
+			unsigned int id = deletedIDs[0];
+			deletedIDs.erase(deletedIDs.begin());
+			return id;
+		}
+		
+		unusedID++;
+		return unusedID;
+	}
 
 	std::string Object::GetDisplayName() const
 	{
 		return mDisplayName;
-	}
-
-	std::string Object::GetClassDisplayName() const
-	{
-		return typeid(this).name();
 	}
 
 	void Object::Select()
@@ -37,7 +39,7 @@ namespace BHive
 
 		mSelected = true;
 
-		OnSelection(true);
+		OnSelected(true);
 	}
 
 	bool Object::IsSelected() const
@@ -50,7 +52,7 @@ namespace BHive
 		mDisplayName = name;
 	}
 
-	void Object::OnSelection(bool selected)
+	void Object::OnSelected(bool selected)
 	{
 
 	}
@@ -68,6 +70,8 @@ namespace BHive
 
 		mActive = false;
 
+		deletedIDs.emplace_back(unusedID);
+
 		OnDestroyed();
 	}
 
@@ -78,17 +82,16 @@ namespace BHive
 
 	void Object::OnDestroyed()
 	{
-
+		bool active = Object::GetStaticClass().mActive;
 	}
 
 	void Object::UnSelect()
 	{
-
 		mActive = false;
 
 		mSelected = false;
 
-		OnSelection(false);
+		OnSelected(false);
 	}
 
 	void Object::SetEnabled(bool enable)

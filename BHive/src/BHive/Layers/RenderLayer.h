@@ -16,12 +16,8 @@ namespace BHive
 		virtual void OnUpdate() override;
 		virtual void OnEvent(Event& event) override;
 
-		void SetOpenGLStates();
-		void PrintMaxVertexAttributes();
-		void PrintOpenglInfo();
+		World* m_DefaultWorld;
 
-		bool openGLInitialized;
-
-		World* mDefaultWorld;
+		//unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 	};
 }

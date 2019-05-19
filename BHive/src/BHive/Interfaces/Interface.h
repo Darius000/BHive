@@ -10,7 +10,7 @@ namespace BHive
 	};
 
 	template<typename T, typename Interface>
-	bool BHive::IInterface::HasInterface()
+	bool IInterface::HasInterface()
 	{
 		return std::is_base_of<T, Interface>::value;
 	}

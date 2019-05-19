@@ -4,7 +4,7 @@
 namespace BHive
 {
 	Particle::Particle()
-		:life(0.0f), velocity(glm::vec3(0.0f))
+		:life(0.0f), velocity(Vector3::Zero())
 	{
 
 	}
@@ -31,7 +31,7 @@ namespace BHive
 
 	void Particle::UpdatePosition(float deltaTime)
 	{
-		SetPosition(GetPosition() + velocity * deltaTime);
+		GetTransform().SetPosition(GetTransform().GetPosition() + velocity * deltaTime);
 	}
 
 	void Particle::UpdateColor(float deltaTime)
@@ -102,10 +102,10 @@ namespace BHive
 		Particle* particle = new Particle();
 		particle->ComponentStart();
 		particles.push_back(particle);
-		glm::vec3 random = glm::vec3((rand() % 100), (rand() % 100), (rand() % 100));
+		Vector3 random = Vector3((rand() % 100), (rand() % 100), (rand() % 100));
 		glm::vec4 pcolor = color * ((rand() % 100) / 100.0f);
 		particle->SetShader(shader);
-		particle->SetPosition(GetParent()->GetComponent<TransformComponent>()->GetPosition() * random);
+		particle->GetTransform().SetPosition(GetOwner()->GetTransform().GetPosition() * random);
 		particle->SetColor(pcolor);
 		particle->SetTexture(texture);
 
@@ -115,13 +115,13 @@ namespace BHive
 		particle->life = life;
 		particle->SetSize(size);
 
-		glm::vec3 velocity = glm::vec3(
+		Vector3 velocity = Vector3(
 			((rand() % 5) - 2.5) / 5.0f,
 			((rand() % 100) - 1.0f) / 100.0f,
 			((rand() % 1) - .5));
 
 		particle->velocity = velocity;
-		particle->SetRotation(velocity);
+		particle->GetTransform().SetRotation(velocity);
 
 		//std::cout << "Spawned Particle\n";
 	}

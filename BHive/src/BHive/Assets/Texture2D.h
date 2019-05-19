@@ -1,10 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include "BResource.h"
-#include <glad/glad.h>
-
-
+#include "Texture.h"
 
 namespace BHive
 {
@@ -39,14 +36,13 @@ namespace BHive
 		EMISSION
 	};
 
-	class BHive_API Texture2D : public BResource
+	class BHive_API Texture2D : public Texture
 	{
 	public:
 		Texture2D();
 		Texture2D(const String& fileName, const String& directory, ETextureType InType, bool gamma = false, EWrapping wrapping = EWrapping::REPEAT, EMipMap mipmap = EMipMap::LINEAR, EFilter filter = EFilter::LINEAR, glm::vec3 borderColor = glm::vec3(1.0f));
-		virtual ~Texture2D();
 
-		bool Load(const String& name, const String& path) override;
+		//bool Load(const String& name, const String& path) override;
 		void Use(int activeTexture = 0);
 		virtual void CreateEditorWindow() override;
 
@@ -59,11 +55,12 @@ namespace BHive
 		glm::vec3 BorderColor;
 
 		void SetTextureParameters();
+		void SetWrapping(GLint wrapping);
+		void SetFilter(EFilter filter);
+		void SetMipMap(EMipMap mipmap);
 
 	private:
-		unsigned char* data;
-
-		int width, height, numChannels, size;
+		
 
 		friend class MeshComponent;
 	};

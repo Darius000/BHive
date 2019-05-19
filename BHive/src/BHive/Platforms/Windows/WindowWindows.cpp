@@ -4,7 +4,9 @@
 #include "BHive/Events/KeyEvent.h"
 #include "BHive/Events/MouseEvent.h"
 
-#include <glad/glad.h>
+#include "Platforms/Opengl/OpenGLContext.h"
+
+
 
 
 namespace BHive
@@ -34,7 +36,8 @@ namespace BHive
 	void WindowWindows::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
+		
 	}
 
 	void WindowWindows::SetVSync(bool enabled)
@@ -82,9 +85,11 @@ namespace BHive
 		}
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		BH_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
+
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -180,6 +185,8 @@ namespace BHive
 
 	void WindowWindows::Shutdown()
 	{
+		delete m_Context;
+
 		glfwDestroyWindow(m_Window);
 	}
 

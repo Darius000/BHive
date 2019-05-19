@@ -87,7 +87,7 @@ namespace BHive
 	{
 		while (m_Running)
 		{
-			glClearColor(.5f, .5f, .5f, 1.0f);
+			glClearColor(.1f, .1f, .1f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			Time::Update();

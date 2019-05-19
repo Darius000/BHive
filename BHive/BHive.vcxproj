@@ -155,23 +155,28 @@
     <ClInclude Include="src\BHive\Components\BillboardComponent.h" />
     <ClInclude Include="src\BHive\Components\CollisionComponent.h" />
     <ClInclude Include="src\BHive\Components\MeshComponent.h" />
-    <ClInclude Include="src\BHive\Components\ObjectComponent.h" />
+    <ClInclude Include="src\BHive\Components\Component.h" />
     <ClInclude Include="src\BHive\Components\ParticleEmitter.h" />
+    <ClInclude Include="src\BHive\Components\Primitives\Triangle.h" />
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
+    <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
+    <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
+    <ClInclude Include="src\BHive\DataTypes\Transform.h" />
     <ClInclude Include="src\BHive\Core.h" />
     <ClInclude Include="src\BHive\DataStructures\DirectoryGraph.h" />
     <ClInclude Include="src\BHive\DataStructures\NodeGraph.h" />
-    <ClInclude Include="src\BHive\ECS.h" />
     <ClInclude Include="src\BHive\EditorTime.h" />
     <ClInclude Include="src\BHive\Editors\AssetEditor.h" />
     <ClInclude Include="src\BHive\Editors\TextureEditor.h" />
+    <ClInclude Include="src\BHive\Entities\EntityManager.h" />
     <ClInclude Include="src\BHive\EntryPoint.h" />
     <ClInclude Include="src\BHive\Events\ApplicationEvent.h" />
     <ClInclude Include="src\BHive\Events\Event.h" />
+    <ClInclude Include="src\BHive\Events\EventMacros.h" />
     <ClInclude Include="src\BHive\Events\KeyEvent.h" />
     <ClInclude Include="src\BHive\Events\MouseEvent.h" />
-    <ClInclude Include="src\BHive\GameObject.h" />
+    <ClInclude Include="src\BHive\Entities\Entity.h" />
     <ClInclude Include="src\BHive\GameStatics.h" />
     <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Image.h" />
@@ -188,12 +193,16 @@
     <ClInclude Include="src\BHive\Log.h" />
     <ClInclude Include="src\BHive\BResourceManager.h" />
     <ClInclude Include="src\BHive\MouseCodes.h" />
-    <ClInclude Include="src\BHive\Object.h" />
+    <ClInclude Include="src\BHive\Object\Object.h" />
+    <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLContext.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowWindows.h" />
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
+    <ClInclude Include="src\BHive\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\BHive\Window.h" />
     <ClInclude Include="src\BHive\World.h" />
     <ClInclude Include="src\BHive\stb_image.h" />
+    <ClInclude Include="src\BHive\Assets\Texture.h" />
+    <ClInclude Include="src\BHive\DataTypes\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp" />
@@ -209,16 +218,21 @@
     <ClCompile Include="src\BHive\Components\BillboardComponent.cpp" />
     <ClCompile Include="src\BHive\Components\CollisionComponent.cpp" />
     <ClCompile Include="src\BHive\Components\MeshComponent.cpp" />
-    <ClCompile Include="src\BHive\Components\ObjectComponent.cpp" />
+    <ClCompile Include="src\BHive\Components\Component.cpp" />
     <ClCompile Include="src\BHive\Components\ParticleEmitter.cpp" />
+    <ClCompile Include="src\BHive\Components\Primitives\Triangle.cpp" />
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Transform.cpp" />
     <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
     <ClCompile Include="src\BHive\DataStructures\NodeGraph.cpp" />
     <ClCompile Include="src\BHive\EditorTime.cpp" />
     <ClCompile Include="src\BHive\Editors\AssetEditor.cpp" />
     <ClCompile Include="src\BHive\Editors\TextureEditor.cpp" />
-    <ClCompile Include="src\BHive\GameObject.cpp" />
+    <ClCompile Include="src\BHive\Entities\Entity.cpp" />
+    <ClCompile Include="src\BHive\Entities\EntityManager.cpp" />
     <ClCompile Include="src\BHive\GameStatics.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp" />
@@ -230,11 +244,14 @@
     <ClCompile Include="src\BHive\Layers\RenderLayer.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
     <ClCompile Include="src\BHive\BResourceManager.cpp" />
-    <ClCompile Include="src\BHive\Object.cpp" />
+    <ClCompile Include="src\BHive\Object\Object.cpp" />
+    <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\BHive\World.cpp" />
     <ClCompile Include="src\BHive\stb_image.cpp" />
+    <ClCompile Include="src\BHive\Assets\Texture.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">
@@ -246,6 +263,12 @@
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\BHive\BResourceManager.inl" />
+    <None Include="src\BHive\Entities\Entity.inl" />
+    <None Include="src\BHive\Entities\EntityManager.inl" />
+    <None Include="src\BHive\Object\Object.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

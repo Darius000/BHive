@@ -4,23 +4,22 @@ namespace BHive
 {
 	class ISerializable
 	{
-	public:
+	protected:
 		ISerializable();
-		virtual ~ISerializable();
-		virtual void OnSave(std::ofstream& file) = 0;
-		virtual void OnLoad(std::ifstream& file) = 0;
-		virtual void OnImport(std::ifstream& file) = 0;
-		void Serialize(String fileName);
-
+		virtual void OnSave(std::ofstream& resourceFile, const String& resourceFilePath) = 0;
+		virtual void OnLoad(std::ifstream& resourceFile) = 0;
+		void DeleteResourceFile();
+		String GetFileName() const;
+		String GetFilePath() const;
+		String GetSaveFilePath();
+		bool FileExists();
 	public:
-
-		String mName;
-
+		void SetFilePath(const String& resourceFilePath);
+		void SetFileName(const String& resourceFileName);	
+	public:
+		void Serialize();
 	private:
-		int mInstanceIndex;
-
-	public:
-		static std::vector<ISerializable*> mSerializables;
-		static int mNumInstances;
+		String m_FilePath;
+		String m_FileName;
 	};	
 }

@@ -25,7 +25,7 @@ namespace BHive
 	}
 
 	Node::Node(String name, int numInputs, int numOutputs)
-		:Object(name)		
+		:Node()
 	{
 		mNumInputs = numInputs;
 		mNumOutputs = numOutputs;

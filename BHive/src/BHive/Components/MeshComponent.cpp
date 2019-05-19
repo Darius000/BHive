@@ -92,7 +92,7 @@ namespace BHive
 		shader->SetVector3("boundsColor", color);
 		shader->SetMatrix4("view", GameStatics::GetActiveCamera()->GetViewMatrix());
 		shader->SetMatrix4("projection", GameStatics::GetActiveCamera()->GetProjectionMatrix());
-		shader->SetMatrix4("model", meshComponent->GetRootComponent()->GetMatrix());
+		shader->SetMatrix4("model", meshComponent->GetTransform().GetMatrix());
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

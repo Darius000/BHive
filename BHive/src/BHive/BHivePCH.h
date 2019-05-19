@@ -32,4 +32,20 @@
 	#include <Windows.h>
 #endif // !BH_PLATFORM_WINDOWS
 
+#include "BHive/Events/EventMacros.h"
+
+#include "BHive/DataTypes/Vector3.h"
+#include "BHive/DataTypes/Vector2.h"
+#include "BHive/DataTypes/Transform.h"
+#include "BHive/DataTypes/Matrix.h"
+//Add color
+
 using String = std::string;
+
+//Convert a number to string
+template<typename T>
+std::string NumToString(T x)
+{
+	return std::to_string(x);
+}
+

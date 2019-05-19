@@ -23,7 +23,7 @@ namespace BHive
 		ImGui::BeginChild("Image", ImVec2(childSize, childSize), true);
 		
 
-		ImGui::Image((void*)(intptr_t)(m_Asset->GetData()), ImVec2(200.0f - 10.0f, 200.0f - 10.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f),ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(tex->BorderColor.r, tex->BorderColor.g, tex->BorderColor.b, 1.0f));
+		//ImGui::Image((void*)(intptr_t)(m_Asset->GetData()), ImVec2(200.0f - 10.0f, 200.0f - 10.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f),ImVec4(1.0f, 1.0f, 1.0f, 1.0f), ImVec4(tex->BorderColor.r, tex->BorderColor.g, tex->BorderColor.b, 1.0f));
 		ImGui::EndChild();
 
 		ImGui::SameLine(ImGui::GetWindowContentRegionWidth() / 2.0f);

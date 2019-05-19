@@ -10,15 +10,13 @@ namespace BHive
 	}
 
 	FPSCamera::FPSCamera(float AspectRatio)
-		:Camera(AspectRatio), MovementSpeed(SPEED), MouseSensitvity(SENSITIVITY)
+		:Camera(AspectRatio), MovementSpeed(SPEED), MouseSensitvity(SENSITIVITY), Yaw(YAW), Pitch(PITCH), Zoom(Fov)
 	{
-		Yaw = YAW;
-		Pitch = PITCH;
-		Zoom = Fov;
+		
 	}
 
 
-	FPSCamera::FPSCamera(float AspectRatio, glm::vec3 position, float Zoom /*= ZOOM*/, float yaw /*= YAW*/, float pitch /*= PITCH*/)
+	FPSCamera::FPSCamera(float AspectRatio, const Vector3& position, float Zoom /*= ZOOM*/, float yaw /*= YAW*/, float pitch /*= PITCH*/)
 		:Camera(AspectRatio, position), MovementSpeed(SPEED), MouseSensitvity(SENSITIVITY)
 	{
 
@@ -26,29 +24,29 @@ namespace BHive
 
 	void FPSCamera::ProcessKeyboard(ECameraMovement Direction, float deltaTime)
 	{
-		glm::vec3 pos = GetRootComponent()->GetPosition();
+		Vector3 pos = GetTransform().GetPosition();
 
 		float velocity = MovementSpeed * deltaTime;
 		if (Direction == FOWARD)
 		{
-			pos += GetRootComponent()->GetForward() * velocity;
+			pos += GetTransform().GetForward() * velocity;
 		}
 		if (Direction == BACKWARD)
 		{
-			pos -= GetRootComponent()->GetForward() * velocity;
+			pos -= GetTransform().GetForward() * velocity;
 		}
 		if (Direction == LEFT)
 		{
-			pos -= GetRootComponent()->GetRight() * velocity;
+			pos -= GetTransform().GetRight() * velocity;
 		}
 		if (Direction == RIGHT)
 		{
-			pos += GetRootComponent()->GetRight() * velocity;
+			pos += GetTransform().GetRight() * velocity;
 		}
 
 		pos.y = 0.0f;
 
-		GetRootComponent()->SetPosition(pos);
+		GetTransform().SetPosition(pos);
 	}
 
 	void FPSCamera::ProcessMouseMovement(float xOffset, float yOffset, bool constrainPitch /*= true*/)
@@ -72,7 +70,7 @@ namespace BHive
 			}
 		}
 
-		GetRootComponent()->SetRotation(glm::vec3(-Pitch, Yaw, 0.0f));
+		GetTransform().SetRotation(Vector3(-Pitch, Yaw, 0.0f));
 	}
 
 	void FPSCamera::ProcessMouseScroll(float yOffset)

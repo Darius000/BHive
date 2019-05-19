@@ -9,7 +9,7 @@ namespace BHive
 	class BHive_API Shader : public BResource
 	{
 	public:
-		Shader();
+		Shader() = default;
 		Shader(const String&  vertexPath, const String&  fragmentPath);
 
 		//the programs id
@@ -38,6 +38,11 @@ namespace BHive
 
 		//check for linking errors
 		void CheckLinkStatus(unsigned int ShaderProgram);
+
+
+		virtual void OnSave(std::ofstream& resourceFile, const String& resourceFilePath) override;
+		virtual void OnLoad(std::ifstream& resourceFile) override;
+		virtual void LoadResource() override;
 
 	private:
 		int success;

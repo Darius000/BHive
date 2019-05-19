@@ -59,7 +59,7 @@ namespace BHive
 				if (isDirectory)
 				{
 					//Show folder image here
-					ImGui::ImageButton((void*)(intptr_t)mFolderImage->GetData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+					ImGui::ImageButton((void*)(intptr_t)mFolderImage->GetIconData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 					if (ImGui::IsItemClicked(0))
 					{
 						Directory* dir = dynamic_cast<Directory*>(entry.second.get());
@@ -73,7 +73,7 @@ namespace BHive
 
 					if (asset)
 					{
-						ImGui::ImageButton((void*)(intptr_t)asset->GetData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+						ImGui::ImageButton((void*)(intptr_t)asset->GetIconData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 						if (ImGui::IsItemClicked(1))
 						{
 							mAssetmanager.mSelectedAsset = asset;

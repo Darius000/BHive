@@ -33,5 +33,10 @@ namespace BHive
 		unsigned int VBO, EBO;
 
 		void SetupMesh();
+	protected:
+		virtual void OnSave(std::ofstream& resourceFile, const String& resourceFilePath) override;
+		virtual void OnLoad(std::ifstream& resourceFile) override;
+		virtual void LoadResource() override;
+
 	};
 }

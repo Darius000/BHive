@@ -6,7 +6,7 @@
 namespace BHive
 {
 	Camera::Camera()
-		:GameObject(), Fov(45.0f), Near(.1f), Far(100.0f)
+		:Entity(), Fov(45.0f), Near(.1f), Far(100.0f)
 	{
 		if (!GameStatics::GetActiveCamera())
 		{
@@ -20,10 +20,10 @@ namespace BHive
 		aspectRatio = AspectRatio;
 	}
 
-	Camera::Camera(float AspectRatio, glm::vec3 position)
+	Camera::Camera(float AspectRatio, const Vector3& position)
 		: Camera(AspectRatio)
 	{
-		GetRootComponent()->SetPosition(position);
+		GetTransform().SetPosition(position);
 	}
 
 	Camera::~Camera()
@@ -38,7 +38,7 @@ namespace BHive
 
 	glm::mat4 Camera::GetViewMatrix()
 	{
-		return LookAt(GetRootComponent()->GetPosition() + GetRootComponent()->GetForward());
+		return LookAt(GetTransform().GetPosition() + GetTransform().GetForward());
 	}
 
 	glm::mat4 Camera::GetProjectionMatrix()
@@ -46,16 +46,16 @@ namespace BHive
 		return glm::perspective(glm::radians(Fov), aspectRatio, Near, Far);
 	}
 
-	glm::mat4 Camera::LookAt(glm::vec3 target)
+	glm::mat4 Camera::LookAt(const Vector3& target)
 	{
-		glm::vec3 ZAxis = glm::normalize(GetRootComponent()->GetPosition() - target); //forward
-		glm::vec3 XAxis = GetRootComponent()->GetRight(); //right
-		glm::vec3 YAxis = GetRootComponent()->GetUp();//up
+		Vector3 ZAxis = (GetTransform().GetPosition() - target).Normalize(); //forward
+		Vector3 XAxis = GetTransform().GetRight(); //right
+		Vector3 YAxis = GetTransform().GetUp();//up
 
 		glm::mat4 translation;
-		translation[3][0] = -GetRootComponent()->GetPosition().x;
-		translation[3][1] = -GetRootComponent()->GetPosition().y;
-		translation[3][2] = -GetRootComponent()->GetPosition().z;
+		translation[3][0] = -GetTransform().GetPosition().x;
+		translation[3][1] = -GetTransform().GetPosition().y;
+		translation[3][2] = -GetTransform().GetPosition().z;
 
 		glm::mat4 rotation;
 		rotation[0][0] = XAxis.x;

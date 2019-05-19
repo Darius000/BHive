@@ -1,15 +1,16 @@
 #pragma once
 
-#include "BHive/GameObject.h"
+#include "BHive/Entities/Entity.h"
 
 namespace BHive
 {
-	class BHive_API Camera : public GameObject
+	//Make Component
+	class BHive_API Camera : public Entity
 	{
 	public:
 		Camera();
 		Camera(float AspectRatio);
-		Camera(float AspectRatio, glm::vec3 position);
+		Camera(float AspectRatio, const Vector3& position);
 		virtual ~Camera();
 
 		float Fov;
@@ -20,6 +21,6 @@ namespace BHive
 		void SetActive();
 		glm::mat4 GetViewMatrix();
 		glm::mat4 GetProjectionMatrix();
-		glm::mat4 LookAt(glm::vec3 target);
+		glm::mat4 LookAt(const Vector3& target);
 	};
 }

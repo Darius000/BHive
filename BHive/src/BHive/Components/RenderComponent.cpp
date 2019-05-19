@@ -20,7 +20,7 @@ namespace BHive
 
 	void RenderComponent::ComponentStart()
 	{
-		TransformComponent::ComponentStart();
+		Super::ComponentStart();
 
 		if (!vertexShader.empty() && !fragmentShader.empty() && !shader)
 		{
@@ -32,7 +32,7 @@ namespace BHive
 
 	void RenderComponent::ComponentUpdate(float deltaTime)
 	{
-		TransformComponent::ComponentUpdate(deltaTime);
+		Super::ComponentUpdate(deltaTime);
 
 		Render();
 	}
@@ -47,7 +47,7 @@ namespace BHive
 		shader->Use();
 		shader->SetMatrix4("PVM",
 			GameStatics::GetActiveCamera()->GetProjectionMatrix() *
-			GameStatics::GetActiveCamera()->GetViewMatrix() * GetMatrix());
+			GameStatics::GetActiveCamera()->GetViewMatrix() * GetTransform().GetMatrix());
 	}
 
 	void RenderComponent::SetShader(Shader* shader)

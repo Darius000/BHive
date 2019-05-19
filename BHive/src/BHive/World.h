@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ECS.h"
+#include "BHive/Entities/EntityManager.h"
 
 namespace BHive
 {

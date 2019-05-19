@@ -9,20 +9,46 @@ namespace BHive
 	RenderLayer::RenderLayer()
 		:Layer("RenderLayer")
 	{
-		mDefaultWorld = new World();
+		m_DefaultWorld = new World();
 	}
 
 	RenderLayer::~RenderLayer()
 	{
-
+		delete m_DefaultWorld;
 	}
 
 	void RenderLayer::OnAttach()
 	{
-		SetOpenGLStates();
-		PrintMaxVertexAttributes();
-		PrintOpenglInfo();
 		GameStatics::GetWorld()->Start();
+
+		//Vertex Array
+		//Vertex Buffer
+		//Index Buffer
+		/*glGenVertexArrays(1, &m_VertexArray);
+		glBindVertexArray(m_VertexArray);
+
+		glGenBuffers(1, &m_VertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
+
+		float vertices[3 * 3] = {
+			-0.5f, -0.5f, -0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f
+		};
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+		glGenBuffers(1, &m_IndexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
+
+		unsigned int indices[3] = { 0, 1, 2 };
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+		glBindVertexArray(0);*/
+
 	}
 
 	void RenderLayer::OnDetach()
@@ -33,33 +59,13 @@ namespace BHive
 	void RenderLayer::OnUpdate()
 	{
 		GameStatics::GetWorld()->Update(Time::GetDeltaTime());
+
+		/*glBindVertexArray(m_VertexArray); //Need if unbounded to 0
+		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);*/
 	}
 
 	void RenderLayer::OnEvent(Event& event)
 	{
 		
 	}
-
-	void RenderLayer::SetOpenGLStates()
-	{
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_MULTISAMPLE);
-		glLineWidth(1.0f);
-		glEnable(GL_LINE_SMOOTH);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-
-	void RenderLayer::PrintMaxVertexAttributes()
-	{
-		int attributes;
-		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &attributes);
-		BH_CORE_INFO("Maximum number of vertex attributes supported: {0}", attributes);
-	}
-
-	void RenderLayer::PrintOpenglInfo()
-	{
-		BH_CORE_INFO(glGetString(GL_VERSION));
-	}
-
 }
