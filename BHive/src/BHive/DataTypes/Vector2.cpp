@@ -43,12 +43,12 @@ namespace BHive
 		return *this /= GetMagnitude();
 	}
 
-	Vector2 Vector2::Zero()
+	const Vector2 Vector2::Zero()
 	{
 		return Vector2();
 	}
 
-	Vector2 Vector2::One()
+	const Vector2 Vector2::One()
 	{
 		return Vector2(1.0f, 1.0f);
 	}

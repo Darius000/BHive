@@ -43,13 +43,13 @@ namespace BHive
 		return *this /= GetMagnitude();
 	}
 
-	Vector3 Vector3::Zero()
+	const Vector3 Vector3::Zero()
 	{
 		Vector3 v = Vector3();
 		return v;
 	}
 
-	Vector3 Vector3::One()
+	const Vector3 Vector3::One()
 	{
 		Vector3 v = Vector3(1.0f, 1.0f, 1.0f);
 		return v;

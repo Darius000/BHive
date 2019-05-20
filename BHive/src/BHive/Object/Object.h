@@ -63,6 +63,7 @@ namespace BHive
 		bool IsSelected() const;
 		bool IsDestroyed() const;
 		unsigned int GetObjectID()  const { return mObjectID; }
+
 	private:
 		bool mDestroyed;
 		bool mEnabled;

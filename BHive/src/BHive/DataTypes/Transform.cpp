@@ -28,22 +28,22 @@ namespace BHive
 		SetPosition(Vector3(x, y, z));
 	}
 
-	void Transform::SetRotation(const Vector3& InRot)
+	void Transform::SetRotation(const Rotator& InRot)
 	{
 		Rotation = InRot;
 
-		R = glm::rotate(R, glm::radians(Rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		R = glm::rotate(R, glm::radians(Rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		R = glm::rotate(R, glm::radians(Rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		R = glm::rotate(R, glm::radians(Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+		R = glm::rotate(R, glm::radians(Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+		R = glm::rotate(R, glm::radians(Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		UpdateTransform();
 
 		UpdateMatrix();
 	}
 
-	void Transform::SetRotation(float x, float y, float z)
+	void Transform::SetRotation(float roll, float yaw, float pitch)
 	{
-		SetRotation(Vector3(x, y, z));
+		SetRotation(Rotator(roll, yaw, pitch));
 	}
 
 	void Transform::SetScale(const Vector3& InScale)
@@ -72,7 +72,7 @@ namespace BHive
 		return Position;
 	}
 
-	Vector3 Transform::GetRotation()
+	Rotator Transform::GetRotation()
 	{
 		return Rotation;
 	}

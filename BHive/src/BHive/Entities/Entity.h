@@ -7,7 +7,7 @@
 
 namespace BHive
 {
-	const glm::vec3 WorldUp = glm::vec3(0.0f, 1.0f, 0.0f);//Move to another file
+	const glm::vec3 WorldUp = glm::vec3(0.0f, 0.0f, 1.0f);//Move to another file
 
 	using ComponentID = std::size_t;
 

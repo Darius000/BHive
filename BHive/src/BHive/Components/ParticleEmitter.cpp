@@ -102,7 +102,7 @@ namespace BHive
 		Particle* particle = new Particle();
 		particle->ComponentStart();
 		particles.push_back(particle);
-		Vector3 random = Vector3((rand() % 100), (rand() % 100), (rand() % 100));
+		Vector3 random = Vector3(((float)(rand() % 100)),(float)( (rand() % 100)), (float)((rand() % 100)));
 		glm::vec4 pcolor = color * ((rand() % 100) / 100.0f);
 		particle->SetShader(shader);
 		particle->GetTransform().SetPosition(GetOwner()->GetTransform().GetPosition() * random);
@@ -116,12 +116,12 @@ namespace BHive
 		particle->SetSize(size);
 
 		Vector3 velocity = Vector3(
-			((rand() % 5) - 2.5) / 5.0f,
+			((rand() % 5) - 2.5f) / 5.0f,
 			((rand() % 100) - 1.0f) / 100.0f,
-			((rand() % 1) - .5));
+			((rand() % 1) - .5f));
 
 		particle->velocity = velocity;
-		particle->GetTransform().SetRotation(velocity);
+		particle->GetTransform().SetRotation(Rotator(velocity));
 
 		//std::cout << "Spawned Particle\n";
 	}

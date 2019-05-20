@@ -12,14 +12,14 @@ namespace BHive
 		Transform();
 		void SetPosition(const Vector3& InPos);
 		void SetPosition(float x, float y, float z);
-		void SetRotation(const Vector3& InRot);
-		void SetRotation(float x, float y, float z);
+		void SetRotation(const Rotator& InRot);
+		void SetRotation(float roll, float yaw, float pitch);
 		void SetScale(const Vector3& InScale);
 		void SetScale(float size);
 		void SetScale(float x, float y, float z);
 
 		Vector3 GetPosition();
-		Vector3 GetRotation();
+		Rotator GetRotation();
 		Vector3 GetScale();
 
 		Vector3 GetForward();
@@ -32,7 +32,7 @@ namespace BHive
 
 	private:
 		Vector3 Position;
-		Vector3 Rotation;
+		Rotator Rotation;
 		Vector3 Scale;
 
 		void UpdateMatrix();

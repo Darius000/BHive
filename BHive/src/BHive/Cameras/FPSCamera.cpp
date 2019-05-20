@@ -70,7 +70,7 @@ namespace BHive
 			}
 		}
 
-		GetTransform().SetRotation(Vector3(-Pitch, Yaw, 0.0f));
+		GetTransform().SetRotation(Rotator(-Pitch, Yaw, 0.0f));
 	}
 
 	void FPSCamera::ProcessMouseScroll(float yOffset)

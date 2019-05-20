@@ -182,6 +182,8 @@
     <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
     <ClInclude Include="src\BHive\DataTypes\Vector3.h" />
     <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
+    <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
+    <ClInclude Include="src\BHive\Math\MathLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -295,11 +297,14 @@
     <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Rotator.cpp" />
+    <ClCompile Include="src\BHive\Math\MathLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\BHive\BResourceManager.inl" />
     <None Include="src\BHive\Object\Object.inl" />
     <None Include="src\BHive\Entities\Entity.inl" />
     <None Include="src\BHive\Entities\EntityManager.inl" />
+    <None Include="src\BHive\Math\MathLibrary.inl" />
   </ItemGroup>
 </Project>

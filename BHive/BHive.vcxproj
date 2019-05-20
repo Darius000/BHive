@@ -161,6 +161,7 @@
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
     <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
+    <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
     <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
     <ClInclude Include="src\BHive\DataTypes\Transform.h" />
     <ClInclude Include="src\BHive\Core.h" />
@@ -192,6 +193,7 @@
     <ClInclude Include="src\BHive\Layers\RenderLayer.h" />
     <ClInclude Include="src\BHive\Log.h" />
     <ClInclude Include="src\BHive\BResourceManager.h" />
+    <ClInclude Include="src\BHive\Math\MathLibrary.h" />
     <ClInclude Include="src\BHive\MouseCodes.h" />
     <ClInclude Include="src\BHive\Object\Object.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLContext.h" />
@@ -224,6 +226,7 @@
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
+    <ClCompile Include="src\BHive\DataTypes\Rotator.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Transform.cpp" />
     <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
@@ -244,6 +247,7 @@
     <ClCompile Include="src\BHive\Layers\RenderLayer.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
     <ClCompile Include="src\BHive\BResourceManager.cpp" />
+    <ClCompile Include="src\BHive\Math\MathLibrary.cpp" />
     <ClCompile Include="src\BHive\Object\Object.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
@@ -268,6 +272,7 @@
     <None Include="src\BHive\BResourceManager.inl" />
     <None Include="src\BHive\Entities\Entity.inl" />
     <None Include="src\BHive\Entities\EntityManager.inl" />
+    <None Include="src\BHive\Math\MathLibrary.inl" />
     <None Include="src\BHive\Object\Object.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

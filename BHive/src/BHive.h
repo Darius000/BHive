@@ -10,6 +10,7 @@
 #include "BHive/Layer.h"
 #include "BHive/Log.h"
 #include "BHive/EditorTime.h"
+#include "BHive/Math/MathLibrary.h"
 
 //---Layers------->
 //#include "BHive/ImGui/ImGuiLayer.h"

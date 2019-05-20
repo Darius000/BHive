@@ -22,8 +22,8 @@ namespace BHive
 		float GetMagnitude() const; //Get the vector magnitude - Pythagorean Theorem
 		Vector2 Normalize(); //Get the unit vector
 
-		static Vector2 Zero(); // return a vector of zero
-		static Vector2 One(); // return a vector of one
+		static const Vector2 Zero(); // return a vector of zero
+		static const Vector2 One(); // return a vector of one
 		static Vector2 Add(const Vector2& a, const Vector2& b);
 		static Vector2 Subtract(const Vector2& a, const Vector2& b);
 		static Vector2 Multiply(const Vector2& v, float s);
