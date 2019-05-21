@@ -161,10 +161,10 @@
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
     <ClInclude Include="src\BHive\DataTypes.h" />
-    <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
-    <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
-    <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
-    <ClInclude Include="src\BHive\DataTypes\Transform.h" />
+    <ClInclude Include="src\BHive\Types\Matrix.h" />
+    <ClInclude Include="src\BHive\Types\Rotator.h" />
+    <ClInclude Include="src\BHive\Types\Vector2.h" />
+    <ClInclude Include="src\BHive\Types\Transform.h" />
     <ClInclude Include="src\BHive\Core.h" />
     <ClInclude Include="src\BHive\DataStructures\DirectoryGraph.h" />
     <ClInclude Include="src\BHive\DataStructures\NodeGraph.h" />
@@ -205,7 +205,7 @@
     <ClInclude Include="src\BHive\World.h" />
     <ClInclude Include="src\BHive\stb_image.h" />
     <ClInclude Include="src\BHive\Assets\Texture.h" />
-    <ClInclude Include="src\BHive\DataTypes\Vector3.h" />
+    <ClInclude Include="src\BHive\Types\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp" />
@@ -226,10 +226,10 @@
     <ClCompile Include="src\BHive\Components\Primitives\Triangle.cpp" />
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Rotator.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Transform.cpp" />
+    <ClCompile Include="src\BHive\Types\Matrix.cpp" />
+    <ClCompile Include="src\BHive\Types\Rotator.cpp" />
+    <ClCompile Include="src\BHive\Types\Vector2.cpp" />
+    <ClCompile Include="src\BHive\Types\Transform.cpp" />
     <ClCompile Include="src\BHive\DataStructures\DirectoryGraph.cpp" />
     <ClCompile Include="src\BHive\DataStructures\NodeGraph.cpp" />
     <ClCompile Include="src\BHive\EditorTime.cpp" />
@@ -255,7 +255,7 @@
     <ClCompile Include="src\BHive\World.cpp" />
     <ClCompile Include="src\BHive\stb_image.cpp" />
     <ClCompile Include="src\BHive\Assets\Texture.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
+    <ClCompile Include="src\BHive\Types\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">

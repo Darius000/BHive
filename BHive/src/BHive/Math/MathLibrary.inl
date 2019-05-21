@@ -55,6 +55,16 @@ namespace BHive
 			return v;
 		};
 
+		template<typename T> T Increment(T& x, T amount)
+		{
+			return x += amount;
+		}
+
+		template<typename T> T Decrement(T& x, T amount)
+		{
+			return x -= amount;
+		}
+
 		template<typename T> bool IsInfinte(T a)
 		{
 			return std::isnan(a);

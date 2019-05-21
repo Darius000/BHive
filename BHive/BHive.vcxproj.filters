@@ -176,15 +176,15 @@
     <ClInclude Include="src\BHive\Entities\EntityManager.h" />
     <ClInclude Include="src\BHive\Components\Primitives\Triangle.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
-    <ClInclude Include="src\BHive\DataTypes\Transform.h">
-      <Filter>BHive\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
-    <ClInclude Include="src\BHive\DataTypes\Vector3.h" />
-    <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
-    <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
     <ClInclude Include="src\BHive\Math\MathLibrary.h" />
     <ClInclude Include="src\BHive\DataTypes.h" />
+    <ClInclude Include="src\BHive\Types\Matrix.h" />
+    <ClInclude Include="src\BHive\Types\Rotator.h" />
+    <ClInclude Include="src\BHive\Types\Transform.h">
+      <Filter>BHive\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Types\Vector2.h" />
+    <ClInclude Include="src\BHive\Types\Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -292,13 +292,13 @@
     <ClCompile Include="src\BHive\Entities\EntityManager.cpp" />
     <ClCompile Include="src\BHive\Components\Primitives\Triangle.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Transform.cpp">
+    <ClCompile Include="src\BHive\Types\Matrix.cpp" />
+    <ClCompile Include="src\BHive\Types\Rotator.cpp" />
+    <ClCompile Include="src\BHive\Types\Transform.cpp">
       <Filter>BHive\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\DataTypes\Vector2.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
-    <ClCompile Include="src\BHive\DataTypes\Rotator.cpp" />
+    <ClCompile Include="src\BHive\Types\Vector2.cpp" />
+    <ClCompile Include="src\BHive\Types\Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\BHive\BResourceManager.inl" />
