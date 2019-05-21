@@ -11,7 +11,7 @@ namespace BHive
 		World();
 
 		//Override Create World in subclasses. Default includes preview
-		virtual void CreateWorld();
+		virtual void CreateWorld() {};
 
 		void SetActive();	
 	};

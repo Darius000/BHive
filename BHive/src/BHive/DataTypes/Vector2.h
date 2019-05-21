@@ -16,8 +16,8 @@ namespace BHive
 		Vector2& operator=(Vector2&&) = default;
 		~Vector2();
 
-		float x; //x component
-		float y; //y component
+		float x = 0.0f; //x component
+		float y = 0.0f; //y component
 
 		float GetMagnitude() const; //Get the vector magnitude - Pythagorean Theorem
 		Vector2 Normalize(); //Get the unit vector

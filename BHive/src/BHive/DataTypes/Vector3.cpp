@@ -5,7 +5,6 @@
 namespace BHive
 {
 	Vector3::Vector3()
-		:x(), y(), z()
 	{
 	}
 

@@ -4,21 +4,15 @@
 
 namespace BHive
 {
-
-	Rotator::Rotator(float _roll, float _yaw, float _pitch)
-		:Rotator()
+	Rotator::Rotator()
 	{
-		roll = _roll;
-		pitch = _pitch;
-		yaw = _yaw;
 
-		Clamp();
 	}
 
-	Rotator::Rotator()
-		:roll(), pitch(), yaw()
+	Rotator::Rotator(float _roll, float _yaw, float _pitch)
+		:roll(_roll), yaw(_yaw), pitch(_pitch)
 	{
-
+		
 	}
 
 	Rotator::Rotator(const Vector3& vector)
@@ -68,25 +62,45 @@ namespace BHive
 		return Rotator(x, y, z);
 	}
 
-	Rotator Rotator::Clamp()
+	void Rotator::Normalize()
 	{
 		roll	= MathLibrary::ModuloAngle(roll, 360.0f);
 		yaw		= MathLibrary::ModuloAngle(yaw, 360.0f);
 		pitch	= MathLibrary::ModuloAngle(pitch, 360.0f);
-		return *this;
+	}
+
+	void Rotator::NormalizeAxis(EAxis axis)
+	{
+		if (axis == X) roll = MathLibrary::ModuloAngle(roll, 360.0f); return;
+		if (axis == Y) yaw = MathLibrary::ModuloAngle(yaw, 360.0f); return;
+		if (axis == Z) pitch = MathLibrary::ModuloAngle(pitch, 360.0f); return;
+	}
+
+	bool Rotator::IsNearlyZero(float tolerance)
+	{
+		return (roll <= tolerance) && 
+			(yaw <= tolerance) && 
+			(pitch <= tolerance);
+	}
+
+	bool Rotator::IsZero()
+	{
+		return (roll == 0.0f) && 
+			(yaw == 0.0f) && 
+			(pitch == 0.0f);
 	}
 
 	bool Rotator::IsNAN() const
 	{
-		return IsInfinte(roll) || IsInfinte(yaw) || IsInfinte(pitch) ||
-			IsUndefinded(roll) || IsUndefinded(yaw) || IsUndefinded(pitch);
+		return MathLibrary::IsInfinte(roll) || MathLibrary::IsInfinte(yaw) || MathLibrary::IsInfinte(pitch) ||
+			MathLibrary::IsUndefinded(roll) || MathLibrary::IsUndefinded(yaw) || MathLibrary::IsUndefinded(pitch);
 	}
 
 	float Rotator::GetAxis(EAxis axis) const
 	{
 		if (axis == X) return roll;
-		else if (axis == Y) return yaw;
-		else return pitch;
+		if (axis == Y) return yaw;
+		return pitch;
 	}
 
 	Vector3 Rotator::ToVector() const

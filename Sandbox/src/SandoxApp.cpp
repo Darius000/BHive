@@ -67,14 +67,14 @@ public:
 		BHive::Matrix Mat;
 		BH_TRACE("Matrix:{0}", Mat.ToString());
 
-		BHive::Rotator rot(0.0f, 400.0f, 0.0f);
+		/*BHive::Rotator rot;
 		BHive::Rotator rot2(500.0f, 360.0f, 10.0f);
 
-		rot /= 2;
+		rot += rot2;
 
 		//270, 0, 350
 		BH_TRACE("Rotator:{0}", rot.ToString());
-		BH_TRACE("Rotator:{0}", rot2.ToString());
+		BH_TRACE("Rotator:{0}", rot2.ToString());*/
 	}
 };
 

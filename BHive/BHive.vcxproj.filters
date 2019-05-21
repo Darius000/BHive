@@ -184,6 +184,7 @@
     <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
     <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
     <ClInclude Include="src\BHive\Math\MathLibrary.h" />
+    <ClInclude Include="src\BHive\DataTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -298,7 +299,6 @@
     <ClCompile Include="src\BHive\DataTypes\Vector3.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Matrix.cpp" />
     <ClCompile Include="src\BHive\DataTypes\Rotator.cpp" />
-    <ClCompile Include="src\BHive\Math\MathLibrary.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\BHive\BResourceManager.inl" />

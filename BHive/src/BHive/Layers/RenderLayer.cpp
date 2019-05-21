@@ -21,10 +21,10 @@ namespace BHive
 	{
 		GameStatics::GetWorld()->Start();
 
-		//Vertex Array
+		/*//Vertex Array
 		//Vertex Buffer
 		//Index Buffer
-		/*glGenVertexArrays(1, &m_VertexArray);
+		glGenVertexArrays(1, &m_VertexArray);
 		glBindVertexArray(m_VertexArray);
 
 		glGenBuffers(1, &m_VertexBuffer);
@@ -60,8 +60,19 @@ namespace BHive
 	{
 		GameStatics::GetWorld()->Update(Time::GetDeltaTime());
 
-		/*glBindVertexArray(m_VertexArray); //Need if unbounded to 0
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);*/
+		/*Rotator a = Rotator();
+		Rotator b = Rotator(20.0f, 360.0f, 500.0f);
+		static float t = 0.0f;
+		static Rotator v = Rotator();
+
+		t += Time::GetDeltaTime() * .1f;
+		v = MathLibrary::LerpRotator(a, b, t);
+		v.roll = MathLibrary::Clamp(v.roll, a.roll, b.roll);
+		v.yaw = MathLibrary::Clamp(v.yaw, a.yaw, b.yaw);
+		v.pitch = MathLibrary::Clamp(v.pitch, a.pitch, b.pitch);
+		v.Normalize();
+
+		BH_CORE_TRACE("value: {0}", v.ToString());*/
 	}
 
 	void RenderLayer::OnEvent(Event& event)

@@ -18,9 +18,9 @@ namespace BHive
 		Vector3& operator=(Vector3&&) = default;
 		~Vector3();
 
-		float x; //x component
-		float y; //y component
-		float z; //z component
+		float x = 0.0f; //x component
+		float y = 0.0f; //y component
+		float z = 0.0f; //z component
 
 		float GetMagnitude() const; //Get the vector magnitude - Pythagorean Theorem
 		Vector3 Normalize(); //Get the unit vector

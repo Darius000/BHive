@@ -13,11 +13,6 @@ namespace BHive
 		}
 	}
 
-	void World::CreateWorld()
-	{
-		BH_INFO("Created Default World");
-	}
-
 	void World::SetActive()
 	{
 		GameStatics::SetWorld(this);

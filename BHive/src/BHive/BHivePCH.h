@@ -35,11 +35,7 @@
 #include "BHive/Events/EventMacros.h"
 
 #include"BHive/Math/MathLibrary.h"
-#include "BHive/DataTypes/Vector3.h"
-#include "BHive/DataTypes/Vector2.h"
-#include "BHive/DataTypes/Rotator.h"
-#include "BHive/DataTypes/Transform.h"
-#include "BHive/DataTypes/Matrix.h"
+#include "DataTypes.h"
 
 //#include "BHive/DataTypes/Color.h" 0 - 255 unsigned char- max is 255
 //#include "BHive/DataTypes/LinearColor.h" 0 - 1

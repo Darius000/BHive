@@ -160,6 +160,7 @@
     <ClInclude Include="src\BHive\Components\Primitives\Triangle.h" />
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
+    <ClInclude Include="src\BHive\DataTypes.h" />
     <ClInclude Include="src\BHive\DataTypes\Matrix.h" />
     <ClInclude Include="src\BHive\DataTypes\Rotator.h" />
     <ClInclude Include="src\BHive\DataTypes\Vector2.h" />
@@ -247,7 +248,6 @@
     <ClCompile Include="src\BHive\Layers\RenderLayer.cpp" />
     <ClCompile Include="src\BHive\Log.cpp" />
     <ClCompile Include="src\BHive\BResourceManager.cpp" />
-    <ClCompile Include="src\BHive\Math\MathLibrary.cpp" />
     <ClCompile Include="src\BHive\Object\Object.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />

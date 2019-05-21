@@ -17,9 +17,9 @@ namespace BHive
 		Rotator(float _roll, float _yaw, float _pitch);
 		Rotator(const Vector3& vector);
 
-		float roll;
-		float pitch;
-		float yaw;
+		float roll	= 0.0f;
+		float pitch = 0.0f;
+		float yaw	= 0.0f;
 
 		static Rotator FromVector(const Vector3& v);
 		static Rotator Add(const Rotator& a, const Rotator& b); //Add to components of the rotator
@@ -27,7 +27,10 @@ namespace BHive
 		static Rotator Multiply(const Rotator& a, float s);
 		static Rotator Divide(const Rotator& a, float s);
 
-		Rotator Clamp(); //Keep angles equivalent ex. 720 = 360, 400 = 40 or 400 - 360
+		void Normalize(); //Keep angles between 0 - 360
+		void NormalizeAxis(EAxis axis); //Keep specified axis angle between 0 - 360
+		bool IsNearlyZero(float tolerance = 0.000001);
+		bool IsZero();
 		bool IsNAN() const; // Checks if a component is nan or infinite
 		float GetAxis(EAxis axis) const;
 		Vector3 ToVector() const;
@@ -51,16 +54,5 @@ namespace BHive
 	inline std::ostream& operator<<(std::ostream& os, const Rotator& rotator)
 	{
 		return os << rotator.ToString();
-	}
-
-	//Add to Static  library
-	inline bool IsInfinte(float a)
-	{
-		return std::isnan(a);
-	}
-
-	inline bool IsUndefinded(float a)
-	{
-		return std::isinf(a);
 	}
 }
