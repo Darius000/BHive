@@ -5,77 +5,89 @@ namespace BHive
 {
 	namespace MathLibrary
 	{
-		template<typename T> T Clamp(T value, T min, T max)
+		template<typename T> T const& Clamp(T const& value, T const& min, T const& max)
 		{
 			if (value <= min) return min;
 			if (value >= max) return max;
 			return value;
 		}
 
-		template<typename T> T Normalize(T value, T min, T max)
+		template<typename T> T const Normalize(T const& value, T const& min, T const& max)
 		{
 			return (value - min) / (max - min);
 		}
 
-		template<typename T> T Absolute(T value)
+		template<typename T> T const Absolute(T const& value)
 		{
 			return std::abs(value);
 		}
 
-		template<typename T> T Lerp(T v0, T v1, T t)
+		template<typename T> T const Lerp(T const& v0, T const& v1, T const& t)
 		{
 			return (1.0f - t) * v0 + t * v1;
 		}
 
-		template<typename T> T ToRadians(T degrees)
+		template<typename T> T const ToRadians(T const& degrees)
 		{
 			return degrees * (PI / 180.0f);
 		}
 
-		template<typename T> T ToDegrees(T radians)
+		template<typename T> T const ToDegrees(T const& radians)
 		{
 			return radians * (180.0f / PI);
 		}
 
-		template<typename T> T Modulo(T x, T y)
+		template<typename T> T const Modulo(T const& x, T const& y)
 		{
-			float v = std::fmod(x, y);
-			return v;
+			return std::fmod(x, y);
 		};
 
-		template<typename T> T ModuloAngle(T x, T y)
+		template<typename T> T const ModuloAngle(T& x, T const& y)
 		{
 			while (x < 0) x = 360 - Absolute(x);
 			return Modulo(x, y);
 		}
 
-		template<typename T> T ClampAngle(T angle, T min, T max)
+		template<typename T> T const ClampAngle(T const& angle, T const& min, T const& max)
 		{
-			float v = Modulo(Clamp(angle, min, max), 360.0f);
-			return v;
+			return Modulo(Clamp(angle, min, max), 360.0f);
 		};
 
-		template<typename T> T Increment(T& x, T amount)
+		template<typename T> T const Increment(T& x, T const& amount)
 		{
 			return x += amount;
 		}
 
-		template<typename T> T Decrement(T& x, T amount)
+		template<typename T> T const Decrement(T& x, T const& amount)
 		{
 			return x -= amount;
 		}
 
-		template<typename T> bool IsInfinte(T a)
+
+		template<typename T>
+		T const& Min(T const& a, T const& b)
+		{
+			return a < b ? a : b;
+		}
+
+
+		template<typename T>
+		T const& Max(T const& a, T const& b)
+		{
+			return a > b ? a : b;
+		}
+
+		template<typename T> bool const IsInfinte(T const& a)
 		{
 			return std::isnan(a);
 		}
 
-		template<typename T> bool IsUndefinded(T a)
+		template<typename T> bool const IsUndefinded(T const& a)
 		{
 			return std::isinf(a);
 		}
 
-		Vector2 LerpVector2(const Vector2 &v0, const Vector2 &v1, float t)
+		Vector2 const LerpVector2(const Vector2 &v0, const Vector2 &v1, float const& t)
 		{
 			float x = Lerp(v0.x, v1.x, t);
 			float y = Lerp(v0.y, v1.y, t);
@@ -83,7 +95,7 @@ namespace BHive
 			return Vector2(x, y);
 		};
 
-		Vector3 LerpVector3(const Vector3 &v0, const Vector3 &v1, float t)
+		Vector3 const LerpVector3(const Vector3 &v0, const Vector3 &v1, float const& t)
 		{
 			float x = Lerp(v0.x, v1.x, t);
 			float y = Lerp(v0.y, v1.y, t);
@@ -92,7 +104,7 @@ namespace BHive
 			return Vector3(x, y, z);
 		}
 
-		Rotator LerpRotator(const Rotator &r0, const Rotator &r1, float t)
+		Rotator const LerpRotator(const Rotator &r0, const Rotator &r1, float const& t)
 		{
 			float x = Lerp(r0.roll, r1.roll, t);
 			float y = Lerp(r0.yaw, r1.yaw, t);

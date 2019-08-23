@@ -185,6 +185,11 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Types\Vector2.h" />
     <ClInclude Include="src\BHive\Types\Vector3.h" />
+    <ClInclude Include="src\BHive\Renderer\Buffer.h" />
+    <ClInclude Include="src\BHive\Renderer\OpenGLBuffer.h" />
+    <ClInclude Include="src\BHive\Renderer\Renderer.h" />
+    <ClInclude Include="src\BHive\Types\Color.h" />
+    <ClInclude Include="src\BHive\PlatformTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\Application.cpp">
@@ -299,6 +304,10 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Types\Vector2.cpp" />
     <ClCompile Include="src\BHive\Types\Vector3.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\BHive\Renderer\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\BHive\Types\Color.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\BHive\BResourceManager.inl" />

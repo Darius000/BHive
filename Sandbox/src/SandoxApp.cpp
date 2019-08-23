@@ -64,27 +64,27 @@ public:
 		BHive::Triangle* T0 = E0->AddComponent<BHive::Triangle>();
 		T0->SetPoints(BHive::Vector3(-0.25f, -0.25f, -0.0f), BHive::Vector3(0.25f, -0.25f, 0.0f), BHive::Vector3(0.0f, 0.1f, 0.0f));
 
-		BHive::Matrix Mat;
-		BH_TRACE("Matrix:{0}", Mat.ToString());
+		//BHive::Matrix Mat;
+		//BH_TRACE("Matrix:{0}", Mat.ToString());
 
-		BHive::Rotator rot;
-		BHive::Rotator rot2(500.0f, 360.0f, 10.0f);
+		//BHive::Rotator rot;
+		//BHive::Rotator rot2(500.0f, 360.0f, 10.0f);
 
-		rot += rot2;
+		//rot += rot2;
 
-		//270, 0, 350
-		BH_TRACE("Rotator:{0}", rot.ToString());
-		BH_TRACE("Rotator:{0}", rot2.ToString());
+		////270, 0, 350
+		//BH_TRACE("Rotator:{0}", rot.ToString());
+		//BH_TRACE("Rotator:{0}", rot2.ToString());
 
-		BH_TRACE("{0}", sizeof(int8));
-		BH_TRACE("{0}", sizeof(int16));
-		BH_TRACE("{0}", sizeof(int32));
-		BH_TRACE("{0}", sizeof(int64));
+		//BH_TRACE("{0}", sizeof(int8));
+		//BH_TRACE("{0}", sizeof(int16));
+		//BH_TRACE("{0}", sizeof(int32));
+		//BH_TRACE("{0}", sizeof(int64));
 
-		BH_TRACE("{0}", sizeof(uint8));
-		BH_TRACE("{0}", sizeof(uint16));
-		BH_TRACE("{0}", sizeof(uint32));
-		BH_TRACE("{0}", sizeof(uint64));
+		//BH_TRACE("{0}", sizeof(uint8));
+		//BH_TRACE("{0}", sizeof(uint16));
+		//BH_TRACE("{0}", sizeof(uint32));
+		//BH_TRACE("{0}", sizeof(uint64));
 	}
 };
 

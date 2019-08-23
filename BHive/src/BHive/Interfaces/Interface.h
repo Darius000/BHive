@@ -1,4 +1,5 @@
-#pragma once
+#ifndef IInterface_H
+#define IInterface_H
 
 namespace BHive
 {
@@ -16,3 +17,5 @@ namespace BHive
 	}
 
 }
+
+#endif

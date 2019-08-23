@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BHive/Components/TransformComponent.h"
+#include "Renderer/Buffer.h"
 
 namespace BHive
 {
@@ -17,6 +18,8 @@ namespace BHive
 		void SetPoints(Vector3& p0 ,Vector3& p1 ,Vector3& p2);
 
 	private:
-		unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+		unsigned int m_VertexArray;
+		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		std::unique_ptr<IndexBuffer> m_IndexBuffer;
 	};
 }

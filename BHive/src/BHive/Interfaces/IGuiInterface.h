@@ -9,7 +9,7 @@ namespace BHive
 	class IGuiInterface : public IInterface
 	{
 	public:
-		IGuiInterface() {};
+		//IGuiInterface() {};
 		virtual void OnGUIRender() = 0;
 	};
 }

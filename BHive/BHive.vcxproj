@@ -161,6 +161,11 @@
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
     <ClInclude Include="src\BHive\DataTypes.h" />
+    <ClInclude Include="src\BHive\PlatformTypes.h" />
+    <ClInclude Include="src\BHive\Renderer\Buffer.h" />
+    <ClInclude Include="src\BHive\Renderer\OpenGLBuffer.h" />
+    <ClInclude Include="src\BHive\Renderer\Renderer.h" />
+    <ClInclude Include="src\BHive\Types\Color.h" />
     <ClInclude Include="src\BHive\Types\Matrix.h" />
     <ClInclude Include="src\BHive\Types\Rotator.h" />
     <ClInclude Include="src\BHive\Types\Vector2.h" />
@@ -226,6 +231,10 @@
     <ClCompile Include="src\BHive\Components\Primitives\Triangle.cpp" />
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\BHive\Renderer\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\BHive\Types\Color.cpp" />
     <ClCompile Include="src\BHive\Types\Matrix.cpp" />
     <ClCompile Include="src\BHive\Types\Rotator.cpp" />
     <ClCompile Include="src\BHive\Types\Vector2.cpp" />

@@ -35,13 +35,18 @@
 #include "BHive/Events/EventMacros.h"
 
 #include"BHive/Math/MathLibrary.h"
+#include "PlatformTypes.h"
 #include "DataTypes.h"
 
 //#include "BHive/DataTypes/Color.h" 0 - 255 unsigned char- max is 255
 //#include "BHive/DataTypes/LinearColor.h" 0 - 1
 
 
-using String = std::string;
+
+typedef std::string String;
+typedef std::ofstream ofStream;
+typedef std::ifstream ifStream;
+typedef std::istream iStream;
 
 //Convert a number to string
 template<typename T>
