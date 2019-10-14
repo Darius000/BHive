@@ -1,7 +1,7 @@
 #include "BHivePCH.h"
 #include "RenderLayer.h"
-#include "EditorTime.h"
-#include "GameStatics.h"
+#include "BHive/Time/EditorTime.h"
+#include "BHive/Statics/GameStatics.h"
 #include <glad/glad.h>
 
 namespace BHive

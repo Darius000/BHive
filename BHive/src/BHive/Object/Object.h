@@ -11,7 +11,8 @@ namespace BHive
 		EntityCategory = BIT(1),
 		ResourceCategory = BIT(2),
 		ComponentCategory = BIT(3),
-		PrimitiveCategory = BIT(4)
+		PrimitiveCategory = BIT(4),
+		MeshCategory = BIT(5)
 	};
 
 #define BCLASS(name, category, base)\
@@ -20,12 +21,13 @@ namespace BHive
 		BCLASS_CATEGORY(category)
 
 #define BCLASS_BASE(base)\
-		typedef base Super;
+		private:\
+			typedef base Super;
 
 #define BCLASS_NAME(name)\
 		public:\
 			static name GetStaticClass() {return name::name();}\
-			virtual String GetClass() const override {return #name;}
+			virtual FString GetClass() const override {return #name;}
 
 #define BCLASS_CATEGORY(category)\
 		public:\
@@ -39,10 +41,10 @@ namespace BHive
 		Object();
 		virtual ~Object() {};
 	public:
-		String mDisplayName;
+		FString mDisplayName;
 	public:
 		static Object GetStaticClass() { return Object::Object(); }
-		virtual String GetClass() const { return "Object"; }
+		virtual FString GetClass() const { return "Object"; }
 		virtual int GetClassCategory() const { return ObjectCategory; }
 		virtual void OnSelected(bool selected);
 		virtual void CreateContextMenuItems() {};
@@ -50,14 +52,14 @@ namespace BHive
 	protected:
 		virtual void OnDestroyed();
 	public:
-		void SetDisplayName(const String& name);
+		void SetDisplayName(const FString& name);
 		void Select();
 		void UnSelect();
 		void SetEnabled(bool enable);
 		void Destroy();
 	
-		String ToString() const { return GetDisplayName(); }
-		String GetDisplayName() const;
+		FString ToString() const { return GetDisplayName(); }
+		FString GetDisplayName() const;
 		bool IsEnabled() const;
 		bool IsActive() const;
 		bool IsSelected() const;
@@ -75,8 +77,13 @@ namespace BHive
 		static unsigned int GetNextID();
 	};	
 
-	inline bool operator==(const Object& a, const Object& b);
-	inline std::ostream& operator<<(std::ostream& os, const Object& object);
+	inline bool operator==(const Object& a, const Object& b)
+	{
+		return (a.GetObjectID() == b.GetObjectID());
+	}
 
-	#include "Object.inl"
+	inline std::ostream& operator<<(std::ostream& os, const Object& object)
+	{
+		return os << object.ToString();
+	}
 }

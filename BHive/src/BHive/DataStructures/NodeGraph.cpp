@@ -24,7 +24,7 @@ namespace BHive
 
 	}
 
-	Node::Node(String name, int numInputs, int numOutputs)
+	Node::Node(FString name, int numInputs, int numOutputs)
 		:Node()
 	{
 		mNumInputs = numInputs;

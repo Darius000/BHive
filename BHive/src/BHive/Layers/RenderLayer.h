@@ -1,7 +1,7 @@
 #pragma once
 
-#include "BHive/Layer.h"
-#include "World.h"
+#include "Layer.h"
+#include "BHive/Levels/World.h"
 
 namespace BHive
 {

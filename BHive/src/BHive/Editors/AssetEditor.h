@@ -10,14 +10,14 @@ namespace BHive
 	class AssetEditor
 	{
 	public:
-		AssetEditor(BResource& asset, const std::string& editorName);
+		AssetEditor(BResource& asset, const FString& editorName);
 		~AssetEditor();
 		AssetEditor(const AssetEditor& assetEditor);
 
 	protected:
 		BResource* m_Asset;
 
-		std::string m_EditorName;
+		FString m_EditorName;
 
 		bool m_ShowEditor;
 

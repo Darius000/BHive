@@ -4,7 +4,7 @@
 namespace BHive
 {
 	BillboardComponent::BillboardComponent()
-		:texture(0)
+		//:texture(0)
 	{
 
 	}
@@ -15,7 +15,7 @@ namespace BHive
 
 	}
 
-	void BillboardComponent::ComponentStart()
+	/*void BillboardComponent::ComponentStart()
 	{
 		vertexShader = "Shaders/Billboard.vs";
 		fragmentShader = "Shaders/Billboard.fs";
@@ -100,14 +100,14 @@ namespace BHive
 
 		/*std::cout << "Positions Size:" << (unsigned int)positions.size() * sizeof(float)
 			<< " Indices Size:" << (unsigned int)indices.size() * sizeof(unsigned int) << "\n";*/
-	}
+	/*}
 
 	void BillboardComponent::SetTexture(std::string fileName, std::string path)
 	{
 		/*texture = new Texture2D();
 		texture->LoadTexture(fileName, path);
 		texture->Type = ETextureType::DIFFUSE;*/
-	}
+	/*}
 
 	void BillboardComponent::SetTexture(Texture2D* InTexture)
 	{
@@ -139,5 +139,5 @@ namespace BHive
 		float z = B.z - A.z;
 
 		return sqrt((x * x) + (y * y) + (z * z));
-	}
+	}*/
 }

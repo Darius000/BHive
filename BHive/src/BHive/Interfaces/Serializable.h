@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Interface.h"
-#include "DataTypes.h"
 
 namespace BHive
 {
@@ -10,28 +9,28 @@ namespace BHive
 	public:
 		virtual std::ofstream& OnSave(std::ofstream& os) const = 0;
 		virtual void OnLoad(std::ifstream& fs) = 0;
-		virtual String ToString() const = 0;
+		virtual FString ToString() const = 0;
 	};
 
 	class ISerializable
 	{
 	public:
 		ISerializable();
-		virtual void OnSave(std::ofstream& resourceFile, const String& resourceFilePath) = 0;
+		virtual void OnSave(std::ofstream& resourceFile, const FString& resourceFilePath) = 0;
 		virtual void OnLoad(std::ifstream& resourceFile) = 0;
 		void DeleteResourceFile();
-		String GetFileName() const;
-		String GetFilePath() const;
-		String GetSaveFilePath();
+		FString GetFileName() const;
+		FString GetFilePath() const;
+		FString GetSaveFilePath();
 		bool FileExists();
 	public:
-		void SetFilePath(const String& resourceFilePath);
-		void SetFileName(const String& resourceFileName);	
+		void SetFilePath(const FString& resourceFilePath);
+		void SetFileName(const FString& resourceFileName);	
 	public:
 		void Serialize();
 	private:
-		String m_FilePath = "";
-		String m_FileName = "";
+		FString m_FilePath = "";
+		FString m_FileName = "";
 	};	
 
 	inline std::ofstream& operator<<(std::ofstream& os, const ISerializableInterface& interface)

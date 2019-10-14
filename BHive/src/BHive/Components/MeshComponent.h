@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Assets/Shader.h"
-#include "Assets/Mesh.h"
-#include "Cameras/Camera.h"
-#include "BHive/Entities/Entity.h"
+//#include "Assets/Shader.h"
+//#include "Assets/Mesh.h"
+//#include "Cameras/Camera.h"
+#include "RenderComponent.h"
 
 namespace BHive
 {
@@ -17,7 +17,7 @@ namespace BHive
 		BBox(std::vector<glm::vec3> InPositions, glm::vec3 InColor = glm::vec3(1.0f, .5f, 0.0f))
 			:color(InColor)
 		{
-			CalculateBounds(InPositions);
+			//CalculateBounds(InPositions);
 		}
 
 		BBox(glm::vec3 InMin, glm::vec3 InMax, glm::vec3 InColor = glm::vec3(1.0f, .5f, 0.0f))
@@ -29,60 +29,64 @@ namespace BHive
 
 		~BBox()
 		{
-			delete shader;
+			//delete shader;
 		}
 
 		glm::vec3 min;
 		glm::vec3 max;
 		glm::vec3 color;
 
-		void CreateDrawBounds();
+		//void CreateDrawBounds();
 
-		void DrawBounds(MeshComponent* meshComponent);
+		//void DrawBounds(MeshComponent* meshComponent);
 
-	protected:
-		void CalculateBounds(const std::vector<glm::vec3> positions);
+// 	protected:
+// 		void CalculateBounds(const std::vector<glm::vec3> positions);
 
 	private:
-		unsigned int VAO, EBO;
-		unsigned int VBO;
+		//unsigned int VAO, EBO;
+		//unsigned int VBO;
 
-		std::vector<unsigned int> indices;
+		//std::vector<unsigned int> indices;
 
-		Shader* shader;
+		//Shader* shader;
 	};
 
-	class BHive_API MeshComponent : public Entity
+	class BHive_API MeshComponent : public RenderComponent
 	{
+
+		BCLASS(MeshComponent, ComponentCategory | PrimitiveCategory, RenderComponent)
+
 	public:
 		MeshComponent();
-		MeshComponent(std::string path);
+		virtual ~MeshComponent();
+		//MeshComponent(std::string path);
 
 		
-		void Draw(Shader* shader);
-		void DrawBounds();
+		//void Draw(Shader* shader);
+		//void DrawBounds();
 
-		void LoadResource(std::string path);
-		void SetUpBounds();
+		//void LoadResource(std::string path);
+		//void SetUpBounds();
 
-		BBox* BoundingBox;
-		std::vector<BBox*> SubBoundingBoxes;
+		//BBox* BoundingBox;
+		//std::vector<BBox*> SubBoundingBoxes;
 
 	private:
 
-		std::vector<Texture2D> textures_loaded;
+		//std::vector<Texture2D> textures_loaded;
 
-		std::vector<Mesh> meshes;
-		std::string directory;
+		//std::vector<Mesh> meshes;
+		//std::string directory;
 
-		bool gammaCorrection;
-		bool m_BoundsUpdated;
+		//bool gammaCorrection;
+		//bool m_BoundsUpdated;
 
-		void LoadMeshComponent(std::string path);
-		void ProcessNode(aiNode * node, const aiScene* World);
-		Mesh ProcessMesh(aiMesh* mesh, const aiScene* World);
-		std::vector<Texture2D> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, ETextureType typeName);
-		BBox* GetSubBoundingBox(int index);
+		//void LoadMeshComponent(std::string path);
+		//void ProcessNode(aiNode * node, const aiScene* World);
+		//Mesh ProcessMesh(aiMesh* mesh, const aiScene* World);
+		//std::vector<Texture2D> LoadMaterialTextures(aiMaterial* mat, aiTextureType type, ETextureType typeName);
+		//BBox* GetSubBoundingBox(int index);
 	};
 }
 

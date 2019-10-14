@@ -4,9 +4,10 @@
 
 namespace BHive
 {
-	void Component::SetOwner(Entity& entity)
+	/*void Component::SetOwner(Entity& entity)
 	{
-		m_Entity = &entity;
-	}
+		if(m_Entity != &entity)
+			m_Entity = &entity;
+	}*/
 }
 

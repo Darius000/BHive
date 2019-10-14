@@ -1,11 +1,11 @@
 #include "BHivePCH.h"
 #include "DirectoryGraph.h"
-#include "BResourceManager.h"
+#include "BHive/Assets/BResourceManager.h"
 
 namespace BHive
 {
 
-	Entry::Entry(String name, String path) 
+	Entry::Entry(FString name, FString path) 
 		:mPath(path), mName(name), mSelected(false)
 	{
 
@@ -16,7 +16,7 @@ namespace BHive
 		mParent = &parent;
 	}
 
-	Directory::Directory(String name, String path)
+	Directory::Directory(FString name, FString path)
 		:Entry(name, path), mNumChildDirectories(0)
 	{
 
@@ -33,23 +33,23 @@ namespace BHive
 		mChildren.emplace(std::make_pair(file->GetName(), std::move(file)));
 	}
 
-	void Directory::RemoveChild(String name)
+	void Directory::RemoveChild(FString name)
 	{
 		mChildren.erase(name);
 	}
 
-	void Directory::MoveChild(String name, Directory& directory)
+	void Directory::MoveChild(FString name, Directory& directory)
 	{
 		mChildren[name]->SetParent(directory);
 	}
 
-	FileEntry::FileEntry(String name, String path)
+	FileEntry::FileEntry(FString name, FString path)
 		:Entry(name, path)
 	{
 
 	}
 
-	DirectoryTreeGraph::DirectoryTreeGraph(String directory)
+	DirectoryTreeGraph::DirectoryTreeGraph(FString directory)
 		: mDirectory(directory), mCurrentDirectory(nullptr), mPreviousDirectory(nullptr)
 	{
 
@@ -64,17 +64,17 @@ namespace BHive
 		CreateDirectoryTree(*mRoot.get(), mDirectory, mDirectory);
 	}
 
-	void DirectoryTreeGraph::CreateDirectoryTree(Directory& parent, String name, String directory)
+	void DirectoryTreeGraph::CreateDirectoryTree(Directory& parent, FString name, FString directory)
 	{
-		bool exists = std::filesystem::exists(directory);
-		bool isDirectory = std::filesystem::is_directory(directory);
+		bool exists = std::filesystem::exists(*directory);
+		bool isDirectory = std::filesystem::is_directory(*directory);
 
 		if (exists && isDirectory)
 		{
-			for (const auto& entry : std::filesystem::directory_iterator(directory))
+			for (const auto& entry : std::filesystem::directory_iterator(*directory))
 			{
-				String entryName = entry.path().filename().string();
-				String path = directory + "\\" + entryName;
+				FString entryName = entry.path().filename().string().c_str();
+				FString path = directory + "\\" + entryName;
 
 				if (std::filesystem::is_directory(entry.status()))
 				{
@@ -88,7 +88,7 @@ namespace BHive
 				else
 				{
 					//Add File to graph
-					String extension = entry.path().extension().string();
+					FString extension = entry.path().extension().string().c_str();
 
 					std::unique_ptr<FileEntry> filePtr = std::make_unique<FileEntry>(entryName, path);
 
@@ -112,7 +112,7 @@ namespace BHive
 		}
 	}
 
-	void DirectoryTreeGraph::AddFile(Directory& parent, std::unique_ptr<FileEntry>& file, String extension)
+	void DirectoryTreeGraph::AddFile(Directory& parent, std::unique_ptr<FileEntry>& file, FString extension)
 	{
 		file->extension = extension;
 		if (&parent == nullptr)
@@ -136,8 +136,8 @@ namespace BHive
 	void DirectoryTreeGraph::OnGUIChildRender(Directory& directory)
 	{
 		bool node = directory.mNumChildDirectories == 0 ?
-			ImGui::TreeNodeEx(directory.GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Leaf) :
-			ImGui::TreeNodeEx(directory.GetName().c_str(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick);
+			ImGui::TreeNodeEx(*directory.GetName(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick | ImGuiTreeNodeFlags_Leaf) :
+			ImGui::TreeNodeEx(*directory.GetName(), ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_OpenOnDoubleClick);
 
 		if (node)
 		{

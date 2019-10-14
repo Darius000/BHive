@@ -5,7 +5,7 @@
 namespace BHive
 {
 
-	AssetEditor::AssetEditor(BResource& asset,const std::string& editorName)
+	AssetEditor::AssetEditor(BResource& asset,const FString& editorName)
 		:m_EditorName(editorName)
 	{
 		m_Asset = &asset;
@@ -47,7 +47,7 @@ namespace BHive
 
 	void AssetEditor::BeginImGuiRender()
 	{
-		ImGui::Begin((m_EditorName + "##" + std::to_string(m_Instance)).c_str(), &m_ShowEditor, m_WindowFlags);
+		ImGui::Begin(*(m_EditorName + "##" + m_Instance), &m_ShowEditor, m_WindowFlags);
 	}
 
 	void AssetEditor::EndImGuiRender()

@@ -2,7 +2,7 @@
 #include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
-#include "BHive/Application.h"
+#include "BHive/Application/Application.h"
 
 namespace BHive
 {

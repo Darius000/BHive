@@ -3,7 +3,8 @@
 #include "imgui/imgui.h"
 #include "BHive/Entities/Entity.h"
 #include "BHive/Components/Primitives/Triangle.h"
-#include "World.h"
+#include "BHive/Components/Primitives/Plane.h"
+#include "BHive/Levels/World.h"
 #include "Components/BillboardComponent.h"
 
 
@@ -53,38 +54,20 @@ class WorldOne : public BHive::World
 public:
 	virtual void CreateWorld() override
 	{
-		BH_INFO("Created World 1");
-		/*BHive::Camera* MainCam = AddEntity<BHive::Camera>();
-		BHive::GameObject* Box = AddEntity<BHive::GameObject>();
-		Box->AddComponent<BHive::BillboardComponent>();*/
-
 		BHive::Entity* E0 = AddEntity<BHive::Entity>();
-		E0->GetTransform().SetPosition(0.0f, 50.0f, 0.0f);
+		//E0->GetTransform().SetPosition(-.5f, 0.0f, 0.0f);
 
 		BHive::Triangle* T0 = E0->AddComponent<BHive::Triangle>();
-		T0->SetPoints(BHive::Vector3(-0.25f, -0.25f, -0.0f), BHive::Vector3(0.25f, -0.25f, 0.0f), BHive::Vector3(0.0f, 0.1f, 0.0f));
+		BHive::Plane* T1 = E0->AddComponent<BHive::Plane>();
+		T0->AddChild(*T1);
+		
+		T0->SetHeight(.5f);
+		T0->SetWidth(.5f);
+		//T0->SetRelativeLocation(BHive::Vector3(0.0f, 0.0f, 0.0f));
 
-		//BHive::Matrix Mat;
-		//BH_TRACE("Matrix:{0}", Mat.ToString());
-
-		//BHive::Rotator rot;
-		//BHive::Rotator rot2(500.0f, 360.0f, 10.0f);
-
-		//rot += rot2;
-
-		////270, 0, 350
-		//BH_TRACE("Rotator:{0}", rot.ToString());
-		//BH_TRACE("Rotator:{0}", rot2.ToString());
-
-		//BH_TRACE("{0}", sizeof(int8));
-		//BH_TRACE("{0}", sizeof(int16));
-		//BH_TRACE("{0}", sizeof(int32));
-		//BH_TRACE("{0}", sizeof(int64));
-
-		//BH_TRACE("{0}", sizeof(uint8));
-		//BH_TRACE("{0}", sizeof(uint16));
-		//BH_TRACE("{0}", sizeof(uint32));
-		//BH_TRACE("{0}", sizeof(uint64));
+		T1->SetHeight(.25f);
+		T1->SetWidth(.25f);
+		//T1->SetRelativeLocation(BHive::Vector3(.25f, -.25f, 0.0f));
 	}
 };
 

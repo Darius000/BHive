@@ -6,8 +6,7 @@ namespace BHive
 	Entity::Entity()
 		:m_RootComponent(nullptr)
 	{
-		TransformComponent* root = AddComponent<TransformComponent>();
-		SetRootComponent(*root);
+		AddComponent<TransformComponent>();
 	}
 
 	Entity::~Entity()
@@ -35,8 +34,35 @@ namespace BHive
 		m_RootComponent = &component;
 	}
 
+	/*void Entity::AttachComponentToRoot(TransformComponent& component)
+	{
+		//m_RootComponent->AddChild(component);
+		component.AttachToComponent(*m_RootComponent);
+	}*/
+
+	void Entity::AttachToEntity(Entity& entity)
+	{
+		GetRootComponent()->AttachToEntity(entity);
+	}
+
+	void Entity::AttachToComponent(TransformComponent& component)
+	{
+		GetRootComponent()->AttachToComponent(component);
+	}
+
 	TransformComponent* Entity::GetRootComponent()
 	{
 		return m_RootComponent;
 	}
+
+	bool Entity::RemoveComponent(Component& component)
+	{
+		return false;
+	}
+
+	void Entity::AddComponent(Component& component)
+	{
+
+	}
+
 }

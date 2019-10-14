@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BHive/Window.h"
+#include "BHive/Platforms/Windows/Window.h"
 #include "BHive/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
@@ -37,7 +37,7 @@ namespace BHive
 
 		struct WindowData
 		{
-			std::string Title;
+			FString Title;
 			unsigned int Width, Height;
 			bool VSync;
 

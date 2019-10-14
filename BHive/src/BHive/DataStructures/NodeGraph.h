@@ -32,14 +32,14 @@ namespace BHive
 	{
 	public:
 		Node();
-		Node(String name, int numInputs = 0, int numOutputs = 1);
+		Node(FString name, int numInputs = 0, int numOutputs = 1);
 		virtual ~Node();
 
 
 		virtual void OnGUIRender() override;
 
 	public:
-		String mPath;
+		FString mPath;
 		bool mIsDirectory;
 
 		int mNumInputs;
@@ -69,10 +69,10 @@ namespace BHive
 	private:
 		Node* mRoot;
 
-		std::unordered_map<String, std::unique_ptr<Node>> mNodes;///Store entries here
+		std::unordered_map<FString, std::unique_ptr<Node>, FStringHashFunction> mNodes;//Store entries here
 		std::vector<std::unique_ptr<Edge>> mEdges;
 
-		static std::vector<Node*> s_SelectedEntries; ///when removing doesn't delete <-- vector doesn't own entries
+		static std::vector<Node*> s_SelectedEntries; //when removing doesn't delete <-- vector doesn't own entries
 
 	public:
 		virtual void Construct();

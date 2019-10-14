@@ -13,17 +13,17 @@ namespace BHive
 		BCLASS(Component, ComponentCategory, Object)
 
 	public:
-		Component() :m_Entity(nullptr) {};
+		Component() :m_Owner(nullptr) {};
 		virtual ~Component() {};
 
 		virtual void ComponentInit() {};
 		virtual void ComponentStart() {};
 		virtual void ComponentUpdate(float DeltaTime) {};
-		void SetOwner(Entity& entity);
-		Entity* GetOwner() const { return m_Entity; };
+		//void SetOwner(Entity& entity); remove component from eniy and add to new one
+		Entity* GetOwner() const { return m_Owner; };
 	
 	private:
-		Entity* m_Entity;
+		Entity* m_Owner;
 		
 	};
 }

@@ -17,7 +17,7 @@ namespace BHive
 	void Particle::ComponentUpdate(float DeltaTime)
 	{
 		UpdatePosition(DeltaTime);
-		UpdateColor(DeltaTime);
+		//UpdateColor(DeltaTime);
 
 		life -= DeltaTime;
 
@@ -34,16 +34,16 @@ namespace BHive
 		GetTransform().SetPosition(GetTransform().GetPosition() + velocity * deltaTime);
 	}
 
-	void Particle::UpdateColor(float deltaTime)
+	/*void Particle::UpdateColor(float deltaTime)
 	{
 		color.a -= (deltaTime * .01f);
 		size += (deltaTime * 2.0f);
 
 		SetColor(color);
-	}
+	}*/
 
 	ParticleEmitter::ParticleEmitter()
-		:texture(0), particles(0)
+		//:texture(0), particles(0)
 	{
 		SetDisplayName("Particle Emitter");
 	}
@@ -54,7 +54,7 @@ namespace BHive
 
 	}
 
-	void ParticleEmitter::ComponentStart()
+	/*void ParticleEmitter::ComponentStart()
 	{
 		SetNumberParticles(20);
 
@@ -139,5 +139,5 @@ namespace BHive
 	void ParticleEmitter::SetParticleShader(Shader* inShader)
 	{
 		shader = inShader;
-	}
+	}*/
 }

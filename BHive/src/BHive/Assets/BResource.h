@@ -2,8 +2,8 @@
 
 #include "Core.h"
 #include "BHive/Object/Object.h"
-#include "Interfaces/Serializable.h"
-#include "Editors/AssetEditor.h"
+#include "BHive/Interfaces/Serializable.h"
+#include "BHive/Editors/AssetEditor.h"
 
 
 namespace BHive
@@ -28,7 +28,7 @@ namespace BHive
 	protected:
 		//bool DoesAssetFileExist(String file);
 
-		virtual void OnSave(std::ofstream& resourceFile, const String& resourceFilePath) override;
+		virtual void OnSave(std::ofstream& resourceFile, const FString& resourceFilePath) override;
 		virtual void OnLoad(std::ifstream& resourceFile) override;
 		virtual void LoadResource() = 0;
 

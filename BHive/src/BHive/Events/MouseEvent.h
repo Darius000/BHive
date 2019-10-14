@@ -13,11 +13,11 @@ namespace BHive
 		inline float GetX() const { return m_MouseX; }
 		inline float GetY() const { return m_MouseY; }
 
-		std::string ToString() const override
+		FString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MousedMovedEvent: " << m_MouseX << ", " << m_MouseY;
-			return ss.str();
+			return ss.str().c_str();
 		}
 
 		EVENT_CLASS_TYPE(MouseMoved)
@@ -36,11 +36,11 @@ namespace BHive
 		inline float GetXOffset() const { return m_XOffset; }
 		inline float GetYOffset() const { return m_YOffset; }
 
-		std::string ToString() const override
+		FString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MousedScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
-			return ss.str();
+			return ss.str().c_str();
 		}
 
 		EVENT_CLASS_TYPE(MouseScrolled)
@@ -70,11 +70,11 @@ namespace BHive
 		MouseButtonPressedEvent(int button)
 			:MouseButtonEvent(button) {}
 
-		std::string ToString() const override
+		FString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MouseButtonPressedEvent: " << m_Button;
-			return ss.str();
+			return ss.str().c_str();
 		}
 
 		EVENT_CLASS_TYPE(MouseButtonPressed)
@@ -86,11 +86,11 @@ namespace BHive
 		MouseButtonReleasedEvent(int button)
 			:MouseButtonEvent(button) {}
 
-		std::string ToString() const override
+		FString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MouseButtonReleasedEvent: " << m_Button;
-			return ss.str();
+			return ss.str().c_str();
 		}
 
 		EVENT_CLASS_TYPE(MouseButtonReleased)

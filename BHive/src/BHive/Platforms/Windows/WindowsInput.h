@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BHive/Input.h"
+#include "BHive/Input/Input.h"
 
 namespace BHive
 {

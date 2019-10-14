@@ -1,56 +1,60 @@
 #include "BHivePCH.h"
 #include "Triangle.h"
-#include <glad/glad.h>
-#include "BHive/Entities/Entity.h"
+//#include <glad/glad.h>
+//#include "BHive/Entities/Entity.h"
 
 namespace BHive
 {
-	void Triangle::ComponentInit()
+
+	Triangle::Triangle()
+		:m_Height(1.0f), m_Width(1.0f)
 	{
-		SetPoints(Vector3(-.5f, -.5f, 0.0f), Vector3(.5f, -.5f, 0.0f), Vector3(0.0f, .5f, 0.0f));
+
 	}
 
-	void Triangle::ComponentStart()
+	Triangle::Triangle(float height, float base)
+		:m_Height(height), m_Width(base)
 	{
-		
+
 	}
 
-	void Triangle::ComponentUpdate(float DeltaTime)
+	void Triangle::SetHeight(float height)
 	{
-		glBindVertexArray(m_VertexArray);
-		glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+		m_Height = height;
+
+		UpdatePrimitive();
 	}
 
-	void Triangle::SetPoints(Vector3& p0, Vector3& p1, Vector3& p2)
+	void Triangle::SetWidth(float width)
 	{
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+		m_Width = width;
 
-		Vector3 p3 = p0 + GetRelativePosition();
-		Vector3 p4 = p1 + GetRelativePosition();
-		Vector3 p5 = p2 + GetRelativePosition();
+		UpdatePrimitive();
+	}
 
-		BH_CORE_TRACE("P0:{0}, P1:{1}, P2:{2}", p3.ToString(), p4.ToString(), p5.ToString());
-
-		//p3.Normalize();
-		//p4.Normalize();
-		//p5.Normalize();
-
-		//BH_CORE_TRACE("P0:{0}, P1:{1}, P2:{2}", p3.ToString(), p4.ToString(), p5.ToString());
-
-		Vector3 vertices[3] = {
-			p3,
-			p4, 
-			p5
+	void Triangle::CreatePrimitive()
+	{
+		m_Vertices = new float[3 * 7]
+		{
+			-m_Width / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+			m_Width / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f,
+			0.0f, m_Height, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f
 		};
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices) / sizeof(Vector3)));
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3), nullptr);
-
-		unsigned int indices[3] = { 0, 1, 2 };
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32)));
-		
+		m_Indices = new uint32[3]
+		{
+			0 , 1, 2
+		};
 	}
+
+	uint32 Triangle::GetVertexArraySize() const
+	{
+		return sizeof(float) * 3 * 7;
+	}
+
+	uint32 Triangle::GetIndexArraySize() const
+	{
+		return 3 * sizeof(uint32);
+	}
+
 }

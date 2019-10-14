@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Layer.h"
-#include "BResourceManager.h"
-#include "BHive/Assets/Texture.h"
+#include "BHive/Assets/BResourceManager.h"
+#include "BHive/Renderer/Texture/Texture.h"
 
 namespace BHive
 {
@@ -12,7 +12,7 @@ namespace BHive
 		AssetManagerLayer(BResourceManager& resourceManager);
 		void OnAttach() override;
 		void OnImGuiRender() override;
-		bool BeginContextMenu(const String& id);
+		bool BeginContextMenu(const FString& id);
 		void CreateObjectContextMenu(class Object& object);
 		void CreateAssetContextMenu();
 		void EndContextMenu();

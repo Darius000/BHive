@@ -62,7 +62,7 @@ namespace BHive
 		return std::filesystem::exists(fileName);
 	}*/
 
-	void BResource::OnSave(std::ofstream& resourceFile, const String& resourceFilePath)
+	void BResource::OnSave(std::ofstream& resourceFile, const FString& resourceFilePath)
 	{
 		//resourceFile << GetClass();
 	}

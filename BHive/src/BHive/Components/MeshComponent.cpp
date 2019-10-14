@@ -1,11 +1,11 @@
 #include "BHivePCH.h"
 #include "MeshComponent.h"
-#include "GameStatics.h"
+//#include "GameStatics.h"
 
 
 namespace BHive
 {
-	void BBox::CalculateBounds(const std::vector<glm::vec3> positions)
+	/*void BBox::CalculateBounds(const std::vector<glm::vec3> positions)
 	{
 		min.x = min.y = min.z = 1e10f;
 		max.x = max.y = max.z = -1e10f;
@@ -102,9 +102,9 @@ namespace BHive
 		glBindVertexArray(0);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
+	}*/
 
-	MeshComponent::MeshComponent()
+	/*MeshComponent::MeshComponent()
 		:BoundingBox(0), SubBoundingBoxes(0), m_BoundsUpdated(false)
 	{
 		SetDisplayName("MeshComponent");
@@ -306,6 +306,17 @@ namespace BHive
 	BBox* MeshComponent::GetSubBoundingBox(int index)
 	{
 		return SubBoundingBoxes[index];
-	}
+	}*/
+
+MeshComponent::MeshComponent()
+{
+
+}
+
+MeshComponent::~MeshComponent()
+{
+
+}
+
 }
 

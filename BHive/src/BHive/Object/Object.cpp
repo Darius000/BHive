@@ -5,7 +5,7 @@
 namespace BHive
 {
 	Object::Object()
-		:mDisplayName(GetClass() + std::to_string(unusedID)), mDestroyed(false), mSelected(false),
+		:mDisplayName(GetClass() + unusedID), mDestroyed(false), mSelected(false),
 		mActive(false), mEnabled(true), mObjectID(GetNextID())
 	{
 		
@@ -28,7 +28,7 @@ namespace BHive
 		return unusedID;
 	}
 
-	std::string Object::GetDisplayName() const
+	FString Object::GetDisplayName() const
 	{
 		return mDisplayName;
 	}
@@ -47,7 +47,7 @@ namespace BHive
 		return mSelected;
 	}
 
-	void Object::SetDisplayName(const String& name) 
+	void Object::SetDisplayName(const FString& name) 
 	{
 		mDisplayName = name;
 	}

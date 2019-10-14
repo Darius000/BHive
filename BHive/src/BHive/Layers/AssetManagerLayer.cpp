@@ -1,7 +1,7 @@
 #include "BHivePCH.h"
 #include "AssetManagerLayer.h"
 #include "imgui.h"
-#include "Application.h"
+#include "BHive/Application/Application.h"
 
 namespace BHive
 {
@@ -53,13 +53,13 @@ namespace BHive
 
 			for (auto& entry : mAssetmanager.mDirectoryGraph->GetSelectedDirectory()->mChildren)
 			{
-				String name = entry.second->GetName();
+				FString name = entry.second->GetName();
 				bool isDirectory = entry.second->IsDirectory();
 
 				if (isDirectory)
 				{
 					//Show folder image here
-					ImGui::ImageButton((void*)(intptr_t)mFolderImage->GetIconData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
+					//ImGui::ImageButton((void*)(intptr_t)mFolderImage->GetIconData(), ImVec2(128.0f, 128.0f), ImVec2(0.0f, 1.0f), ImVec2(1.0f, 0.0f));
 					if (ImGui::IsItemClicked(0))
 					{
 						Directory* dir = dynamic_cast<Directory*>(entry.second.get());
@@ -79,7 +79,7 @@ namespace BHive
 							mAssetmanager.mSelectedAsset = asset;
 							ImGui::OpenPopup("objectContextMenu");
 						}
-						ImGui::Text(asset->mDisplayName.c_str());
+						ImGui::Text(*asset->mDisplayName);
 						
 					}
 				}
@@ -99,10 +99,10 @@ namespace BHive
 		ImGui::End();
 	}
 
-	bool AssetManagerLayer::BeginContextMenu(const String& id)
+	bool AssetManagerLayer::BeginContextMenu(const FString& id)
 	{
 		
-		if (ImGui::BeginPopupContextItem(id.c_str()))
+		if (ImGui::BeginPopupContextItem(*id))
 		{
 			ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(1.0f, .3f, .3f, .5f));
 			ImGui::SetWindowPos(ImGui::GetMousePos(), ImGuiCond_FirstUseEver);
@@ -148,7 +148,7 @@ namespace BHive
 		{
 			BH_INFO("Import");
 
-			String importDir = mAssetmanager.mDirectoryGraph->GetSelectedDirectory()->GetPath();
+			FString importDir = mAssetmanager.mDirectoryGraph->GetSelectedDirectory()->GetPath();
 
 			mAssetmanager.ImportAsset(importDir);
 		}

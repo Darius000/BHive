@@ -1,18 +1,21 @@
 #pragma once
 
-#include "Assets/Texture2D.h"
-#include "RenderComponent.h"
-#include "Cameras/Camera.h"
+//#include "Assets/Texture2D.h"
+#include "MeshComponent.h"
+//#include "Cameras/Camera.h"
 
 namespace BHive
 {
-	class BHive_API BillboardComponent : public RenderComponent
+	class BHive_API BillboardComponent : public MeshComponent
 	{
+
+		BCLASS(BillboardComponent, ComponentCategory, MeshComponent)
+
 	public:
 		BillboardComponent();
 		virtual ~BillboardComponent();
 
-		virtual void ComponentStart() override;
+		/*virtual void ComponentStart() override;
 		virtual void ComponentUpdate(float DeltaTime) override;
 		virtual void Render() override;
 		virtual void Construct() override;
@@ -22,7 +25,8 @@ namespace BHive
 			0 = Opaque
 			1 = CutOut
 			2 = Transparent
-		*/
+			*/
+		/*
 		void SetBlendMode(int InMode);
 		void SetSize(float InSize);
 		void SetColor(glm::vec4 InColor);
@@ -34,6 +38,6 @@ namespace BHive
 		int blendMode;
 
 	private:
-		float CameraDistance(Camera* camera);
+		float CameraDistance(Camera* camera);*/
 	};
 }

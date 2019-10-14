@@ -1,31 +1,35 @@
 #pragma once
 
-
 #include "BillboardComponent.h"
 
 namespace BHive
 {
 	class BHive_API Particle : public BillboardComponent
 	{
+		BCLASS(Particle, ComponentCategory, BillboardComponent)
+
 	public:
 		Particle();
 		~Particle();
 
 		virtual void ComponentUpdate(float DeltaTime) override;
 		void UpdatePosition(float deltaTime);
-		void UpdateColor(float deltaTime);
+		//void UpdateColor(float deltaTime);
 
 		float life;
 		Vector3 velocity;
 	};
 
-	class BHive_API ParticleEmitter : public RenderComponent
+	class BHive_API ParticleEmitter : public Component
 	{
+
+		BCLASS(ParticleEmitter, ComponentCategory, Component)
+
 	public:
 		ParticleEmitter();
 		~ParticleEmitter();
 
-		virtual void ComponentStart() override;
+		/*virtual void ComponentStart() override;
 		virtual void ComponentUpdate(float deltaTime) override;
 
 		void SetNumberParticles(unsigned int num);
@@ -41,6 +45,6 @@ namespace BHive
 		glm::vec4 color;
 
 	private:
-		unsigned int lastUsedParticle;
+		unsigned int lastUsedParticle;*/
 	};
 }

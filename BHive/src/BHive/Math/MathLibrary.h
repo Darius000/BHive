@@ -1,5 +1,6 @@
-#pragma once
-#include "DataTypes.h"
+#ifndef MATHLIBRARY_H
+#define MATHLIBRARY_H
+
 
 namespace BHive
 {
@@ -36,3 +37,5 @@ namespace BHive
 }
 
 #include "MathLibrary.inl"
+
+#endif
