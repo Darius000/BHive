@@ -6,12 +6,11 @@
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
 
-#include "BHive/Application/Application.h"
+#include "BHive/Core/Application.h"
 
 //TEMP
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
-#include "BHive/Time/EditorTime.h"
 
 namespace BHive
 {

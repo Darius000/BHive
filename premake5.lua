@@ -14,6 +14,8 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "BHive/vendor/glfw/include"
 IncludeDir["Glad"] = "BHive/vendor/glad/include"
 IncludeDir["ImGui"] = "BHive/vendor/imgui"
+IncludeDir["GLM"] = "BHive/vendor/glm/include"
+IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
 
 include "BHive/vendor/glfw"
 include "BHive/vendor/glad"
@@ -35,7 +37,12 @@ project "BHive"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/**h",
+		"%{prj.name}/vendor/stb_image/**cpp",
+		"%{prj.name}/vendor/glm/**hpp",
+		"%{prj.name}/vendor/glm/**inl",
+		"%{prj.name}/Assets/**"
     }
     
     defines
@@ -48,22 +55,24 @@ project "BHive"
         "%{prj.name}/src",
         "%{prj.name}/src/BHive",
         "%{prj.name}/vendor/spdlog/include",
-        "%{prj.name}/vendor/glm/include",
-        "%{prj.name}/Shaders",
-        "%{prj.name}/vendor/assimp/include",
+        --"%{prj.name}/vendor/glm/include",
+        --"%{prj.name}/Shaders",
+        --"%{prj.name}/vendor/assimp/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.ImGui}",
+		"%{IncludeDir.GLM}",
+		"%{IncludeDir.STB_Image}"
     }
     
-    libdirs {"%{prj.name}/vendor/assimp/lib"}
+    --libdirs {"%{prj.name}/vendor/assimp/lib"}
 
     links
     {
         "GLFW",
         "Glad",
         "ImGui",
-        "assimp-vc140-mt.lib",
+        --"assimp-vc140-mt.lib",
         "opengl32.lib"
     }
 
@@ -107,7 +116,8 @@ project "Sandbox"
     files
     {
         "%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+		"%{prj.name}/Assets/**"
     }
 
     includedirs

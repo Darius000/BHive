@@ -18,7 +18,7 @@ namespace BHive
 
 		virtual void ComponentInit() {};
 		virtual void ComponentStart() {};
-		virtual void ComponentUpdate(float DeltaTime) {};
+		virtual void ComponentUpdate(const Time& time) {};
 		//void SetOwner(Entity& entity); remove component from eniy and add to new one
 		Entity* GetOwner() const { return m_Owner; };
 	

@@ -1,8 +1,6 @@
 #include "BHivePCH.h"
-#include "WindowsInput.h"
-
 #include <GLFW/glfw3.h>
-#include "BHive/Application/Application.h"
+#include "WindowsInput.h"
 
 namespace BHive
 {

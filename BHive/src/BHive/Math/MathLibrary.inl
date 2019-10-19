@@ -87,7 +87,7 @@ namespace BHive
 			return std::isinf(a);
 		}
 
-		Vector2 const LerpVector2(const Vector2 &v0, const Vector2 &v1, float const& t)
+		template<typename T> Vector2<T> const LerpVector2(const Vector2<T> &v0, const Vector2<T> &v1, float const& t)
 		{
 			float x = Lerp(v0.x, v1.x, t);
 			float y = Lerp(v0.y, v1.y, t);
@@ -95,7 +95,7 @@ namespace BHive
 			return Vector2(x, y);
 		};
 
-		Vector3 const LerpVector3(const Vector3 &v0, const Vector3 &v1, float const& t)
+		template<typename T> Vector3<T> const LerpVector3(const Vector3<T> &v0, const Vector3<T> &v1, float const& t)
 		{
 			float x = Lerp(v0.x, v1.x, t);
 			float y = Lerp(v0.y, v1.y, t);

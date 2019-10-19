@@ -1,7 +1,5 @@
 #pragma once
 
-#include "BHive/Input/Input.h"
-
 namespace BHive
 {
 	class WindowsInput : public Input

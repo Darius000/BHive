@@ -17,9 +17,6 @@ namespace BHive
 		virtual void Init() override;
 		virtual void SwapBuffers() override;
 
-	protected:
-		void SetOpenGLStates();
-
 	private:
 		GLFWwindow* m_WindowHandle;
 	};

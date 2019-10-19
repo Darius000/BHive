@@ -19,29 +19,36 @@
 #include <bitset>
 #include <array>
 
-#include "BHive/Logging/Log.h"
+//---------------GLM--------------
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
+//-------------Core----------------
+#include "BHive/Core/Core.h"
+#include "BHive/Core/DataTypes.h"
+#include "BHive/Math/MathLibrary.h"
+#include "BHive/Core/KeyCodes.h"
+#include "BHive/Core/MouseCodes.h"
+#include "BHive/Core/Event.h"
+#include "BHive/Core/MouseEvent.h"
+#include "BHive/Core/KeyEvent.h"
+#include "BHive/Core/ApplicationEvent.h"
+#include "BHive/Core/Input.h"
+#include "BHive/Core/Log.h"
+#include "BHive/Core/Time.h"
+#include "BHive/Core/Layer.h"
+#include "BHive/Core/Application.h"
+
+
+
+//#include <assimp/Importer.hpp>
+//#include <assimp/scene.h>
+//#include <assimp/postprocess.h>
 
 #ifdef BH_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif // !BH_PLATFORM_WINDOWS
 
-#include "BHive/Platforms/PlatformDataTypes.h"
-#include "BHive/Performance/Profiler.h"
-#include "BHive/Events/EventMacros.h"
-#include "BHive/Types/DataTypes.h"
-#include "BHive/Math/MathLibrary.h"
-//#include "BHive/DataTypes/Color.h" 0 - 255 unsigned char- max is 255
-//#include "BHive/DataTypes/LinearColor.h" 0 - 1
 
-
-typedef std::ofstream ofStream;
-typedef std::ifstream ifStream;
-typedef std::istream iStream;
 

@@ -27,23 +27,10 @@ namespace BHive
 		int attributes;
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &attributes);
 		BH_CORE_INFO(" Vertex attributes supported: {0}", attributes);
-
-		SetOpenGLStates();
 	}
 
 	void OpenGLContext::SwapBuffers()
 	{
 		glfwSwapBuffers(m_WindowHandle);
 	}
-
-	void OpenGLContext::SetOpenGLStates()
-	{
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_MULTISAMPLE);
-		glLineWidth(1.0f);
-		glEnable(GL_LINE_SMOOTH);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
-
 }

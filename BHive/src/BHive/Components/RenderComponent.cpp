@@ -1,42 +1,21 @@
 #include "BHivePCH.h"
 #include <glad/glad.h>
 #include "RenderComponent.h"
-//#include "Cameras/Camera.h"
-//#include "GameStatics.h"
-
+#include "BHive/AssetManagement/AssetManager.h"
+#include "BHive/Renderer/Renderer.h"
 
 namespace BHive
 {
 	RenderComponent::RenderComponent()
-		:m_VertexBuffer(nullptr), m_IndexBuffer(nullptr),
-		m_VertexArray(-1)
+		:m_VertexArray(nullptr)
 	{
-
+		m_Shader = AssetManager::GetShaders()[0].get();
 	}
 
 	RenderComponent::RenderComponent(const RenderComponent& other)
 	{
-		m_VertexArray	= other.m_VertexArray;
-		m_VertexBuffer	= VertexBuffer::Create(m_Vertices, GetVertexArraySize());
-		m_IndexBuffer	= IndexBuffer::Create(m_Indices, GetIndexArraySize());
+		m_VertexArray.reset(other.m_VertexArray.get());
 	}
-
-	RenderComponent::~RenderComponent()
-	{
-		delete m_IndexBuffer;
-		delete m_VertexBuffer;
-
-		if (m_Vertices != nullptr)
-		{
-			delete[] m_Vertices;
-		}
-
-		if (m_Indices != nullptr)
-		{
-			delete[] m_Indices;
-		}
-	}
-
 
 	void RenderComponent::ComponentInit()
 	{
@@ -47,75 +26,67 @@ namespace BHive
 	{
 		Super::ComponentStart();
 
-		UpdateBuffers();	
+		CreateBuffers();	
 	}
 
-	void RenderComponent::ComponentUpdate(float deltaTime)
+	void RenderComponent::ComponentUpdate(const Time& time)
 	{
-		Super::ComponentUpdate(deltaTime);
+		Super::ComponentUpdate(time);
 
-		glBindVertexArray(m_VertexArray);
-		glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetSize(), GL_UNSIGNED_INT, nullptr);
+		Draw();
 	}
 
 	void RenderComponent::OnTransformUpdated(const Transform& transform)
 	{
-		////Update vertex positions relative to absolute location
-		//for (uint32 i = 0; (uint32)i < sizeof(m_Vertices) / sizeof(float); i++)
-		//{
-		//	Vector3 absLoc = GetAbsoluteLocation();
-		//	m_Vertices[i] += absLoc;
-		//}
+		Super::OnTransformUpdated(transform);
 
-		UpdateBuffers();
+		//BH_CORE_TRACE("RenderComponent OnTransformUpdate!");
+
+		m_Shader->Bind();
 	}
 
-	void RenderComponent::UpdateBuffers()
+	void RenderComponent::SetShader(Ref<Shader>& shader)
 	{
-		if (m_VertexArray == -1)
-		{
-			glGenVertexArrays(1, &m_VertexArray);
-		}
+		m_Shader = &*shader;
+	}
 
-		glBindVertexArray(m_VertexArray);
+	void RenderComponent::SetTexture(Ref<Texture2D>& texture)
+	{
+		m_Texture = texture;
+	}
 
-		if (m_VertexBuffer != nullptr)
-			delete m_VertexBuffer;
-		
-		m_VertexBuffer = VertexBuffer::Create(m_Vertices, GetVertexArraySize());
+	void RenderComponent::CreateBuffers()
+	{
+		m_VertexArray.reset(VertexArray::Create());
 
-		{
-			BufferLayout layout = {
-				{ ShaderDataType::Float3, "a_Position" },
-				{ ShaderDataType::Float4, "a_Color"}
-			};
+		BufferLayout layout = {
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float4, "a_Color"},
+			{ ShaderDataType::Float2, "a_TexCoord"}
+		};
 
-			m_VertexBuffer->SetLayout(layout);
-		}
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		m_VertexBuffer.reset(VertexBuffer::Create(m_Vertices.data(), (uint32)(m_Vertices.size() * sizeof(float))));
+		m_VertexBuffer->SetLayout(layout);
 
-		uint32 index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout();
-		for (const auto& element : layout)
-		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(
-				index, 
-				element.GetComponentCount(),
-				ShaderDataTypeToOpenGlBaseType(element.Type), 
-				element.Normalized ? GL_TRUE : GL_FALSE, 
-				layout.GetStride(),
-				(const void*)element.Offset);
-			index++;
-		}
+		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		m_IndexBuffer.reset(IndexBuffer::Create(m_Indices.data(), (uint32)(m_Indices.size() * sizeof(uint32))));
 
-		//offset by 12 bytes 3 * 4 and size is number of floats
-		//glEnableVertexAttribArray(1);
-		//glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (const void*)12);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+	}
 
-		if (m_IndexBuffer != nullptr)
-			delete m_IndexBuffer;
+	void RenderComponent::Draw()
+	{
+		m_Shader->Bind();
+		dynamic_cast<OpenGLShader*>(m_Shader)->SetMatrix4("u_Model", GetTransform().GetMatrix());
+		dynamic_cast<OpenGLShader*>(m_Shader)->SetInt("u_Texture", 0);
 
-		m_IndexBuffer = IndexBuffer::Create(m_Indices, GetIndexArraySize());
+		m_Texture->Bind();
+
+		m_VertexArray->Bind();
+
+		Renderer::Submit(m_VertexArray);
 	}
 }

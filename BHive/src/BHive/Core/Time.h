@@ -1,0 +1,40 @@
+#pragma once
+
+#include "Core.h"
+
+namespace BHive
+{
+	class BHive_API Time
+	{
+	public:
+		Time()
+			:m_Time(0.0f), m_LastTime(0.0f), m_DeltaTime(0.0f) {}
+		virtual ~Time() {}
+
+		virtual float GetPlatformTime() = 0;
+		float GetTime() const { return m_Time;}
+		float GetDeltaTime() const { return m_DeltaTime; }
+		void Update();
+		float GetSeconds() const { return m_Time; }
+		float GetMillisconds() const { return m_Time * 1000.0f; }
+
+	public:
+		operator float() const { return m_Time; }
+
+	private:
+		float m_Time;
+		float m_LastTime;
+		float m_DeltaTime;
+	};
+
+	class BHive_API WindowsTime : public Time
+	{
+
+	public:
+		WindowsTime() {}
+		virtual ~WindowsTime() {}
+
+	public:
+		virtual float GetPlatformTime() override;
+	};
+}

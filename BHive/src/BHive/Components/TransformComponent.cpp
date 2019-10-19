@@ -1,40 +1,49 @@
 #include "BHivePCH.h"
 #include "TransformComponent.h"
-#include "BHive/Entities/Entity.h"
+#include "BHive/Object/Entity.h"
 
 namespace BHive
 {
 	TransformComponent::TransformComponent()
 		:m_Parent(nullptr)
 	{
-		m_Transform.OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(&TransformComponent::OnTransformUpdated));
+		m_Transform.OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(&TransformComponent::UpdateTransformation));
 	}
 
-	Vector3 TransformComponent::GetAbsoluteLocation()
+	Transform TransformComponent::GetAbsoluteTransform()
 	{
-		Vector3 location = m_RelativeLocation;
 		TransformComponent * parent = GetParent();
+
+		FVector3 location = m_RelativeTransform.GetPosition();
+		Rotator rotation = m_RelativeTransform.GetRotation();
+		FVector3 scale = m_RelativeTransform.GetScale();
+		FVector3 pScale = parent->GetTransform().GetScale();
 
 		//Loop through hierarchy to get locations to add to get absolute location
 		while (parent != nullptr)
 		{
 			location += parent->GetTransform().GetPosition();
+			rotation += parent->GetTransform().GetRotation();
+			scale.x *= pScale.x;
+			scale.y *= pScale.y;
+			scale.z *= pScale.z;
+
 			parent = parent->GetParent(); //get the next parent
 		}
 
-		return location;
+		return Transform(location, rotation, scale);
 	}
 
-	void TransformComponent::SetRelativeLocation(Vector3& location)
+	void TransformComponent::SetRelativeTransform(const Transform& transform)
 	{
-		m_RelativeLocation = location;
+		m_RelativeTransform = transform;
 
-		UpdateRelativeLocation();
+		UpdateRelativeTransform();
 	}
 
-	Vector3 TransformComponent::GetRelativeLocation()
+	Transform TransformComponent::GetRelativeTransform()
 	{
-		return m_RelativeLocation;
+		return m_RelativeTransform;
 	}
 
 	void TransformComponent::AddChild(TransformComponent& child)
@@ -74,7 +83,7 @@ namespace BHive
 			m_Parent = &parent;
 			m_Parent->children.push_back(this);
 
-			UpdateRelativeLocation();
+			UpdateRelativeTransform();
 		}
 
 		return;
@@ -88,13 +97,30 @@ namespace BHive
 			children.erase(it);
 	}
 
-	void TransformComponent::UpdateRelativeLocation()
-	{
-		m_Transform.SetPosition(m_RelativeLocation + m_Parent->m_Transform.GetPosition());
-	}
-
 	void TransformComponent::OnTransformUpdated(const Transform& transform)
 	{
-		
+		//BH_CORE_TRACE("TransformComponent OnTransformUpdate!");
+
+		for (auto& c : children)
+		{
+			c->UpdateRelativeTransform();
+		}
+	}
+
+	void TransformComponent::UpdateTransformation(const Transform& transform)
+	{
+		OnTransformUpdated(transform);
+	}
+
+	void TransformComponent::UpdateRelativeTransform()
+	{
+		FVector3 relLocation = m_RelativeTransform.GetPosition();
+		Rotator relRotation = m_RelativeTransform.GetRotation();
+		FVector3 relScale	= m_RelativeTransform.GetScale();
+		FVector3 pScale		= m_Parent->m_Transform.GetScale();
+
+ 		m_Transform.SetPosition(relLocation + m_Parent->m_Transform.GetPosition());
+		m_Transform.SetRotation(relRotation + m_Parent->m_Transform.GetRotation());
+		m_Transform.SetScale(relScale.x * pScale.x, relScale.y * pScale.y, relScale.z * pScale.z);
 	}
 }

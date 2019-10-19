@@ -1,8 +1,10 @@
 #pragma once
 
 #include "TransformComponent.h"
-//#include "Assets/Shader.h"
-#include "BHive/Renderer/Buffer/Buffer.h"
+#include "BHive/Renderer/Buffer.h"
+#include "BHive/Renderer/VertexArray.h"
+#include "BHive/Platforms/Opengl/OpenGLShader.h"
+#include "BHive/Renderer/Texture.h"
 
 namespace BHive
 {
@@ -13,24 +15,30 @@ namespace BHive
 	public:
 		RenderComponent();
 		RenderComponent(const RenderComponent& other);
-		virtual ~RenderComponent();
+		virtual ~RenderComponent() {};
 
 		virtual void ComponentInit() override;
 		virtual void ComponentStart() override;
-		virtual void ComponentUpdate(float deltaTime) override;
-		virtual void OnTransformUpdated(const Transform& transform);
-		void UpdateBuffers();
+		virtual void ComponentUpdate(const Time& time) override;
 
 	protected:
-		float* m_Vertices;
-		uint32* m_Indices;
-		virtual uint32 GetVertexArraySize() const { return 0; }
-		virtual uint32 GetIndexArraySize() const { return 0; }
+		virtual void OnTransformUpdated(const Transform& transform) override;
+
+	public:
+		void SetShader(Ref<Shader>& shader);
+		Shader* GetShader() const { return m_Shader; }
+		void SetTexture(Ref<Texture2D>& texture);
+	private:
+		void CreateBuffers();
+		void Draw();
+
+	protected:
+		std::vector<float> m_Vertices;
+		std::vector<uint32> m_Indices;
 
 	private:
-		unsigned int m_VertexArray;
-		VertexBuffer* m_VertexBuffer;
-		IndexBuffer* m_IndexBuffer;
-		
+		Shader* m_Shader;
+		Ref<VertexArray> m_VertexArray;
+		Ref<Texture2D> m_Texture;
 	};
 }

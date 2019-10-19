@@ -28,8 +28,8 @@ namespace BHive
 		//inline Vector3 const ClampVector3(const Vector3 & value, const Vector3 &min, const Vector3 &max);
 		//inline Rotator const ClampRotator(const Rotator & value, const Rotator &min, const Rotator &max);
 
-		inline Vector2 const LerpVector2(const Vector2 &v0, const Vector2 &v1, float const& t);
-		inline Vector3 const LerpVector3(const Vector3 &v0, const Vector3 &v1, float const& t);
+		template<typename T> inline Vector2<T> const LerpVector2(const Vector2<T> &v0, const Vector2<T> &v1, float const& t);
+		template<typename T> inline Vector3<T> const LerpVector3(const Vector3<T> &v0, const Vector3<T> &v1, float const& t);
 		inline Rotator const LerpRotator(const Rotator &r0, const Rotator &r1, float const& t);
 		//inline Color const Lerp(const Color &v, const Color &min, const Color &max);
 		//inline LinearColor const Lerp(const LinearColor &v, const LinearColor &min, const LinearColor &max);
