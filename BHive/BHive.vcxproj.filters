@@ -28,17 +28,11 @@
     <Filter Include="src\BHive\Core">
       <UniqueIdentifier>{E22BD88B-CEF9-CB91-B78D-3CB8A3FAA7F6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Core\Profile">
+      <UniqueIdentifier>{C272F620-AE6C-1F73-97D9-B583837285DF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\BHive\Core\Types">
       <UniqueIdentifier>{06D1CC7E-F25F-5648-9B7E-6A4387EC66EE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Graphs">
-      <UniqueIdentifier>{9E8214EC-8A7B-333E-B3AD-18C39F05134A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Graphs\DirectoryGraph">
-      <UniqueIdentifier>{14F4B0C6-80D7-BF06-89DA-ED42F53C8657}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Graphs\NodeGraph">
-      <UniqueIdentifier>{65FE5A27-510E-07F8-BAC7-6B16A6F6F590}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\ImGui">
       <UniqueIdentifier>{F46D4807-60F9-B5CB-690A-39C0D51412CC}</UniqueIdentifier>
@@ -168,6 +162,9 @@
     <ClInclude Include="src\BHive\Core\MouseEvent.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Profile\Timer.h">
+      <Filter>src\BHive\Core\Profile</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\Serializable.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
@@ -177,13 +174,19 @@
     <ClInclude Include="src\BHive\Core\Types\Color.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\FString.h">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Matrix.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\Name.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\PlatformDataTypes.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Rotator.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\String.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Transform.h">
@@ -194,12 +197,6 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Vector3.h">
       <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Graphs\DirectoryGraph\DirectoryGraph.h">
-      <Filter>src\BHive\Graphs\DirectoryGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Graphs\NodeGraph\NodeGraph.h">
-      <Filter>src\BHive\Graphs\NodeGraph</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h">
       <Filter>src\BHive\ImGui</Filter>
@@ -1362,10 +1359,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\PlatformDataTypes.h">
-      <Filter>src\BHive\Platforms</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\FName.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\AssetManagement\AssetManager.cpp">
@@ -1401,6 +1394,9 @@
     <ClCompile Include="src\BHive\Core\Log.cpp">
       <Filter>src\BHive\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Core\Profile\Timer.cpp">
+      <Filter>src\BHive\Core\Profile</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Core\Serializable.cpp">
       <Filter>src\BHive\Core</Filter>
     </ClCompile>
@@ -1410,20 +1406,17 @@
     <ClCompile Include="src\BHive\Core\Types\Color.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\FString.cpp">
+    <ClCompile Include="src\BHive\Core\Types\Name.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\Transform.cpp">
+    <ClCompile Include="src\BHive\Core\Types\String.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Graphs\DirectoryGraph\DirectoryGraph.cpp">
-      <Filter>src\BHive\Graphs\DirectoryGraph</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Graphs\NodeGraph\NodeGraph.cpp">
-      <Filter>src\BHive\Graphs\NodeGraph</Filter>
+    <ClCompile Include="src\BHive\Core\Types\Transform.cpp">
+      <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp">
       <Filter>src\BHive\ImGui</Filter>
@@ -1494,7 +1487,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\FName.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Billboard.fs">

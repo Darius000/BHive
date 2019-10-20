@@ -21,10 +21,17 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SandBox2D.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SandBox2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\SandoxApp.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\SandBox2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Data\back.png.bh">
@@ -134,8 +141,5 @@
     <Image Include="Assets\Textures\wall.jpg">
       <Filter>Assets\Textures</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\SandBox2D.h" />
   </ItemGroup>
 </Project>

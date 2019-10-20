@@ -140,6 +140,9 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\SandBox2D.h" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="src\SandBox2D.cpp" />
     <ClCompile Include="src\SandoxApp.cpp" />
   </ItemGroup>
@@ -186,9 +189,6 @@
     <ProjectReference Include="..\BHive\BHive.vcxproj">
       <Project>{F39AD20C-5FAF-FABD-2831-9E1D9404F7EE}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\SandBox2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

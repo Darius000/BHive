@@ -11,13 +11,19 @@
 #include <sstream>
 #include <fstream>
 #include <ostream>
+#include <cctype>
 #include <vector>
+#include <map>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
 #include <set>
 #include <bitset>
 #include <array>
+#include <future> //async for multi threading
+#include <chrono>
+#include <thread>
 
 //---------------GLM--------------
 #include <glm/glm.hpp>
@@ -26,6 +32,8 @@
 
 //-------------Core----------------
 #include "BHive/Core/Core.h"
+#include "BHive/Core/Log.h"
+#include "BHive/Core/Profile/Timer.h"
 #include "BHive/Core/DataTypes.h"
 #include "BHive/Math/MathLibrary.h"
 #include "BHive/Core/KeyCodes.h"
@@ -35,12 +43,9 @@
 #include "BHive/Core/KeyEvent.h"
 #include "BHive/Core/ApplicationEvent.h"
 #include "BHive/Core/Input.h"
-#include "BHive/Core/Log.h"
 #include "BHive/Core/Time.h"
 #include "BHive/Core/Layer.h"
 #include "BHive/Core/Application.h"
-
-
 
 //#include <assimp/Importer.hpp>
 //#include <assimp/scene.h>

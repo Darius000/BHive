@@ -5,7 +5,7 @@
 
 namespace BHive
 {
-	Ref<Shader> Shader::Create(const FString& filePath)
+	Ref<Shader> Shader::Create(const Path& filePath)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -17,7 +17,7 @@ namespace BHive
 		return nullptr;
 	}
 
-	Ref<Shader> Shader::Create(const FString& name, const FString& vertexSrc, const FString& fragmentSrc)
+	Ref<Shader> Shader::Create(const Name& name, const FString& vertexSrc, const FString& fragmentSrc)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -29,7 +29,7 @@ namespace BHive
 		return nullptr;
 	}
 
-	void ShaderLibrary::Add(const FString& name, const Ref<Shader>& shader)
+	void ShaderLibrary::Add(const Name& name, const Ref<Shader>& shader)
 	{
 		BH_CORE_ASSERT(!Exists(name), "Shader Already Exists");
 		m_Shaders[name] = shader;
@@ -41,27 +41,27 @@ namespace BHive
 		Add(name, shader);
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const FString& filePath)
+	Ref<Shader> ShaderLibrary::Load(const Path& filePath)
 	{
 		auto shader = Shader::Create(filePath);
 		Add(shader);
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const FString& name, const FString& filePath)
+	Ref<Shader> ShaderLibrary::Load(const Name& name, const Path& filePath)
 	{
 		auto shader = Shader::Create(filePath);
 		Add(name, shader);
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Get(const FString& name)
+	Ref<Shader> ShaderLibrary::Get(const Name& name)
 	{
 		BH_CORE_ASSERT(Exists(name), "Shader Doesn't Exists");
 		return m_Shaders[name];
 	}
 
-	bool ShaderLibrary::Exists(const FString& name) const
+	bool ShaderLibrary::Exists(const Name& name) const
 	{
 		return m_Shaders.find(name) != m_Shaders.end();
 	}

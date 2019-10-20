@@ -58,7 +58,9 @@ void SandBox2D::OnAttach()
 
 	BHive::Ref<BHive::Scene> scene0 = std::make_shared<BHive::Scene>(m_OrthoCameraController.GetCamera());
 
-	BHive::Ref<BHive::Entity> square = std::make_shared<BHive::Entity>(scene0->AddEntity<BHive::Entity>());
+	BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();
+
+	BHive::Ref<BHive::Entity> square = std::shared_ptr<BHive::Entity>(E0);
 
 	BHive::Plane* T1 = square->AddComponent<BHive::Plane>();
 	T1->SetShader(shader);

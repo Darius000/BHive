@@ -10,27 +10,27 @@ namespace BHive
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 
-		virtual const FString& GetName() const = 0;
+		virtual const Name& GetName() const = 0;
 
-		static Ref<Shader> Create(const FString& filePath);
-		static Ref<Shader> Create(const FString& name, const FString& vertexSrc, const FString& fragmentSrc);
+		static Ref<Shader> Create(const Path& filePath);
+		static Ref<Shader> Create(const Name& name, const FString& vertexSrc, const FString& fragmentSrc);
 	
 	};
 
 	class ShaderLibrary
 	{
 	public:
-		void Add(const FString& name, const Ref<Shader>& shader);
+		void Add(const Name& name, const Ref<Shader>& shader);
 		void Add(const Ref<Shader>& shader);
 		
-		Ref<Shader> Load(const FString& filePath);
-		Ref<Shader> Load(const FString& name, const FString& filePath);
+		Ref<Shader> Load(const Path& filePath);
+		Ref<Shader> Load(const Name& name, const Path& filePath);
 
-		Ref<Shader> Get(const FString& name);
+		Ref<Shader> Get(const Name& name);
 
-		bool Exists(const FString& name) const;
+		bool Exists(const Name& name) const;
 
 	private:
-		std::unordered_map<FName, Ref<Shader>> m_Shaders;
+		std::unordered_map<Name, Ref<Shader>> m_Shaders;
 	};
 }

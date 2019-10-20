@@ -17,7 +17,7 @@ namespace BHive
 		return 0;
 	}
 
-	OpenGLShader::OpenGLShader(const FString& filePath)
+	OpenGLShader::OpenGLShader(const Path& filePath)
 	{
 		FString source = ReadFile(filePath);	
 		auto shaderSources = PreProccess(source);
@@ -28,10 +28,12 @@ namespace BHive
 		auto lastDot = filePath.Find(".", 0);
 		auto count = lastDot == filePath.Size() ? filePath.Size() - lastLash : lastDot - lastLash;
 
-		m_Name = filePath.SubString(lastLash, count);
+		FString fileName;
+		filePath.GetSubString(lastLash, count, fileName);
+		m_Name = *fileName;
 	}
 
-	OpenGLShader::OpenGLShader(const FString& name, const FString&  vertexSrc, const FString&  fragmentSrc)
+	OpenGLShader::OpenGLShader(const Name& name, const FString&  vertexSrc, const FString&  fragmentSrc)
 	{
 		std::unordered_map<GLenum, FString> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -46,68 +48,67 @@ namespace BHive
 		glDeleteProgram(id);
 	}
 
-	void OpenGLShader::SetBool(const FString& name, bool value) const
+	void OpenGLShader::SetBool(const Name& name, bool value) const
 	{
-		glUniform1i(glGetUniformLocation(id, *name), (int)value);
+		glUniform1i(glGetUniformLocation(id, *name.ToString()), (int)value);
 	}
 
-	void OpenGLShader::SetInt(const FString& name, int value) const
+	void OpenGLShader::SetInt(const Name& name, int value) const
 	{
-		glUniform1i(glGetUniformLocation(id, *name), value);
+		glUniform1i(glGetUniformLocation(id, *name.ToString()), value);
 	}
 
-	void OpenGLShader::SetFloat(const FString& name, float value) const
+	void OpenGLShader::SetFloat(const Name& name, float value) const
 	{
-		glUniform1f(glGetUniformLocation(id, *name), value);
+		glUniform1f(glGetUniformLocation(id, *name.ToString()), value);
 	}
 
-	void OpenGLShader::SetVector2(const FString& name, float value0, float value1) const
+	void OpenGLShader::SetVector2(const Name& name, float value0, float value1) const
 	{
-		glUniform2f(glGetUniformLocation(id, *name), value0, value1);
+		glUniform2f(glGetUniformLocation(id, *name.ToString()), value0, value1);
 	}
 
-	void OpenGLShader::SetVector2(const FString& name, const glm::vec2& vec) const
+	void OpenGLShader::SetVector2(const Name& name, const glm::vec2& vec) const
 	{
-		glUniform2fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform2fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector3(const FString& name, float value0, float value1, float value2) const
+	void OpenGLShader::SetVector3(const Name& name, float value0, float value1, float value2) const
 	{
-		glUniform3f(glGetUniformLocation(id, *name), value0, value1, value2);
+		glUniform3f(glGetUniformLocation(id, *name.ToString()), value0, value1, value2);
 	}
 
-	void OpenGLShader::SetVector3(const FString& name, const glm::vec3& vec) const
+	void OpenGLShader::SetVector3(const Name& name, const glm::vec3& vec) const
 	{
-		glUniform3fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform3fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector4(const FString& name, float value0, float value1, float value2, float value3) const
+	void OpenGLShader::SetVector4(const Name& name, float value0, float value1, float value2, float value3) const
 	{
-		glUniform4f(glGetUniformLocation(id, *name), value0, value1, value2, value3);
+		glUniform4f(glGetUniformLocation(id, *name.ToString()), value0, value1, value2, value3);
 	}
 
-	void OpenGLShader::SetVector4(const FString& name, const glm::vec4& vec) const
+	void OpenGLShader::SetVector4(const Name& name, const glm::vec4& vec) const
 	{
-		glUniform4fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform4fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetMatrix2(const FString& name, const glm::mat2& mat) const
+	void OpenGLShader::SetMatrix2(const Name& name, const glm::mat2& mat) const
 	{
-		glUniformMatrix2fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix2fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix3(const FString& name, const glm::mat3& mat) const
+	void OpenGLShader::SetMatrix3(const Name& name, const glm::mat3& mat) const
 	{
-		glUniformMatrix3fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix3fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix4(const FString& name, const glm::mat4& mat) const
+	void OpenGLShader::SetMatrix4(const Name& name, const glm::mat4& mat) const
 	{
-		int32 loc = glGetUniformLocation(id, *name);
-		glUniformMatrix4fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix4fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	bool OpenGLShader::CheckShaderStatus(unsigned int Shader)
+	bool OpenGLShader::CheckShaderStatus(uint32 Shader)
 	{
 		int32 success;
 		int32 fileType;
@@ -140,7 +141,7 @@ namespace BHive
 		return success;
 	}
 
-	bool OpenGLShader::CheckLinkStatus(unsigned int ShaderProgram)
+	bool OpenGLShader::CheckLinkStatus(uint32 ShaderProgram)
 	{
 		int32 success;
 
@@ -158,7 +159,7 @@ namespace BHive
 		return success;
 	}
 
-	FString OpenGLShader::ReadFile(const FString& filePath)
+	FString OpenGLShader::ReadFile(const Path& filePath)
 	{
 		FString result;
 	
@@ -194,20 +195,20 @@ namespace BHive
 
 		FString vCode, fCode, type;
 
-		uint32 i = source.Find(typeToken, 0);
+		uint32 i = source.Find(*typeToken, 0);
 		uint32 j = source.Find("\n", i + typeTokenLength);
 		//FString vertex = source.SubString(i + typeTokenLength, j);
-		type = source.SubString(i + typeTokenLength + 1, j - 2);
+		source.GetSubString(i + typeTokenLength + 1, j - 2, type);
 
-		uint32 r = source.Find(typeToken, j);
-		vCode = source.SubString(j, r - 1);
+		uint32 r = source.Find(*typeToken, j);
+		source.GetSubString(j, r - 1, vCode);
 		shaderSources[ShaderTypeFromString(type)] = vCode;
 
 		uint32 s = source.Find("\n", r + typeTokenLength);
 		//FString fragment = source.SubString(r + typeTokenLength, s);
 		uint32 e = source.Find("\n", s);
-		fCode = source.SubString(e, source.Size());
-		type = source.SubString(r + typeTokenLength + 1, s - 2);
+		source.GetSubString(e, source.Size(), fCode);
+		source.GetSubString(r + typeTokenLength + 1, s - 2, type);
 		
 		shaderSources[ShaderTypeFromString(type)] = fCode;
 

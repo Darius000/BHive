@@ -14,7 +14,4 @@ namespace BHive
 	typedef uint64_t	uint64;
 	typedef wchar_t		WIDECHAR;
 	typedef char		ANSICHAR;
-	typedef std::ofstream ofStream;
-	typedef std::ifstream ifStream;
-	typedef std::istream iStream;
 }
