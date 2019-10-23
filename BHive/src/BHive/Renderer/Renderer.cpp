@@ -1,5 +1,6 @@
 #include "BHivePCH.h"
 #include "Renderer.h"
+#include "Renderer2D.h"
 
 namespace BHive
 {
@@ -31,7 +32,7 @@ namespace BHive
 		if (index > 0 && index < s_Scenes.size())
 			s_SceneIndex = index;
 			s_Scene = s_Scenes[index];
-			s_Scene->Start();
+			s_Scene->Begin();
 	}
 
 	void Renderer::UpdateScene(const Time& time)
@@ -42,14 +43,15 @@ namespace BHive
 
 	void Renderer::EndScene()
 	{
-
+		s_Scene->End();
 	}
 
-	void Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray)
+	void Renderer::Draw(const std::shared_ptr<VertexArray>& vertexArray)
 	{
 		vertexArray->Bind();
 		RenderCommands::DrawIndexed(vertexArray);
 	}
+
 
 	std::vector<std::shared_ptr<BHive::Scene>> Renderer::s_Scenes;
 

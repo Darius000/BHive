@@ -38,11 +38,13 @@ project "BHive"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/**.inl",
 		"%{prj.name}/vendor/stb_image/**h",
 		"%{prj.name}/vendor/stb_image/**cpp",
 		"%{prj.name}/vendor/glm/**hpp",
 		"%{prj.name}/vendor/glm/**inl",
-		"%{prj.name}/Assets/**"
+		"%{prj.name}/Assets/**",
+		"premake5.lua"
     }
     
     defines

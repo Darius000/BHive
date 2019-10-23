@@ -30,10 +30,10 @@ namespace BHive
 
 		FString fileName;
 		filePath.GetSubString(lastLash, count, fileName);
-		m_Name = *fileName;
+		m_Name.FromString(fileName);
 	}
 
-	OpenGLShader::OpenGLShader(const Name& name, const FString&  vertexSrc, const FString&  fragmentSrc)
+	OpenGLShader::OpenGLShader(const FName& name, const FString&  vertexSrc, const FString&  fragmentSrc)
 	{
 		std::unordered_map<GLenum, FString> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
@@ -48,64 +48,64 @@ namespace BHive
 		glDeleteProgram(id);
 	}
 
-	void OpenGLShader::SetBool(const Name& name, bool value) const
+	void OpenGLShader::SetBool(const FString& name, bool value) const
 	{
-		glUniform1i(glGetUniformLocation(id, *name.ToString()), (int)value);
+		glUniform1i(glGetUniformLocation(id, *name), (int)value);
 	}
 
-	void OpenGLShader::SetInt(const Name& name, int value) const
+	void OpenGLShader::SetInt(const FString& name, int value) const
 	{
-		glUniform1i(glGetUniformLocation(id, *name.ToString()), value);
+		glUniform1i(glGetUniformLocation(id, *name), value);
 	}
 
-	void OpenGLShader::SetFloat(const Name& name, float value) const
+	void OpenGLShader::SetFloat(const FString& name, float value) const
 	{
-		glUniform1f(glGetUniformLocation(id, *name.ToString()), value);
+		glUniform1f(glGetUniformLocation(id, *name), value);
 	}
 
-	void OpenGLShader::SetVector2(const Name& name, float value0, float value1) const
+	void OpenGLShader::SetVector2(const FString& name, float value0, float value1) const
 	{
-		glUniform2f(glGetUniformLocation(id, *name.ToString()), value0, value1);
+		glUniform2f(glGetUniformLocation(id, *name), value0, value1);
 	}
 
-	void OpenGLShader::SetVector2(const Name& name, const glm::vec2& vec) const
+	void OpenGLShader::SetVector2(const FString& name, const glm::vec2& vec) const
 	{
-		glUniform2fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
+		glUniform2fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector3(const Name& name, float value0, float value1, float value2) const
+	void OpenGLShader::SetVector3(const FString& name, float value0, float value1, float value2) const
 	{
-		glUniform3f(glGetUniformLocation(id, *name.ToString()), value0, value1, value2);
+		glUniform3f(glGetUniformLocation(id, *name), value0, value1, value2);
 	}
 
-	void OpenGLShader::SetVector3(const Name& name, const glm::vec3& vec) const
+	void OpenGLShader::SetVector3(const FString& name, const glm::vec3& vec) const
 	{
-		glUniform3fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
+		glUniform3fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector4(const Name& name, float value0, float value1, float value2, float value3) const
+	void OpenGLShader::SetVector4(const FString& name, float value0, float value1, float value2, float value3) const
 	{
-		glUniform4f(glGetUniformLocation(id, *name.ToString()), value0, value1, value2, value3);
+		glUniform4f(glGetUniformLocation(id, *name), value0, value1, value2, value3);
 	}
 
-	void OpenGLShader::SetVector4(const Name& name, const glm::vec4& vec) const
+	void OpenGLShader::SetVector4(const FString& name, const glm::vec4& vec) const
 	{
-		glUniform4fv(glGetUniformLocation(id, *name.ToString()), 1, glm::value_ptr(vec));
+		glUniform4fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetMatrix2(const Name& name, const glm::mat2& mat) const
+	void OpenGLShader::SetMatrix2(const FString& name, const glm::mat2& mat) const
 	{
-		glUniformMatrix2fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix2fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix3(const Name& name, const glm::mat3& mat) const
+	void OpenGLShader::SetMatrix3(const FString& name, const glm::mat3& mat) const
 	{
-		glUniformMatrix3fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix3fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix4(const Name& name, const glm::mat4& mat) const
+	void OpenGLShader::SetMatrix4(const FString& name, const glm::mat4& mat) const
 	{
-		glUniformMatrix4fv(glGetUniformLocation(id, *name.ToString()), 1, GL_FALSE, glm::value_ptr(mat));
+		glUniformMatrix4fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
 	bool OpenGLShader::CheckShaderStatus(uint32 Shader)

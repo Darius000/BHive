@@ -80,13 +80,13 @@ namespace BHive
 	void RenderComponent::Draw()
 	{
 		m_Shader->Bind();
-		dynamic_cast<OpenGLShader*>(m_Shader)->SetMatrix4("u_Model", GetTransform().GetMatrix());
-		dynamic_cast<OpenGLShader*>(m_Shader)->SetInt("u_Texture", 0);
+		m_Shader->SetMatrix4("u_Model", GetTransform().GetMatrix());
+		m_Shader->SetInt("u_Texture", 0);
 
 		m_Texture->Bind();
 
 		m_VertexArray->Bind();
 
-		Renderer::Submit(m_VertexArray);
+		Renderer::Draw(m_VertexArray);
 	}
 }

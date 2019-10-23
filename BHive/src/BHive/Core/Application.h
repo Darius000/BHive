@@ -33,7 +33,7 @@ namespace BHive
 
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
-		Time* m_Time;
+		Scope<Time> m_Time;
 
 		bool m_Minimized = false;
 		bool m_Running = true;

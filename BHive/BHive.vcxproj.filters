@@ -126,6 +126,9 @@
     <ClInclude Include="src\BHive\Core\Core.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\CoreLibrary.h">
+      <Filter>src\BHive\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\DataTypes.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
@@ -180,6 +183,9 @@
     <ClInclude Include="src\BHive\Core\Types\Name.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\Name.inl">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\PlatformDataTypes.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
@@ -187,6 +193,9 @@
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\String.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\String.inl">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Transform.h">
@@ -202,6 +211,9 @@
       <Filter>src\BHive\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Math\MathLibrary.h">
+      <Filter>src\BHive\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Math\MathLibrary.inl">
       <Filter>src\BHive\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Object\Entity.h">
@@ -247,6 +259,9 @@
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Renderer\Renderer.h">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Renderer\Renderer2D.h">
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Renderer\RendererAPI.h">
@@ -1359,6 +1374,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\IDGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\AssetManagement\AssetManager.cpp">
@@ -1406,13 +1422,7 @@
     <ClCompile Include="src\BHive\Core\Types\Color.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\Name.cpp">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\String.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp">
@@ -1463,6 +1473,9 @@
     <ClCompile Include="src\BHive\Renderer\Renderer.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Renderer\Renderer2D.cpp">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Renderer\RendererAPI.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
@@ -1487,8 +1500,10 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Core\IDGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\premake5.lua" />
     <None Include="Assets\Shaders\Billboard.fs">
       <Filter>Assets\Shaders</Filter>
     </None>

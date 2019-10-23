@@ -5,7 +5,6 @@
 
 namespace BHive
 {
-
 	class Renderer
 	{
 	public:
@@ -18,11 +17,12 @@ namespace BHive
 		static void BeginScene(uint32 index); 
 		static void UpdateScene(const Time& time);
 		static void EndScene(); 
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+		static void Draw(const std::shared_ptr<VertexArray>& vertexArray);
 
 		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 
 	private:
+		
 		static std::vector<std::shared_ptr<Scene>> s_Scenes;
 		static std::shared_ptr<Scene> s_Scene;
 		static uint32 s_SceneIndex;

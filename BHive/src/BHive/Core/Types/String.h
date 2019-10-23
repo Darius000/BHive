@@ -6,356 +6,114 @@ namespace BHive
 	#define MAX_FLOAT_DIGITS DBL_MAX_10_EXP + 2
 	#define MAX_INT_DIGITS 11
 	#define MAX_UINT_DIGITS 10
-	#define NULL_TERMINATOR '\0'
-	#define NEW_LINE '\n'
-	#define NEW_LINE_RETURN '\r\n'
-	#define RESERVE_SIZE 1024
-	#define MAKE_SCOPED_ARRAY(size, type) std::make_unique<type[]>(size)
 
-	namespace ESearchCase
+	enum { STRING_SIZE = 1024 };
+
+	enum class ESearchCase : uint8
 	{
-		enum Type
-		{
-			CaseSensitive,
-			IgnoreCase
-		};
-	}
+		CaseSensitive,
+		CaseInSensitive
+	};
 
 	template<typename charType>
-	class String
+	class String 
 	{
 	public:
-		String() : String("") {}
+		String();
 
-		String(const charType* c) : m_Size(GetCharArraySize(c)), m_Chars(MAKE_SCOPED_ARRAY(m_Size, charType)) 
-		{
-			CopyCharArray(m_Chars.get(), c, m_Size, m_IsNumeric);
-		}
+		String(const charType* c);
 
-		String(const charType* c, uint32 len)
-		{
-			m_Size = len;
-			CopyCharArray(m_Chars.get(), c, len, m_IsNumeric);
-		}
+		String(const charType* c, uint32 len);
 
-		explicit String(uint32 length)
-		{
-			m_Size = length;
-			m_Chars = MAKE_SCOPED_ARRAY(m_Size, ANSICHAR);
-			InitCharArray(m_Chars.get(), m_Size);
-		}
+		explicit String(uint32 len);
 
-		String(const String& other) 
-		{
-			m_Size = other.m_Size;
-			m_Chars = MAKE_SCOPED_ARRAY(m_Size, charType);
-			CopyCharArray(m_Chars.get(), other.m_Chars.get(), m_Size, m_IsNumeric);
-		}
+		String(const String& other);
 
-		String(String&& other)
-		{
-			m_Size = other.m_Size;
-			m_Chars = MAKE_SCOPED_ARRAY(m_Size, charType);
-			CopyCharArray(m_Chars.get(), other.m_Chars.get(), m_Size, m_IsNumeric);
-			//Release the data from other object
-			other.m_Chars = nullptr;
-			other.m_Size = 0;
-		}
-
-		virtual ~String() {};
-
-	private:
-		Scope<charType[]> m_Chars;
-		uint32 m_Size;
-
+		~String();
+		
 	public:
-		charType GetCharacter(uint32 index) const 
-		{ 
-			BH_CORE_ASSERT(!IsValidIndex(index), "Invalid Index");
-			return m_Chars[index]; 
-		}
+		void Resize(uint32 len);
+
+		//shrinks the char array capacity to size
+		void Shrink();
 
 		uint32 Size() const { return m_Size; }
 
-		void Resize(uint32 size)
-		{
-			const charType* temp = m_Chars.get();
-			m_Chars = MAKE_SCOPED_ARRAY(size, charType);
-			CopyCharArray(m_Chars.get(), temp, m_Size, m_IsNumeric);
-			m_Size = size;
-		}
-
-		void Reset(const charType* chars, uint32 size)
-		{
-			m_Size = size;
-			m_Chars = MAKE_SCOPED_ARRAY(size, charType);
-			CopyCharArray(m_Chars.get(), m_Chars.get(), size, m_IsNumeric);
-		}
+		uint32 Capacity() const { return m_Capacity; }
 
 		bool IsEmpty() const { return m_Size == 0; }
 
 		bool IsNumeric() const { return m_IsNumeric; }
 
-		bool IsValidIndex(const uint32& index) const { return index < m_Size && index > 0; }
+		bool IsValidIndex(uint32 index) const;
 
-		String Append(const String& a, const String b)
-		{
-			return String();
-		}
+		bool Equals(const String& other, ESearchCase searchCase) const;
 
-		uint32 Find(const charType* subString, uint32 start) const
-		{
-			return -1;
-		}
+		void Reset(uint32 size);
 
-		uint32 Find_First_Of(const charType* subString) const
-		{
-			return -1;
-		}
+		void SetCharacter(uint32 index,const char& character);
 
-		uint32 Find_Last_Of(const charType* subString) const
-		{
-			return -1;
-		}
+		String Append(const String& a, const String& b);
 
-		void GetSubString(const uint32& start, const uint32& end, String& out) const
-		{
-			
-		}
+		uint32 Find(const ANSICHAR* subString, uint32 start) const;	
 
-		void Split(const charType* substring, String& first, String& second, uint32 start) const
-		{
-			BH_CORE_ASSERT(!IsValidIndex(start), "Invalid Index");
+		uint32 Find_First_Of(const ANSICHAR* subString) const;
 
-			uint32 index = Find(substring, start);
+		uint32 Find_Last_Of(const ANSICHAR* subString) const;
 
-			if (index != INDEX_NONE)
-			{
-				GetSubString(0, index - 1, first);
-				GetSubString(index + 1, m_Size, second);
-			}
-		}
+		std::vector<String> Tokenize(const ANSICHAR* delimiters);	
 
-		void Swap(const uint32& a, const uint32& b)
-		{
-			BH_CORE_ASSERT(!IsValidIndex(a) || !IsValidIndex(b), "Invalid Index");
+		void GetSubString(const uint32& start, const uint32& end, String& out) const;	
 
-			const charType tmpA = m_Chars[a];
-			const charType tmpB = m_Chars[b];
+		void Split(const ANSICHAR* substring, String& first, String& second, uint32 start) const;
 
-			SetCharacter(a, tmpB);
-			SetCharacter(b, tmpA);
-		}
+		void Swap(const uint32& a, const uint32& b);
 
-		void ToUpper(String& s) const
-		{
-			uint32 i = 0;
-			while (i < m_Size)
-			{
-				s[i] = toupper(m_Chars[i]);
-			}
-		}
+		void ToUpper(String& s) const;
 
-		void ToLower(String& s) const
-		{
-			uint32 i = 0;
-			while (i < m_Size)
-			{
-				s[i] = tolower(m_Chars[i]);
-			}
-		}
+		void ToLower(String& s) const;
 
-		void SetCharacter(const uint32& index, const char& character)
-		{
-			BH_CORE_ASSERT(!IsValidIndex(index), "Invalid Index");
+		int32 ToNumber() const;
+		
+		template<typename T>
+		String FromNumber(const T n);
 
-			m_Chars[index] = character;
-		}
+		String AsFormatedNumber(const int32 number);
 
-		bool ToBool() const
-		{
-			if (Equals("true") || Equals("1") || Equals("yes"))
-			{
-				return true;
-			}
+		String operator+(const charType* other);
 
-			if (Equals("false") || Equals("0") || Equals("no"))
-			{
-				return false;
-			}
-
-			return false;
-		}
-
-		int32 ToNumber() const
-		{
-			if (IsNumeric())
-			{
-				return atoi(m_Chars.get());
-			}
-
-			return INDEX_NONE;
-		}
-
-		static bool Compare(const String& a, const String& b, ESearchCase::Type searchCase = ESearchCase::IgnoreCase) 
-		{ 
-			return a.Equals(b); 
-		}
-
-		bool Equals(const String& other, ESearchCase::Type searchCase = ESearchCase::IgnoreCase) const
-		{
-			if (m_Size != other.m_Size)
-				return false;
-
-			if (searchCase == ESearchCase::CaseSensitive)
-			{
-				//Check characters for case as well
-				for (uint32 i = 0; i < m_Size; i++)
-				{
-					if (m_Chars[i] != other[i])
-					{
-						return false;
-					}
-				}
-			}
-			else
-			{
-				//only check if value is same
-				for (uint32 i = 0; i < m_Size; i++)
-				{
-					if (tolower(m_Chars[i]) != tolower(other[i]))
-					{
-						return false;
-					}
-				}
-			}
-
-			return true;
-		}
+		String operator+(const String& other);
 
 		template<typename T>
-		static String FromNumber(const T n)
-		{
-			BH_CORE_ASSERT(false, "Type not supported!");
-			return String();
-		}
+		String operator+(T n);
 
-		String AsFormatedNumber(const int32 number)
-		{
-			String s = String::FromNumber(number);
+		String operator+=(const String& other);
 
-			if (s.m_Size > 3)
-			{
-				s.Insert(s.m_Size - 3, ",");
-			}
-
-			if (s.m_Size > 7)
-			{
-				s.Insert(s.m_Size - 7, ",");
-			}
-
-			return s;
-		}
-
-		const charType* c_str() const 
-		{
-			return m_Chars.get();
-		}
-
-		const charType* operator*() const 
-		{ 
-			return m_Chars.get(); 
-		}
-
-		String operator+(const String& other)
-		{	
-			return Append(*this, other);
-		}
+		String& operator=(const String& other);
 
 		template<typename T>
-		String operator+(T n)
-		{	
-			return Append(*this, FromNumber(n));
-		}
+		String& operator=(const T& n);
 
-		String operator+=(const String& other)
-		{		
-			return *this = Append(*this, other);;
-		}
+		bool operator==(const String& other) const;
 
-		String& operator=(const String& other)
-		{
-			m_Size = other.m_Size;
-			Resize(m_Size);
-			CopyCharArray(m_Chars.get(), other.m_Chars.get(), m_Size, m_IsNumeric);
-			return *this;
-		}
+		charType& operator[](uint32 index) const;
 
-		template<typename T>
-		String& operator=(const T& n) 
-		{ 
-			return *this = FromNumber(n); 
-		}
+		const charType* operator*() const;
 
-		bool operator==(const String& other) const 
-		{ 
-			return this->Equals(other, ESearchCase::CaseSensitive); 
-		}
-
-		charType& operator[](const uint32 index) 
-		{ 
-			return m_Chars[index]; 
-		}
-
-		const charType& operator[](const uint32 index) const 
-		{ 
-			return m_Chars[index]; 
-		}
-
-		static const uint32 npos = INDEX_NONE;
-
-	public:
-		static uint32 GetCharArraySize(const charType* c)
-		{
-			BH_CORE_ASSERT(c == nullptr , "null char pointer");
-
-			uint32 i = 0;
-			while (c[i] != NULL_TERMINATOR) { i++; }
-			return i;
-		}
-
-		static void InitCharArray(charType* c,const uint32 len)
-		{
-			BH_CORE_ASSERT(c == nullptr, "null char pointer")
-
-			uint32 i = 0;
-			while (i < len) { c[i] = " "; }
-			c[len] = NULL_TERMINATOR;
-		}
-
-		static void CopyCharArray(charType* to, const charType* from, const uint32 len, bool& numeric)
-		{
-			BH_CORE_ASSERT(to == nullptr || from == nullptr, "null char pointer");
-
-			uint32 i = 0;
-			bool temp = true;
-			while (i < len && from[i] != NULL_TERMINATOR)
-			{
-				to[i] = from[i];
-				if (!isdigit(to[i]) && temp == true)
-				{
-					temp = false;
-					numeric = temp;
-				}
-
-				i++;
-			}
-
-			to[len] = NULL_TERMINATOR;
-		}
+		static const char null_terminator;
 
 	private:
+		charType* m_Characters;
+		uint32 m_Size = 0;
+		uint32 m_Capacity = STRING_SIZE;
 		bool m_IsNumeric;
+
+		friend class CharacterArrayHelper;
+
+		template<typename>
+		friend class Name;
+
+		friend std::ostream& operator<<(std::ostream& os, const String& s);
 	};
 
 	template<typename charType>
@@ -363,13 +121,7 @@ namespace BHive
 	{
 		return os << *s;
 	}
-
-	template<typename charType>
-	std::istream& operator>>(std::istream& is, const String<charType>& s)
-	{
-		return is >> *s;
-	}
-
+	
 	template<> template<>
 	inline String<ANSICHAR> String<ANSICHAR>::FromNumber(const int32 n)
 	{
@@ -377,7 +129,7 @@ namespace BHive
 		sprintf_s(c, "%d", n);
 		return String(c);
 	}
-	
+
 	template<> template<>
 	inline String<ANSICHAR> String<ANSICHAR>::FromNumber(const uint32 n)
 	{
@@ -401,7 +153,35 @@ namespace BHive
 		return  s = n ? "true" : "false";
 	}
 
-	using FString =  String<ANSICHAR>;
-	using WString =  String<WIDECHAR>;
-	using Path = String<ANSICHAR>;
+	class CharacterArrayHelper
+	{
+	public:
+		template<typename charType>
+		static void InitializeString(const String<charType>& string, uint32 size, uint32 len);
+
+		template<typename charType>
+		static void CopyString(String<charType>& toString, const String<charType>& fromString, bool& numeric);
+
+		template<typename charType>
+		static void CopyCharactersToString(String<charType>& toString, const charType* characters);
+
+		template<typename charType>
+		static void CopyCharacters(charType* to, const charType* from);
+
+		template<typename charType>
+		static void CopyCharacters(charType* to, const charType* from, bool& numeric);
+
+		template<typename charType>
+		static uint32 GetCharArraySize(const charType* characters);
+
+		template<typename charType>
+		static bool NeedToResizeString(const String<charType>& string, uint32 newLen);
+	};
+
+	typedef String<ANSICHAR> FString;
+	typedef String<WIDECHAR> WString;
+	typedef FString Path;
 }
+
+#include "String.inl"
+

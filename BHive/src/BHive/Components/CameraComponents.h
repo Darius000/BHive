@@ -26,7 +26,7 @@ namespace BHive
 		BCLASS(OrthographicCameraComponent, ComponentCategory, CameraComponent)
 
 	public:
-		OrthographicCameraComponent() {}
+		OrthographicCameraComponent();
 		OrthographicCameraComponent(float left, float right, float bottom, float top) ;
 
 		void SetProjection(float left, float right, float bottom, float top);

@@ -16,6 +16,7 @@
 //-------Renderer----------------
 
 #include "BHive/Renderer/Renderer.h"
+#include "BHive/Renderer/Renderer2D.h"
 #include "BHive/Renderer/Shader.h"
 #include "BHive/Renderer/Texture.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"

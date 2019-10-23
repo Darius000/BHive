@@ -11,21 +11,33 @@ namespace BHive
 		Scene(CameraComponent& camera);
 
 	public:
-		void Start();
+		void Begin();
 		void Update(const Time& time);
+		void End();
 		void Refresh();
 
 		template<typename T>
-		T* AddEntity()
-		{
-			T* e = new T();
-			std::unique_ptr<T> uPtr{ e };
-			m_Entities.emplace_back(std::move(uPtr));
-			return e;
-		}
+		T* AddEntity();
 
 	private:
-		std::vector<std::unique_ptr<Entity>> m_Entities;
-		CameraComponent* m_Camera;
+		struct SceneData
+		{
+			SceneData(CameraComponent& camera);
+
+			glm::mat4 m_VPM;
+			std::vector<Scope<Entity>> m_Entities;
+			CameraComponent* m_Camera;
+		};
+
+		SceneData* m_SceneData;
 	};
+
+	template<typename T>
+	T* BHive::Scene::AddEntity()
+	{
+		Scope<T> uPtr = std::make_unique<T>();
+		T* e = uPtr.get();
+		m_SceneData->m_Entities.emplace_back(std::move(uPtr));
+		return e;
+	}
 }

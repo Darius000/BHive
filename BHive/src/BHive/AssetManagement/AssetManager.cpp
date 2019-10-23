@@ -20,7 +20,7 @@ namespace BHive
 		for (auto& s : s_Shaders)
 		{
 			s->Bind();
-			std::dynamic_pointer_cast<OpenGLShader>(s)->SetMatrix4("u_ViewProjection", viewProjectionMatrix);
+			s->SetMatrix4("u_ViewProjection", viewProjectionMatrix);
 		}
 	}
 

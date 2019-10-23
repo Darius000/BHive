@@ -34,6 +34,7 @@
 #include "BHive/Core/Core.h"
 #include "BHive/Core/Log.h"
 #include "BHive/Core/Profile/Timer.h"
+#include "BHive/Core/CoreLibrary.h"
 #include "BHive/Core/DataTypes.h"
 #include "BHive/Math/MathLibrary.h"
 #include "BHive/Core/KeyCodes.h"

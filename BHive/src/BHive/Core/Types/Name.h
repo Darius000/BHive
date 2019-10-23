@@ -1,116 +1,85 @@
 #pragma once
 
+#include "BHive/Core/IDGenerator.h"
+
 namespace BHive
 {
+	#define  NAME_None "None"
+
 	enum class ENameCase : uint8
 	{
 		CaseSensitive = 0,
 		IgnoreCase
 	};
 
-	enum EFindName
+	enum class ENameSearch : uint8 
 	{
-		Find, Add
+		NAME_Find,
+		NAME_Add
 	};
 
 	enum { NAME_SIZE = 1024 };
 
-	struct FNameEntryID
-	{
-		FNameEntryID() : m_Value(0) {}
-
-		bool operator<(FNameEntryID entry) const { return m_Value < entry.m_Value; }
-		bool operator>(FNameEntryID entry) const { return m_Value > entry.m_Value; }
-		bool operator==(FNameEntryID entry) const { return m_Value == entry.m_Value; }
-		bool operator!=(FNameEntryID entry) const { return m_Value != entry.m_Value; }
-
-		operator int32() const { return (int32)m_Value; }
-
-	private:
-		uint32 m_Value;
-	};
-
-	struct FNameEntry
-	{
-		FNameEntryID m_ComparsionID;
-
-		union 
-		{
-			ANSICHAR AnsiName[NAME_SIZE];
-			WIDECHAR WideName[NAME_SIZE];
-		};
-
-		FNameEntry(const FNameEntry&) = delete;
-		FNameEntry(FNameEntry&&) = delete;
-		FNameEntry& operator=(const FNameEntry&) = delete;
-		FNameEntry& operator=(FNameEntry&&) = delete;
-	};
-
-	class Name
+	template<typename charType>
+	class Name 
 	{
 	public:
 		Name();
-		Name(uint32 len, const ANSICHAR* c);
-		Name(uint32 len, const WIDECHAR* wc);
-		Name(const ANSICHAR* c);
-		Name(const WIDECHAR* wc);
-		virtual ~Name() = default;
+		Name(const charType* c, ENameSearch searchCase = ENameSearch::NAME_Add);
+		Name(const Name& other);
+		~Name();
 
 	public:
-		int32 Compare(const Name& other) const;
-		uint32 GetSize() const { return m_Size; }
-		uint32 GetNumber() const { return m_Number; }
-		bool IsEqual(const Name& other, ENameCase nameCase);
-		bool IsNone();
-		void SetNumber(const int32 newNumber);
-		FString ToString() const;
-		void ToString(FString& out);
-		FNameEntryID GetComparsionIndex() const { return m_ComparsionID; }
+		FString ToString() const { return String(m_Characters, m_Size); };
+		uint32 GetComparsionIndex() const { return m_ComparsionID; }
+		void FromString(const String<charType>& other);
+
 	public:
-
-		bool operator==(const Name& name);
-		//bool operator==(const ANSICHAR* name);
-		//bool operator==(const WIDECHAR* name);
-		//bool operator!=(const Name& name) const;
-
-		template<typename charType>
-		bool operator!=(const charType* other);
-
+		
+		bool operator>(const Name& other);
+		bool operator<(const Name& other);
+		Name& operator=(const Name&) = delete;
+		const charType* operator*() const;
+		
 	private:
-		uint32 m_Size;
-		uint32 m_Number;
+		uint32 m_ComparsionID;
+		charType* m_Characters;
 
-		union 
-		{
-			ANSICHAR m_Chars[NAME_SIZE];
-			WIDECHAR m_WChars[NAME_SIZE];
-		};
+		template<typename>
+		friend class String;
 
-		FNameEntryID m_ComparsionID;
+		static IDGenerator s_IDGenerator;
 
-	public:
-		bool operator==(const Name& name) const
-		{
-			return m_ComparsionID == name.m_ComparsionID;
-		}
 	};
 
 	template<typename charType>
-	bool Name::operator!=(const charType* other)
+	bool operator==(const Name<charType>& a, const Name<charType>& b)
 	{
-		return false;
+		return a.GetComparsionIndex() == b.GetComparsionIndex();
 	}
 
-	
+	typedef Name<ANSICHAR> FName;
+	typedef Name<WIDECHAR> WName;
 }
-
+	
 template<>
-struct std::hash<BHive::Name>
+struct std::hash<BHive::FName>
 {
-	size_t operator()(const BHive::Name& name) const
+	size_t operator()(const BHive::FName& name) const
 	{
-		size_t const h1(std::hash<BHive::uint32>{}(name.GetNumber()));
-		size_t const h2(std::hash<BHive::uint32>{}(name.GetComparsionIndex()));
-		return h1 ^ (h2 << 1);
+		size_t const h(std::hash<BHive::uint32>{}(name.GetComparsionIndex()));
+		return h;
 	}
 };
+
+template<>
+struct std::hash<BHive::WName>
+{
+	size_t operator()(const BHive::WName& name) const
+	{
+		size_t const h(std::hash<BHive::uint32>{}(name.GetComparsionIndex()));
+		return h;
+	}
+};
+
+#include "Name.inl"

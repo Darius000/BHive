@@ -1,6 +1,4 @@
-#ifndef MATHLIBRARY_H
-#define MATHLIBRARY_H
-
+#pragma  once
 
 namespace BHive
 {
@@ -37,5 +35,3 @@ namespace BHive
 }
 
 #include "MathLibrary.inl"
-
-#endif

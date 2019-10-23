@@ -8,7 +8,7 @@ SandBox2D::SandBox2D()
 
 void SandBox2D::OnAttach()
 {
-	BHive::FString vertexSrc = R"(
+	/*BHive::FString vertexSrc = R"(
 			#version 450 core
 
 			layout(location = 0) in vec3 a_Position;
@@ -48,36 +48,36 @@ void SandBox2D::OnAttach()
 				color = texture(u_Texture, v_TexCoord);
 			}
 			
-		)";
+		)";*/
 
-	shader = BHive::Ref<BHive::Shader>(BHive::Shader::Create("Default", vertexSrc, fragmentSrc));
-	//shader = BHive::Ref<BHive::Shader>(BHive::Shader::Create("Assets/Shaders/Default.glsl"));
-	BHive::AssetManager::AddShader(shader);
+	//shader = BHive::Ref<BHive::Shader>(BHive::Shader::Create("Default", vertexSrc, fragmentSrc));
+	////shader = BHive::Ref<BHive::Shader>(BHive::Shader::Create("Assets/Shaders/Default.glsl"));
+	//BHive::AssetManager::AddShader(shader);
 
-	m_Texture = BHive::Texture2D::Create("Assets/Textures/grass.png");
+	//m_Texture = BHive::Texture2D::Create("Assets/Textures/grass.png");
 
 	BHive::Ref<BHive::Scene> scene0 = std::make_shared<BHive::Scene>(m_OrthoCameraController.GetCamera());
 
-	BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();
+	BHive::Name newName("NewName");
+	BHive::Name nM(newName);
 
-	BHive::Ref<BHive::Entity> square = std::shared_ptr<BHive::Entity>(E0);
+	//BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();
 
-	BHive::Plane* T1 = square->AddComponent<BHive::Plane>();
-	T1->SetShader(shader);
-	T1->SetTexture(m_Texture);
+	//BHive::Ref<BHive::Entity> square = std::shared_ptr<BHive::Entity>(E0);
 
-	BHive::Renderer::AddScene(scene0);
-	BHive::Renderer::BeginScene(0);
+	//BHive::Plane* T1 = square->AddComponent<BHive::Plane>();
+	//T1->SetShader(shader);
+	//T1->SetTexture(m_Texture);
+
+	BHive::Renderer2D::AddScene(scene0);
+	BHive::Renderer2D::BeginScene(0);
 }
 
 void SandBox2D::OnUpdate(const BHive::Time& time)
 {
-	BHive::RenderCommands::SetClearColor(BHive::Color(50, 50, 50, 255));
-	BHive::RenderCommands::Clear();
-
 	m_OrthoCameraController.OnUpdate(time);
 
-	BHive::Renderer::UpdateScene(time);
+	BHive::Renderer2D::UpdateScene(time);
 }
 
 void SandBox2D::OnImGuiRender()

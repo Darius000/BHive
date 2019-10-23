@@ -23,9 +23,10 @@ namespace BHive
 
 		Renderer::Init();
 
-		m_Time = new WindowsTime();
+		m_Time = std::make_unique<WindowsTime>();
 
 		m_ImGuiLayer = new ImGuiLayer();
+
 		PushOverlay(m_ImGuiLayer);
 	}
 
