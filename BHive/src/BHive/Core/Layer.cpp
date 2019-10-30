@@ -3,7 +3,7 @@
 
 namespace BHive
 {
-	Layer::Layer(const FString& name /*= "Layer"*/)
+	Layer::Layer(const BString& name /*= "Layer"*/)
 		:m_DebugName(name)
 	{
 

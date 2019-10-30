@@ -26,7 +26,7 @@ namespace BHive
 		void AddChild(TransformComponent& child);
 		void RemoveChild(TransformComponent& child);
 		void AttachToComponent(TransformComponent& parent);
-		void AttachToEntity(Entity& entity);
+		void AttachToEntity(Actor& entity);
 		
 	protected:
 		virtual void OnTransformUpdated(const Transform& transform);;

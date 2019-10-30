@@ -26,7 +26,7 @@ namespace BHive
 
 	public:
 		void SetShader(Ref<Shader>& shader);
-		Shader* GetShader() const { return m_Shader; }
+		Ref<Shader> GetShader() const { return m_Shader; }
 		void SetTexture(Ref<Texture2D>& texture);
 	private:
 		void CreateBuffers();
@@ -37,7 +37,7 @@ namespace BHive
 		std::vector<uint32> m_Indices;
 
 	private:
-		Shader* m_Shader;
+		Ref<Shader> m_Shader;
 		Ref<VertexArray> m_VertexArray;
 		Ref<Texture2D> m_Texture;
 	};

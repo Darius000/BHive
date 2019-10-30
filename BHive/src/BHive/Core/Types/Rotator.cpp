@@ -73,9 +73,9 @@ namespace BHive
 		return FVector3(roll, yaw, pitch);
 	}
 
-	FString Rotator::ToString() const
+	BString Rotator::ToString() const
 	{
-		return FString() + "{ roll:" + roll + ", yaw:" + yaw + ", pitch:" + pitch + "}";
+		return Format("{ %f, %f, %f }", roll, yaw, pitch);
 	}
 
 	Rotator Rotator::operator+(const Rotator& r)

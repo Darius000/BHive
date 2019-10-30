@@ -5,7 +5,7 @@ namespace BHive
 	class BHive_API Layer
 	{
 	public:
-		Layer(const FString& name = "Layer");
+		Layer(const BString& name = "Layer");
 		virtual ~Layer();
 
 		virtual void OnAttach() {}
@@ -14,9 +14,9 @@ namespace BHive
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 
-		inline const FString& GetName() const { return m_DebugName; }
+		inline const BString& GetName() const { return m_DebugName; }
 
 	protected:
-		FString m_DebugName;
+		BString m_DebugName;
 	};
 }

@@ -5,93 +5,45 @@
 namespace BHive
 {
 	Object::Object()
-		:mDisplayName(GetClass() + unusedID), mDestroyed(false), mSelected(false),
-		mActive(false), mEnabled(true), mObjectID(GetNextID())
+		:mDisplayName(GetClass()), mDestroyed(false), mEnabled(true), mObjectID(s_IDGenerator.GenerateID())
 	{
-		
+
+#ifdef BH_DEBUG
+		BH_CORE_TRACE("Name:{0} ; ID:{1}", GetClass(), mObjectID);
+#endif
 	}
 
-	unsigned int Object::unusedID = 0;
-
-	std::vector<unsigned int> Object::deletedIDs;
-
-	unsigned int Object::GetNextID()
-	{
-		if (deletedIDs.size() > 0)
-		{
-			unsigned int id = deletedIDs[0];
-			deletedIDs.erase(deletedIDs.begin());
-			return id;
-		}
-		
-		unusedID++;
-		return unusedID;
-	}
-
-	FString Object::GetDisplayName() const
+	BString Object::GetDisplayName() const
 	{
 		return mDisplayName;
 	}
 
-	void Object::Select()
-	{
-		mActive = true;
-
-		mSelected = true;
-
-		OnSelected(true);
-	}
-
-	bool Object::IsSelected() const
-	{
-		return mSelected;
-	}
-
-	void Object::SetDisplayName(const FString& name) 
+	void Object::SetDisplayName(const BString& name) 
 	{
 		mDisplayName = name;
-	}
-
-	void Object::OnSelected(bool selected)
-	{
-
 	}
 
 	void Object::Destroy()
 	{
 		mDestroyed = true;
 
-		if (IsSelected())
-		{
-			UnSelect();
-		}
-
 		mEnabled = false;
 
-		mActive = false;
-
-		deletedIDs.emplace_back(unusedID);
+		s_IDGenerator.DeleteID(mObjectID);
 
 		OnDestroyed();
 	}
 
-	bool Object::IsDestroyed() const
+	bool Object::IsPendingDestroy() const
 	{
 		return mDestroyed;
 	}
 
+	IDGenerator Object::s_IDGenerator;
+
 	void Object::OnDestroyed()
 	{
-		bool active = Object::GetStaticClass().mActive;
-	}
-
-	void Object::UnSelect()
-	{
-		mActive = false;
-
-		mSelected = false;
-
-		OnSelected(false);
+		
 	}
 
 	void Object::SetEnabled(bool enable)
@@ -102,10 +54,5 @@ namespace BHive
 	bool Object::IsEnabled() const
 	{
 		return mEnabled;
-	}
-
-	bool Object::IsActive() const
-	{
-		return mActive;
 	}
 }

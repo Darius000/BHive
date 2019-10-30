@@ -1,5 +1,7 @@
 #pragma once
 
+#include "BHive/Core/IDGenerator.h"
+
 namespace BHive
 {
 	enum ClassCategory
@@ -25,7 +27,7 @@ namespace BHive
 #define BCLASS_NAME(name)\
 		public:\
 			static name GetStaticClass() {return name::name();}\
-			virtual FString GetClass() const override {return #name;}
+			virtual BString GetClass() const override {return #name;}
 
 #define BCLASS_CATEGORY(category)\
 		public:\
@@ -39,40 +41,30 @@ namespace BHive
 		Object();
 		virtual ~Object() {};
 	public:
-		FString mDisplayName;
+		BString mDisplayName;
 	public:
 		static Object GetStaticClass() { return Object::Object(); }
-		virtual FString GetClass() const { return "Object"; }
-		virtual int GetClassCategory() const { return ObjectCategory; }
-		virtual void OnSelected(bool selected);
-		virtual void CreateContextMenuItems() {};
+		virtual BString GetClass() const { return "Object"; }
+		virtual int32 GetClassCategory() const { return ObjectCategory; }
 		inline bool IsComponent() { return GetClassCategory() == ObjectCategory; }
 	protected:
 		virtual void OnDestroyed();
 	public:
-		void SetDisplayName(const FString& name);
-		void Select();
-		void UnSelect();
+		void SetDisplayName(const BString& name);
 		void SetEnabled(bool enable);
 		void Destroy();
 	
-		FString ToString() const { return GetDisplayName(); }
-		FString GetDisplayName() const;
+		BString ToString() const { return GetDisplayName(); }
+		BString GetDisplayName() const;
 		bool IsEnabled() const;
-		bool IsActive() const;
-		bool IsSelected() const;
-		bool IsDestroyed() const;
-		unsigned int GetObjectID()  const { return mObjectID; }
+		bool IsPendingDestroy() const;
+		uint64 GetObjectID()  const { return mObjectID; }
 
 	private:
 		bool mDestroyed;
 		bool mEnabled;
-		bool mActive;
-		bool mSelected;
-		unsigned int mObjectID;
-		static unsigned int unusedID;
-		static std::vector<unsigned int> deletedIDs;
-		static unsigned int GetNextID();
+		uint64 mObjectID;
+		static IDGenerator s_IDGenerator;
 	};	
 
 	inline bool operator==(const Object& a, const Object& b)

@@ -1,6 +1,6 @@
 #include "BHivePCH.h"
 #include "CameraComponents.h"
-#include "BHive/AssetManagement/AssetManager.h"
+#include "BHive/Renderer/Shader.h"
 
 namespace BHive
 {
@@ -27,7 +27,7 @@ namespace BHive
 	void OrthographicCameraComponent::OnTransformUpdated(const Transform& transform)
 	{
 		glm::mat4 VP = GetViewProjectionMatrix();
-		BHive::AssetManager::UpdateShaderViewProjectionMatrices(VP); //TODO : change this
+		ShaderLibrary::UpdateShaderViewProjectionMatrices(VP); //TODO : change this
 	}
 
 	void OrthographicCameraComponent::RecalulateViewMatrix(const Transform& transform)

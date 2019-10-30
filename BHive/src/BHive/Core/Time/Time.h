@@ -1,17 +1,22 @@
 #pragma once
 
-#include "Core.h"
+#include "BHive/Core/Core.h"
 
 namespace BHive
 {
 	class BHive_API Time
 	{
-	public:
+	protected:
 		Time()
 			:m_Time(0.0f), m_LastTime(0.0f), m_DeltaTime(0.0f) {}
+
+	public:
 		virtual ~Time() {}
 
+	protected:
 		virtual float GetPlatformTime() = 0;
+
+	public:
 		float GetTime() const { return m_Time;}
 		float GetDeltaTime() const { return m_DeltaTime; }
 		void Update();
@@ -34,7 +39,7 @@ namespace BHive
 		WindowsTime() {}
 		virtual ~WindowsTime() {}
 
-	public:
+	protected:
 		virtual float GetPlatformTime() override;
 	};
 }

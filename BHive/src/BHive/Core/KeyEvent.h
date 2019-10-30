@@ -29,7 +29,7 @@ namespace BHive
 
 		inline int GetRepeatCount() const { return m_RepeatCount; }
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyPressedEvent: " << m_KeyCode << "(" << m_RepeatCount << " repeats)";
@@ -48,7 +48,7 @@ namespace BHive
 		KeyReleasedEvent(int keycode)
 			:KeyEvent(keycode) {}
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyPressedEvent: " << m_KeyCode;
@@ -65,7 +65,7 @@ namespace BHive
 			:KeyEvent(keycode) {}
 
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "KeyTypedEvent: " << m_KeyCode;

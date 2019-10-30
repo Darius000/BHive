@@ -9,9 +9,9 @@ namespace BHive
 
 	}
 
-	uint32 IDGenerator::GenerateID()
+	uint64 IDGenerator::GenerateID()
 	{
-		uint32 id = -1;
+		uint64 id = -1;
 
 		if (m_AvailableDeletedIDs.size() > 0)
 		{
@@ -26,7 +26,7 @@ namespace BHive
 		return id;
 	}
 
-	void IDGenerator::DeleteID(uint32 id)
+	void IDGenerator::DeleteID(uint64 id)
 	{
 		m_AvailableDeletedIDs.emplace_back(id);
 	}

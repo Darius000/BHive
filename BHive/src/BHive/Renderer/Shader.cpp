@@ -17,7 +17,7 @@ namespace BHive
 		return nullptr;
 	}
 
-	Ref<Shader> Shader::Create(const FName& name, const FString& vertexSrc, const FString& fragmentSrc)
+	Ref<Shader> Shader::Create(const BName& name, const BString& vertexSrc, const BString& fragmentSrc)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -29,7 +29,7 @@ namespace BHive
 		return nullptr;
 	}
 
-	void ShaderLibrary::Add(const FName& name, const Ref<Shader>& shader)
+	void ShaderLibrary::Add(const BName& name, const Ref<Shader>& shader)
 	{
 		BH_CORE_ASSERT(!Exists(name), "Shader Already Exists");
 		m_Shaders[name] = shader;
@@ -48,22 +48,32 @@ namespace BHive
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const FName& name, const Path& filePath)
+	Ref<Shader> ShaderLibrary::Load(const BName& name, const Path& filePath)
 	{
 		auto shader = Shader::Create(filePath);
 		Add(name, shader);
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Get(const FName& name)
+	Ref<Shader> ShaderLibrary::Get(const BName& name)
 	{
 		BH_CORE_ASSERT(Exists(name), "Shader Doesn't Exists");
 		return m_Shaders[name];
 	}
 
-	bool ShaderLibrary::Exists(const FName& name) const
+	bool ShaderLibrary::Exists(const BName& name)
 	{
 		return m_Shaders.find(name) != m_Shaders.end();
 	}
 
+	void ShaderLibrary::UpdateShaderViewProjectionMatrices(glm::mat4 VP)
+	{
+		for (auto& s : m_Shaders)
+		{
+			s.second->Bind();
+			s.second->SetMat4("u_ViewProjection", VP);
+		}
+	}
+
+	std::unordered_map<BName, Ref<Shader>> ShaderLibrary::m_Shaders;
 }

@@ -141,7 +141,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\BHive.h" />
-    <ClInclude Include="src\BHive\AssetManagement\AssetManager.h" />
     <ClInclude Include="src\BHive\BHivePCH.h" />
     <ClInclude Include="src\BHive\Components\CameraComponents.h" />
     <ClInclude Include="src\BHive\Components\Component.h" />
@@ -156,6 +155,8 @@
     <ClInclude Include="src\BHive\Core\DataTypes.h" />
     <ClInclude Include="src\BHive\Core\EntryPoint.h" />
     <ClInclude Include="src\BHive\Core\Event.h" />
+    <ClInclude Include="src\BHive\Core\EventMacros.h" />
+    <ClInclude Include="src\BHive\Core\IDGenerator.h" />
     <ClInclude Include="src\BHive\Core\Input.h" />
     <ClInclude Include="src\BHive\Core\Interface.h" />
     <ClInclude Include="src\BHive\Core\KeyCodes.h" />
@@ -163,27 +164,23 @@
     <ClInclude Include="src\BHive\Core\Layer.h" />
     <ClInclude Include="src\BHive\Core\LayerStack.h" />
     <ClInclude Include="src\BHive\Core\Log.h" />
+    <ClInclude Include="src\BHive\Core\Math\MathLibrary.h" />
+    <ClInclude Include="src\BHive\Core\Math\MathLibrary.inl" />
     <ClInclude Include="src\BHive\Core\MouseCodes.h" />
     <ClInclude Include="src\BHive\Core\MouseEvent.h" />
-    <ClInclude Include="src\BHive\Core\Profile\Timer.h" />
-    <ClInclude Include="src\BHive\Core\Serializable.h" />
-    <ClInclude Include="src\BHive\Core\Time.h" />
+    <ClInclude Include="src\BHive\Core\PlatformDataTypes.h" />
+    <ClInclude Include="src\BHive\Core\Time\Time.h" />
+    <ClInclude Include="src\BHive\Core\Time\Timer.h" />
+    <ClInclude Include="src\BHive\Core\Types\BString.h" />
     <ClInclude Include="src\BHive\Core\Types\Color.h" />
     <ClInclude Include="src\BHive\Core\Types\Matrix.h" />
-    <ClInclude Include="src\BHive\Core\Types\Name.h" />
-    <ClInclude Include="src\BHive\Core\Types\Name.inl" />
-    <ClInclude Include="src\BHive\Core\IDGenerator.h" />
-    <ClInclude Include="src\BHive\Core\Types\PlatformDataTypes.h" />
     <ClInclude Include="src\BHive\Core\Types\Rotator.h" />
-    <ClInclude Include="src\BHive\Core\Types\String.h" />
-    <ClInclude Include="src\BHive\Core\Types\String.inl" />
     <ClInclude Include="src\BHive\Core\Types\Transform.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector2.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector3.h" />
-    <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h" />
-    <ClInclude Include="src\BHive\Math\MathLibrary.h" />
-    <ClInclude Include="src\BHive\Math\MathLibrary.inl" />
-    <ClInclude Include="src\BHive\Object\Entity.h" />
+    <ClInclude Include="src\BHive\Object\ActorManager.h" />
+    <ClInclude Include="src\BHive\Layers\ImGuiLayer.h" />
+    <ClInclude Include="src\BHive\Object\Actor.h" />
     <ClInclude Include="src\BHive\Object\Object.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLBuffer.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLContext.h" />
@@ -203,7 +200,6 @@
     <ClInclude Include="src\BHive\Renderer\Shader.h" />
     <ClInclude Include="src\BHive\Renderer\Texture.h" />
     <ClInclude Include="src\BHive\Renderer\VertexArray.h" />
-    <ClInclude Include="src\BHive\Scene\Scene.h" />
     <ClInclude Include="src\BHive\Shapes\Plane.h" />
     <ClInclude Include="src\BHive\Shapes\Triangle.h" />
     <ClInclude Include="vendor\glm\include\glm\common.hpp" />
@@ -571,7 +567,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BHive\AssetManagement\AssetManager.cpp" />
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -581,19 +576,19 @@
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
     <ClCompile Include="src\BHive\Controllers\OrthographicCameraController.cpp" />
     <ClCompile Include="src\BHive\Core\Application.cpp" />
+    <ClCompile Include="src\BHive\Core\IDGenerator.cpp" />
     <ClCompile Include="src\BHive\Core\Layer.cpp" />
     <ClCompile Include="src\BHive\Core\LayerStack.cpp" />
     <ClCompile Include="src\BHive\Core\Log.cpp" />
-    <ClCompile Include="src\BHive\Core\Profile\Timer.cpp" />
-    <ClCompile Include="src\BHive\Core\Serializable.cpp" />
-    <ClCompile Include="src\BHive\Core\Time.cpp" />
+    <ClCompile Include="src\BHive\Core\Time\Time.cpp" />
+    <ClCompile Include="src\BHive\Core\Time\Timer.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Color.cpp" />
-    <ClCompile Include="src\BHive\Core\IDGenerator.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp" />
-    <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
+    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp" />
-    <ClCompile Include="src\BHive\Object\Entity.cpp" />
+    <ClCompile Include="src\BHive\Object\Actor.cpp" />
     <ClCompile Include="src\BHive\Object\Object.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLBuffer.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
@@ -611,7 +606,6 @@
     <ClCompile Include="src\BHive\Renderer\Shader.cpp" />
     <ClCompile Include="src\BHive\Renderer\Texture.cpp" />
     <ClCompile Include="src\BHive\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\BHive\Scene\Scene.cpp" />
     <ClCompile Include="src\BHive\Shapes\Plane.cpp" />
     <ClCompile Include="src\BHive\Shapes\Triangle.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />

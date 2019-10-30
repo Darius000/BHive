@@ -1,7 +1,6 @@
 #include "BHivePCH.h"
 #include <glad/glad.h>
 #include "RenderComponent.h"
-#include "BHive/AssetManagement/AssetManager.h"
 #include "BHive/Renderer/Renderer.h"
 
 namespace BHive
@@ -9,24 +8,26 @@ namespace BHive
 	RenderComponent::RenderComponent()
 		:m_VertexArray(nullptr)
 	{
-		m_Shader = AssetManager::GetShaders()[0].get();
+		m_Shader = ShaderLibrary::Get("Default");
 	}
 
 	RenderComponent::RenderComponent(const RenderComponent& other)
+		:m_Shader(other.m_Shader)
 	{
 		m_VertexArray.reset(other.m_VertexArray.get());
 	}
 
 	void RenderComponent::ComponentInit()
 	{
-
+		Super::ComponentInit();
+		
 	}
 
 	void RenderComponent::ComponentStart()
 	{
 		Super::ComponentStart();
 
-		CreateBuffers();	
+		CreateBuffers();
 	}
 
 	void RenderComponent::ComponentUpdate(const Time& time)
@@ -47,7 +48,7 @@ namespace BHive
 
 	void RenderComponent::SetShader(Ref<Shader>& shader)
 	{
-		m_Shader = &*shader;
+		m_Shader = shader;
 	}
 
 	void RenderComponent::SetTexture(Ref<Texture2D>& texture)
@@ -80,7 +81,7 @@ namespace BHive
 	void RenderComponent::Draw()
 	{
 		m_Shader->Bind();
-		m_Shader->SetMatrix4("u_Model", GetTransform().GetMatrix());
+		m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
 		m_Shader->SetInt("u_Texture", 0);
 
 		m_Texture->Bind();

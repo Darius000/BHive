@@ -19,6 +19,6 @@ namespace BHive
 	public:
 		virtual ~Texture2D() = default;
 
-		static Ref<Texture2D> Create(const FString& path);
+		static Ref<Texture2D> Create(const BString& path);
 	};
 }

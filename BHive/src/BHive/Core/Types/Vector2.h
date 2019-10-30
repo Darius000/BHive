@@ -37,7 +37,7 @@ namespace BHive
 		bool operator!=(const Vector2& _other);
 		T* const operator*();
 
-		const FString& ToString() const { return FString() + "{" + x + "," + y + "}"; }
+		const BString& ToString() const { return Format("{ %f, %f}"); }
 	};
 
 	template<typename T>

@@ -7,11 +7,11 @@ namespace BHive
 	{
 	public:
 		IDGenerator();
-		uint32 GenerateID();
-		void DeleteID(uint32 id);
+		uint64 GenerateID();
+		void DeleteID(uint64 id);
 
 	private:
-		uint32 m_NextAvailableUndeletedID;
-		std::vector<uint32> m_AvailableDeletedIDs;
+		uint64 m_NextAvailableUndeletedID;
+		std::vector<uint64> m_AvailableDeletedIDs;
 	};
 }

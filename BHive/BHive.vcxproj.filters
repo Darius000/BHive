@@ -28,17 +28,17 @@
     <Filter Include="src\BHive\Core">
       <UniqueIdentifier>{E22BD88B-CEF9-CB91-B78D-3CB8A3FAA7F6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\BHive\Core\Profile">
-      <UniqueIdentifier>{C272F620-AE6C-1F73-97D9-B583837285DF}</UniqueIdentifier>
+    <Filter Include="src\BHive\Core\Math">
+      <UniqueIdentifier>{FB4D5713-67AF-3421-F01C-7BD35C7D6BE0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BHive\Core\Time">
+      <UniqueIdentifier>{C0455B13-2CA7-3821-B514-7FD321756FE0}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Core\Types">
       <UniqueIdentifier>{06D1CC7E-F25F-5648-9B7E-6A4387EC66EE}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\ImGui">
       <UniqueIdentifier>{F46D4807-60F9-B5CB-690A-39C0D51412CC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Math">
-      <UniqueIdentifier>{636CDD8B-4F3A-D191-38CE-41B8243BADF6}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Object">
       <UniqueIdentifier>{90FFA0FD-7CF8-BF4F-A52A-A5D491829F5B}</UniqueIdentifier>
@@ -93,9 +93,6 @@
     <ClInclude Include="src\BHive.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\AssetManagement\AssetManager.h">
-      <Filter>src\BHive\AssetManagement</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\BHivePCH.h">
       <Filter>src\BHive</Filter>
     </ClInclude>
@@ -138,6 +135,12 @@
     <ClInclude Include="src\BHive\Core\Event.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\EventMacros.h">
+      <Filter>src\BHive\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\IDGenerator.h">
+      <Filter>src\BHive\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\Input.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
@@ -159,20 +162,29 @@
     <ClInclude Include="src\BHive\Core\Log.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Math\MathLibrary.h">
+      <Filter>src\BHive\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Math\MathLibrary.inl">
+      <Filter>src\BHive\Core\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\MouseCodes.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\MouseEvent.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Profile\Timer.h">
-      <Filter>src\BHive\Core\Profile</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Serializable.h">
+    <ClInclude Include="src\BHive\Core\PlatformDataTypes.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Time.h">
-      <Filter>src\BHive\Core</Filter>
+    <ClInclude Include="src\BHive\Core\Time\Time.h">
+      <Filter>src\BHive\Core\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Time\Timer.h">
+      <Filter>src\BHive\Core\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\BString.h">
+      <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Color.h">
       <Filter>src\BHive\Core\Types</Filter>
@@ -180,22 +192,7 @@
     <ClInclude Include="src\BHive\Core\Types\Matrix.h">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\Name.h">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\Name.inl">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\PlatformDataTypes.h">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Rotator.h">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\String.h">
-      <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\String.inl">
       <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Transform.h">
@@ -206,18 +203,6 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Vector3.h">
       <Filter>src\BHive\Core\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\ImGui\ImGuiLayer.h">
-      <Filter>src\BHive\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Math\MathLibrary.h">
-      <Filter>src\BHive\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Math\MathLibrary.inl">
-      <Filter>src\BHive\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Object\Entity.h">
-      <Filter>src\BHive\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Object\Object.h">
       <Filter>src\BHive\Object</Filter>
@@ -275,9 +260,6 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Renderer\VertexArray.h">
       <Filter>src\BHive\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Scene\Scene.h">
-      <Filter>src\BHive\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Shapes\Plane.h">
       <Filter>src\BHive\Shapes</Filter>
@@ -1374,12 +1356,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\IDGenerator.h" />
+    <ClInclude Include="src\BHive\Object\Actor.h">
+      <Filter>src\BHive\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Layers\ImGuiLayer.h">
+      <Filter>src\BHive\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Object\ActorManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BHive\AssetManagement\AssetManager.cpp">
-      <Filter>src\BHive\AssetManagement</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
       <Filter>src\BHive</Filter>
     </ClCompile>
@@ -1401,6 +1386,9 @@
     <ClCompile Include="src\BHive\Core\Application.cpp">
       <Filter>src\BHive\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Core\IDGenerator.cpp">
+      <Filter>src\BHive\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Core\Layer.cpp">
       <Filter>src\BHive\Core</Filter>
     </ClCompile>
@@ -1410,14 +1398,11 @@
     <ClCompile Include="src\BHive\Core\Log.cpp">
       <Filter>src\BHive\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Profile\Timer.cpp">
-      <Filter>src\BHive\Core\Profile</Filter>
+    <ClCompile Include="src\BHive\Core\Time\Time.cpp">
+      <Filter>src\BHive\Core\Time</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Serializable.cpp">
-      <Filter>src\BHive\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Core\Time.cpp">
-      <Filter>src\BHive\Core</Filter>
+    <ClCompile Include="src\BHive\Core\Time\Timer.cpp">
+      <Filter>src\BHive\Core\Time</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Color.cpp">
       <Filter>src\BHive\Core\Types</Filter>
@@ -1428,14 +1413,8 @@
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp">
       <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\ImGui\ImGuiLayer.cpp">
-      <Filter>src\BHive\ImGui</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp">
       <Filter>src\BHive\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Object\Entity.cpp">
-      <Filter>src\BHive\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Object\Object.cpp">
       <Filter>src\BHive\Object</Filter>
@@ -1488,9 +1467,6 @@
     <ClCompile Include="src\BHive\Renderer\VertexArray.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Scene\Scene.cpp">
-      <Filter>src\BHive\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\BHive\Shapes\Plane.cpp">
       <Filter>src\BHive\Shapes</Filter>
     </ClCompile>
@@ -1500,7 +1476,13 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\IDGenerator.cpp" />
+    <ClCompile Include="src\BHive\Object\Actor.cpp">
+      <Filter>src\BHive\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp">
+      <Filter>src\BHive\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />

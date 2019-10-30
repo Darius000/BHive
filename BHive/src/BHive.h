@@ -4,14 +4,13 @@
 
 #include "BHive/BHivePCH.h"
 #include "imgui.h"
-#include "BHive/ImGui/ImGuiLayer.h"
-#include "BHive/Object/Entity.h"
+#include "BHive/Layers/ImGuiLayer.h"
+#include "BHive/Object/Actor.h"
 #include "BHive/Shapes/Triangle.h"
 #include "BHive/Shapes/Plane.h"
-#include "BHive/Scene/Scene.h"
-#include "BHive/AssetManagement/AssetManager.h"
 #include "BHive/Components/CameraComponents.h"
 #include "BHive/Controllers/OrthographicCameraController.h"
+#include "BHive/Object/ActorManager.h"
 
 //-------Renderer----------------
 

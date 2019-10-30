@@ -3,7 +3,7 @@
 #include "BHive/Core/ApplicationEvent.h"
 #include "BHive/Platforms/Windows/Window.h"
 #include "BHive/Core/LayerStack.h"
-#include "BHive/ImGui/ImGuiLayer.h"
+#include "BHive/Layers/ImGuiLayer.h"
 
 namespace BHive
 {

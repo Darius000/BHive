@@ -7,7 +7,7 @@ namespace BHive
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:
-		OpenGLTexture2D(const FString& path);
+		OpenGLTexture2D(const BString& path);
 		virtual ~OpenGLTexture2D();
 
 		virtual uint32 GetWidth() const override { return m_Width; }
@@ -16,7 +16,7 @@ namespace BHive
 		virtual void Bind(uint32 slot = 0) const override;
 
 	private:
-		FString m_Path;
+		BString m_Path;
 		uint32 m_Width;
 		uint32 m_Height;
 		uint32 m_Channels;

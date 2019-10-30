@@ -127,6 +127,11 @@ namespace BHive
 		m_RotationOrder = rotationOrder;
 	}
 
+	const BString Transform::ToString() const
+	{
+		return	Format("Position: {%f, %f, %f}, Rotation: {%f, %f, %f} , Scale: {%f, %f, %f} ", m_Position.x, m_Position.y, m_Position.z, m_Rotation.roll, m_Rotation.yaw, m_Rotation.pitch, m_Scale.x, m_Scale.y, m_Scale.z );
+	}
+
 	void Transform::RecalulateModelMatrix()
 	{
 		m_ModelMatrix = m_TranslationMatrix * m_RotationMatrix * m_ScaleMatrix;

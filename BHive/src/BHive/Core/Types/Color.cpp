@@ -4,47 +4,35 @@
 namespace BHive
 {
 	Color::Color()
-		: Color(0, 255)
+		: Color(128, 255)
 	{
 
 	}
 
-	Color::Color(uint8 InColor, uint8 InA)
-		:r(InColor), b(InColor), g(InColor), a(InA)
+	Color::Color(uint8 color, uint8 A)
+		: Color(color, color, color, A)
 	{
 		
 	}
 
 	
-	Color::Color(uint8 InR, uint8 InG, uint8 InB, uint8 InA /*= 1*/)
-		: r(InR), b(InG), g(InB), a(InA)
+	Color::Color(uint8 R, uint8 G, uint8 B, uint8 A )
+		: r(R), b(G), g(B), a(A)
 	{
-
+		Clamp();
 	}
 
-	float Color::GetR() const
+	void Color::Clamp()
 	{
-		return r / (float)MAX_COLOR;
+		MathLibrary::Clamp(r, (uint8)0, (uint8)255);
+		MathLibrary::Clamp(g, (uint8)0, (uint8)255);
+		MathLibrary::Clamp(b, (uint8)0, (uint8)255);
+		MathLibrary::Clamp(a, (uint8)0, (uint8)255);
 	}
 
-	float Color::GetG() const
+	BString Color::ToString() const
 	{
-		return g / (float)MAX_COLOR;
-	}
-
-	float Color::GetB() const
-	{
-		return b / (float)MAX_COLOR;
-	}
-
-	float Color::GetA() const
-	{
-		return a / (float)MAX_COLOR;
-	}
-
-	FString Color::ToString() const
-	{
-		return FString() + "{" + r + "," + g + "," + b + "," + a + "}";
+		return Format("{ %i, %i, %i , %i }", r, g, b, a);
 	}
 
 	uint8* const Color::operator*()
@@ -80,12 +68,20 @@ namespace BHive
 	LinearColor::LinearColor(float R, float G, float B, float A )
 		:r(R), g(G), b(B), a(A)
 	{
-
+		Clamp();
 	}
 
-	FString LinearColor::ToString() const
+	void LinearColor::Clamp()
 	{
-		return FString() + "{" + r + "," + g + "," + b + "," + a + "}";
+		MathLibrary::Clamp(r, 0.0f, 1.0f);
+		MathLibrary::Clamp(g, 0.0f, 1.0f);
+		MathLibrary::Clamp(b, 0.0f, 1.0f);
+		MathLibrary::Clamp(a, 0.0f, 1.0f);
+	}
+
+	BString LinearColor::ToString() const
+	{
+		return Format("{ %f, %f, %f }", r, g, b);
 	}
 
 	float* const LinearColor::operator*()
@@ -99,6 +95,8 @@ namespace BHive
 		g += col.g;
 		b += col.b;
 		a += col.a;
+
+		Clamp();
 	}
 
 	bool LinearColor::operator==(const LinearColor& col)

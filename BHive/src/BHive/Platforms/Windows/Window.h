@@ -6,11 +6,11 @@ namespace BHive
 {
 	struct WindowProps
 	{
-		FString Title;
+		BName Title;
 		unsigned int Width;
 		unsigned int Height;
 
-		WindowProps(const FString& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720)
+		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720)
 			:Title(title), Width(width), Height(height)
 		{
 

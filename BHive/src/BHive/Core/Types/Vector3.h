@@ -7,24 +7,24 @@ namespace BHive
 	{
 		struct Vector2;
 
-		Vector3():x(0),y(0),z(0) {};
+		Vector3() :x(0), y(0), z(0) {};
 		Vector3(T _x) :x(_x), y(_x), z(_x) {};
-		Vector3(T _x, T _y , T _z) :x(_x), y(_y), z(_z) {};
+		Vector3(T _x, T _y, T _z) :x(_x), y(_y), z(_z) {};
 		Vector3(const Vector2& _vector2, T _z) :x(_vector2.x), y(_vector2.y), z(_z) {};
 		Vector3(Vector2& _vector2, T _z = 0.0f) :x(_vector2.x), y(_vector2.y), z(_z) {};
 		Vector3(const Vector3& other) :x(other.x), y(other.y), z(other.z) {};
-		
+
 		union { T x, r; };
 		union { T y, g; };
 		union { T z, b; };
 
 	public:
-		T GetMagnitude() const; 
-		Vector3 Normalize(); 
+		T GetMagnitude() const;
+		Vector3 Normalize();
 
 	public:
-		static const Vector3 Zero(); 
-		static const Vector3 One(); 
+		static const Vector3 Zero();
+		static const Vector3 One();
 		static float GetAngle(const Vector3& a, const Vector3& b);
 
 	public:
@@ -36,16 +36,16 @@ namespace BHive
 		Vector3 operator-=(const Vector3& _other);
 		Vector3 operator*=(T _scalar);
 		Vector3 operator/=(T _scalar);
-		Vector3 operator-(); 
+		Vector3 operator-();
 		T* const operator*();
-		float operator*(const Vector3& _other); 
-		Vector3 operator^(const Vector3& _other); 
+		float operator*(const Vector3& _other);
+		Vector3 operator^(const Vector3& _other);
 
-		T operator[](uint32 index); 
+		T operator[](uint32 index);
 		bool operator==(const Vector3& _other);
 
 	public:
-		FString ToString() const { return FString() + "{" + x + "," + y + "," + z + "}"; }
+		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
 	};
 
 	template<typename T>

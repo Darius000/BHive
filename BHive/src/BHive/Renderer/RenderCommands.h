@@ -12,7 +12,7 @@ namespace BHive
 			s_RendererAPI->Init();
 		}
 
-		inline static void SetClearColor(const Color& color) 
+		inline static void SetClearColor(const LinearColor& color) 
 		{
 			s_RendererAPI->SetClearColor(color);
 		}

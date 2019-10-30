@@ -9,13 +9,11 @@ namespace BHive
 
 	public:
 		Color();
-		Color(uint8 InColor, uint8 InA = MAX_COLOR);
-		Color(uint8 InR, uint8 InG, uint8 InB, uint8 InA = MAX_COLOR);
-		float GetR() const;
-		float GetG() const;
-		float GetB() const;
-		float GetA() const;
-		FString ToString() const;
+		Color(uint8 color, uint8 A = MAX_COLOR);
+		Color(uint8 R, uint8 G, uint8 B, uint8 A = MAX_COLOR);
+		void Clamp();
+
+		BString ToString() const;
 
 	public:
 		bool operator==(const Color& col);
@@ -44,7 +42,8 @@ namespace BHive
 		LinearColor(float color, float A = MAX_COLOR);
 		LinearColor(float R, float G, float B, float A = MAX_COLOR);
 
-		FString ToString() const;
+		void Clamp();
+		BString ToString() const;
 
 	public:
 		bool operator==(const LinearColor& col);

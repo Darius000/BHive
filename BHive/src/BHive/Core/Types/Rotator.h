@@ -30,7 +30,7 @@ namespace BHive
 		bool IsNAN() const; // Checks if a component is nan or infinite
 		float GetAxis(EAxis axis) const;
 		FVector3 ToVector() const;
-		FString ToString() const;
+		BString ToString() const;
 		
 		Rotator operator+(const Rotator& r);
 		Rotator operator-(const Rotator& r);

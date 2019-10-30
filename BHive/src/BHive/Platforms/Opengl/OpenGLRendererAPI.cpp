@@ -13,9 +13,9 @@ namespace BHive
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
-	void OpenGLRendererAPI::SetClearColor(const Color& color)
+	void OpenGLRendererAPI::SetClearColor(const LinearColor& color)
 	{
-		glClearColor(color.GetR(), color.GetG(),color.GetB(),color.GetA());
+		glClearColor(color.r, color.g,color.b,color.a);
 	}
 
 	void OpenGLRendererAPI::Clear()

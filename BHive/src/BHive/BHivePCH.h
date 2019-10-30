@@ -32,11 +32,13 @@
 
 //-------------Core----------------
 #include "BHive/Core/Core.h"
+#include "BHive/Core/EventMacros.h"
 #include "BHive/Core/Log.h"
-#include "BHive/Core/Profile/Timer.h"
-#include "BHive/Core/CoreLibrary.h"
+#include "BHive/Core/PlatformDataTypes.h"
+#include "BHive/Core/Time/Timer.h"
 #include "BHive/Core/DataTypes.h"
-#include "BHive/Math/MathLibrary.h"
+#include "BHive/Core/CoreLibrary.h"
+#include "BHive/Core/Math/MathLibrary.h"
 #include "BHive/Core/KeyCodes.h"
 #include "BHive/Core/MouseCodes.h"
 #include "BHive/Core/Event.h"
@@ -44,7 +46,7 @@
 #include "BHive/Core/KeyEvent.h"
 #include "BHive/Core/ApplicationEvent.h"
 #include "BHive/Core/Input.h"
-#include "BHive/Core/Time.h"
+#include "BHive/Core/Time/Time.h"
 #include "BHive/Core/Layer.h"
 #include "BHive/Core/Application.h"
 

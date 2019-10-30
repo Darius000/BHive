@@ -13,7 +13,7 @@ namespace BHive
 		inline float GetX() const { return m_MouseX; }
 		inline float GetY() const { return m_MouseY; }
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MousedMovedEvent: " << m_MouseX << ", " << m_MouseY;
@@ -36,7 +36,7 @@ namespace BHive
 		inline float GetXOffset() const { return m_XOffset; }
 		inline float GetYOffset() const { return m_YOffset; }
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MousedScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
@@ -70,7 +70,7 @@ namespace BHive
 		MouseButtonPressedEvent(int button)
 			:MouseButtonEvent(button) {}
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MouseButtonPressedEvent: " << m_Button;
@@ -86,7 +86,7 @@ namespace BHive
 		MouseButtonReleasedEvent(int button)
 			:MouseButtonEvent(button) {}
 
-		FString ToString() const override
+		BString ToString() const override
 		{
 			std::stringstream ss;
 			ss << "MouseButtonReleasedEvent: " << m_Button;

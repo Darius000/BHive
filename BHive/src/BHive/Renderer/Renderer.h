@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RenderCommands.h"
-#include "Scene/Scene.h"
 
 namespace BHive
 {
@@ -9,23 +8,15 @@ namespace BHive
 	{
 	public:
 		static void Init();
-		static void OnWindowResized(uint32 width, uint32 height);
+		static void Shutdown();
 
-		static void AddScene(std::shared_ptr<Scene> scene);
-		static void RemoveScene(std::shared_ptr<Scene> scene);
-
-		static void BeginScene(uint32 index); 
-		static void UpdateScene(const Time& time);
-		static void EndScene(); 
+		static void Begin(); 
+		static void End(); 
 		static void Draw(const std::shared_ptr<VertexArray>& vertexArray);
 
-		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
+		static void OnWindowResized(uint32 width, uint32 height);
 
-	private:
-		
-		static std::vector<std::shared_ptr<Scene>> s_Scenes;
-		static std::shared_ptr<Scene> s_Scene;
-		static uint32 s_SceneIndex;
+		inline static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); };
 	};
 	
 }

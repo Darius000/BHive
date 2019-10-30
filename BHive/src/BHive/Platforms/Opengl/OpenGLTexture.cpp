@@ -7,7 +7,7 @@
 
 namespace BHive
 {
-	OpenGLTexture2D::OpenGLTexture2D(const FString& path)
+	OpenGLTexture2D::OpenGLTexture2D(const BString& path)
 		:m_Path(path)
 	{
 		stbi_set_flip_vertically_on_load(1);

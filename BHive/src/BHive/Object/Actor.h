@@ -28,13 +28,13 @@ namespace BHive
 	using ComponentBitSet = std::bitset<maxComponents>;
 	using ComponentArray = std::array<Component*, maxComponents>;
 
-	class BHive_API Entity : public Object
+	class BHive_API Actor : public Object
 	{
-		BCLASS(Entity, EntityCategory, Object)
+		BCLASS(Actor, EntityCategory, Object)
 
 	public:
-		Entity();
-		virtual ~Entity();
+		Actor();
+		virtual ~Actor();
 
 		virtual void Start();
 		virtual void Update(const Time& time);
@@ -42,7 +42,7 @@ namespace BHive
 
 		void SetRootComponent(TransformComponent& component);
 		//void AttachComponentToRoot(TransformComponent& component);
-		void AttachToEntity(Entity& entity);
+		void AttachToEntity(Actor& entity);
 		void AttachToComponent(TransformComponent& component);
 
 		TransformComponent* GetRootComponent();

@@ -36,7 +36,7 @@ namespace BHive
 		const FVector3& GetUp() { return FVector3(m_ModelMatrix[0][1], m_ModelMatrix[1][1], m_ModelMatrix[2][1]).Normalize(); }
 		const glm::mat4& GetMatrix() const { return m_ModelMatrix;}
 
-		const FString& ToString() const{ return	FString("{") + m_Position.x + "," + m_Position.y + "," + m_Position.z + "} , {" + m_Scale.x + "," + m_Scale.y + "," + m_Scale.z + "} , {" + m_Rotation.roll + "," + m_Rotation.yaw + "," + m_Rotation.pitch + "}"; }
+		const BString ToString() const;
 
 		FTransformUpdatedEvent OnTransformUpdated;
 

@@ -1,6 +1,6 @@
 #include "BHivePCH.h"
 #include "TransformComponent.h"
-#include "BHive/Object/Entity.h"
+#include "BHive/Object/Actor.h"
 
 namespace BHive
 {
@@ -63,7 +63,7 @@ namespace BHive
 		return;
 	}
 
-	void TransformComponent::AttachToEntity(Entity& entity)
+	void TransformComponent::AttachToEntity(Actor& entity)
 	{
 		/*if (GetOwner() != &entity)
 		{

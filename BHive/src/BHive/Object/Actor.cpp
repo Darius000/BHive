@@ -1,35 +1,35 @@
 #include "BHivePCH.h"
-#include "Entity.h"
+#include "Actor.h"
 
 namespace BHive
 {
-	Entity::Entity()
+	Actor::Actor()
 		:m_RootComponent(nullptr)
 	{
 		AddComponent<TransformComponent>();
 	}
 
-	Entity::~Entity()
+	Actor::~Actor()
 	{
 		
 	}
 
-	void Entity::Start()
+	void Actor::Start()
 	{
 		for (auto& c : components) c->ComponentStart();
 	}
 
-	void Entity::Update(const Time& time)
+	void Actor::Update(const Time& time)
 	{
 		for (auto& c : components) c->ComponentUpdate(time);
 	}
 
-	void Entity::OnDestroyed()
+	void Actor::OnDestroyed()
 	{
 		for (auto& c : components) c->Destroy();
 	}
 
-	void Entity::SetRootComponent(TransformComponent& component)
+	void Actor::SetRootComponent(TransformComponent& component)
 	{
 		m_RootComponent = &component;
 	}
@@ -40,27 +40,27 @@ namespace BHive
 		component.AttachToComponent(*m_RootComponent);
 	}*/
 
-	void Entity::AttachToEntity(Entity& entity)
+	void Actor::AttachToEntity(Actor& entity)
 	{
 		GetRootComponent()->AttachToEntity(entity);
 	}
 
-	void Entity::AttachToComponent(TransformComponent& component)
+	void Actor::AttachToComponent(TransformComponent& component)
 	{
 		GetRootComponent()->AttachToComponent(component);
 	}
 
-	TransformComponent* Entity::GetRootComponent()
+	TransformComponent* Actor::GetRootComponent()
 	{
 		return m_RootComponent;
 	}
 
-	bool Entity::RemoveComponent(Component& component)
+	bool Actor::RemoveComponent(Component& component)
 	{
 		return false;
 	}
 
-	void Entity::AddComponent(Component& component)
+	void Actor::AddComponent(Component& component)
 	{
 
 	}

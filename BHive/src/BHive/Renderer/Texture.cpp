@@ -69,7 +69,7 @@ namespace BHive
 		stbi_image_free(m_PixelData);
 	}*/
 
-	Ref<BHive::Texture2D> Texture2D::Create(const FString& path)
+	Ref<BHive::Texture2D> Texture2D::Create(const BString& path)
 	{
 		switch (Renderer::GetAPI())
 		{

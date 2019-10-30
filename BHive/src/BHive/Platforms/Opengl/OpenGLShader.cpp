@@ -5,7 +5,7 @@
 
 namespace BHive
 {
-	static GLenum ShaderTypeFromString(const FString& type)
+	static GLenum ShaderTypeFromString(const BString& type)
 	{
 		if (type == "VERTEX") 
 			return GL_VERTEX_SHADER;
@@ -19,23 +19,24 @@ namespace BHive
 
 	OpenGLShader::OpenGLShader(const Path& filePath)
 	{
-		FString source = ReadFile(filePath);	
+		BString source = ReadFile(filePath);	
 		auto shaderSources = PreProccess(source);
 		Compile(shaderSources);
 
-		auto lastLash = filePath.Find_Last_Of("/");
-		lastLash = lastLash == filePath.Size() ? 0 : lastLash + 1;
-		auto lastDot = filePath.Find(".", 0);
-		auto count = lastDot == filePath.Size() ? filePath.Size() - lastLash : lastDot - lastLash;
+		auto lastLash = filePath.find_last_of("/");
+		lastLash = lastLash == filePath.size() ? 0 : lastLash + 1;
+		auto lastDot = filePath.find(".", 0);
+		auto count = lastDot == filePath.size() ? filePath.size() - lastLash : lastDot - lastLash;
 
-		FString fileName;
-		filePath.GetSubString(lastLash, count, fileName);
-		m_Name.FromString(fileName);
+		BString fileName = filePath.substr(lastLash, count);
+		
+		m_Name = fileName;
 	}
 
-	OpenGLShader::OpenGLShader(const FName& name, const FString&  vertexSrc, const FString&  fragmentSrc)
+	OpenGLShader::OpenGLShader(const BName& name, const BString&  vertexSrc, const BString&  fragmentSrc)
+		:m_Name(name)
 	{
-		std::unordered_map<GLenum, FString> sources;
+		std::unordered_map<GLenum, BString> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;
 		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
 		Compile(sources);
@@ -48,62 +49,62 @@ namespace BHive
 		glDeleteProgram(id);
 	}
 
-	void OpenGLShader::SetBool(const FString& name, bool value) const
+	void OpenGLShader::SetBool(const BString& name, bool value) const
 	{
 		glUniform1i(glGetUniformLocation(id, *name), (int)value);
 	}
 
-	void OpenGLShader::SetInt(const FString& name, int value) const
+	void OpenGLShader::SetInt(const BString& name, int value) const
 	{
 		glUniform1i(glGetUniformLocation(id, *name), value);
 	}
 
-	void OpenGLShader::SetFloat(const FString& name, float value) const
+	void OpenGLShader::SetFloat(const BString& name, float value) const
 	{
 		glUniform1f(glGetUniformLocation(id, *name), value);
 	}
 
-	void OpenGLShader::SetVector2(const FString& name, float value0, float value1) const
+	void OpenGLShader::SetFloat2(const BString& name, float value0, float value1) const
 	{
 		glUniform2f(glGetUniformLocation(id, *name), value0, value1);
 	}
 
-	void OpenGLShader::SetVector2(const FString& name, const glm::vec2& vec) const
+	void OpenGLShader::SetVec2(const BString& name, const glm::vec2& vec) const
 	{
 		glUniform2fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector3(const FString& name, float value0, float value1, float value2) const
+	void OpenGLShader::SetFloat3(const BString& name, float value0, float value1, float value2) const
 	{
 		glUniform3f(glGetUniformLocation(id, *name), value0, value1, value2);
 	}
 
-	void OpenGLShader::SetVector3(const FString& name, const glm::vec3& vec) const
+	void OpenGLShader::SetVec3(const BString& name, const glm::vec3& vec) const
 	{
 		glUniform3fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetVector4(const FString& name, float value0, float value1, float value2, float value3) const
+	void OpenGLShader::SetFloat4(const BString& name, float value0, float value1, float value2, float value3) const
 	{
 		glUniform4f(glGetUniformLocation(id, *name), value0, value1, value2, value3);
 	}
 
-	void OpenGLShader::SetVector4(const FString& name, const glm::vec4& vec) const
+	void OpenGLShader::SetVec4(const BString& name, const glm::vec4& vec) const
 	{
 		glUniform4fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
 	}
 
-	void OpenGLShader::SetMatrix2(const FString& name, const glm::mat2& mat) const
+	void OpenGLShader::SetMat2(const BString& name, const glm::mat2& mat) const
 	{
 		glUniformMatrix2fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix3(const FString& name, const glm::mat3& mat) const
+	void OpenGLShader::SetMat3(const BString& name, const glm::mat3& mat) const
 	{
 		glUniformMatrix3fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
 
-	void OpenGLShader::SetMatrix4(const FString& name, const glm::mat4& mat) const
+	void OpenGLShader::SetMat4(const BString& name, const glm::mat4& mat) const
 	{
 		glUniformMatrix4fv(glGetUniformLocation(id, *name), 1, GL_FALSE, glm::value_ptr(mat));
 	}
@@ -159,18 +160,18 @@ namespace BHive
 		return success;
 	}
 
-	FString OpenGLShader::ReadFile(const Path& filePath)
+	BString OpenGLShader::ReadFile(const Path& filePath)
 	{
-		FString result;
+		BString result;
 	
 		std::ifstream shaderFile(*filePath, std::ios::binary | std::ios::in);
 
 		if (shaderFile)
 		{
 			shaderFile.seekg(0, std::ios::end);
-			result.Resize((uint32)shaderFile.tellg());
+			result.resize(shaderFile.tellg());
 
-			int32 size = (int32)result.Size();
+			size_t size = result.size();
 
 			shaderFile.seekg(0, std::ios::beg);
 			shaderFile.read(&result[0], size);
@@ -186,50 +187,32 @@ namespace BHive
 		return result;
 	}
 
-	std::unordered_map<uint32, FString> OpenGLShader::PreProccess(const FString& source)
+	std::unordered_map<uint32, BString> OpenGLShader::PreProccess(const BString& source)
 	{
-		std::unordered_map<uint32, FString> shaderSources;
+		std::unordered_map<uint32, BString> shaderSources;
 
-		FString typeToken = "#type";
-		uint32 typeTokenLength = typeToken.Size();
-
-		FString vCode, fCode, type;
-
-		uint32 i = source.Find(*typeToken, 0);
-		uint32 j = source.Find("\n", i + typeTokenLength);
-		//FString vertex = source.SubString(i + typeTokenLength, j);
-		source.GetSubString(i + typeTokenLength + 1, j - 2, type);
-
-		uint32 r = source.Find(*typeToken, j);
-		source.GetSubString(j, r - 1, vCode);
-		shaderSources[ShaderTypeFromString(type)] = vCode;
-
-		uint32 s = source.Find("\n", r + typeTokenLength);
-		//FString fragment = source.SubString(r + typeTokenLength, s);
-		uint32 e = source.Find("\n", s);
-		source.GetSubString(e, source.Size(), fCode);
-		source.GetSubString(r + typeTokenLength + 1, s - 2, type);
+		const ANSICHAR* typeToken = "#type";
+		size_t typeTokenLength = strlen(typeToken);
+		size_t pos = source.find(*typeToken, 0);
 		
-		shaderSources[ShaderTypeFromString(type)] = fCode;
-
-		/*while (pos != FString::npos)
+		while (pos != BString::npos)
 		{
-			size_t eol = source.Find_First_Of("\r\n", pos);
-			BH_CORE_ASSERT(eol != FString::npos, "Syntax Error");
+			size_t eol = source.find_first_of("\r\n", pos);
+			BH_CORE_ASSERT(eol != BString::npos, "Syntax Error");
 			size_t begin = pos + typeTokenLength + 1;
-			FString type = source.SubString(begin, eol - begin);
+			BString type = source.substr(begin, eol - begin);
 			BH_CORE_ASSERT(ShaderTypeFromString(type), "Invalid Shader Type Specified");
 
-			size_t nextLinePos = source.Find_First_Not_Of("\r\n", eol);
-			pos = source.Find(typeToken);
-			shaderSources[ShaderTypeFromString(type)] = source.SubString(nextLinePos,
-				pos - (nextLinePos == FString::npos ? source.Size() - 1 : nextLinePos));
-		}*/
+			size_t nextLinePos = source.find_first_not_of("\r\n", eol);
+			pos = source.find(typeToken, nextLinePos);
+			shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos,
+				pos - (nextLinePos == BString::npos ? source.size() - 1 : nextLinePos));
+		}
 
 		return shaderSources;
 	}
 
-	void OpenGLShader::Compile(std::unordered_map<uint32, FString>& sources)
+	void OpenGLShader::Compile(std::unordered_map<uint32, BString>& sources)
 	{
 		GLuint program = glCreateProgram();
 		BH_CORE_ASSERT(sources.size() <= 2, "Only support 2  shaders for now!");
@@ -240,7 +223,7 @@ namespace BHive
 		for (auto& kv : sources)
 		{
 			GLenum shaderType = kv.first;
-			const FString& source = kv.second;
+			const BString& source = kv.second;
 
 			GLuint shader = glCreateShader(shaderType);
 

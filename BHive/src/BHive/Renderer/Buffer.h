@@ -34,7 +34,7 @@ namespace BHive
 
 	struct BufferElement
 	{
-		FString Name;
+		BString Name;
 		ShaderDataType Type;
 		uint32 Size;
 		uint64 Offset;
@@ -46,7 +46,7 @@ namespace BHive
 
 		}
 
-		BufferElement(ShaderDataType type, const FString& name, bool normalized = false)
+		BufferElement(ShaderDataType type, const BString& name, bool normalized = false)
 			:Name(name), Type(type), Size(ShaderDataTypeSize(type)), Offset(0), Normalized(normalized)
 		{
 

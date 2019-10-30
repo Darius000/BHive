@@ -6,6 +6,7 @@
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Renderer/RenderCommands.h"
 #include "BHive/Core/Input.h"
+#include "BHive/Object/ActorManager.h"
 
 
 namespace BHive
@@ -77,6 +78,8 @@ namespace BHive
 
 	void Application::Run()
 	{
+		ActorManager::Start();
+
 		while (m_Running)
 		{
 			m_Time->Update();
@@ -87,6 +90,8 @@ namespace BHive
 				{
 					layer->OnUpdate(*m_Time);
 				}
+
+				ActorManager::Update(*m_Time);
 			}
 
 			m_ImGuiLayer->Begin();
@@ -98,6 +103,8 @@ namespace BHive
 
 			m_Window->OnUpdate();
 		}
+
+		ActorManager::Shutdown();
 	}
 
 	bool Application::OnWindowClosed(WindowCloseEvent& e)

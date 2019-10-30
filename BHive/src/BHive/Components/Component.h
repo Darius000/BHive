@@ -4,7 +4,7 @@
 
 namespace BHive
 {
-	class Entity;
+	class Actor;
 
 	//add get relative
 
@@ -20,10 +20,10 @@ namespace BHive
 		virtual void ComponentStart() {};
 		virtual void ComponentUpdate(const Time& time) {};
 		//void SetOwner(Entity& entity); remove component from eniy and add to new one
-		Entity* GetOwner() const { return m_Owner; };
+		Actor* GetOwner() const { return m_Owner; };
 	
 	private:
-		Entity* m_Owner;
+		Actor* m_Owner;
 		
 	};
 }

@@ -37,7 +37,7 @@ namespace BHive
 
 		struct WindowData
 		{
-			FString Title;
+			BName Title;
 			unsigned int Width, Height;
 			bool VSync;
 

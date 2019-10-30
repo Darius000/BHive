@@ -39,7 +39,7 @@ namespace BHive
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
-		virtual FString ToString() const { return GetName(); }
+		virtual BString ToString() const { return GetName(); }
 
 		inline bool IsInCategory(EventCategory category)
 		{
