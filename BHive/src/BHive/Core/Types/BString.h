@@ -27,16 +27,18 @@ inline BHive::uint64 find_last_of(const BHive::BString& str, BHive::ANSICHAR x)
 {
 	BHive::uint32 i = 0;
 	BHive::uint64 pos = 0;
+	bool found = false;
 
 	while (str[i] != '\0')
 	{
 		if (str[i] == x)
 		{
 			pos = i;
+			found = true;
 		}
 
 		++i;
 	}
 
-	return pos;
+	return found ? pos : -1;
 }
