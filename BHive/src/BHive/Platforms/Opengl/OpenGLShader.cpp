@@ -19,18 +19,17 @@ namespace BHive
 
 	OpenGLShader::OpenGLShader(const Path& filePath)
 	{
-		BString source = ReadFile(filePath);	
-		auto shaderSources = PreProccess(source);
-		Compile(shaderSources);
-
 		auto lastLash = filePath.find_last_of('/');
 		lastLash = lastLash == filePath.size() ? 0 : lastLash + 1;
 		auto lastDot = find_last_of(filePath, '.');
 		auto count = lastDot == filePath.size() ? filePath.size() - lastLash : lastDot - lastLash;
 
 		BString fileName = filePath.substr(lastLash, count);
-		
 		m_Name = fileName;
+
+		BString source = ReadFile(filePath);	
+		auto shaderSources = PreProccess(source);
+		Compile(shaderSources);
 	}
 
 	OpenGLShader::OpenGLShader(const BName& name, const BString&  vertexSrc, const BString&  fragmentSrc)
@@ -136,7 +135,7 @@ namespace BHive
 				shaderType = "FRAGMENT";
 			}
 
-			BH_CORE_ERROR("{0} ERROR::SHADER::COMPILATION_FAILED\n {1}", shaderType, infoLog.data());
+			BH_CORE_ERROR("File: {0} , {1} ERROR::SHADER::COMPILATION_FAILED\n {2}", GetName(), shaderType, infoLog.data());
 		}
 
 		return success;
@@ -177,7 +176,7 @@ namespace BHive
 			shaderFile.read(&result[0], size);
 			shaderFile.close();
 
-			BH_CORE_ASSERT(true, "SHADER::FILE_LOADED_SUCCESFULLY!");
+			BH_CORE_TRACE("SHADER:: {0} :: FILE_LOADED_SUCCESFULLY!", GetName());
 		}
 		else
 		{

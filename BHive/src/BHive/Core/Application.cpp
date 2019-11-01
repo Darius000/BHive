@@ -32,6 +32,8 @@ namespace BHive
 
 		//Load Default Shaders 
 		ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
+		ShaderLibrary::Load("../BHive/Assets/Shaders/BoundingBox.glsl");
+		ShaderLibrary::Load("../BHive/Assets/Shaders/Phong.glsl");
 	}
 
 

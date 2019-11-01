@@ -612,14 +612,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />
-    <None Include="Assets\Shaders\Billboard.fs" />
-    <None Include="Assets\Shaders\Billboard.vs" />
-    <None Include="Assets\Shaders\BoundingBox.fs" />
-    <None Include="Assets\Shaders\BoundingBox.vs" />
+    <None Include="Assets\Shaders\BoundingBox.glsl" />
     <None Include="Assets\Shaders\Default.glsl" />
-    <None Include="Assets\Shaders\Modified.fs" />
-    <None Include="Assets\Shaders\Phong.fs" />
-    <None Include="Assets\Shaders\model_loading.fs" />
+    <None Include="Assets\Shaders\Phong.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Icons\UI_Circle-24.png" />

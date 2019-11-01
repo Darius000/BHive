@@ -1490,28 +1490,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />
-    <None Include="Assets\Shaders\Billboard.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Billboard.vs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\BoundingBox.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\BoundingBox.vs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
     <None Include="Assets\Shaders\Default.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="Assets\Shaders\Modified.fs">
+    <None Include="Assets\Shaders\BoundingBox.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="Assets\Shaders\Phong.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\model_loading.fs">
+    <None Include="Assets\Shaders\Phong.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
   </ItemGroup>

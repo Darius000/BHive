@@ -20,7 +20,7 @@ void SandBox2D::OnAttach()
 	plane->SetTexture(m_Texture);
 
 	BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
-	triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
+	triangle->SetShader(BHive::ShaderLibrary::Get("BoundingBox"));
 	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
 	triangle->SetTexture(m_Texture2);
 
