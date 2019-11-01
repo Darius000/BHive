@@ -23,3 +23,20 @@ inline const BHive::ANSICHAR* operator*(const BHive::BString& s)
 	return s.c_str();
 }
 
+inline BHive::uint64 find_last_of(const BHive::BString& str, BHive::ANSICHAR x)
+{
+	BHive::uint32 i = 0;
+	BHive::uint64 pos = 0;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == x)
+		{
+			pos = i;
+		}
+
+		++i;
+	}
+
+	return pos;
+}

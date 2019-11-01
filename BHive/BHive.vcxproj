@@ -178,9 +178,9 @@
     <ClInclude Include="src\BHive\Core\Types\Transform.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector2.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector3.h" />
-    <ClInclude Include="src\BHive\Object\ActorManager.h" />
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Object\Actor.h" />
+    <ClInclude Include="src\BHive\Object\ActorManager.h" />
     <ClInclude Include="src\BHive\Object\Object.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLBuffer.h" />
     <ClInclude Include="src\BHive\Platforms\Opengl\OpenGLContext.h" />
@@ -585,10 +585,10 @@
     <ClCompile Include="src\BHive\Core\Types\Color.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp" />
-    <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
-    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp" />
+    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\Object\Actor.cpp" />
+    <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
     <ClCompile Include="src\BHive\Object\Object.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLBuffer.cpp" />
     <ClCompile Include="src\BHive\Platforms\Opengl\OpenGLContext.cpp" />
@@ -616,24 +616,25 @@
     <None Include="Assets\Shaders\Billboard.vs" />
     <None Include="Assets\Shaders\BoundingBox.fs" />
     <None Include="Assets\Shaders\BoundingBox.vs" />
-    <None Include="Assets\Shaders\Default.fshader" />
     <None Include="Assets\Shaders\Default.glsl" />
-    <None Include="Assets\Shaders\Default.vshader" />
-    <None Include="Assets\Shaders\Light.fs" />
     <None Include="Assets\Shaders\Modified.fs" />
     <None Include="Assets\Shaders\Phong.fs" />
     <None Include="Assets\Shaders\model_loading.fs" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Textures\awesomeface.png" />
-    <Image Include="Assets\Textures\container.jpg" />
-    <Image Include="Assets\Textures\container2.png" />
-    <Image Include="Assets\Textures\container2_specular.png" />
-    <Image Include="Assets\Textures\grass.jpg" />
-    <Image Include="Assets\Textures\grass.png" />
-    <Image Include="Assets\Textures\matrix.jpg" />
-    <Image Include="Assets\Textures\smoke.png" />
-    <Image Include="Assets\Textures\wall.jpg" />
+    <Image Include="Assets\Textures\Icons\UI_Circle-24.png" />
+    <Image Include="Assets\Textures\Icons\UI_Create.png" />
+    <Image Include="Assets\Textures\Icons\UI_Cube.png" />
+    <Image Include="Assets\Textures\Icons\UI_Cylinder.png" />
+    <Image Include="Assets\Textures\Icons\UI_Delete.png" />
+    <Image Include="Assets\Textures\Icons\UI_DeleteFace.png" />
+    <Image Include="Assets\Textures\Icons\UI_Edge.png" />
+    <Image Include="Assets\Textures\Icons\UI_FINISHED.png" />
+    <Image Include="Assets\Textures\Icons\UI_Modify.png" />
+    <Image Include="Assets\Textures\Icons\UI_Sphere.png" />
+    <Image Include="Assets\Textures\Icons\Ui_SPline.png" />
+    <Image Include="Assets\Textures\Icons\back.png" />
+    <Image Include="Assets\Textures\Icons\folder.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">

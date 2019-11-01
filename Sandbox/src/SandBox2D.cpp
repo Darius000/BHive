@@ -8,61 +8,23 @@ SandBox2D::SandBox2D()
 
 void SandBox2D::OnAttach()
 {
-	BHive::BString vertexSrc = R"(
-			#version 450 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-			layout(location = 2) in vec2 a_TexCoord;
-
-			uniform mat4 u_ViewProjection;
-			uniform mat4 u_Model;
-
-			out vec4 v_Position;
-			out vec4 v_Color;
-			out vec2 v_TexCoord;
-			
-			void main()
-			{
-				v_TexCoord = a_TexCoord;
-				v_Color = a_Color;
-				v_Position =  vec4(a_Position, 1.0);
-				gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
-			}
-			
-		)";
-
-	BHive::BString fragmentSrc = R"(
-			#version 450 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec4 v_Position;
-			in vec4 v_Color;
-			in vec2 v_TexCoord;
-
-			uniform sampler2D u_Texture;
-
-			void main()
-			{
-				color = texture(u_Texture, v_TexCoord);
-			}
-			
-		)";
-
-	//shader = BHive::Shader::Create("Default", vertexSrc, fragmentSrc);
-	shader = BHive::Shader::Create("Assets/Shaders/Default.glsl");
-	//BHive::AssetManager::AddShader(shader);
-	BHive::ShaderLibrary::Add(shader);
-
 	m_Texture = BHive::Texture2D::Create("Assets/Textures/grass.png");
+	BHive::Ref<BHive::Texture2D> m_Texture2 = BHive::Texture2D::Create("Assets/Textures/awesomeface.png");
 
 	BHive::Timer time2("Sandbox");
 
 	BHive::Actor* actor0 = BHive::SpawnActor<BHive::Actor>("Actor 0", BHive::Transform(BHive::Vector3(0.0f, 0.0f,-.5f), BHive::Rotator(0.0f)));
+
 	BHive::Plane* plane = actor0->AddComponent<BHive::Plane>();
 	plane->SetShader(BHive::ShaderLibrary::Get("Default"));
 	plane->SetTexture(m_Texture);
+
+	BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
+	triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
+	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
+	triangle->SetTexture(m_Texture2);
+
+
 	//BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();
 
 	//BHive::Ref<BHive::Entity> square = std::shared_ptr<BHive::Entity>(E0);

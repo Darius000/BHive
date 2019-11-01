@@ -62,7 +62,7 @@ namespace BHive
 
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float4, "a_Color"},
+			{ ShaderDataType::Float3, "a_Color"},
 			{ ShaderDataType::Float2, "a_TexCoord"}
 		};
 
@@ -80,14 +80,21 @@ namespace BHive
 
 	void RenderComponent::Draw()
 	{
-		m_Shader->Bind();
-		m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
-		m_Shader->SetInt("u_Texture", 0);
+		if (m_Shader)
+		{
+			m_Shader->Bind();
+			m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
+			
+			if (m_Texture)
+			{
+				m_Shader->SetInt("u_Texture", 0);
+				m_Texture->Bind();
+			}
+		}
 
-		m_Texture->Bind();
-
-		m_VertexArray->Bind();
-
-		Renderer::Draw(m_VertexArray);
+		if (m_VertexArray)
+		{
+			Renderer::Draw(m_VertexArray);
+		}
 	}
 }

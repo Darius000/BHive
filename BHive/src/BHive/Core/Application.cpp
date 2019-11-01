@@ -7,7 +7,7 @@
 #include "BHive/Renderer/RenderCommands.h"
 #include "BHive/Core/Input.h"
 #include "BHive/Object/ActorManager.h"
-
+#include "BHive/Renderer/Shader.h"
 
 namespace BHive
 {
@@ -29,6 +29,9 @@ namespace BHive
 		m_ImGuiLayer = new ImGuiLayer();
 
 		PushOverlay(m_ImGuiLayer);
+
+		//Load Default Shaders 
+		ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
 	}
 
 

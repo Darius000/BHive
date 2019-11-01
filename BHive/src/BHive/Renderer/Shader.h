@@ -2,6 +2,8 @@
 
 namespace BHive
 {
+	class ShaderLibrary;
+
 	class BHive_API Shader
 	{
 	public:

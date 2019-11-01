@@ -10,14 +10,14 @@
     <Filter Include="Assets\Textures">
       <UniqueIdentifier>{0B35254A-77C0-920E-80D1-1503ECDBEE0E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Textures\Icons">
+      <UniqueIdentifier>{F6333D22-62A0-F81C-2B94-907A97BF1A85}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive">
       <UniqueIdentifier>{4AA98FB2-B613-4429-FF51-F5CE6BFB217E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\AssetManagement">
-      <UniqueIdentifier>{F66B46F1-622E-7A7B-ABDE-080817E05259}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Components">
       <UniqueIdentifier>{1FEC59C7-0B7B-E390-B499-F78BA007F436}</UniqueIdentifier>
@@ -40,6 +40,9 @@
     <Filter Include="src\BHive\ImGui">
       <UniqueIdentifier>{F46D4807-60F9-B5CB-690A-39C0D51412CC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Layers">
+      <UniqueIdentifier>{C9A897F6-B5A1-B648-DED3-9BCDCA2B9654}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\BHive\Object">
       <UniqueIdentifier>{90FFA0FD-7CF8-BF4F-A52A-A5D491829F5B}</UniqueIdentifier>
     </Filter>
@@ -54,9 +57,6 @@
     </Filter>
     <Filter Include="src\BHive\Renderer">
       <UniqueIdentifier>{3000D79E-1CE4-97F4-8544-924771478276}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Scene">
-      <UniqueIdentifier>{E765F807-53F1-65CC-5C02-E9C0C80CC2CC}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Shapes">
       <UniqueIdentifier>{BD745D07-A96D-7C59-D29F-61DEBEF75B65}</UniqueIdentifier>
@@ -203,6 +203,15 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Vector3.h">
       <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Layers\ImGuiLayer.h">
+      <Filter>src\BHive\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Object\Actor.h">
+      <Filter>src\BHive\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Object\ActorManager.h">
+      <Filter>src\BHive\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Object\Object.h">
       <Filter>src\BHive\Object</Filter>
@@ -1356,13 +1365,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Object\Actor.h">
-      <Filter>src\BHive\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Layers\ImGuiLayer.h">
-      <Filter>src\BHive\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Object\ActorManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1415,6 +1417,15 @@
     </ClCompile>
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp">
       <Filter>src\BHive\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp">
+      <Filter>src\BHive\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Object\Actor.cpp">
+      <Filter>src\BHive\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Object\ActorManager.cpp">
+      <Filter>src\BHive\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Object\Object.cpp">
       <Filter>src\BHive\Object</Filter>
@@ -1476,13 +1487,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Object\Actor.cpp">
-      <Filter>src\BHive\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp">
-      <Filter>src\BHive\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />
@@ -1498,16 +1502,7 @@
     <None Include="Assets\Shaders\BoundingBox.vs">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="Assets\Shaders\Default.fshader">
-      <Filter>Assets\Shaders</Filter>
-    </None>
     <None Include="Assets\Shaders\Default.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Default.vshader">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Light.fs">
       <Filter>Assets\Shaders</Filter>
     </None>
     <None Include="Assets\Shaders\Modified.fs">
@@ -1521,32 +1516,44 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Textures\awesomeface.png">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Circle-24.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\container.jpg">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Create.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\container2.png">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Cube.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\container2_specular.png">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Cylinder.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\grass.jpg">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Delete.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\grass.png">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_DeleteFace.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\matrix.jpg">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Edge.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\smoke.png">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_FINISHED.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
-    <Image Include="Assets\Textures\wall.jpg">
-      <Filter>Assets\Textures</Filter>
+    <Image Include="Assets\Textures\Icons\UI_Modify.png">
+      <Filter>Assets\Textures\Icons</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Icons\UI_Sphere.png">
+      <Filter>Assets\Textures\Icons</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Icons\Ui_SPline.png">
+      <Filter>Assets\Textures\Icons</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Icons\back.png">
+      <Filter>Assets\Textures\Icons</Filter>
+    </Image>
+    <Image Include="Assets\Textures\Icons\folder.png">
+      <Filter>Assets\Textures\Icons</Filter>
     </Image>
   </ItemGroup>
 </Project>

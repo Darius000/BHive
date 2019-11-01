@@ -6,7 +6,7 @@ namespace BHive
 	OrthographicCameraController::OrthographicCameraController(float aspectRatio, bool rotation)
 		:m_AspectRatio(aspectRatio), m_Camera(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel), m_Rotation(rotation)
 	{
-
+		m_Camera.GetTransform().SetPosition(FVector3(0.0f, 0.0f, -1.0f));
 	}
 
 	void OrthographicCameraController::SetZoomLevel(float level)

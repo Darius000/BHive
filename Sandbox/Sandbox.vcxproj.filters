@@ -7,14 +7,8 @@
     <Filter Include="Assets\Data">
       <UniqueIdentifier>{A1FCB013-0DB2-2909-96A6-23E0025B200D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\Shaders">
-      <UniqueIdentifier>{1101E1D1-FDCE-D4D7-E662-45FED2CFB03C}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Textures">
       <UniqueIdentifier>{0B35254A-77C0-920E-80D1-1503ECDBEE0E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\Textures\Icons">
-      <UniqueIdentifier>{F6333D22-62A0-F81C-2B94-907A97BF1A85}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
@@ -40,80 +34,8 @@
     <None Include="Assets\Data\folder.png.bh">
       <Filter>Assets\Data</Filter>
     </None>
-    <None Include="Assets\Shaders\Billboard.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Billboard.vs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\BoundingBox.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\BoundingBox.vs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Default.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Default.glsl">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Default.vs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Light.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Modified.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\Phong.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
-    <None Include="Assets\Shaders\model_loading.fs">
-      <Filter>Assets\Shaders</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Textures\Icons\UI_Circle-24.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Create.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Cube.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Cylinder.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Delete.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_DeleteFace.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Edge.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_FINISHED.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Modify.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\UI_Sphere.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\Ui_SPline.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\back.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
-    <Image Include="Assets\Textures\Icons\folder.png">
-      <Filter>Assets\Textures\Icons</Filter>
-    </Image>
     <Image Include="Assets\Textures\awesomeface.png">
       <Filter>Assets\Textures</Filter>
     </Image>

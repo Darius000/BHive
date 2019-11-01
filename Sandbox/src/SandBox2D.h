@@ -15,6 +15,5 @@ public:
 
 private:
 	BHive::OrthographicCameraController m_OrthoCameraController;
-	BHive::Ref<BHive::Shader> shader;
 	BHive::Ref<BHive::Texture2D> m_Texture;
 };

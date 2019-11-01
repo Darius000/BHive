@@ -22,10 +22,10 @@ namespace BHive
 	{
 		m_Vertices = 
 		{
-			-m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-			m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-			m_Width / 2.0f, m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-			-m_Width / 2.0f, m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f
+			-m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 0.0f,
+			m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 0.0f,
+			m_Width / 2.0f, m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 1.0f,
+			-m_Width / 2.0f, m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f
 		};
 
 		m_Indices = 

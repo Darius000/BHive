@@ -23,9 +23,9 @@ namespace BHive
 		auto shaderSources = PreProccess(source);
 		Compile(shaderSources);
 
-		auto lastLash = filePath.find_last_of("/");
+		auto lastLash = filePath.find_last_of('/');
 		lastLash = lastLash == filePath.size() ? 0 : lastLash + 1;
-		auto lastDot = filePath.find(".", 0);
+		auto lastDot = find_last_of(filePath, '.');
 		auto count = lastDot == filePath.size() ? filePath.size() - lastLash : lastDot - lastLash;
 
 		BString fileName = filePath.substr(lastLash, count);
@@ -235,7 +235,7 @@ namespace BHive
 			{
 				glDeleteShader(shader);
 
-				BH_CORE_ASSERT(false, "shader compile error!");
+				//BH_CORE_ASSERT(false, "shader compile error!");
 				break;
 			}	
 
@@ -251,8 +251,9 @@ namespace BHive
 			{
 				glDeleteShader(shaderID);
 			}
-			
+#ifdef BH_DEBUG		
 			BH_CORE_ASSERT(false, "Shader linking error!");
+#endif
 			return;
 		}
 
