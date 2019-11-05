@@ -31,6 +31,7 @@ namespace BHive
 		PushOverlay(m_ImGuiLayer);
 
 		//Load Default Shaders 
+		ShaderLibrary::Load("../BHive/Assets/Shaders/Lambert.glsl");
 		ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
 		ShaderLibrary::Load("../BHive/Assets/Shaders/BoundingBox.glsl");
 		ShaderLibrary::Load("../BHive/Assets/Shaders/Phong.glsl");

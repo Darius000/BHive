@@ -1,4 +1,5 @@
 #pragma once
+#include "BHive/Core/Types/APath.h"
 
 namespace BHive
 {
@@ -27,7 +28,7 @@ namespace BHive
 
 		virtual const BName& GetName() const = 0;
 
-		static Ref<Shader> Create(const Path& filePath);
+		static Ref<Shader> Create(const WinPath& filePath);
 		static Ref<Shader> Create(const BName& name, const BString& vertexSrc, const BString& fragmentSrc);
 	
 	};
@@ -38,8 +39,8 @@ namespace BHive
 		static void Add(const BName& name, const Ref<Shader>& shader);
 		static void Add(const Ref<Shader>& shader);
 		
-		static Ref<Shader> Load(const Path& filePath);
-		static Ref<Shader> Load(const BName& name, const Path& filePath);
+		static Ref<Shader> Load(const WinPath& filePath);
+		static Ref<Shader> Load(const BName& name, const WinPath& filePath);
 
 		static Ref<Shader> Get(const BName& name);
 		static std::unordered_map<BName, Ref<Shader>> GetShaders() { return m_Shaders; }

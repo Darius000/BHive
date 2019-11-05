@@ -3,7 +3,6 @@
 namespace BHive
 {
 	typedef std::string BString;
-	typedef BString Path;
 	typedef BString BName;		
 }
 
@@ -25,7 +24,7 @@ inline const BHive::ANSICHAR* operator*(const BHive::BString& s)
 
 inline BHive::uint64 find_last_of(const BHive::BString& str, BHive::ANSICHAR x)
 {
-	BHive::uint32 i = 0;
+	BHive::uint64 i = 0;
 	BHive::uint64 pos = 0;
 	bool found = false;
 

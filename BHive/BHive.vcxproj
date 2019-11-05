@@ -171,6 +171,7 @@
     <ClInclude Include="src\BHive\Core\PlatformDataTypes.h" />
     <ClInclude Include="src\BHive\Core\Time\Time.h" />
     <ClInclude Include="src\BHive\Core\Time\Timer.h" />
+    <ClInclude Include="src\BHive\Core\Types\APath.h" />
     <ClInclude Include="src\BHive\Core\Types\BString.h" />
     <ClInclude Include="src\BHive\Core\Types\Color.h" />
     <ClInclude Include="src\BHive\Core\Types\Matrix.h" />
@@ -582,6 +583,7 @@
     <ClCompile Include="src\BHive\Core\Log.cpp" />
     <ClCompile Include="src\BHive\Core\Time\Time.cpp" />
     <ClCompile Include="src\BHive\Core\Time\Timer.cpp" />
+    <ClCompile Include="src\BHive\Core\Types\APath.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Color.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp" />
@@ -614,6 +616,7 @@
     <None Include="..\premake5.lua" />
     <None Include="Assets\Shaders\BoundingBox.glsl" />
     <None Include="Assets\Shaders\Default.glsl" />
+    <None Include="Assets\Shaders\Lambert.glsl" />
     <None Include="Assets\Shaders\Phong.glsl" />
   </ItemGroup>
   <ItemGroup>

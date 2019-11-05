@@ -5,7 +5,7 @@
 
 namespace BHive
 {
-	Ref<Shader> Shader::Create(const Path& filePath)
+	Ref<Shader> Shader::Create(const WinPath& filePath)
 	{
 		switch (Renderer::GetAPI())
 		{
@@ -41,14 +41,14 @@ namespace BHive
 		Add(name, shader);
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const Path& filePath)
+	Ref<Shader> ShaderLibrary::Load(const WinPath& filePath)
 	{
 		auto shader = Shader::Create(filePath);
 		Add(shader);
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const BName& name, const Path& filePath)
+	Ref<Shader> ShaderLibrary::Load(const BName& name, const WinPath& filePath)
 	{
 		auto shader = Shader::Create(filePath);
 		Add(name, shader);

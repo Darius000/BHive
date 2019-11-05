@@ -8,7 +8,7 @@ namespace BHive
 	class BHive_API OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const Path&  filePath);
+		OpenGLShader(const WinPath&  filePath);
 		OpenGLShader(const BName& name, const BString&  vertexSrc, const BString&  fragmentSrc);
 		~OpenGLShader();
 
@@ -35,7 +35,7 @@ namespace BHive
 		bool CheckLinkStatus(uint32 ShaderProgram);
 
 	private:
-		BString ReadFile(const Path& filePath);
+		BString ReadFile(const WinPath& filePath);
 		std::unordered_map<uint32, BString> PreProccess(const BString& source);
 		void Compile(std::unordered_map<uint32, BString>& sources);
 

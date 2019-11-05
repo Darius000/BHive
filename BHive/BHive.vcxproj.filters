@@ -1365,6 +1365,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\APath.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1487,6 +1488,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Core\Types\APath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />
@@ -1499,6 +1501,7 @@
     <None Include="Assets\Shaders\Phong.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
+    <None Include="Assets\Shaders\Lambert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Icons\UI_Circle-24.png">
