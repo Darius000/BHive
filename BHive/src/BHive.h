@@ -9,7 +9,7 @@
 #include "BHive/Shapes/Triangle.h"
 #include "BHive/Shapes/Plane.h"
 #include "BHive/Components/CameraComponents.h"
-#include "BHive/Controllers/OrthographicCameraController.h"
+#include "BHive/Controllers/CameraController.h"
 #include "BHive/Object/ActorManager.h"
 
 //-------Renderer----------------

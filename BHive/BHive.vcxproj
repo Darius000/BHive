@@ -147,7 +147,7 @@
     <ClInclude Include="src\BHive\Components\Primitive.h" />
     <ClInclude Include="src\BHive\Components\RenderComponent.h" />
     <ClInclude Include="src\BHive\Components\TransformComponent.h" />
-    <ClInclude Include="src\BHive\Controllers\OrthographicCameraController.h" />
+    <ClInclude Include="src\BHive\Controllers\CameraController.h" />
     <ClInclude Include="src\BHive\Core\Application.h" />
     <ClInclude Include="src\BHive\Core\ApplicationEvent.h" />
     <ClInclude Include="src\BHive\Core\Core.h" />
@@ -575,7 +575,7 @@
     <ClCompile Include="src\BHive\Components\Primitive.cpp" />
     <ClCompile Include="src\BHive\Components\RenderComponent.cpp" />
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp" />
-    <ClCompile Include="src\BHive\Controllers\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\BHive\Controllers\CameraController.cpp" />
     <ClCompile Include="src\BHive\Core\Application.cpp" />
     <ClCompile Include="src\BHive\Core\IDGenerator.cpp" />
     <ClCompile Include="src\BHive\Core\Layer.cpp" />

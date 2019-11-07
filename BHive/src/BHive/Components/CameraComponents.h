@@ -8,16 +8,26 @@ namespace BHive
 	{
 		
 	public:
-		CameraComponent() {}
+		CameraComponent();
 		virtual ~CameraComponent() {}
 
 	public:
-		virtual const glm::mat4& GetProjectionMatrix() const = 0;
-		virtual const glm::mat4& GetViewMatrix() const = 0;
-		virtual const glm::mat4& GetViewProjectionMatrix() const = 0;
+		const glm::mat4& GetProjectionMatrix() const  { return m_ProjectionMatrix; }
+		const glm::mat4& GetViewMatrix() const  { return m_ViewMatrix; }
+		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+
+	protected:
+		virtual void OnTransformUpdated(const Transform& transform) override;
 
 	private:
 		virtual void RecalulateViewMatrix(const Transform& transform) = 0;
+
+	protected:
+		glm::mat4 m_ProjectionMatrix;
+		glm::mat4 m_ViewMatrix;
+		glm::mat4 m_ViewProjectionMatrix;
+
+		friend class CameraController;
 	
 	};
 
@@ -30,19 +40,25 @@ namespace BHive
 		OrthographicCameraComponent(float left, float right, float bottom, float top) ;
 
 		void SetProjection(float left, float right, float bottom, float top);
-		virtual const glm::mat4& GetProjectionMatrix() const override { return m_ProjectionMatrix; }
-		virtual const glm::mat4& GetViewMatrix() const override { return m_ViewMatrix; }
-		virtual const glm::mat4& GetViewProjectionMatrix() const override { return m_ViewProjectionMatrix; }
 
-	protected:
-		virtual void OnTransformUpdated(const Transform& transform) override;
+	private:
+		virtual void RecalulateViewMatrix(const Transform& transform) override;
+	
+	};
+
+	class PerspectiveCameraComponent : public CameraComponent
+	{
+		BCLASS(PerspectiveCameraComponent, ComponentCategory, CameraComponent)
+
+	public:
+		PerspectiveCameraComponent();
+		PerspectiveCameraComponent(float fov, float aspect, float zNear, float zFar);
+
+		void SetProjection(float fov, float aspect, float zNear, float zFar);
+		void LookAt(FVector3 location);
 
 	private:
 		virtual void RecalulateViewMatrix(const Transform& transform) override;
 
-	private:
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
 	};
 }

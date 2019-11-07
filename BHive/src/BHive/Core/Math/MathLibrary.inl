@@ -112,5 +112,15 @@ namespace BHive
 
 			return Rotator(x, y, z);
 		}
+
+		float Cos(float radians)
+		{
+			return cos(radians);
+		}
+
+		inline float Sin(float radians)
+		{
+			return sin(radians);
+		}
 	}
 }

@@ -111,9 +111,6 @@
     <ClInclude Include="src\BHive\Components\TransformComponent.h">
       <Filter>src\BHive\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Controllers\OrthographicCameraController.h">
-      <Filter>src\BHive\Controllers</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Core\Application.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
@@ -1366,6 +1363,9 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\APath.h" />
+    <ClInclude Include="src\BHive\Controllers\CameraController.h">
+      <Filter>src\BHive\Controllers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1382,9 +1382,6 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
       <Filter>src\BHive\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Controllers\OrthographicCameraController.cpp">
-      <Filter>src\BHive\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Application.cpp">
       <Filter>src\BHive\Core</Filter>
@@ -1489,6 +1486,9 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\APath.cpp" />
+    <ClCompile Include="src\BHive\Controllers\CameraController.cpp">
+      <Filter>src\BHive\Controllers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />

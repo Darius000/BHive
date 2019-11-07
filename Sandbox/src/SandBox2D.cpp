@@ -1,9 +1,10 @@
 #include "SandBox2D.h"
 
 SandBox2D::SandBox2D()
-	:Layer("SandBox2D") , m_OrthoCameraController(16.0f / 9.0f, true)
+	:Layer("SandBox2D")
 {
-	
+	BHive::Ref<BHive::PerspectiveCameraComponent> camera = std::make_shared<BHive::PerspectiveCameraComponent>(65.0f, (16.0f / 9.0f), .01f, 1000.f );
+	m_OrthoCameraController = std::make_shared<BHive::PerspectiveCameraController>( camera , 16.0f / 9.0f);
 }
 
 void SandBox2D::OnAttach()
@@ -40,9 +41,9 @@ void SandBox2D::OnAttach()
 
 void SandBox2D::OnUpdate(const BHive::Time& time)
 {
-	m_OrthoCameraController.OnUpdate(time);
+	m_OrthoCameraController->OnUpdate(time);
 
-	BHive::Renderer2D::Begin(m_OrthoCameraController.GetCamera());
+	BHive::Renderer2D::Begin(*m_OrthoCameraController->GetCamera().get());
 	BHive::Renderer2D::End();
 }
 
@@ -55,7 +56,7 @@ void SandBox2D::OnImGuiRender()
 
 void SandBox2D::OnEvent(BHive::Event& event)
 {
-	m_OrthoCameraController.OnEvent(event);
+	m_OrthoCameraController->OnEvent(event);
 }
 
 void SandBox2D::OnDetach()
