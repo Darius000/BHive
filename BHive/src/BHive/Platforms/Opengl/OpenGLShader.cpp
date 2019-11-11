@@ -70,9 +70,9 @@ namespace BHive
 		glUniform2f(glGetUniformLocation(id, *name), value0, value1);
 	}
 
-	void OpenGLShader::SetVec2(const BString& name, const glm::vec2& vec) const
+	void OpenGLShader::SetVec2(const BString& name, const FVector2& vec) const
 	{
-		glUniform2fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform2fv(glGetUniformLocation(id, *name), 1, *vec);
 	}
 
 	void OpenGLShader::SetFloat3(const BString& name, float value0, float value1, float value2) const
@@ -80,9 +80,9 @@ namespace BHive
 		glUniform3f(glGetUniformLocation(id, *name), value0, value1, value2);
 	}
 
-	void OpenGLShader::SetVec3(const BString& name, const glm::vec3& vec) const
+	void OpenGLShader::SetVec3(const BString& name, const FVector3& vec) const
 	{
-		glUniform3fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform3fv(glGetUniformLocation(id, *name), 1, *vec);
 	}
 
 	void OpenGLShader::SetFloat4(const BString& name, float value0, float value1, float value2, float value3) const
@@ -90,9 +90,9 @@ namespace BHive
 		glUniform4f(glGetUniformLocation(id, *name), value0, value1, value2, value3);
 	}
 
-	void OpenGLShader::SetVec4(const BString& name, const glm::vec4& vec) const
+	void OpenGLShader::SetVec4(const BString& name, const FVector4& vec) const
 	{
-		glUniform4fv(glGetUniformLocation(id, *name), 1, glm::value_ptr(vec));
+		glUniform4fv(glGetUniformLocation(id, *name), 1, *vec);
 	}
 
 	void OpenGLShader::SetMat2(const BString& name, const glm::mat2& mat) const
@@ -229,7 +229,7 @@ namespace BHive
 			GLuint shader = glCreateShader(shaderType);
 
 			const GLchar* sourceCode = *source;
-			glShaderSource(shader, 1, &sourceCode, NULL);
+			glShaderSource(shader, 1, &sourceCode, nullptr);
 			glCompileShader(shader);
 
 			if (CheckShaderStatus(shader) == false)

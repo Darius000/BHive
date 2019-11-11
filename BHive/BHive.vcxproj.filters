@@ -1366,6 +1366,7 @@
     <ClInclude Include="src\BHive\Controllers\CameraController.h">
       <Filter>src\BHive\Controllers</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\Vector4.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">

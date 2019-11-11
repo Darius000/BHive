@@ -17,13 +17,13 @@ void SandBox2D::OnAttach()
 	BHive::Actor* actor0 = BHive::SpawnActor<BHive::Actor>("Actor 0", BHive::Transform(BHive::Vector3(0.0f, 0.0f,-.5f), BHive::Rotator(0.0f)));
 
 	BHive::Plane* plane = actor0->AddComponent<BHive::Plane>();
-	plane->SetShader(BHive::ShaderLibrary::Get("Default"));
-	plane->SetTexture(m_Texture);
+	//plane->SetShader(BHive::ShaderLibrary::Get("Default"));
+	plane->SetTexture(m_Texture2);
 
 	BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
-	triangle->SetShader(BHive::ShaderLibrary::Get("BoundingBox"));
+	//triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
 	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
-	triangle->SetTexture(m_Texture2);
+	triangle->SetTexture(m_Texture);
 
 
 	//BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();

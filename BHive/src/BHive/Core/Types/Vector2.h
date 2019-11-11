@@ -8,7 +8,7 @@ namespace BHive
 		struct Vector3;
 
 		Vector2(){};
-		Vector2(T _x, T _y = 0.0f) :x(_x), y(_y) {};
+		Vector2(T _x, T _y = (T)0.0f) :x(_x), y(_y) {};
 		Vector2(const Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
 		Vector2(Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
 
@@ -35,7 +35,7 @@ namespace BHive
 		T operator[](uint32 index);
 		bool operator==(const Vector2& _other);
 		bool operator!=(const Vector2& _other);
-		T* const operator*();
+		const T* operator*() const;
 
 		const BString& ToString() const { return Format("{ %f, %f}"); }
 	};
@@ -95,7 +95,7 @@ namespace BHive
 	}
 
 	template<typename T>
-	T* const Vector2<T>::operator*()
+	const T* Vector2<T>::operator*() const
 	{
 		return &x;
 	}
@@ -161,8 +161,8 @@ namespace BHive
 		return (x != _other.x) || (y != _other.y);
 	}
 
-	typedef Vector2<float>	FVector2;
-	typedef Vector2<uint32> UVector2;
-	typedef Vector2<int32>	IVector2;
-	typedef Vector2<bool>	BVector2;
+	using FVector2 = Vector2<float>;
+	using UVector2 = Vector2<uint32>;
+	using IVector2 = Vector2<int32>;
+	using BVector2 = Vector2<bool>;
 }

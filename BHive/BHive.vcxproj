@@ -179,6 +179,7 @@
     <ClInclude Include="src\BHive\Core\Types\Transform.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector2.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector3.h" />
+    <ClInclude Include="src\BHive\Core\Types\Vector4.h" />
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Object\Actor.h" />
     <ClInclude Include="src\BHive\Object\ActorManager.h" />

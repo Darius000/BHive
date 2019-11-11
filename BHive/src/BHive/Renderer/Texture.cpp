@@ -81,4 +81,31 @@ namespace BHive
 		return nullptr;
 	}
 
+	BHive::Ref<BHive::Texture2D> Texture2D::Create(uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported"); return nullptr;
+		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(width, height, internalFormat, dataFormat);
+		}
+
+		BH_CORE_ASSERT(false, "Unknown API");
+		return nullptr;
+	}
+
+	Ref<Texture2D> Texture2D::WhiteTexture()
+	{
+		Ref<Texture2D> tex = Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA);
+		uint32 whiteTextureData = 0xffffffff;
+		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
+		return tex;
+	}
+
+	Ref<Texture2D> Texture2D::BlackTexture()
+	{
+		Ref<Texture2D> tex = Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA);
+		uint32 whiteTextureData = 0x000000ff;
+		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
+		return tex;
+	}
 }

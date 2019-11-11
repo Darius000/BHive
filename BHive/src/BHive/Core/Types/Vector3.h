@@ -7,7 +7,7 @@ namespace BHive
 	{
 		struct Vector2;
 
-		Vector3() :x(0), y(0), z(0) {};
+		Vector3() :x((T)0), y((T)0), z((T)0) {};
 		Vector3(T _x) :x(_x), y(_x), z(_x) {};
 		Vector3(T _x, T _y, T _z) :x(_x), y(_y), z(_z) {};
 		Vector3(const Vector2& _vector2, T _z) :x(_vector2.x), y(_vector2.y), z(_z) {};
@@ -37,7 +37,7 @@ namespace BHive
 		Vector3 operator*=(T _scalar);
 		Vector3 operator/=(T _scalar);
 		Vector3 operator-();
-		T* const operator*();
+		const T* operator*() const;
 		float operator*(const Vector3& _other);
 		Vector3 operator^(const Vector3& _other);
 
@@ -169,15 +169,15 @@ namespace BHive
 	}
 
 	template<typename T>
-	T* const Vector3<T>::operator*()
+	const T* Vector3<T>::operator*() const
 	{
 		return &x;
 	}
 
-	typedef Vector3<float>	FVector3;
-	typedef Vector3<uint32> UVector3;
-	typedef Vector3<int32>	IVector3;
-	typedef Vector3<bool>	BVector3;
+	using FVector3 = Vector3<float>;
+	using UVector3 = Vector3<uint32>;
+	using IVector3 = Vector3<int32>;
+	using BVector3 = Vector3<bool>;
 }
 
 

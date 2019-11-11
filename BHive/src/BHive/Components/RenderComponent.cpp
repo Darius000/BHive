@@ -9,6 +9,7 @@ namespace BHive
 		:m_VertexArray(nullptr)
 	{
 		m_Shader = ShaderLibrary::Get("Default");
+		m_Texture = Texture2D::WhiteTexture();
 	}
 
 	RenderComponent::RenderComponent(const RenderComponent& other)
@@ -80,18 +81,14 @@ namespace BHive
 	}
 
 	void RenderComponent::Draw()
-	{
-	
+	{	
 		if (m_Shader)
 		{
 			m_Shader->Bind();
 			m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
-			
-			if (m_Texture)
-			{
-				m_Shader->SetInt("u_Texture", 0);
-				m_Texture->Bind();
-			}
+			m_Shader->SetVec4("u_Color", LinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+			m_Shader->SetInt("u_Texture", 0);
+			m_Texture->Bind();
 		}
 
 		if (m_VertexArray)

@@ -1,8 +1,7 @@
 #pragma once
 
 namespace BHive
-{
-	
+{	
 	class Color
 	{
 		#define MAX_COLOR 255
@@ -49,7 +48,7 @@ namespace BHive
 		bool operator==(const LinearColor& col);
 		void operator+=(const LinearColor& col);
 		float* const operator*();
-
+		operator FVector4 () const;
 	public:
 		float r;	
 		float g;

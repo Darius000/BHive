@@ -89,6 +89,11 @@ namespace BHive
 		return &r;
 	}
 
+	LinearColor::operator FVector4() const
+	{
+		return (r, g, b, a);
+	}
+
 	void LinearColor::operator+=(const LinearColor& col)
 	{
 		r += col.r;
