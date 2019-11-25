@@ -1,5 +1,4 @@
 #pragma once
-#include "BHive/Core/Types/APath.h"
 
 namespace BHive
 {

@@ -4,6 +4,7 @@
 
 #include "BHive/BHivePCH.h"
 #include "imgui.h"
+#include "BHive/Interfaces/Interface.h"
 #include "BHive/Layers/ImGuiLayer.h"
 #include "BHive/Object/Actor.h"
 #include "BHive/Shapes/Triangle.h"

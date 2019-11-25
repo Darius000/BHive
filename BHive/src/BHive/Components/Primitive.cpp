@@ -6,7 +6,7 @@ namespace BHive
 
 	PrimitiveComponent::PrimitiveComponent()
 	{
-		OnUpdatePrimitive.AddBinding(BIND_EVENT(&PrimitiveComponent::CreatePrimitive));
+		OnUpdatePrimitive.AddBinding(BIND_EVENT(PrimitiveComponent::CreatePrimitive));
 	}
 
 	void PrimitiveComponent::ComponentInit()

@@ -13,6 +13,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "BHive/vendor/glfw/include"
 IncludeDir["Glad"] = "BHive/vendor/glad/include"
+IncludeDir["Refl"] = "BHive/vendor/reflection/include"
 IncludeDir["ImGui"] = "BHive/vendor/imgui"
 IncludeDir["GLM"] = "BHive/vendor/glm/include"
 IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
@@ -43,6 +44,9 @@ project "BHive"
 		"%{prj.name}/vendor/stb_image/**cpp",
 		"%{prj.name}/vendor/glm/**hpp",
 		"%{prj.name}/vendor/glm/**inl",
+        "%{prj.name}/vendor/reflection/**.h",
+        "%{prj.name}/vendor/reflection/**.cpp",
+        "%{prj.name}/vendor/reflection/**.hpp",
 		"%{prj.name}/Assets/**",
 		"premake5.lua"
     }
@@ -63,6 +67,7 @@ project "BHive"
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
+        "%{IncludeDir.Refl}",
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.STB_Image}"
     }

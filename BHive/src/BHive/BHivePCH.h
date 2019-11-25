@@ -32,11 +32,10 @@
 
 //-------------Core----------------
 #include "BHive/Core/Core.h"
-#include "BHive/Core/EventMacros.h"
 #include "BHive/Core/Log.h"
 #include "BHive/Core/PlatformDataTypes.h"
-#include "BHive/Core/Time/Timer.h"
 #include "BHive/Core/DataTypes.h"
+#include "BHive/Debug/Instrumentor.h"
 #include "BHive/Core/CoreLibrary.h"
 #include "BHive/Core/Math/MathLibrary.h"
 #include "BHive/Core/KeyCodes.h"

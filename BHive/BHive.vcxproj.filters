@@ -31,14 +31,23 @@
     <Filter Include="src\BHive\Core\Math">
       <UniqueIdentifier>{FB4D5713-67AF-3421-F01C-7BD35C7D6BE0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Core\Reflection">
+      <UniqueIdentifier>{5C7186D7-C833-BA61-11E4-48EE7DE5923F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\BHive\Core\Time">
       <UniqueIdentifier>{C0455B13-2CA7-3821-B514-7FD321756FE0}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Core\Types">
       <UniqueIdentifier>{06D1CC7E-F25F-5648-9B7E-6A4387EC66EE}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Debug">
+      <UniqueIdentifier>{4003EA06-AC8E-57CB-B59F-DABF21AAB3CB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\BHive\ImGui">
       <UniqueIdentifier>{F46D4807-60F9-B5CB-690A-39C0D51412CC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BHive\Interfaces">
+      <UniqueIdentifier>{5D6B9598-49FA-1E62-F218-335DDE862F08}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Layers">
       <UniqueIdentifier>{C9A897F6-B5A1-B648-DED3-9BCDCA2B9654}</UniqueIdentifier>
@@ -111,6 +120,9 @@
     <ClInclude Include="src\BHive\Components\TransformComponent.h">
       <Filter>src\BHive\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Controllers\CameraController.h">
+      <Filter>src\BHive\Controllers</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Core\Application.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
@@ -132,16 +144,10 @@
     <ClInclude Include="src\BHive\Core\Event.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\EventMacros.h">
-      <Filter>src\BHive\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\BHive\Core\IDGenerator.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Input.h">
-      <Filter>src\BHive\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Interface.h">
       <Filter>src\BHive\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\KeyCodes.h">
@@ -177,8 +183,11 @@
     <ClInclude Include="src\BHive\Core\Time\Time.h">
       <Filter>src\BHive\Core\Time</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Time\Timer.h">
-      <Filter>src\BHive\Core\Time</Filter>
+    <ClInclude Include="src\BHive\Core\Types\APath.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\Array.h">
+      <Filter>src\BHive\Core\Types</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\BString.h">
       <Filter>src\BHive\Core\Types</Filter>
@@ -200,6 +209,18 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Types\Vector3.h">
       <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Types\Vector4.h">
+      <Filter>src\BHive\Core\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Debug\Instrumentor.h">
+      <Filter>src\BHive\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Interfaces\Interface.h">
+      <Filter>src\BHive\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Interfaces\SelectableInterface.h">
+      <Filter>src\BHive\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h">
       <Filter>src\BHive\Layers</Filter>
@@ -1362,11 +1383,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\APath.h" />
-    <ClInclude Include="src\BHive\Controllers\CameraController.h">
-      <Filter>src\BHive\Controllers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Core\Types\Vector4.h" />
+    <ClInclude Include="src\BHive\EventMacros.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1383,6 +1400,9 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Components\TransformComponent.cpp">
       <Filter>src\BHive\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Controllers\CameraController.cpp">
+      <Filter>src\BHive\Controllers</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Application.cpp">
       <Filter>src\BHive\Core</Filter>
@@ -1402,8 +1422,8 @@
     <ClCompile Include="src\BHive\Core\Time\Time.cpp">
       <Filter>src\BHive\Core\Time</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Time\Timer.cpp">
-      <Filter>src\BHive\Core\Time</Filter>
+    <ClCompile Include="src\BHive\Core\Types\APath.cpp">
+      <Filter>src\BHive\Core\Types</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Color.cpp">
       <Filter>src\BHive\Core\Types</Filter>
@@ -1413,6 +1433,9 @@
     </ClCompile>
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp">
       <Filter>src\BHive\Core\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Debug\Instrumentor.cpp">
+      <Filter>src\BHive\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp">
       <Filter>src\BHive\ImGui</Filter>
@@ -1486,23 +1509,21 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\BHive\Core\Types\APath.cpp" />
-    <ClCompile Include="src\BHive\Controllers\CameraController.cpp">
-      <Filter>src\BHive\Controllers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />
+    <None Include="Assets\Shaders\BoundingBox.glsl">
+      <Filter>Assets\Shaders</Filter>
+    </None>
     <None Include="Assets\Shaders\Default.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="Assets\Shaders\BoundingBox.glsl">
+    <None Include="Assets\Shaders\Lambert.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
     <None Include="Assets\Shaders\Phong.glsl">
       <Filter>Assets\Shaders</Filter>
     </None>
-    <None Include="Assets\Shaders\Lambert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Textures\Icons\UI_Circle-24.png">

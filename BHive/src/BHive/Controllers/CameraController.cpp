@@ -17,8 +17,8 @@ namespace BHive
 	void CameraController::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<MouseScrolledEvent>(BH_BIND_EVENT_FN(CameraController::OnMouseScrolled));
-		dispatcher.Dispatch<WindowResizeEvent>(BH_BIND_EVENT_FN(CameraController::OnWindowResized));
+		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnMouseScrolled));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnWindowResized));
 	}
 
 

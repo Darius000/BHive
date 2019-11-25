@@ -1,7 +1,5 @@
 #pragma once
 
-#include <memory>
-
 #ifdef BH_PLATFORM_WINDOWS
 #if BH+DYNAMIC_DLL
 	#ifdef BH_BUILD_DLL
@@ -28,20 +26,6 @@
 	#define BH_CORE_ASSERT(x, ...)
 #endif
 
-#define  BIT(x) (1 << x)
-#define INDEX_NONE -1
+#include "CoreLibrary.h"
+#include "EventMacros.h"
 
-#define BH_BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
-
-namespace BHive
-{
-	template<typename T>
-	using Scope = std::unique_ptr<T>;
-
-	template<typename T>
-	using Ref= std::shared_ptr<T>;	
-
-	template<typename T>
-	using WRef = std::weak_ptr<T>;
-
-}

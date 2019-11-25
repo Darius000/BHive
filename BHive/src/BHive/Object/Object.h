@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BHive/Core/IDGenerator.h"
+#include "BHive/Interfaces/SelectableInterface.h"
 
 namespace BHive
 {
@@ -33,10 +34,13 @@ namespace BHive
 		public:\
 			virtual int GetClassCategory() const override {return category; }
 
-	class BHive_API Object
+	using SelectedObjects = std::unordered_map< uint64 , class Object*>;
+
+	DECLARE_ONE_PARAMETER_EVENT(Selected, bool, selected)
+	DECLARE_ONE_PARAMETER_EVENT(Active, bool, active)
+
+	class BHive_API Object: public ISelectable
 	{
-	public:
-	
 	public:
 		Object();
 		virtual ~Object() {};
@@ -58,12 +62,33 @@ namespace BHive
 		BString GetDisplayName() const;
 		bool IsEnabled() const;
 		bool IsPendingDestroy() const;
-		uint64 GetObjectID()  const { return mObjectID; }
+		uint64 GetObjectID()  const { return m_ObjectID; }
+
+	public:
+		FSelectedEvent OnSelectedEvent;
+		FActiveEvent OnActiveEvent;
 
 	private:
-		bool mDestroyed;
-		bool mEnabled;
-		uint64 mObjectID;
+		void OnActive(bool active);
+		void OnSelected(bool select);
+
+		//Start ISelectable
+	public:
+		virtual bool IsSelected() override;
+		virtual void Select(bool selected) override;
+		virtual void ToggleSelection() override;
+		virtual bool IsActive() override;
+		virtual void SetActive(bool active = true) override;
+		//End ISelectable
+
+	private:
+		bool m_Destroyed;
+		bool m_Enabled;
+		bool m_Selected;
+		bool m_Active;
+		uint64 m_ObjectID;
+		static SelectedObjects s_SelectedObjects;
+		static Object* s_ActiveObject;
 		static IDGenerator s_IDGenerator;
 	};	
 
@@ -72,8 +97,35 @@ namespace BHive
 		return (a.GetObjectID() == b.GetObjectID());
 	}
 
+	inline bool operator!=(const Object& a, const Object& b)
+	{
+		return (a.GetObjectID() != b.GetObjectID());
+	}
+
 	inline std::ostream& operator<<(std::ostream& os, const Object& object)
 	{
 		return os << object.ToString();
+	}
+
+	class ObjectManager
+	{
+	public:
+		static void Add(uint64 id, Scope<Object>& obj);
+		static void Remove(uint64 id);
+		static void CheckPendingDestroy();
+		static Object* Get(uint64 id);
+
+	private:
+		static std::unordered_map<uint64, Scope<class Object>> s_Objects;
+	};
+
+	template<typename T, typename ... Params>
+	T* ConstructObject(const ANSICHAR* name, Params&&... params)
+	{
+		Scope<T> uPtr = std::make_unique<T>(std::forward<Params>(params)...);
+		T* e = uPtr.get();
+		ObjectManager::Add(e->GetObjectID(), uPtr);
+		e->SetDisplayName(name);
+		return e;
 	}
 }

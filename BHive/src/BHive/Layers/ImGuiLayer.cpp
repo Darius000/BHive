@@ -1,7 +1,7 @@
 #include "BHivePCH.h"
 #include "ImGuiLayer.h"
 
-#include "imgui.h"
+
 
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
@@ -15,7 +15,7 @@
 namespace BHive
 {
 	ImGuiLayer::ImGuiLayer()
-		:Layer("ImGuiLayer")
+		:Layer("ImGuiLayer"), m_Style(Make_Scope<ImGuiStyle>())
 	{
 
 	}
@@ -39,19 +39,18 @@ namespace BHive
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
 		// Setup Dear ImGui style
-		ImGui::StyleColorsDark();
+		ImGui::StyleColorsDark(m_Style.get());
 		//ImGui::StyleColorsClassic();
 
 		// When view ports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-		ImGuiStyle& style = ImGui::GetStyle();
 		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			style.WindowRounding = 0.0f;
-			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+			m_Style->WindowRounding = 0.0f;
+			m_Style->Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 
 		Application& app = Application::Get();
-		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
+		auto* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		// Setup Platform/Renderer bindings
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -66,9 +65,40 @@ namespace BHive
 	}
 
 	void ImGuiLayer::OnImGuiRender()
-	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+	{	
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("Menu"))
+			{
+				ShowMenuItems();
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Windows"))
+			{
+				ShowWindowItems();
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMainMenuBar();
+		}
+
+		if (m_ShowStyleEditor)
+		{
+			ImGui::Begin("Style Editor", &m_ShowStyleEditor);
+			ImGui::ShowStyleEditor(m_Style.get());
+			ImGui::End();
+		}
+
+		if (m_ShowDemoWindow)
+		{
+			ImGui::ShowDemoWindow(&m_ShowDemoWindow);
+		}
+
+		if (m_ShowProfiler)
+		{
+			ShowProfiler(&m_ShowProfiler);
+		}
 	}
 
 	void ImGuiLayer::Begin()
@@ -97,4 +127,51 @@ namespace BHive
 		}
 	}
 
+	void ImGuiLayer::ShowMenuItems()
+	{
+		ImGui::MenuItem("(dummy menu)", nullptr, false, false);
+		if (ImGui::MenuItem("New")) {}
+		if (ImGui::MenuItem("Open", "Ctrl+O")) {}
+	
+		if (ImGui::MenuItem("Save", "Ctrl+S")) {}
+		if (ImGui::MenuItem("Save As..")) {}
+	}
+
+	void ImGuiLayer::ShowWindowItems()
+	{
+		if (ImGui::MenuItem("Style Editor"))
+		{
+			m_ShowStyleEditor = true;
+		}
+
+		if (ImGui::MenuItem("Demo Window"))
+		{
+			m_ShowDemoWindow = true;
+		}
+
+		if (ImGui::MenuItem("Profiler"))
+		{
+			m_ShowProfiler = true;
+		}
+	}
+
+	void ImGuiLayer::ShowProfiler(bool *open)
+	{
+		/*if (ImGui::Begin("Profiler", open))
+		{
+			for (auto& result : InstrumentionTimer::ProfilerResults)
+			{
+				const char* label = Format("%.3fms %s", result.m_Duration, result.m_Name);
+				ImGui::Text(label, result.m_Duration);
+			}
+
+			InstrumentionTimer::ProfilerResults.clear();
+
+			ImGui::End();
+		}*/
+	}
+
+	/*bool ImGuiLayer::m_ShowStyleEditor = false;
+	bool ImGuiLayer::m_ShowDemoWindow = false;
+	bool ImGuiLayer::m_ShowProfiler = false;*/
 }

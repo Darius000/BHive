@@ -2,42 +2,60 @@
 
 namespace BHive
 {
-	typedef std::string BString;
-	typedef BString BName;		
-}
+	using BString = std::string;
+	using BName = BString;
 
-inline const BHive::ANSICHAR* Format(const BHive::ANSICHAR* format, ...)
-{
-	BHive::ANSICHAR* buffer = new BHive::ANSICHAR[256];
-	va_list args;
-	va_start(args, format);
-	vsnprintf(buffer, 255, format, args);
-	va_end(args);
-
-	return buffer;
-}
-
-inline const BHive::ANSICHAR* operator*(const BHive::BString& s)
-{
-	return s.c_str();
-}
-
-inline BHive::uint64 find_last_of(const BHive::BString& str, BHive::ANSICHAR x)
-{
-	BHive::uint64 i = 0;
-	BHive::uint64 pos = 0;
-	bool found = false;
-
-	while (str[i] != '\0')
+	inline const ANSICHAR* Format(const ANSICHAR* format, ...)
 	{
-		if (str[i] == x)
-		{
-			pos = i;
-			found = true;
-		}
+		auto* buffer = new ANSICHAR[256];
+		va_list args;
+		va_start(args, format);
+		vsnprintf(buffer, 255, format, args);
+		va_end(args);
 
-		++i;
+		return buffer;
 	}
 
-	return found ? pos : -1;
+	inline const ANSICHAR* operator*(const BString& s)
+	{
+		return s.c_str();
+	}
+
+	inline uint64 find_last_of(const BString& str, ANSICHAR x)
+	{
+		uint64 i = 0;
+		uint64 pos = 0;
+		bool found = false;
+
+		while (str[i] != '\0')
+		{
+			if (str[i] == x)
+			{
+				pos = i;
+				found = true;
+			}
+
+			++i;
+		}
+
+		return found ? pos : -1;
+	}
+
+	template<class ForwardIterator, typename T>
+	inline void Replace(ForwardIterator start, ForwardIterator end, const T& oldVal, const T& newVal)
+	{
+		ForwardIterator i = start;
+
+		BString::iterator j;
+
+		while (i < end)
+		{
+			if (*i == oldVal)
+				*i = newVal;
+
+			i++;
+		}
+
+		return;
+	}
 }

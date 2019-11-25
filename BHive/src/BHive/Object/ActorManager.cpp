@@ -19,7 +19,7 @@ namespace BHive
 			actor->Destroy();
 		}
 
-		ResfreshActors();
+		//ResfreshActors();
 	}
 
 	void ActorManager::Update(const Time& time)
@@ -28,7 +28,7 @@ namespace BHive
 			actor->Update(time);
 		}
 
-		ResfreshActors();
+		//ResfreshActors();
 	}
 
 	void ActorManager::ResfreshActors()

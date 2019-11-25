@@ -7,6 +7,7 @@
 #include "BHive/Renderer/RenderCommands.h"
 #include "BHive/Core/Input.h"
 #include "BHive/Object/ActorManager.h"
+#include "BHive/Object/Object.h"
 #include "BHive/Renderer/Shader.h"
 
 namespace BHive
@@ -15,38 +16,42 @@ namespace BHive
 
 	Application::Application()
 	{
+
 		BH_CORE_ASSERT(!s_Instance, "Application Already Exists!");
 		s_Instance = this;
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
-		m_Window->SetEventCallback(BH_BIND_EVENT_FN(Application::OnEvent));
+		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
 		//m_Window->SetVSync(false);
 
 		Renderer::Init();
 
-		m_Time = std::make_unique<WindowsTime>();
-
+		m_Time = Make_Scope<WindowsTime>();
 		m_ImGuiLayer = new ImGuiLayer();
 
 		PushOverlay(m_ImGuiLayer);
 
-		//Load Default Shaders 
-		ShaderLibrary::Load("../BHive/Assets/Shaders/Lambert.glsl");
-		ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
-		ShaderLibrary::Load("../BHive/Assets/Shaders/BoundingBox.glsl");
-		ShaderLibrary::Load("../BHive/Assets/Shaders/Phong.glsl");
+		{
+			BH_PROFILE_SCOPE("Load Shaders");
+			//Load Default Shaders 
+			ShaderLibrary::Load("../BHive/Assets/Shaders/Lambert.glsl");
+			ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
+			ShaderLibrary::Load("../BHive/Assets/Shaders/BoundingBox.glsl");
+			ShaderLibrary::Load("../BHive/Assets/Shaders/Phong.glsl");
+		}
 	}
 
 
 	Application::~Application()
 	{
+		
 	}
-
+	
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BH_BIND_EVENT_FN(Application::OnWindowClosed));
-		dispatcher.Dispatch<WindowResizeEvent>(BH_BIND_EVENT_FN(Application::OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_ONE_PARAM(Application::OnWindowClosed));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_ONE_PARAM(Application::OnWindowResize));
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{
@@ -84,6 +89,8 @@ namespace BHive
 
 	void Application::Run()
 	{
+		BH_PROFILE_FUNCTION();
+			
 		ActorManager::Start();
 
 		while (m_Running)
@@ -108,9 +115,9 @@ namespace BHive
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-		}
 
-		ActorManager::Shutdown();
+			ObjectManager::CheckPendingDestroy();
+		}
 	}
 
 	bool Application::OnWindowClosed(WindowCloseEvent& e)

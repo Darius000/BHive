@@ -1,13 +1,15 @@
 #pragma once
 
-#include <memory>
+#define  BIT(x) (1 << x)
+#define INDEX_NONE -1
 
-#define BIND_EVENT(x) std::bind(x, this)
-#define BIND_EVENT_ONE_PARAM(x) std::bind(x, this, std::placeholders::_1)
-#define BIND_EVENT_TWO_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2)
-#define BIND_EVENT_THREE_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
-#define BIND_EVENT_FOUR_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)
-#define BIND_EVENT_FIVE_PARAMS(x) std::bind(x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5)
+
+#define BIND_EVENT(x) std::bind(&x, this)
+#define BIND_EVENT_ONE_PARAM(x) std::bind(&x, this, std::placeholders::_1)
+#define BIND_EVENT_TWO_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2)
+#define BIND_EVENT_THREE_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
+#define BIND_EVENT_FOUR_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)
+#define BIND_EVENT_FIVE_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5)
 #define CLASSNAME(x) x
 
 #define DECLARE_EVENT(EventName)\

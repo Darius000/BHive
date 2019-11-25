@@ -7,7 +7,7 @@ namespace BHive
 	TransformComponent::TransformComponent()
 		:m_Parent(nullptr)
 	{
-		m_Transform.OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(&TransformComponent::UpdateTransformation));
+		m_Transform.OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(TransformComponent::UpdateTransformation));
 	}
 
 	Transform TransformComponent::GetAbsoluteTransform()

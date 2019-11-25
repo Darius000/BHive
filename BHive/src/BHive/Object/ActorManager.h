@@ -33,7 +33,6 @@ namespace BHive
 		e->GetTransform().SetPosition(transform.GetPosition());
 		e->GetTransform().SetRotation(transform.GetRotation());
 		e->GetTransform().SetScale(transform.GetScale());
-		e->SetDisplayName(name);
 		return e;
 	}
 }

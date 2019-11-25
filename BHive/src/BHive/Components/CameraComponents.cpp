@@ -7,7 +7,7 @@ namespace BHive
 	CameraComponent::CameraComponent()
 		:m_ProjectionMatrix(1.0f), m_ViewMatrix(1.0f), m_ViewProjectionMatrix(1.0f)
 	{
-		GetTransform().OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(&CameraComponent::RecalulateViewMatrix));
+		GetTransform().OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(CameraComponent::RecalulateViewMatrix));
 	}
 
 	void CameraComponent::OnTransformUpdated(const Transform& transform)

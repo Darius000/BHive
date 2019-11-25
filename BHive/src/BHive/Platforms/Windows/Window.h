@@ -1,6 +1,7 @@
 #pragma once
 
 #include "BHivePCH.h"
+#include "BHive/Renderer/Texture.h"
 
 namespace BHive
 {
@@ -9,9 +10,10 @@ namespace BHive
 		BName Title;
 		unsigned int Width;
 		unsigned int Height;
+		Ref<Texture2D> Icon;
 
-		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720)
-			:Title(title), Width(width), Height(height)
+		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720, Ref<Texture2D> icon = nullptr)
+			:Title(title), Width(width), Height(height), Icon(icon)
 		{
 
 		}

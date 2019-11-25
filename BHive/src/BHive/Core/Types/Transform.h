@@ -4,7 +4,7 @@ namespace BHive
 {
 	struct Transform;
 
-	DECLARE_ONE_PARAMETER_EVENT(TransformUpdated, Transform&, newTransform);
+	DECLARE_ONE_PARAMETER_EVENT(TransformUpdated, Transform&, newTransform)
 
 	enum class ERotationOrder
 	{

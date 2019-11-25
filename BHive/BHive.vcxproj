@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNING;BH_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\reflection\include;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,7 +97,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNING;BH_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\reflection\include;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,7 +121,7 @@
       <PrecompiledHeaderFile>BHivePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;BH_PLATFORM_WINDOWS;BH_BUILD_DLL;GLFW_INCLUDE_NONE;_CRT_SECURE_NO_WARNING;BH_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;src\BHive;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\reflection\include;vendor\glm\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -155,10 +155,8 @@
     <ClInclude Include="src\BHive\Core\DataTypes.h" />
     <ClInclude Include="src\BHive\Core\EntryPoint.h" />
     <ClInclude Include="src\BHive\Core\Event.h" />
-    <ClInclude Include="src\BHive\Core\EventMacros.h" />
     <ClInclude Include="src\BHive\Core\IDGenerator.h" />
     <ClInclude Include="src\BHive\Core\Input.h" />
-    <ClInclude Include="src\BHive\Core\Interface.h" />
     <ClInclude Include="src\BHive\Core\KeyCodes.h" />
     <ClInclude Include="src\BHive\Core\KeyEvent.h" />
     <ClInclude Include="src\BHive\Core\Layer.h" />
@@ -170,8 +168,8 @@
     <ClInclude Include="src\BHive\Core\MouseEvent.h" />
     <ClInclude Include="src\BHive\Core\PlatformDataTypes.h" />
     <ClInclude Include="src\BHive\Core\Time\Time.h" />
-    <ClInclude Include="src\BHive\Core\Time\Timer.h" />
     <ClInclude Include="src\BHive\Core\Types\APath.h" />
+    <ClInclude Include="src\BHive\Core\Types\Array.h" />
     <ClInclude Include="src\BHive\Core\Types\BString.h" />
     <ClInclude Include="src\BHive\Core\Types\Color.h" />
     <ClInclude Include="src\BHive\Core\Types\Matrix.h" />
@@ -180,6 +178,10 @@
     <ClInclude Include="src\BHive\Core\Types\Vector2.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector3.h" />
     <ClInclude Include="src\BHive\Core\Types\Vector4.h" />
+    <ClInclude Include="src\BHive\Debug\Instrumentor.h" />
+    <ClInclude Include="src\BHive\EventMacros.h" />
+    <ClInclude Include="src\BHive\Interfaces\Interface.h" />
+    <ClInclude Include="src\BHive\Interfaces\SelectableInterface.h" />
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h" />
     <ClInclude Include="src\BHive\Object\Actor.h" />
     <ClInclude Include="src\BHive\Object\ActorManager.h" />
@@ -583,11 +585,11 @@
     <ClCompile Include="src\BHive\Core\LayerStack.cpp" />
     <ClCompile Include="src\BHive\Core\Log.cpp" />
     <ClCompile Include="src\BHive\Core\Time\Time.cpp" />
-    <ClCompile Include="src\BHive\Core\Time\Timer.cpp" />
     <ClCompile Include="src\BHive\Core\Types\APath.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Color.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Rotator.cpp" />
     <ClCompile Include="src\BHive\Core\Types\Transform.cpp" />
+    <ClCompile Include="src\BHive\Debug\Instrumentor.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp" />
     <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp" />
     <ClCompile Include="src\BHive\Object\Actor.cpp" />
