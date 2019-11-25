@@ -84,8 +84,13 @@ namespace BHive
 		m_Context = new OpenGLContext(m_Window);
 		m_Context->Init();
 
-
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);
+		GLFWimage* image = new GLFWimage();
+		image->height = props.Icon->GetHeight();
+		image->width = props.Icon->GetWidth();
+		image->pixels = (unsigned char*)props.Icon->GetData();
+		glfwSetWindowIcon(m_Window, 1, image);
 		SetVSync(true);
 
 		//Set GLFW Callbacks

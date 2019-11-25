@@ -14,6 +14,7 @@ namespace BHive
 
 		virtual uint32 GetWidth() const override { return m_Width; }
 		virtual uint32 GetHeight() const override { return m_Height; }
+		virtual uint8 GetData() const override { return m_Data; }
 
 		virtual void Bind(uint32 slot = 0) const override;
 
@@ -23,6 +24,7 @@ namespace BHive
 		BString m_Path;
 		uint32 m_Width;
 		uint32 m_Height;
+		uint8* m_Data;
 		uint32 m_RendererID;
 		GLenum m_InternalFormat;
 		GLenum m_DataFormat;

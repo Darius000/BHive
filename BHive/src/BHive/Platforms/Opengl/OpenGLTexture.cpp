@@ -13,9 +13,9 @@ namespace BHive
 		stbi_set_flip_vertically_on_load(1);
 
 		int width, height, channels;
-		stbi_uc* data = stbi_load(*path, &width, &height, &channels, 0);
+		m_Data = stbi_load(*path, &width, &height, &channels, 0);
 
-		BH_CORE_ASSERT(data, "failed to load image!");
+		BH_CORE_ASSERT(m_Data, "failed to load image!");
 		m_Width = width;
 		m_Height = height;
 		uint32 Channels = channels;
@@ -42,13 +42,11 @@ namespace BHive
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
-
-		stbi_image_free(data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, m_Data);
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(uint32 width, uint32 height,  GLenum internalFormat, GLenum dataFormat)
-		:m_Width(width), m_Height(height), m_Path(""), m_InternalFormat(internalFormat), m_DataFormat(dataFormat)
+		:m_Width(width), m_Height(height), m_Path(""), m_InternalFormat(internalFormat), m_DataFormat(dataFormat), m_Data(nullptr)
 	{
 		BH_CORE_ASSERT(m_InternalFormat & m_DataFormat, "Format not supported!");
 
@@ -64,6 +62,8 @@ namespace BHive
 
 	OpenGLTexture2D::~OpenGLTexture2D()
 	{
+		stbi_image_free(m_Data);
+
 		glDeleteTextures(1, &m_RendererID);
 	}
 
@@ -74,9 +74,10 @@ namespace BHive
 
 	void OpenGLTexture2D::SetData(void* data, uint32 size)
 	{
+		m_Data = (uint8*)(data);
 		uint32 bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 		BH_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, m_Data);
 	}
 }

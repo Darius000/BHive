@@ -11,6 +11,7 @@ namespace BHive
 	public:
 		virtual uint32 GetWidth() const = 0;
 		virtual uint32 GetHeight() const = 0;
+		virtual uint8 GetData() const = 0;
 
 		virtual void SetData(void* data, uint32 size) = 0;
 
