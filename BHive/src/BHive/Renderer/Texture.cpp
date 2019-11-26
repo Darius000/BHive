@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Platforms/Opengl/OpenGLTexture.h"
+#include "BHive/Managers/AssetManagers.h"
 
 namespace BHive
 {
@@ -69,24 +70,32 @@ namespace BHive
 		stbi_image_free(m_PixelData);
 	}*/
 
-	Ref<BHive::Texture2D> Texture2D::Create(const BString& path)
+	Ref<Texture2D> Texture2D::Create(const WinPath& path)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(path);
+		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
+		case RendererAPI::API::OpenGL: 
+			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(path); 
+			TextureManager::Add(tex); 
+			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
+			return tex;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");
 		return nullptr;
 	}
 
-	BHive::Ref<BHive::Texture2D> Texture2D::Create(uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
+	Ref<Texture2D> Texture2D::Create(uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported"); return nullptr;
-		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLTexture2D>(width, height, internalFormat, dataFormat);
+		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
+		case RendererAPI::API::OpenGL:
+			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(width, height, internalFormat, dataFormat); 
+			TextureManager::Add(tex);
+			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
+			return tex;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");

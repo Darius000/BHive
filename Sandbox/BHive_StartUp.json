@@ -1,1 +1,1 @@
-{"otherData":{},"traceEvents":[{"cat":"function","dur":6741,"name":"Load Shaders","ph":"X","pid":0,"tid":3339237894,"ts":209563970754}]}
+{"otherData":{},"traceEvents":[{"cat":"function","dur":577588,"name":"Load Engine Assets","ph":"X","pid":0,"tid":872358159,"ts":368185047405}]}

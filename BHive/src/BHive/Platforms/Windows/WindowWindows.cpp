@@ -54,6 +54,15 @@ namespace BHive
 		return m_Data.VSync;
 	}
 
+	void WindowWindows::SetIcon(Ref<Texture2D> icon)
+	{
+		m_IconImage = new GLFWimage();
+		m_IconImage->height = icon->GetHeight();
+		m_IconImage->width = icon->GetWidth();
+		m_IconImage->pixels = (unsigned char*)icon->GetData();
+		glfwSetWindowIcon(m_Window, 1, m_IconImage);
+	}
+
 	void WindowWindows::SetWindowHints()
 	{
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -64,6 +73,8 @@ namespace BHive
 
 	void WindowWindows::Init(const WindowProps& props)
 	{
+		m_IconImage = nullptr;
+
 		m_Data.Title = props.Title;
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
@@ -83,14 +94,9 @@ namespace BHive
 
 		m_Context = new OpenGLContext(m_Window);
 		m_Context->Init();
-
-		
+	
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-		GLFWimage* image = new GLFWimage();
-		image->height = props.Icon->GetHeight();
-		image->width = props.Icon->GetWidth();
-		image->pixels = (unsigned char*)props.Icon->GetData();
-		glfwSetWindowIcon(m_Window, 1, image);
+
 		SetVSync(true);
 
 		//Set GLFW Callbacks
@@ -186,6 +192,7 @@ namespace BHive
 	void WindowWindows::Shutdown()
 	{
 		delete m_Context;
+		if(m_IconImage) delete m_IconImage;
 
 		glfwDestroyWindow(m_Window);
 	}

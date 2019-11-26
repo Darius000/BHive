@@ -1384,6 +1384,8 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\EventMacros.h" />
+    <ClInclude Include="src\BHive\Managers\AssetManagers.h" />
+    <ClInclude Include="src\BHive\Managers\AssetLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1509,6 +1511,7 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Managers\AssetLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />

@@ -183,6 +183,8 @@
     <ClInclude Include="src\BHive\Interfaces\Interface.h" />
     <ClInclude Include="src\BHive\Interfaces\SelectableInterface.h" />
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h" />
+    <ClInclude Include="src\BHive\Managers\AssetLoader.h" />
+    <ClInclude Include="src\BHive\Managers\AssetManagers.h" />
     <ClInclude Include="src\BHive\Object\Actor.h" />
     <ClInclude Include="src\BHive\Object\ActorManager.h" />
     <ClInclude Include="src\BHive\Object\Object.h" />
@@ -592,6 +594,7 @@
     <ClCompile Include="src\BHive\Debug\Instrumentor.cpp" />
     <ClCompile Include="src\BHive\ImGui\ImguiBuild.cpp" />
     <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp" />
+    <ClCompile Include="src\BHive\Managers\AssetLoader.cpp" />
     <ClCompile Include="src\BHive\Object\Actor.cpp" />
     <ClCompile Include="src\BHive\Object\ActorManager.cpp" />
     <ClCompile Include="src\BHive\Object\Object.cpp" />

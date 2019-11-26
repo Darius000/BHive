@@ -9,6 +9,8 @@
 #include "BHive/Object/ActorManager.h"
 #include "BHive/Object/Object.h"
 #include "BHive/Renderer/Shader.h"
+#include "BHive/Managers/AssetLoader.h"
+#include "BHive/Managers/AssetManagers.h"
 
 namespace BHive
 {
@@ -22,6 +24,15 @@ namespace BHive
 
 		m_Window = std::unique_ptr<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
+
+		{
+			BH_PROFILE_SCOPE("Load Engine Assets");
+			WinPath EngineAssetFolder("../BHive/Assets", true);
+			Ref<AssetLoader> EngineAssetLoader = Make_Ref<AssetLoader>(EngineAssetFolder);
+		}
+
+		Ref<Texture2D> m_WindowsIcon = TextureManager::Get("folder");
+		m_Window->SetIcon(m_WindowsIcon);
 		//m_Window->SetVSync(false);
 
 		Renderer::Init();
@@ -30,15 +41,6 @@ namespace BHive
 		m_ImGuiLayer = new ImGuiLayer();
 
 		PushOverlay(m_ImGuiLayer);
-
-		{
-			BH_PROFILE_SCOPE("Load Shaders");
-			//Load Default Shaders 
-			ShaderLibrary::Load("../BHive/Assets/Shaders/Lambert.glsl");
-			ShaderLibrary::Load("../BHive/Assets/Shaders/Default.glsl");
-			ShaderLibrary::Load("../BHive/Assets/Shaders/BoundingBox.glsl");
-			ShaderLibrary::Load("../BHive/Assets/Shaders/Phong.glsl");
-		}
 	}
 
 

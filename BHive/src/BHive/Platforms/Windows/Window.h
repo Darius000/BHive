@@ -10,10 +10,9 @@ namespace BHive
 		BName Title;
 		unsigned int Width;
 		unsigned int Height;
-		Ref<Texture2D> Icon;
 
-		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720, Ref<Texture2D> icon = nullptr)
-			:Title(title), Width(width), Height(height), Icon(icon)
+		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720)
+			:Title(title), Width(width), Height(height)
 		{
 
 		}
@@ -37,6 +36,7 @@ namespace BHive
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
+		virtual void SetIcon(Ref<Texture2D> icon) = 0;
 		virtual void* GetNativeWindow() const = 0;
 
 		static Window* Create(const WindowProps& props = WindowProps());

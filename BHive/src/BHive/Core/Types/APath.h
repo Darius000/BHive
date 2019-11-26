@@ -2,15 +2,15 @@
 
 namespace BHive
 {
-	typedef uint64 index;
-	typedef uint64 size;
+	using index =  uint64;
+	using size =  uint64;
 
 	class WinPath
 	{
 	
 	public:
 		WinPath();
-		WinPath(const ANSICHAR* path);
+		WinPath(const ANSICHAR* path, bool directory = false);
 		WinPath(const WinPath& other);
 		~WinPath();
 
@@ -25,8 +25,8 @@ namespace BHive
 	private:
 		void copy(ANSICHAR* to, const ANSICHAR* from);
 		Scope<ANSICHAR[]> substring(index start, index end);
-		index find_first_of(ANSICHAR x);
-		index find_last_of(ANSICHAR x);
+		index find_first_of(std::vector<ANSICHAR> x);
+		index find_last_of(std::vector<ANSICHAR> x);
 		
 	private:
 		Scope<ANSICHAR[]> m_Path;

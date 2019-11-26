@@ -22,6 +22,7 @@ namespace BHive
 		void SetVSync(bool enabled) override;
 		bool IsVSync() const override;
 
+		void SetIcon(Ref<Texture2D> icon) override;
 		void SetWindowHints();
 
 		inline virtual void* GetNativeWindow() const override { return m_Window; }
@@ -34,6 +35,7 @@ namespace BHive
 		GLFWwindow* m_Window;
 
 		GraphicsContext* m_Context;
+		GLFWimage* m_IconImage;
 
 		struct WindowData
 		{

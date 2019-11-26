@@ -1,0 +1,53 @@
+#include "BHivePCH.h"
+#include "BHive/Managers/AssetManagers.h"
+#include "AssetLoader.h"
+#include "BHive/Renderer/Shader.h"
+
+namespace BHive
+{
+	AssetLoader::AssetLoader(const WinPath& path)
+	{
+		m_TexExts = {"jpg", "png", "tga"};
+		OpenDirectory(path);
+	}
+
+	AssetLoader::~AssetLoader()
+	{
+
+	}
+
+	void AssetLoader::OpenDirectory(const WinPath& path)
+	{
+		auto& it = fs::directory_iterator(*path);
+		if (it->exists())
+		{
+			BH_CORE_TRACE("found directory: {0} ", *path);
+
+			for (auto& sub : it)
+			{
+				bool isDir = sub.is_directory();
+				WinPath subPath(sub.path().string().c_str(), isDir);
+				isDir ? OpenDirectory(subPath) : LoadFile(subPath);
+			}
+		}
+	}
+
+	void AssetLoader::LoadFile(const WinPath& filepath)
+	{
+		BH_CORE_TRACE("found file: {0}", *filepath);
+
+		BString ext = filepath.GetExtension();
+		auto& it = std::find(m_TexExts.begin(), m_TexExts.end(), ext);
+
+		if (ext == "glsl")
+		{
+			Ref<Shader> shader = ShaderLibrary::Load(filepath);
+		}
+		else if (it != m_TexExts.end())
+		{
+			Ref<Texture2D> texture = Texture2D::Create(filepath);
+			//TextureManager::Add(texture);
+		}
+	}
+
+}

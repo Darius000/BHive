@@ -21,7 +21,7 @@ namespace BHive
 		return s.c_str();
 	}
 
-	inline uint64 find_last_of(const BString& str, ANSICHAR x)
+	inline uint64 find_last_of(const BString& str, std::vector<ANSICHAR> x)
 	{
 		uint64 i = 0;
 		uint64 pos = 0;
@@ -29,7 +29,8 @@ namespace BHive
 
 		while (str[i] != '\0')
 		{
-			if (str[i] == x)
+			auto& it = std::find(x.begin(), x.end(), str[i]);
+			if (it != x.end())
 			{
 				pos = i;
 				found = true;
