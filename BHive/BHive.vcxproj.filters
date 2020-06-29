@@ -97,6 +97,9 @@
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Core\Events">
+      <UniqueIdentifier>{9d19359c-ee68-4992-b53f-7e5d08e9b0ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\BHive.h">
@@ -1386,6 +1389,9 @@
     <ClInclude Include="src\BHive\EventMacros.h" />
     <ClInclude Include="src\BHive\Managers\AssetManagers.h" />
     <ClInclude Include="src\BHive\Managers\AssetLoader.h" />
+    <ClInclude Include="EventDelegate.h">
+      <Filter>src\BHive\Core\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
