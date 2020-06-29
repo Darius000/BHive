@@ -140,6 +140,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="src\BHive.h" />
     <ClInclude Include="src\BHive\BHivePCH.h" />
     <ClInclude Include="src\BHive\Components\CameraComponents.h" />
