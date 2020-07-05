@@ -9,21 +9,21 @@ SandBox2D::SandBox2D()
 
 void SandBox2D::OnAttach()
 {
-	//m_Texture = BHive::Texture2D::Create("Assets/Textures/grass.png");
+	m_Texture = BHive::TextureManager::Get("grass");
 	//BHive::Ref<BHive::Texture2D> m_Texture2 = BHive::Texture2D::Create("Assets/Textures/awesomeface.png");
 
 	//BHive::Timer time2("Sandbox");
 
-	//BHive::Actor* actor0 = BHive::SpawnActor<BHive::Actor>("Actor 0", BHive::Transform(BHive::Vector3(0.0f, 0.0f,-.5f), BHive::Rotator(0.0f)));
+	BHive::Actor* actor0 = BHive::SpawnActor<BHive::Actor>("Actor 0", BHive::Transform(BHive::Vector3(0.0f, 0.0f,-.5f), BHive::Rotator(0.0f)));
 
 	//BHive::Plane* plane = actor0->AddComponent<BHive::Plane>();
 	////plane->SetShader(BHive::ShaderLibrary::Get("Default"));
 	//plane->SetTexture(m_Texture2);
 
-	//BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
-	////triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
-	//triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
-	//triangle->SetTexture(m_Texture);
+	BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
+	triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
+	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
+	triangle->SetTexture(m_Texture);
 
 	BHive::ConstructObject<BHive::Object>("1st Object");
 	BHive::ConstructObject<BHive::Object>("2nd Object");

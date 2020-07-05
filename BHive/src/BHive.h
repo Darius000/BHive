@@ -12,6 +12,7 @@
 #include "BHive/Components/CameraComponents.h"
 #include "BHive/Controllers/CameraController.h"
 #include "BHive/Object/ActorManager.h"
+#include "BHive/Managers/AssetManagers.h"
 
 //-------Renderer----------------
 

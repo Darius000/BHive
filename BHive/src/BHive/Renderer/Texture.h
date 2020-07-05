@@ -1,9 +1,10 @@
 #pragma once
 #include <glad/glad.h>
+#include "BHive/Object/Object.h"
 
 namespace BHive
 {
-	class Texture 
+	class Texture : public Object
 	{
 	public:
 		virtual ~Texture() = default;
@@ -24,8 +25,8 @@ namespace BHive
 	public:
 		virtual ~Texture2D() = default;
 
-		static Ref<Texture2D> Create(const WinPath& path);
-		static Ref<Texture2D> Create(uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat);
+		static Ref<Texture2D> Create(BName TextureName, const WinPath& path);
+		static Ref<Texture2D> Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat);
 		static Ref<Texture2D> WhiteTexture();
 		static Ref<Texture2D> BlackTexture();
 	};

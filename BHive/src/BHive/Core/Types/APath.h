@@ -2,7 +2,7 @@
 
 namespace BHive
 {
-	using index =  uint64;
+	using index =  int64;
 	using size =  uint64;
 
 	class WinPath
@@ -10,7 +10,7 @@ namespace BHive
 	
 	public:
 		WinPath();
-		WinPath(const ANSICHAR* path, bool directory = false);
+		WinPath(const ANSICHAR* path);
 		WinPath(const WinPath& other);
 		~WinPath();
 

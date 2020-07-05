@@ -127,5 +127,55 @@ namespace BHive
 		ObjectManager::Add(e->GetObjectID(), uPtr);
 		e->SetDisplayName(name);
 		return e;
-	}
+	};
+
+	template<typename To, typename From>
+	inline To* Cast(From* FromPtr)
+	{
+		return dynamic_cast<To*>(FromPtr);
+	};
+
+	template<typename To, typename From>
+	inline To* StaticCast(From* FromPtr)
+	{
+		return static_cast<To*>(FromPtr);
+	};
+
+	template<typename T>
+	inline bool IsValid(T* Obj)
+	{
+		return T* == nullptr? false : true;
+	};
+
+	template<typename T>
+	inline bool CheckIsValid(Ref<T> Obj)
+	{
+		if(Obj == nullptr || Obj.use_count() == 0) return false;
+		if (Object* ObjectPtr = Cast<Object>(Obj.get()))
+		{
+			if (ObjectPtr->IsPendingDestroy())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	inline bool CheckIsValid(Object* Obj)
+	{
+		if (Obj == nullptr) return false;
+		if (Object* ObjectPtr = Cast<Object>(Obj))
+		{
+			if (ObjectPtr->IsPendingDestroy())
+			{
+				return false;
+			}
+		}
+
+		return true;
+	};
+
+	#define ISVALID(From) IsValid(From)
+	#define CHECKVALID(ptr) CheckIsValid(ptr)
 }

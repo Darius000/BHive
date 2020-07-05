@@ -7,11 +7,9 @@
 
 namespace BHive
 {
-	OpenGLTexture2D::OpenGLTexture2D(const WinPath& path)
-		:m_Path(path), m_DataFormat(0), m_InternalFormat(0)
+	OpenGLTexture2D::OpenGLTexture2D(BName TextureName, const WinPath& path)
+		:m_Name(TextureName), m_Path(path), m_DataFormat(0), m_InternalFormat(0)
 	{
-		m_Name = path.GetName();
-
 		stbi_set_flip_vertically_on_load(1);
 
 		int width, height, channels;
@@ -47,11 +45,9 @@ namespace BHive
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, m_Data);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(uint32 width, uint32 height,  GLenum internalFormat, GLenum dataFormat)
-		:m_Width(width), m_Height(height), m_Path(""), m_InternalFormat(internalFormat), m_DataFormat(dataFormat), m_Data(nullptr)
+	OpenGLTexture2D::OpenGLTexture2D(BName TextureName, uint32 width, uint32 height,  GLenum internalFormat, GLenum dataFormat)
+		:m_Name(TextureName), m_Width(width), m_Height(height), m_Path(""), m_InternalFormat(internalFormat), m_DataFormat(dataFormat), m_Data(nullptr)
 	{
-		m_Name = "Texture" + m_RendererID;
-
 		BH_CORE_ASSERT(m_InternalFormat & m_DataFormat, "Format not supported!");
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
