@@ -56,6 +56,8 @@ namespace BHive
 
 	void WindowWindows::SetIcon(Ref<Texture2D> icon)
 	{
+		if(icon == nullptr) return;
+
 		m_IconImage = new GLFWimage();
 		m_IconImage->height = icon->GetHeight();
 		m_IconImage->width = icon->GetWidth();

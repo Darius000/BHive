@@ -25,9 +25,8 @@ namespace BHive
 
 			for (auto& sub : it)
 			{
-				bool isDir = sub.is_directory();
-				WinPath subPath(sub.path().string().c_str(), isDir);
-				isDir ? OpenDirectory(subPath) : LoadFile(subPath);
+				WinPath subPath(sub.path().string().c_str());
+				subPath.IsDirectory() ? OpenDirectory(subPath) : LoadFile(subPath);
 			}
 		}
 	}
@@ -45,8 +44,8 @@ namespace BHive
 		}
 		else if (it != m_TexExts.end())
 		{
-			Ref<Texture2D> texture = Texture2D::Create(filepath);
-			//TextureManager::Add(texture);
+			Ref<Texture2D> texture = Texture2D::Create(filepath.GetName(), filepath);
+			TextureManager::Add(texture);
 		}
 	}
 

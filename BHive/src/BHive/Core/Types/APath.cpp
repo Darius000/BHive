@@ -1,5 +1,6 @@
 #include "BHivePCH.h"
 #include "APath.h"
+#include <filesystem>
 
 namespace BHive
 {
@@ -10,8 +11,10 @@ namespace BHive
 		m_Length = 0;
 	}
 
-	WinPath::WinPath(const ANSICHAR* path, bool directory)
+	WinPath::WinPath(const ANSICHAR* path)
 	{
+		m_Directory = std::filesystem::is_directory(path);
+
 		index i = 0;
 		while (path[i] != '\0') ++i;
 		m_Length = i;
@@ -28,22 +31,13 @@ namespace BHive
 		m_Path[m_Length] = '\0';
 
 		index dotPos = find_last_of({'.'});
-		m_Ext = std::move(substring(dotPos + 1, m_Length));
-
-		m_Directory = directory;
+		m_Ext = m_Directory ? Make_Scope<ANSICHAR[]>(0) : std::move(substring(dotPos + 1, m_Length));
 
 		index lastslashPos = find_last_of({ '/', '\\' });
 
-		if (!m_Directory)
-		{
-			m_Name = lastslashPos != -1 ? std::move(substring(lastslashPos + 1, dotPos - 1)) :
-				std::move(substring(0, dotPos - 1));
-		}
-		else
-		{
-			m_Name = lastslashPos != -1 ? std::move(substring(lastslashPos + 1, m_Length)) :
-				std::move(substring(0, m_Length));
-		}
+		m_Name = lastslashPos != -1 ? std::move(substring(lastslashPos + 1, m_Directory ? m_Length : dotPos - 1)) :
+			std::move(substring(0, m_Directory ? m_Length : dotPos - 1));
+	
 	}
 
 	WinPath::WinPath(const WinPath& other)
@@ -117,8 +111,8 @@ namespace BHive
 
 	index WinPath::find_last_of(std::vector<ANSICHAR> x)
 	{
-		BHive::index i = 0;
-		BHive::index pos = 0;
+		index i = 0;
+		index pos = 0;
 		bool found = false;
 
 		while (i < m_Length)

@@ -8,8 +8,8 @@ namespace BHive
 	class OpenGLTexture2D : public Texture2D
 	{
 	public:
-		OpenGLTexture2D(uint32 width, uint32 height, GLenum internalFormat = GL_RGBA8, GLenum dataFormat = GL_RGBA);
-		OpenGLTexture2D(const WinPath& path);
+		OpenGLTexture2D(BName TextureName, uint32 width, uint32 height, GLenum internalFormat = GL_RGBA8, GLenum dataFormat = GL_RGBA);
+		OpenGLTexture2D(BName TextureName, const WinPath& path);
 		virtual ~OpenGLTexture2D();
 
 		virtual uint32 GetWidth() const override { return m_Width; }
