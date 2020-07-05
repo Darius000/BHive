@@ -70,13 +70,13 @@ namespace BHive
 		stbi_image_free(m_PixelData);
 	}*/
 
-	Ref<Texture2D> Texture2D::Create(const WinPath& path)
+	Ref<Texture2D> Texture2D::Create(BName TextureName, const WinPath& path)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
 		case RendererAPI::API::OpenGL: 
-			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(path); 
+			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(TextureName, path); 
 			TextureManager::Add(tex); 
 			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
@@ -86,13 +86,13 @@ namespace BHive
 		return nullptr;
 	}
 
-	Ref<Texture2D> Texture2D::Create(uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
+	Ref<Texture2D> Texture2D::Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
 		case RendererAPI::API::OpenGL:
-			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(width, height, internalFormat, dataFormat); 
+			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(TextureName, width, height, internalFormat, dataFormat); 
 			TextureManager::Add(tex);
 			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
@@ -104,7 +104,7 @@ namespace BHive
 
 	Ref<Texture2D> Texture2D::WhiteTexture()
 	{
-		Ref<Texture2D> tex = Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA);
+		Ref<Texture2D> tex = Texture2D::Create("WhiteTex", 1, 1, GL_RGBA8, GL_RGBA);
 		uint32 whiteTextureData = 0xffffffff;
 		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
 		return tex;
@@ -112,7 +112,7 @@ namespace BHive
 
 	Ref<Texture2D> Texture2D::BlackTexture()
 	{
-		Ref<Texture2D> tex = Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA);
+		Ref<Texture2D> tex = Texture2D::Create("BlackTex", 1, 1, GL_RGBA8, GL_RGBA);
 		uint32 whiteTextureData = 0x000000ff;
 		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
 		return tex;

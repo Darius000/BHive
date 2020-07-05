@@ -5,6 +5,16 @@ namespace BHive
 	using BString = std::string;
 	using BName = BString;
 
+	inline std::string operator+(const std::string& String, const uint32& Integer)
+	{
+		return String + std::to_string(Integer);
+	}
+
+	inline std::string operator+(const uint32& Integer, const std::string& String)
+	{
+		return std::to_string(Integer) + String;
+	}
+
 	inline const ANSICHAR* Format(const ANSICHAR* format, ...)
 	{
 		auto* buffer = new ANSICHAR[256];

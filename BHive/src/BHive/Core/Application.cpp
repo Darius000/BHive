@@ -27,8 +27,10 @@ namespace BHive
 
 		{
 			BH_PROFILE_SCOPE("Load Engine Assets");
-			WinPath EngineAssetFolder("../BHive/Assets", true);
+			WinPath EngineAssetFolder("..\\BHive\\Assets");
+			WinPath SandBoxAssetFolder("..\\Sandbox\\Assets");
 			Ref<AssetLoader> EngineAssetLoader = Make_Ref<AssetLoader>(EngineAssetFolder);
+			Ref<AssetLoader> SandBoxAssetLoader = Make_Ref<AssetLoader>(SandBoxAssetFolder);
 		}
 
 		Ref<Texture2D> m_WindowsIcon = TextureManager::Get("folder");
