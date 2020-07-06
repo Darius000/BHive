@@ -61,7 +61,7 @@ namespace BHive
 		m_IconImage = new GLFWimage();
 		m_IconImage->height = icon->GetHeight();
 		m_IconImage->width = icon->GetWidth();
-		m_IconImage->pixels = (unsigned char*)icon->GetData();
+		m_IconImage->pixels = (unsigned char*)icon->GetData().m_Data;
 		glfwSetWindowIcon(m_Window, 1, m_IconImage);
 	}
 

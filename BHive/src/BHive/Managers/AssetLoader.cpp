@@ -5,13 +5,8 @@
 
 namespace BHive
 {
-	AssetLoader::AssetLoader(const WinPath& path)
-	{
-		m_TexExts = {"jpg", "png", "tga"};
-		OpenDirectory(path);
-	}
-
-	AssetLoader::~AssetLoader()
+	AssetLoader::AssetLoader()
+		:m_TexExts({ "jpg", "png", "tga" })
 	{
 
 	}
@@ -40,12 +35,11 @@ namespace BHive
 
 		if (ext == "glsl")
 		{
-			Ref<Shader> shader = ShaderLibrary::Load(filepath);
+			ShaderLibrary::Load(filepath);
 		}
 		else if (it != m_TexExts.end())
 		{
-			Ref<Texture2D> texture = Texture2D::Create(filepath.GetName(), filepath);
-			TextureManager::Add(texture);
+			Texture2D::Create(BString(filepath.GetName()) + filepath.GetExtension(), filepath);
 		}
 	}
 

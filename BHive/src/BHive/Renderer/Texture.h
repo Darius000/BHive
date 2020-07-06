@@ -4,30 +4,61 @@
 
 namespace BHive
 {
-	class Texture : public Object
+	struct FPixelData
+	{
+		FPixelData();
+
+		void* m_Data;
+
+		GLenum m_InternalFormat;
+
+		GLenum m_DataFormat;
+	};
+
+	class Texture 
 	{
 	public:
+		Texture(BName Name);
 		virtual ~Texture() = default;
 
 	public:
-		virtual uint32 GetWidth() const = 0;
-		virtual uint32 GetHeight() const = 0;
-		virtual uint8* GetData() const = 0;
-		virtual BName GetName() const = 0;
+		BName GetName() const { return m_Name; };
 
-		virtual void SetData(void* data, uint32 size) = 0;
+		uint32 GetWidth() const  { return m_Width; }
+
+		uint32 GetHeight() const  {return m_Height; }
+
+		FPixelData GetData() const  { return PixelData; };
+
+		WinPath GetExternalFilePath() const { return m_Path; }
 
 		virtual void Bind(uint32 slot = 0) const = 0;
+
+	protected:
+		virtual void SetupTextureParameters() = 0;
+
+		BName m_Name;
+
+		WinPath m_Path;
+
+		uint32 m_Width;
+
+		uint32 m_Height;
+
+		uint32 m_RendererID;
+
+		FPixelData PixelData;
 	};
 
 	class Texture2D : public Texture
 	{
 	public:
+		Texture2D(BName Name): Texture(Name){}
+
 		virtual ~Texture2D() = default;
 
 		static Ref<Texture2D> Create(BName TextureName, const WinPath& path);
-		static Ref<Texture2D> Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat);
-		static Ref<Texture2D> WhiteTexture();
-		static Ref<Texture2D> BlackTexture();
+
+		static Ref<Texture2D> Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
 	};
 }

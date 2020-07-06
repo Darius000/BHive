@@ -4,6 +4,7 @@
 #include "BHive/Platforms/Windows/Window.h"
 #include "BHive/Core/LayerStack.h"
 #include "BHive/Layers/ImGuiLayer.h"
+#include "BHive/Managers/AssetLoader.h"
 
 namespace BHive
 {
@@ -29,7 +30,7 @@ namespace BHive
 		bool OnWindowClosed(WindowCloseEvent& e);
 		bool OnWindowResize(WindowResizeEvent& e);
 
-		std::unique_ptr<Window> m_Window;
+		Scope<Window> m_Window;
 
 		LayerStack m_LayerStack;
 		ImGuiLayer* m_ImGuiLayer;
@@ -37,9 +38,14 @@ namespace BHive
 
 		bool m_Minimized = false;
 		bool m_Running = true;
-		
+
+		//Asset Loader
+		Scope<AssetLoader> m_ApplicationAssetLoader;
+
 	private:
 		static Application* s_Instance;
+
+		void LoadAssets();
 	};
 
 	//defined in client

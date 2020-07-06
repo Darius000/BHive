@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include "RenderComponent.h"
 #include "BHive/Renderer/Renderer.h"
+#include "Managers/AssetManagers.h"
 
 namespace BHive
 {
@@ -9,7 +10,9 @@ namespace BHive
 		:m_VertexArray(nullptr)
 	{
 		m_Shader = ShaderLibrary::Get("Default");
-		m_Texture = Texture2D::WhiteTexture();
+		m_Texture = TextureManager::Get("White");
+		
+		BH_CORE_TRACE("White tex use count {0}", m_Texture.use_count());
 	}
 
 	RenderComponent::RenderComponent(const RenderComponent& other)
@@ -44,15 +47,15 @@ namespace BHive
 
 		//BH_CORE_TRACE("RenderComponent OnTransformUpdate!");
 
-		m_Shader->Bind();
+		if(m_Shader) m_Shader->Bind();
 	}
 
-	void RenderComponent::SetShader(Ref<Shader>& shader)
+	void RenderComponent::SetShader(Ref<Shader> shader)
 	{
 		m_Shader = shader;
 	}
 
-	void RenderComponent::SetTexture(Ref<Texture2D>& texture)
+	void RenderComponent::SetTexture(Ref<Texture2D> texture)
 	{
 		m_Texture = texture;
 	}
@@ -82,7 +85,7 @@ namespace BHive
 
 	void RenderComponent::Draw()
 	{	
-		if (CheckIsValid(m_Shader))
+		if (m_Shader)
 		{
 			m_Shader->Bind();
 			m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
@@ -90,12 +93,12 @@ namespace BHive
 			m_Shader->SetInt("u_Texture", 0);
 		}
 
-		if (CheckIsValid(m_Texture))
+		if (m_Texture)
 		{
 			m_Texture->Bind();
 		}
 
-		if (CheckIsValid(m_VertexArray))
+		if (m_VertexArray)
 		{
 			Renderer::Draw(m_VertexArray);
 		}

@@ -25,9 +25,9 @@ namespace BHive
 		virtual void OnTransformUpdated(const Transform& transform) override;
 
 	public:
-		void SetShader(Ref<Shader>& shader);
+		void SetShader(Ref<Shader> shader);
 		Ref<Shader> GetShader() const { return m_Shader; }
-		void SetTexture(Ref<Texture2D>& texture);
+		void SetTexture(Ref<Texture2D> texture);
 	private:
 		void CreateBuffers();
 		void Draw();

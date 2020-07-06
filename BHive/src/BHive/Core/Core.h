@@ -26,6 +26,8 @@
 	#define BH_CORE_ASSERT(x, ...)
 #endif
 
+#define DEPRECATED(x) [[deprecated(x)]]
+
 #include "CoreLibrary.h"
 #include "EventMacros.h"
 
