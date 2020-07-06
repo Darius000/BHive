@@ -16,4 +16,5 @@ public:
 private:
 	BHive::Ref<BHive::PerspectiveCameraController> m_OrthoCameraController;
 	BHive::Ref<BHive::Texture2D> m_Texture;
+	BHive::Ref<BHive::Texture2D> m_Texture2;
 };

@@ -57,8 +57,12 @@ namespace BHive
 
 	Ref<Shader> ShaderLibrary::Get(const BName& name)
 	{
-		BH_CORE_ASSERT(Exists(name), "Shader Doesn't Exists");
-		return m_Shaders[name];
+		if (Exists(name))
+		{
+			return m_Shaders[name];
+		}
+
+		return nullptr;
 	}
 
 	bool ShaderLibrary::Exists(const BName& name)
