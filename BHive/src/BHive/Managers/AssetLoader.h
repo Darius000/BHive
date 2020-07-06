@@ -11,8 +11,7 @@ namespace BHive
 	{
 	
 	public:
-		AssetLoader(const WinPath& path);
-		~AssetLoader();
+		AssetLoader();
 
 		void OpenDirectory(const WinPath& path);
 		void LoadFile(const WinPath& filename);

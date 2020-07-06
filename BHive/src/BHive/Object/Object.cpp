@@ -123,6 +123,12 @@ namespace BHive
 		s_Objects.erase(id);
 	}
 
+
+	void ObjectManager::Refresh()
+	{
+		CheckPendingDestroy();
+	}
+
 	void ObjectManager::CheckPendingDestroy()
 	{
 		for (auto& object : s_Objects)

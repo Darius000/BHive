@@ -31,6 +31,11 @@ namespace BHive
 		return s.c_str();
 	}
 
+	inline const ANSICHAR* operator+(const BString& a, const ANSICHAR* b) 
+	{
+		return (a + BString(b)).c_str();
+	}
+
 	inline uint64 find_last_of(const BString& str, std::vector<ANSICHAR> x)
 	{
 		uint64 i = 0;

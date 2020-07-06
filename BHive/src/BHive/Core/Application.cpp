@@ -11,6 +11,7 @@
 #include "BHive/Renderer/Shader.h"
 #include "BHive/Managers/AssetLoader.h"
 #include "BHive/Managers/AssetManagers.h"
+#include "Platforms/Opengl/OpenGLTexture.h"
 
 namespace BHive
 {
@@ -22,20 +23,21 @@ namespace BHive
 		BH_CORE_ASSERT(!s_Instance, "Application Already Exists!");
 		s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create());
 		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
 
-		{
-			BH_PROFILE_SCOPE("Load Engine Assets");
-			WinPath EngineAssetFolder("..\\BHive\\Assets");
-			WinPath SandBoxAssetFolder("..\\Sandbox\\Assets");
-			Ref<AssetLoader> EngineAssetLoader = Make_Ref<AssetLoader>(EngineAssetFolder);
-			Ref<AssetLoader> SandBoxAssetLoader = Make_Ref<AssetLoader>(SandBoxAssetFolder);
-		}
+		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
+		TextureManager::CreateAsset("White", Make_Ref<OpenGLTexture2D>("White", 1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
+	
+		//Create default black texture
+		uint8 BlackTextureData[] = {0x00, 0x00, 0x00, 0xff, '\0'};
+		TextureManager::CreateAsset("Black", Make_Ref<OpenGLTexture2D>("Black", 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
+	
+		LoadAssets();
 
 		Ref<Texture2D> m_WindowsIcon = TextureManager::Get("folder");
 		m_Window->SetIcon(m_WindowsIcon);
-		//m_Window->SetVSync(false);
+		m_Window->SetVSync(false);
 
 		Renderer::Init();
 
@@ -94,7 +96,7 @@ namespace BHive
 	void Application::Run()
 	{
 		BH_PROFILE_FUNCTION();
-			
+
 		ActorManager::Start();
 
 		while (m_Running)
@@ -144,4 +146,15 @@ namespace BHive
 
 		return false;
 	}
+
+	void Application::LoadAssets()
+	{	
+		BH_PROFILE_SCOPE("Load Engine Assets");
+		WinPath EngineAssetFolder("..\\BHive\\Assets");
+		WinPath SandBoxAssetFolder("..\\Sandbox\\Assets");
+		m_ApplicationAssetLoader = Make_Scope<AssetLoader>();
+		m_ApplicationAssetLoader->OpenDirectory(EngineAssetFolder);
+		m_ApplicationAssetLoader->OpenDirectory(SandBoxAssetFolder);
+	}
+
 }

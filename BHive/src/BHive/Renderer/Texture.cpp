@@ -6,7 +6,18 @@
 
 namespace BHive
 {
+	FPixelData::FPixelData()
+		: m_Data(nullptr), m_InternalFormat(GL_RGBA8), m_DataFormat(GL_RGBA)
+	{
+	
+	}
 
+
+	Texture::Texture(BName Name)
+		: m_Name(Name), m_Path(""), m_Width(0), m_Height(0), m_RendererID(0)
+	{
+
+	}
 	/*unsigned int Texture::GetIconData() const
 	{
 		return m_TextureData;
@@ -76,8 +87,8 @@ namespace BHive
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
 		case RendererAPI::API::OpenGL: 
-			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(TextureName, path); 
-			TextureManager::Add(tex); 
+			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, path)); 
+			TextureManager::Add(TextureName, tex); 
 			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
 		}
@@ -86,35 +97,19 @@ namespace BHive
 		return nullptr;
 	}
 
-	Ref<Texture2D> Texture2D::Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat)
+	Ref<Texture2D> Texture2D::Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat, void* data)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
 		case RendererAPI::API::OpenGL:
-			Ref<Texture2D> tex = Make_Ref<OpenGLTexture2D>(TextureName, width, height, internalFormat, dataFormat); 
-			TextureManager::Add(tex);
+			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, width, height, internalFormat, dataFormat, data)); 
+			TextureManager::Add(TextureName, tex);
 			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");
 		return nullptr;
-	}
-
-	Ref<Texture2D> Texture2D::WhiteTexture()
-	{
-		Ref<Texture2D> tex = Texture2D::Create("WhiteTex", 1, 1, GL_RGBA8, GL_RGBA);
-		uint32 whiteTextureData = 0xffffffff;
-		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
-		return tex;
-	}
-
-	Ref<Texture2D> Texture2D::BlackTexture()
-	{
-		Ref<Texture2D> tex = Texture2D::Create("BlackTex", 1, 1, GL_RGBA8, GL_RGBA);
-		uint32 whiteTextureData = 0x000000ff;
-		tex->SetData(&whiteTextureData, sizeof(BHive::uint32));
-		return tex;
 	}
 }

@@ -112,6 +112,7 @@ namespace BHive
 	public:
 		static void Add(uint64 id, Scope<Object>& obj);
 		static void Remove(uint64 id);
+		static void Refresh();
 		static void CheckPendingDestroy();
 		static Object* Get(uint64 id);
 

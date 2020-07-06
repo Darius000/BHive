@@ -2,12 +2,9 @@
 
 namespace BHive
 {
-	using index =  int64;
-	using size =  uint64;
-
 	class WinPath
 	{
-	
+
 	public:
 		WinPath();
 		WinPath(const ANSICHAR* path);
@@ -21,18 +18,19 @@ namespace BHive
 		bool IsDirectory() { return m_Directory; }
 
 		const ANSICHAR* operator*() const { return m_Path.get(); }
+		WinPath operator= (const WinPath& Other);
 
 	private:
 		void copy(ANSICHAR* to, const ANSICHAR* from);
-		Scope<ANSICHAR[]> substring(index start, index end);
-		index find_first_of(std::vector<ANSICHAR> x);
-		index find_last_of(std::vector<ANSICHAR> x);
-		
+		Scope<ANSICHAR[]> substring(uint64 start, uint64 end);
+		int64 find_first_of(std::vector<ANSICHAR> x);
+		int64 find_last_of(std::vector<ANSICHAR> x);
+
 	private:
 		Scope<ANSICHAR[]> m_Path;
 		Scope<ANSICHAR[]> m_Name;
 		Scope<ANSICHAR[]> m_Ext;
 		bool m_Directory;
-		size m_Length;
+		uint64 m_Length;
 	};
 }
