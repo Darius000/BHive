@@ -140,7 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EventDelegate.h" />
     <ClInclude Include="src\BHive.h" />
     <ClInclude Include="src\BHive\BHivePCH.h" />
     <ClInclude Include="src\BHive\Components\CameraComponents.h" />
@@ -156,6 +155,7 @@
     <ClInclude Include="src\BHive\Core\DataTypes.h" />
     <ClInclude Include="src\BHive\Core\EntryPoint.h" />
     <ClInclude Include="src\BHive\Core\Event.h" />
+    <ClInclude Include="src\BHive\Core\Events\EventDelegate.h" />
     <ClInclude Include="src\BHive\Core\IDGenerator.h" />
     <ClInclude Include="src\BHive\Core\Input.h" />
     <ClInclude Include="src\BHive\Core\KeyCodes.h" />
