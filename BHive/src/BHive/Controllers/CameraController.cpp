@@ -85,16 +85,23 @@ namespace BHive
 
 	bool PerspectiveCameraController::OnMouseMoved(MouseMovedEvent& e)
 	{
-		if (m_bLeftMouseButtonPressed)
+		FVector2 MousePos = FVector2(e.GetX(), e.GetY());
+		FVector2 DeltaMousePos = MousePos - m_OldMousePos;
+		m_OldMousePos = MousePos;
+		DeltaMousePos.Normalize();
+
+		if (m_bMiddleMouseButtonPressed)
 		{
-			FVector2 MousePos = FVector2(e.GetX(), e.GetY());
-			FVector2 DeltaMousePos =  MousePos - m_OldMousePos;
-			m_OldMousePos = MousePos;
-			DeltaMousePos.Normalize();
 			m_CameraPosition.x -= m_CameraSpeed * DeltaMousePos.x * m_DeltaTime; 
 			m_CameraPosition.y += m_CameraSpeed * DeltaMousePos.y * m_DeltaTime;
 			m_Camera->GetTransform().SetPosition(m_CameraPosition);
 			BH_CORE_TRACE("mouse delta : {0}", DeltaMousePos.ToString());
+		}
+
+		if (m_bLeftMouseButtonPressed)
+		{
+			m_CameraRotation.y += m_RotationSpeed * DeltaMousePos.x * m_DeltaTime;
+			m_Camera->GetTransform().SetRotation(m_CameraRotation);
 		}
 
 		return false;
@@ -103,11 +110,15 @@ namespace BHive
 
 	bool PerspectiveCameraController::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
-		if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_MIDDLE)
+		{
+			m_bMiddleMouseButtonPressed = true;
+
+			BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
+		}
+		else if(e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
 		{
 			m_bLeftMouseButtonPressed = true;
-
-			BH_CORE_TRACE("{0}", m_bLeftMouseButtonPressed);
 		}
 
 		return false;
@@ -116,11 +127,15 @@ namespace BHive
 
 	bool PerspectiveCameraController::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
 	{
-		if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_MIDDLE)
+		{
+			m_bMiddleMouseButtonPressed = false;
+
+			BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
+		}
+		else if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
 		{
 			m_bLeftMouseButtonPressed = false;
-
-			BH_CORE_TRACE("{0}", m_bLeftMouseButtonPressed);
 		}
 
 		return false;

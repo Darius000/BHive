@@ -79,6 +79,7 @@ namespace BHive
 		Rotator m_CameraRotation = { 0.0f, 0.0f, 0.0f };
 		float m_RotationSpeed = 1.0f;
 		float m_CameraSpeed = 100.0f;
+		bool m_bMiddleMouseButtonPressed = false;
 		bool m_bLeftMouseButtonPressed = false;
 		FVector2 m_OldMousePos;
 		float m_DeltaTime = 0.0f;
