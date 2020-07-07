@@ -7,11 +7,12 @@ namespace BHive
 	CameraComponent::CameraComponent()
 		:m_ProjectionMatrix(1.0f), m_ViewMatrix(1.0f), m_ViewProjectionMatrix(1.0f)
 	{
-		GetTransform().OnTransformUpdated.AddBinding(BIND_EVENT_ONE_PARAM(CameraComponent::RecalulateViewMatrix));
+	
 	}
 
 	void CameraComponent::OnTransformUpdated(const Transform& transform)
 	{
+		RecalulateViewMatrix(transform);
 		glm::mat4 VP = GetViewProjectionMatrix();
 		ShaderLibrary::UpdateShaderViewProjectionMatrices(VP); //TODO : change this
 	}
@@ -73,8 +74,6 @@ namespace BHive
 	{
 		glm::mat4 matrix = transform.GetMatrix();
 		m_ViewMatrix = glm::inverse(matrix);
-		/*FVector3 loc = GetTransform().GetPosition();
-		m_ViewMatrix = glm::lookAt(glm::vec3(loc.x, loc.y, loc.z), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));*/
 		m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, .1f, 1000.0f);
 		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}

@@ -3,8 +3,7 @@
 
 namespace BHive
 {
-	CameraController::CameraController(float aspectRatio)
-		:m_AspectRatio(aspectRatio)
+	CameraController::CameraController()
 	{
 		
 	}
@@ -18,136 +17,112 @@ namespace BHive
 	{
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnMouseScrolled));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnWindowResized));
+		dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnMouseMoved));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnMouseButtonPressed));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_ONE_PARAM(CameraController::OnMouseButtonReleased));
 	}
 
 
 
-	OrthographicCameraController::OrthographicCameraController(Ref<OrthographicCameraComponent>& camera, float aspectRatio, bool rotation )
-		:CameraController(aspectRatio), m_Rotation(rotation), m_Camera(camera)
+	OrthographicCameraController::OrthographicCameraController(Ref<OrthographicCameraComponent>& camera, bool rotation )
+		:CameraController(), m_Rotation(rotation), m_Camera(camera)
 	{
 		
 	}
 
+
+	const BHive::Ref<BHive::OrthographicCameraComponent>& OrthographicCameraController::GetCamera() const
+	{
+		return m_Camera;
+	}
+
 	void OrthographicCameraController::OnUpdate(const Time& time)
 	{
-		if (Input::IsKeyPressed(BH_KEY_A))
-		{
-			m_CameraPosition.x -= m_CameraSpeed * time;
-		}
-		else if (Input::IsKeyPressed(BH_KEY_D))
-		{
-			m_CameraPosition.x += m_CameraSpeed * time;
-		}
-
-		if (Input::IsKeyPressed(BH_KEY_W))
-		{
-			m_CameraPosition.y += m_CameraSpeed * time;
-		}
-		else if (Input::IsKeyPressed(BH_KEY_S))
-		{
-			m_CameraPosition.y -= m_CameraSpeed * time;
-		}
-
-		m_Camera->GetTransform().SetPosition(m_CameraPosition);
-
-		if (m_Rotation)
-		{
-			if (Input::IsKeyPressed(BH_KEY_Q))
-			{
-				m_CameraRotation += m_RotationSpeed * time;
-			}
-			else if (Input::IsKeyPressed(BH_KEY_E))
-			{
-				m_CameraRotation -= m_RotationSpeed * time;
-			}
-
-			m_Camera->GetTransform().SetRotation(Rotator(0.0f, 0.0f, m_CameraRotation));
-		}
+		
 	}
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		m_ZoomLevel -= e.GetYOffset();
-		MathLibrary::Clamp(m_ZoomLevel, 0.25f, m_ZoomLevel);
-		m_CameraSpeed = m_ZoomLevel * 0.1f;
-		m_Camera->SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;
 	}
 
-	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
+	bool OrthographicCameraController::OnMouseMoved(MouseMovedEvent& e)
 	{
-		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		m_Camera->SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 		return false;
 	}
 
-	PerspectiveCameraController::PerspectiveCameraController(Ref<PerspectiveCameraComponent>& camera, float aspect)
-		:CameraController(aspect), m_Camera(camera)
+	bool OrthographicCameraController::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		return false;
+	}
+
+
+	bool OrthographicCameraController::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
+	{
+		return false;
+	}
+
+	PerspectiveCameraController::PerspectiveCameraController(Ref<PerspectiveCameraComponent> camera)
+		:CameraController(), m_Camera(camera)
 	{	
-		m_Camera->SetProjection(glm::radians(45.0f), m_AspectRatio, .1f, 1000.0f);
-		m_Camera->GetTransform().SetPosition(m_CameraPosition);
-		//m_Camera->LookAt(FVector3(0.0f));
+		m_CameraPosition = m_Camera->GetTransform().GetPosition();
 	}
 
 	void PerspectiveCameraController::OnUpdate(const Time& time)
 	{
-		if (Input::IsKeyPressed(BH_KEY_A))
-		{
-			m_CameraPosition.x -= m_CameraSpeed * time;
-		}
-		else if (Input::IsKeyPressed(BH_KEY_D))
-		{
-			m_CameraPosition.x += m_CameraSpeed * time;
-		}
-
-		if (Input::IsKeyPressed(BH_KEY_W))
-		{
-			m_CameraPosition.y += m_CameraSpeed * time;
-		}
-		else if (Input::IsKeyPressed(BH_KEY_S))
-		{
-			m_CameraPosition.y -= m_CameraSpeed * time;
-		}
-
-		if (Input::IsKeyPressed(BH_KEY_Q))
-		{
-			m_CameraRotation.y += m_RotationSpeed * time;
-		}
-		else if (Input::IsKeyPressed(BH_KEY_E))
-		{
-			m_CameraRotation.y -= m_RotationSpeed * time;
-		}
-
-		/*if (Input::IsKeyPressed(BH_KEY_F))
-		{
-			m_Camera->LookAt(FVector3(0.0f));
-		}*/
-
-		m_Camera->GetTransform().SetRotation(m_CameraRotation);
-		m_Camera->GetTransform().SetPosition(m_CameraPosition);
-		//m_Camera->LookAt(FVector3(0.0f));
+		m_DeltaTime = time.GetDeltaTime();
 	}
 
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_ZoomLevel = e.GetYOffset() * m_ZoomSpeed;
 		BH_TRACE("Zoom Level: {0}", m_ZoomLevel * m_ZoomSpeed);
-		//MathLibrary::Clamp(m_ZoomLevel, 0.25f, m_ZoomLevel);
-		m_CameraSpeed = m_ZoomLevel * 0.1f;
-		m_Camera->SetProjection(glm::radians(45.0f), m_AspectRatio, .1f, 1000.0f);
+
 		m_CameraPosition.z += m_ZoomLevel;
 		m_Camera->GetTransform().SetPosition(m_CameraPosition);
-		//m_Camera->LookAt(FVector3(0.0f));
 		return false;
 	}
 
-	bool PerspectiveCameraController::OnWindowResized(WindowResizeEvent& e)
+	bool PerspectiveCameraController::OnMouseMoved(MouseMovedEvent& e)
 	{
-		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
-		m_Camera->SetProjection(glm::radians(45.0f), m_AspectRatio, .1f, 1000.0f);
-		//m_Camera->LookAt(FVector3(0.0f));
+		if (m_bLeftMouseButtonPressed)
+		{
+			FVector2 MousePos = FVector2(e.GetX(), e.GetY());
+			FVector2 DeltaMousePos =  MousePos - m_OldMousePos;
+			m_OldMousePos = MousePos;
+			DeltaMousePos.Normalize();
+			m_CameraPosition.x -= m_CameraSpeed * DeltaMousePos.x * m_DeltaTime; 
+			m_CameraPosition.y += m_CameraSpeed * DeltaMousePos.y * m_DeltaTime;
+			m_Camera->GetTransform().SetPosition(m_CameraPosition);
+			BH_CORE_TRACE("mouse delta : {0}", DeltaMousePos.ToString());
+		}
+
 		return false;
 	}
 
+
+	bool PerspectiveCameraController::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		{
+			m_bLeftMouseButtonPressed = true;
+
+			BH_CORE_TRACE("{0}", m_bLeftMouseButtonPressed);
+		}
+
+		return false;
+	}
+
+
+	bool PerspectiveCameraController::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
+	{
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		{
+			m_bLeftMouseButtonPressed = false;
+
+			BH_CORE_TRACE("{0}", m_bLeftMouseButtonPressed);
+		}
+
+		return false;
+	}
 }

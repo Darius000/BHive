@@ -3,13 +3,16 @@
 SandBox2D::SandBox2D()
 	:Layer("SandBox2D")
 {
-	BHive::Ref<BHive::PerspectiveCameraComponent> camera = std::make_shared<BHive::PerspectiveCameraComponent>(65.0f, (16.0f / 9.0f), .01f, 1000.f );
-	m_OrthoCameraController = std::make_shared<BHive::PerspectiveCameraController>( camera , 16.0f / 9.0f);
-	BHive::Texture2D::Create("AwesomeFace", "Assets/Textures/awesomeface.png");
+	
 }
 
 void SandBox2D::OnAttach()
 {
+	BHive::Ref<BHive::PerspectiveCameraComponent> camera = std::make_shared<BHive::PerspectiveCameraComponent>(65.0f, (16.0f / 9.0f), .01f, 1000.f);
+	camera->GetTransform().SetPosition(0.0f, 0.0f, 1.0f);
+	m_OrthoCameraController = std::make_shared<BHive::PerspectiveCameraController>(camera);
+	BHive::Texture2D::Create("AwesomeFace", "Assets/Textures/awesomeface.png");
+
 	m_Texture = BHive::TextureManager::Get("grasspng");
 	m_Texture2 = BHive::TextureManager::Get("AwesomeFace");
 
