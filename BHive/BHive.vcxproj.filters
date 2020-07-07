@@ -1389,7 +1389,7 @@
     <ClInclude Include="src\BHive\EventMacros.h" />
     <ClInclude Include="src\BHive\Managers\AssetManagers.h" />
     <ClInclude Include="src\BHive\Managers\AssetLoader.h" />
-    <ClInclude Include="EventDelegate.h">
+    <ClInclude Include="src\BHive\Core\Events\EventDelegate.h">
       <Filter>src\BHive\Core\Events</Filter>
     </ClInclude>
   </ItemGroup>

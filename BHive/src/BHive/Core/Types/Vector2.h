@@ -7,7 +7,7 @@ namespace BHive
 	{
 		struct Vector3;
 
-		Vector2(){};
+		Vector2():x(0), y(0){};
 		Vector2(T _x, T _y = (T)0.0f) :x(_x), y(_y) {};
 		Vector2(const Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
 		Vector2(Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
@@ -37,7 +37,7 @@ namespace BHive
 		bool operator!=(const Vector2& _other);
 		const T* operator*() const;
 
-		const BString& ToString() const { return Format("{ %f, %f}"); }
+		BString ToString() const { return Format("{ %f, %f}", x, y); }
 	};
 
 	template<typename T>
@@ -128,7 +128,7 @@ namespace BHive
 	template<typename T>
 	Vector2<T> Vector2<T>::operator-()
 	{
-		return Vector2(x * -1.0f, y * -1.0f);;
+		return Vector2(x * -1.0f, y * -1.0f);
 	}
 
 	template<typename T>
