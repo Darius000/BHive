@@ -34,17 +34,19 @@ namespace BHive
 
 	void Triangle::CreatePrimitive()
 	{
-		m_Vertices = 
+		std::vector<float> m_Vertices =
 		{
 			-m_Width / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 			m_Width / 2.0f, 0.0f, .0f, 1.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 			0.0f, m_Height, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f
 		};
 
-		m_Indices = 
+		std::vector<uint32> m_Indices =
 		{
 			0 , 1, 2
 		};
 
+		m_Mesh = Ref<FMesh>(new FMesh());
+		m_Mesh->SetVerticesAndIndices(m_Vertices, m_Indices);
 	}
 }

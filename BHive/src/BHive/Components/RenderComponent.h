@@ -5,6 +5,7 @@
 #include "BHive/Renderer/VertexArray.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"
 #include "BHive/Renderer/Texture.h"
+#include "BHive/Renderer/Mesh.h"
 
 namespace BHive
 {
@@ -28,17 +29,24 @@ namespace BHive
 		void SetShader(Ref<Shader> shader);
 		Ref<Shader> GetShader() const { return m_Shader; }
 		void SetTexture(Ref<Texture2D> texture);
+
+		void SetMesh(Ref<FMesh> Mesh);
+		Ref<FMesh> GetMesh() { return m_Mesh; }
+
 	private:
 		void CreateBuffers();
 		void Draw();
 
 	protected:
-		std::vector<float> m_Vertices;
-		std::vector<uint32> m_Indices;
+		//std::vector<float> m_Vertices;
+		//std::vector<uint32> m_Indices;
 
 	private:
 		Ref<Shader> m_Shader;
-		Ref<VertexArray> m_VertexArray;
+		//Ref<VertexArray> m_VertexArray;
 		Ref<Texture2D> m_Texture;
+
+	protected:
+		Ref<FMesh> m_Mesh;
 	};
 }

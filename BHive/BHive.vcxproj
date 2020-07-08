@@ -200,6 +200,7 @@
     <ClInclude Include="src\BHive\Platforms\Windows\WindowsInput.h" />
     <ClInclude Include="src\BHive\Renderer\Buffer.h" />
     <ClInclude Include="src\BHive\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\BHive\Renderer\Mesh.h" />
     <ClInclude Include="src\BHive\Renderer\RenderCommands.h" />
     <ClInclude Include="src\BHive\Renderer\Renderer.h" />
     <ClInclude Include="src\BHive\Renderer\Renderer2D.h" />
@@ -608,6 +609,7 @@
     <ClCompile Include="src\BHive\Platforms\Windows\WindowWindows.cpp" />
     <ClCompile Include="src\BHive\Platforms\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\BHive\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Mesh.cpp" />
     <ClCompile Include="src\BHive\Renderer\RenderCommands.cpp" />
     <ClCompile Include="src\BHive\Renderer\Renderer.cpp" />
     <ClCompile Include="src\BHive\Renderer\Renderer2D.cpp" />
