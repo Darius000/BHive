@@ -4,10 +4,11 @@
 #include "BHive/Renderer/Renderer.h"
 #include "Managers/AssetManagers.h"
 
+
 namespace BHive
 {
 	RenderComponent::RenderComponent()
-		:m_VertexArray(nullptr)
+		//:m_VertexArray(nullptr)
 	{
 		m_Shader = ShaderLibrary::Get("Default");
 		m_Texture = TextureManager::Get("White");
@@ -18,7 +19,7 @@ namespace BHive
 	RenderComponent::RenderComponent(const RenderComponent& other)
 		:m_Shader(other.m_Shader)
 	{
-		m_VertexArray.reset(other.m_VertexArray.get());
+		//m_VertexArray.reset(other.m_VertexArray.get());
 	}
 
 	void RenderComponent::ComponentInit()
@@ -31,7 +32,7 @@ namespace BHive
 	{
 		Super::ComponentStart();
 
-		CreateBuffers();
+		//CreateBuffers();
 	}
 
 	void RenderComponent::ComponentUpdate(const Time& time)
@@ -60,9 +61,15 @@ namespace BHive
 		m_Texture = texture;
 	}
 
+
+	void RenderComponent::SetMesh(Ref<FMesh> Mesh)
+	{
+		m_Mesh = Mesh;
+	}
+
 	void RenderComponent::CreateBuffers()
 	{
-		m_VertexArray.reset(VertexArray::Create());
+		/*m_VertexArray.reset(VertexArray::Create());
 
 		BufferLayout layout = {
 			{ ShaderDataType::Float3, "a_Position" },
@@ -80,7 +87,7 @@ namespace BHive
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		m_IndexBuffer.reset(IndexBuffer::Create(m_Indices.data(), (uint32)(m_Indices.size() * sizeof(uint32))));
 
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+		m_VertexArray->SetIndexBuffer(m_IndexBuffer);*/
 	}
 
 	void RenderComponent::Draw()
@@ -98,9 +105,14 @@ namespace BHive
 			m_Texture->Bind();
 		}
 
-		if (m_VertexArray)
+		if (m_Mesh)
+		{
+			m_Mesh->Render();
+		}
+
+		/*if (m_VertexArray)
 		{
 			Renderer::Draw(m_VertexArray);
-		}
+		}*/
 	}
 }
