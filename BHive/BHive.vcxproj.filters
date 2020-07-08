@@ -1392,6 +1392,9 @@
     <ClInclude Include="src\BHive\Core\Events\EventDelegate.h">
       <Filter>src\BHive\Core\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Renderer\Mesh.h">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1518,6 +1521,9 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\BHive\Managers\AssetLoader.cpp" />
+    <ClCompile Include="src\BHive\Renderer\Mesh.cpp">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\premake5.lua" />

@@ -21,3 +21,4 @@
 #include "BHive/Renderer/Shader.h"
 #include "BHive/Renderer/Texture.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"
+#include "BHive/Renderer/Mesh.h"

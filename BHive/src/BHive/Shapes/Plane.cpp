@@ -20,7 +20,7 @@ namespace BHive
 
 	void Plane::CreatePrimitive()
 	{
-		m_Vertices = 
+		std::vector<float> m_Vertices = 
 		{
 			-m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 0.0f,0.0f, 0.0f, -1.0f,
 			m_Width / 2.0f, -m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
@@ -28,9 +28,12 @@ namespace BHive
 			-m_Width / 2.0f, m_Height / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f,  0.0f, 1.0f, 0.0f, 0.0f, -1.0f
 		};
 
-		m_Indices = 
+		std::vector<uint32> m_Indices = 
 		{
 			0, 1, 2, 2, 3, 0
 		};
+
+		m_Mesh = Ref<FMesh>(new FMesh());
+		m_Mesh->SetVerticesAndIndices(m_Vertices, m_Indices);
 	}
 }
