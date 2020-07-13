@@ -87,8 +87,8 @@ namespace BHive
 	//template<typename Fn>
 	struct InstrumentionTimer
 	{
-		InstrumentionTimer(const ANSICHAR* name/*, Fn&& func*/)
-			:m_Name(name), m_Stopped(false)//, m_Func(func)
+		InstrumentionTimer(const ANSICHAR* name)
+			:m_Name(name), m_Stopped(false)
 		{
 			m_StartPoint = std::chrono::high_resolution_clock::now();
 		}
@@ -110,14 +110,10 @@ namespace BHive
 			m_Stopped = true;
 
 			 uint32 threadID = (uint32)std::hash<std::thread::id>{}(std::this_thread::get_id());
-			//m_Func({ m_Name, duration });
-			//ProfilerResults.push_back({m_Name, start, end});
+
 			Instrumentor::Get().WriteProfile({ m_Name, start, end, threadID});
-			//BH_CORE_WARN("Timer: {0} took {1} milliseconds, {2} microseconds to complete!", m_Name, ms, duration);
 		}
 
-		//static std::vector<ProfilerResult> GetProfilerResults() { return ProfilerResults; }
-		//static std::vector<ProfilerResult> ProfilerResults;
 	private:
 		std::chrono::time_point<std::chrono::steady_clock> m_StartPoint;
 		const ANSICHAR* m_Name;

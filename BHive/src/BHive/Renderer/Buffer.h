@@ -2,6 +2,7 @@
 #define BUFFER_H
 
 #include <glad/glad.h>
+#include "BHive/Renderer/Vertex.h"
 
 namespace BHive
 {
@@ -104,6 +105,8 @@ namespace BHive
 				element.Offset = offset;
 				offset += element.Size;
 				m_Stride += element.Size;
+
+				
 			}
 		}
 	private:
@@ -118,12 +121,12 @@ namespace BHive
 
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
-		virtual uint32 GetSize() const = 0;
+		//virtual uint32 GetSize() const = 0;
 
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
-		static VertexBuffer* Create(float* vertices, uint32 size);
+		static VertexBuffer* Create(std::vector<FVertex> Vertices);
 	};
 
 	class IndexBuffer
@@ -135,7 +138,7 @@ namespace BHive
 		virtual void UnBind() const = 0;
 		virtual uint32 GetSize() const = 0;
 
-		static IndexBuffer* Create(uint32* indices, uint32 size);
+		static IndexBuffer* Create(std::vector<uint32> Indices);
 	};
 }
 

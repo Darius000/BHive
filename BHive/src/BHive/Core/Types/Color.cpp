@@ -35,6 +35,12 @@ namespace BHive
 		return Format("{ %i, %i, %i , %i }", r, g, b, a);
 	}
 
+
+	Color Color::operator=(const Color& other) const
+	{
+		return Color(other.r, other.g, other.b, other.a);
+	}
+
 	uint8* const Color::operator*()
 	{
 		return &r;
@@ -82,6 +88,16 @@ namespace BHive
 	BString LinearColor::ToString() const
 	{
 		return Format("{ %f, %f, %f }", r, g, b);
+	}
+
+
+	LinearColor LinearColor::operator=(const LinearColor& other)
+	{
+		r = other.r;
+		g = other.g;
+		b = other.b;
+		a = other.a;
+		return *this;
 	}
 
 	float* const LinearColor::operator*()

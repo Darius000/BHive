@@ -6,7 +6,11 @@ bin-int/
 
 
 #files
+.json
 
 *.user
 BHive/BHive/vendor/imgui
 BHive/BHivevendor/spdlog
+Sandbox/Assets/Import
+Profiles
+

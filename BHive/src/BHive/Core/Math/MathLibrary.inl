@@ -65,16 +65,16 @@ namespace BHive
 
 
 		template<typename T>
-		T const& Min(T const& a, T const& b)
+		T  Min(T  a, T  b)
 		{
-			return a < b ? a : b;
+			return a <= b ? a : b;
 		}
 
 
 		template<typename T>
-		T const& Max(T const& a, T const& b)
+		T  Max(T a, T  b)
 		{
-			return a > b ? a : b;
+			return a >= b ? a : b;
 		}
 
 		template<typename T> bool const IsInfinte(T const& a)

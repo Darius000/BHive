@@ -38,13 +38,13 @@ namespace BHive
 		const Ref<OrthographicCameraComponent>& GetCamera() const;
 	
 	public:
-		virtual void OnUpdate(const Time & time) override;
+		void OnUpdate(const Time & time) override;
 
 	private:
-		virtual bool OnMouseScrolled(MouseScrolledEvent & e) override;
-		virtual bool OnMouseMoved(MouseMovedEvent& e) override;
-		virtual bool OnMouseButtonPressed(MouseButtonPressedEvent& e) override;
-		virtual bool OnMouseButtonReleased(MouseButtonReleasedEvent& e) override;
+		bool OnMouseScrolled(MouseScrolledEvent & e) override;
+		bool OnMouseMoved(MouseMovedEvent& e) override;
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e) override;
+		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e) override;
 
 	private:
 		Ref<OrthographicCameraComponent> m_Camera;
@@ -63,26 +63,27 @@ namespace BHive
 	public:
 		PerspectiveCameraController(Ref<PerspectiveCameraComponent> camera);
 
-		virtual void OnUpdate(const Time& time) override;
+		void OnUpdate(const Time& time) override;
 		Ref<PerspectiveCameraComponent> GetCamera() { return m_Camera; }
 		const Ref<PerspectiveCameraComponent> GetCamera() const { return m_Camera; }
 
 	protected:
-		virtual bool OnMouseScrolled(MouseScrolledEvent& e) override;
-		virtual bool OnMouseMoved(MouseMovedEvent& e) override;
-		virtual bool OnMouseButtonPressed(MouseButtonPressedEvent& e) override;
-		virtual bool OnMouseButtonReleased(MouseButtonReleasedEvent& e) override;
+		bool OnMouseScrolled(MouseScrolledEvent& e) override;
+		bool OnMouseMoved(MouseMovedEvent& e) override;
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e) override;
+		bool OnMouseButtonReleased(MouseButtonReleasedEvent& e) override;
 
 	private:
 		Ref<PerspectiveCameraComponent> m_Camera;
 		FVector3 m_CameraPosition;
 		Rotator m_CameraRotation = { 0.0f, 0.0f, 0.0f };
-		float m_RotationSpeed = 1.0f;
+		float m_RotationSpeed = .01f;
 		float m_CameraSpeed = 100.0f;
 		bool m_bMiddleMouseButtonPressed = false;
 		bool m_bLeftMouseButtonPressed = false;
 		FVector2 m_OldMousePos;
 		float m_DeltaTime = 0.0f;
+		Vector2<float> m_Angles;
 	};
 }
 
