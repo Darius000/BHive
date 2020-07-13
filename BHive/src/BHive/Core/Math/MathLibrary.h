@@ -17,8 +17,8 @@ namespace BHive
 		template<typename T> inline T const ClampAngle(T const& angle, T const& min, T const& max);
 		template<typename T> inline T const Increment(T& x, T const& amount);
 		template<typename T> inline T const Decrement(T& x, T const& amount);
-		template<typename T> inline T const& Min(T const& a, T const& b);
-		template<typename T> inline T const& Max(T const& a, T const& b);
+		template<typename T> inline T Min(T  a, T  b);
+		template<typename T> inline T Max(T  a, T  b);
 		template<typename T> inline bool const IsInfinte(T const& a);
 		template<typename T> inline bool const IsUndefinded(T const& a);
 

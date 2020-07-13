@@ -8,13 +8,12 @@ namespace BHive
 	//Vertex Buffer////////////////////////////////////
 	///////////////////////////////////////////////////
 
-	OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32 size)
-		:m_Size(size)
+	OpenGLVertexBuffer::OpenGLVertexBuffer(std::vector<FVertex> Vertices)
 	{
 		
 		glGenBuffers(1, &m_RenderID);
 		glBindBuffer(GL_ARRAY_BUFFER, m_RenderID);
-		glBufferData(GL_ARRAY_BUFFER, size , vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER,(uint32)( Vertices.size() * sizeof(FVertex)), Vertices.data(), GL_STATIC_DRAW);
 	}
 
 	OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -46,12 +45,12 @@ namespace BHive
 	//Index Buffer/////////////////////////////////
 	///////////////////////////////////////////////
 
-	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32* indices, uint32 size)
-		:m_Size(size)
+	OpenGLIndexBuffer::OpenGLIndexBuffer(std::vector<uint32> Indices)
+		:m_Size((uint32)(Indices.size() * sizeof(uint32)))
 	{
 		glGenBuffers(1, &m_RenderID);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RenderID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, (uint32)(Indices.size() * sizeof(uint32)), Indices.data(), GL_STATIC_DRAW);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()

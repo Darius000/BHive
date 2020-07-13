@@ -19,14 +19,6 @@ namespace BHive
 
 	OpenGLShader::OpenGLShader(const WinPath& filePath)
 	{
-		/*auto lastLash = filePath.find_last_of('/');
-		lastLash = lastLash == filePath.size() ? 0 : lastLash + 1;
-		auto lastDot = find_last_of(filePath, '.');
-		auto count = lastDot == filePath.size() ? filePath.size() - lastLash : lastDot - lastLash;
-
-		BString fileName = filePath.substr(lastLash, count);
-		m_Name = fileName;*/
-
 		m_Name = filePath.GetName();
 
 		BString source = ReadFile(filePath);	

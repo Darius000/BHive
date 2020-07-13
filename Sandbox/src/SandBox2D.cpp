@@ -26,10 +26,18 @@ void SandBox2D::OnAttach()
 	plane->SetShader(BHive::ShaderLibrary::Get("Default"));
 	plane->SetTexture(m_Texture);
 
-	BHive::Plane* triangle = actor0->AddComponent<BHive::Plane>();
+	
+	BHive::Triangle* triangle = actor0->AddComponent<BHive::Triangle>();
 	triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
 	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
-	triangle->SetTexture(m_Texture);
+
+	BHive::Ref<BHive::FMesh> GrenadeMesh = BHive::LoadFromFile("Assets/Import/Meshes/Grenades.obj");
+	BHive::RenderComponent* Grenades = actor0->AddComponent<BHive::RenderComponent>();
+	Grenades->SetMesh(GrenadeMesh);
+	Grenades->SetShader(BHive::ShaderLibrary::Get("Default"));
+	Grenades->GetShader()->SetFloat4("u_Color", 1.0f, 0.0f, 1.0f, 1.0f);
+	Grenades->GetTransform().SetPosition(1.0f, -2.0f, -.5f);
+	//Grenades->SetTexture(m_Texture);
 
 	BH_TRACE("{0}", m_Texture.use_count());
 
@@ -45,6 +53,8 @@ void SandBox2D::OnAttach()
 	//T1->SetTexture(m_Texture);
 
 	//BHive::Renderer2D::AddScene(scene0);
+
+	
 
 	BHive::Renderer2D::Init();
 }

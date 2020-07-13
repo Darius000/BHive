@@ -65,7 +65,6 @@ namespace BHive
 		
 	}
 
-
 	WinPath WinPath::operator=(const WinPath& Other)
 	{
 		copy(m_Path.get(), Other.m_Path.get());

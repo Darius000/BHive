@@ -10,6 +10,7 @@ namespace BHive
 		glLineWidth(1.0f);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
+		glEnable(GL_CULL_FACE);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
