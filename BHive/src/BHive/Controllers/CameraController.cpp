@@ -1,5 +1,6 @@
 #include "BHivePCH.h"
 #include "CameraController.h"
+#include "Core/Application.h"
 
 namespace BHive
 {
@@ -62,6 +63,7 @@ namespace BHive
 		return false;
 	}
 
+
 	PerspectiveCameraController::PerspectiveCameraController(Ref<PerspectiveCameraComponent> camera)
 		:CameraController(), m_Camera(camera)
 	{	
@@ -100,8 +102,17 @@ namespace BHive
 
 		if (m_bLeftMouseButtonPressed)
 		{
-			m_CameraRotation.y += m_RotationSpeed * DeltaMousePos.x * m_DeltaTime;
-			m_Camera->GetTransform().SetRotation(m_CameraRotation);
+			//ADD ROTATION HERE
+
+			/*float WindowHeight	= (float)Application::Get().GetWindow().GetHeight();
+			float WindowWidth	= (float)Application::Get().GetWindow().GetWidth();
+			Vector2 MouseToCenterPos = Vector2(WindowHeight / 2.0f - MousePos.x, WindowWidth / 2.0f - MousePos.y);
+			m_Angles +=  MouseToCenterPos * m_RotationSpeed * m_DeltaTime;
+			Vector3 Direction = Vector3(cos(m_Angles.y) * sin(m_Angles.x),
+			sin(m_Angles.y),
+			cos(m_Angles.y) * cos(m_Angles.x));
+
+			m_Camera->GetTransform().SetPosition(m_CameraPosition + Direction);*/
 		}
 
 		return false;

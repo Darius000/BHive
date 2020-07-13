@@ -43,6 +43,8 @@ namespace BHive
 
 		T operator[](uint32 index);
 		bool operator==(const Vector3& _other);
+		friend std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3);
+		friend std::istream& operator>>(std::istream& is, Vector3<T>& _vector3);
 
 	public:
 		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
@@ -52,6 +54,12 @@ namespace BHive
 	inline std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3)
 	{
 		return os << _vector3.ToString();
+	}
+
+	template<typename T>
+	inline std::istream& operator>>(std::istream& is, Vector3<T>& _vector3)
+	{
+		return is >> _vector3.x >> _vector3.y >> _vector3.z;
 	}
 
 	template<typename T>

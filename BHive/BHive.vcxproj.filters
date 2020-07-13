@@ -28,11 +28,11 @@
     <Filter Include="src\BHive\Core">
       <UniqueIdentifier>{E22BD88B-CEF9-CB91-B78D-3CB8A3FAA7F6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\BHive\Core\Events">
+      <UniqueIdentifier>{86652D35-F2D1-E82F-BBC5-808D27F10A98}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\BHive\Core\Math">
       <UniqueIdentifier>{FB4D5713-67AF-3421-F01C-7BD35C7D6BE0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Core\Reflection">
-      <UniqueIdentifier>{5C7186D7-C833-BA61-11E4-48EE7DE5923F}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Core\Time">
       <UniqueIdentifier>{C0455B13-2CA7-3821-B514-7FD321756FE0}</UniqueIdentifier>
@@ -51,6 +51,9 @@
     </Filter>
     <Filter Include="src\BHive\Layers">
       <UniqueIdentifier>{C9A897F6-B5A1-B648-DED3-9BCDCA2B9654}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\BHive\Managers">
+      <UniqueIdentifier>{677E6FCD-5362-3023-BCC2-2A76A8C51AA5}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\BHive\Object">
       <UniqueIdentifier>{90FFA0FD-7CF8-BF4F-A52A-A5D491829F5B}</UniqueIdentifier>
@@ -96,9 +99,6 @@
     </Filter>
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\BHive\Core\Events">
-      <UniqueIdentifier>{9d19359c-ee68-4992-b53f-7e5d08e9b0ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Core\Event.h">
       <Filter>src\BHive\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Core\Events\EventDelegate.h">
+      <Filter>src\BHive\Core\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Core\IDGenerator.h">
       <Filter>src\BHive\Core</Filter>
@@ -219,6 +222,9 @@
     <ClInclude Include="src\BHive\Debug\Instrumentor.h">
       <Filter>src\BHive\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\EventMacros.h">
+      <Filter>src\BHive</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Interfaces\Interface.h">
       <Filter>src\BHive\Interfaces</Filter>
     </ClInclude>
@@ -227,6 +233,12 @@
     </ClInclude>
     <ClInclude Include="src\BHive\Layers\ImGuiLayer.h">
       <Filter>src\BHive\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Managers\AssetLoader.h">
+      <Filter>src\BHive\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Managers\AssetManagers.h">
+      <Filter>src\BHive\Managers</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Object\Actor.h">
       <Filter>src\BHive\Object</Filter>
@@ -270,6 +282,9 @@
     <ClInclude Include="src\BHive\Renderer\GraphicsContext.h">
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\BHive\Renderer\Mesh.h">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\BHive\Renderer\RenderCommands.h">
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
@@ -286,6 +301,9 @@
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Renderer\Texture.h">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BHive\Renderer\Vertex.h">
       <Filter>src\BHive\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\BHive\Renderer\VertexArray.h">
@@ -1386,15 +1404,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\BHive\EventMacros.h" />
-    <ClInclude Include="src\BHive\Managers\AssetManagers.h" />
-    <ClInclude Include="src\BHive\Managers\AssetLoader.h" />
-    <ClInclude Include="src\BHive\Core\Events\EventDelegate.h">
-      <Filter>src\BHive\Core\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BHive\Renderer\Mesh.h">
-      <Filter>src\BHive\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BHive\BHivePCH.cpp">
@@ -1454,6 +1463,12 @@
     <ClCompile Include="src\BHive\Layers\ImGuiLayer.cpp">
       <Filter>src\BHive\Layers</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Managers\AssetLoader.cpp">
+      <Filter>src\BHive\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BHive\Managers\AssetManagers.cpp">
+      <Filter>src\BHive\Managers</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Object\Actor.cpp">
       <Filter>src\BHive\Object</Filter>
     </ClCompile>
@@ -1490,6 +1505,9 @@
     <ClCompile Include="src\BHive\Renderer\Buffer.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Renderer\Mesh.cpp">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Renderer\RenderCommands.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
@@ -1508,6 +1526,9 @@
     <ClCompile Include="src\BHive\Renderer\Texture.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\BHive\Renderer\Vertex.cpp">
+      <Filter>src\BHive\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\BHive\Renderer\VertexArray.cpp">
       <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
@@ -1519,10 +1540,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BHive\Managers\AssetLoader.cpp" />
-    <ClCompile Include="src\BHive\Renderer\Mesh.cpp">
-      <Filter>src\BHive\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

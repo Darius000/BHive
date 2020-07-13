@@ -15,6 +15,7 @@ namespace BHive
 		BString ToString() const;
 
 	public:
+		Color operator=(const Color& other) const;
 		bool operator==(const Color& col);
 		void operator+=(const Color& col);
 		uint8* const operator*();
@@ -38,13 +39,14 @@ namespace BHive
 
 	public:
 		LinearColor();
-		LinearColor(float color, float A = MAX_COLOR);
-		LinearColor(float R, float G, float B, float A = MAX_COLOR);
+		LinearColor(float color, float A = MAX_LINEARCOLOR);
+		LinearColor(float R, float G, float B, float A = MAX_LINEARCOLOR);
 
 		void Clamp();
 		BString ToString() const;
 
 	public:
+		LinearColor operator=(const LinearColor& other);
 		bool operator==(const LinearColor& col);
 		void operator+=(const LinearColor& col);
 		float* const operator*();

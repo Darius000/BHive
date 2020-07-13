@@ -34,11 +34,11 @@ namespace BHive
 
 	void Triangle::CreatePrimitive()
 	{
-		std::vector<float> m_Vertices =
+		std::vector<FVertex> m_Vertices =
 		{
-			-m_Width / 2.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-			m_Width / 2.0f, 0.0f, .0f, 1.0f, 0.0f, 0.0f,  1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-			0.0f, m_Height, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f, 1.0f, 0.0f, 0.0f, -1.0f
+			FVertex({-m_Width / 2.0f, 0.0f, 0.0f},	{1.0f, 0.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({m_Width / 2.0f, 0.0f, 0.0f},	{1.0f, 0.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({0.0f, m_Height, 0.0f},			{1.0f, 0.0f, 0.0f},		{0.5f, 1.0f},	{0.0f, 0.0f, 1.0f})
 		};
 
 		std::vector<uint32> m_Indices =
