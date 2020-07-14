@@ -14,6 +14,6 @@ bin-int/
 *.user
 BHive/BHive/vendor/imgui/
 BHive/BHive/vendor/spdlog/
-Sandbox/Assets/Import/
+Sandbox/Import/
 Profiles/
 
