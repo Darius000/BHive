@@ -3,12 +3,12 @@
 .vs/
 bin/
 bin-int/
-.sln
-.vcxproj
+*.sln
+*.vcxproj
 
 
 #files
-.json
+*.json
 
 *.user
 BHive/BHive/vendor/imgui
