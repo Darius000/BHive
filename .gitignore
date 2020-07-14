@@ -3,6 +3,8 @@
 .vs/
 bin/
 bin-int/
+.sln
+.vcxproj
 
 
 #files

@@ -31,7 +31,7 @@ void SandBox2D::OnAttach()
 	triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
 	triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
 
-	BHive::Ref<BHive::FMesh> GrenadeMesh = BHive::LoadFromFile("Assets/Import/Meshes/Grenades.obj");
+	BHive::Ref<BHive::FMesh> GrenadeMesh = BHive::LoadFromFile("Import/Meshes/Grenades.obj");
 	BHive::RenderComponent* Grenades = actor0->AddComponent<BHive::RenderComponent>();
 	Grenades->SetMesh(GrenadeMesh);
 	Grenades->SetShader(BHive::ShaderLibrary::Get("Default"));
