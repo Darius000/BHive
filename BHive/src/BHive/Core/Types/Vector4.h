@@ -151,7 +151,7 @@ namespace BHive
 	{
 		if (index <= 0) return x;
 		else if (index == 1) return y;
-		else if (index == 1) return z;
+		else if (index == 2) return z;
 		else return w;
 	}
 

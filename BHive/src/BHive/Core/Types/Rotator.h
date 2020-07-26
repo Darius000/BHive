@@ -4,7 +4,7 @@
 
 namespace BHive
 {
-	enum EAxis
+	enum class EAxis
 	{
 		X,
 		Y,

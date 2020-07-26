@@ -6,7 +6,6 @@
 #include "Types/Vector3.h"
 #include "Types/Vector4.h"
 #include "Types/Rotator.h"
-#include "Types/Matrix.h"
 #include "Types/Transform.h"
 #include "Types/Color.h"
 

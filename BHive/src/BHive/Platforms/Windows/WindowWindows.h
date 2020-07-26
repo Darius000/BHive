@@ -15,8 +15,8 @@ namespace BHive
 
 		void OnUpdate() override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width;  };
-		inline unsigned int GetHeight() const override { return m_Data.Height; };
+		inline uint32 GetWidth() const override { return m_Data.Width;  };
+		inline uint32 GetHeight() const override { return m_Data.Height; };
 
 		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; };
 		void SetVSync(bool enabled) override;
@@ -40,7 +40,7 @@ namespace BHive
 		struct WindowData
 		{
 			BName Title;
-			unsigned int Width, Height;
+			uint32 Width, Height;
 			bool VSync;
 
 			EventCallbackFn EventCallback;

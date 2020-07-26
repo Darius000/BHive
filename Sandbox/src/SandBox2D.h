@@ -15,6 +15,8 @@ public:
 
 private:
 	BHive::Ref<BHive::PerspectiveCameraController> m_OrthoCameraController;
+	BHive::Plane* m_Plane = nullptr;
 	BHive::Ref<BHive::Texture2D> m_Texture;
 	BHive::Ref<BHive::Texture2D> m_Texture2;
+	BHive::Triangle* triangle = nullptr;
 };

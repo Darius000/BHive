@@ -86,11 +86,12 @@ namespace BHive
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
-		case RendererAPI::API::OpenGL: 
+		case RendererAPI::API::OpenGL: {
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, path)); 
 			TextureManager::Add(TextureName, tex); 
-			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
+		}
+		case RendererAPI::API::DirectX: break;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");
@@ -102,11 +103,12 @@ namespace BHive
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
-		case RendererAPI::API::OpenGL:
+		case RendererAPI::API::OpenGL:{
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, width, height, internalFormat, dataFormat, data)); 
 			TextureManager::Add(TextureName, tex);
-			BH_CORE_TRACE("Texture Loaded, {0}", tex->GetName()); 
 			return tex;
+		}
+		case RendererAPI::API::DirectX: break;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");

@@ -28,6 +28,8 @@ namespace BHive
 
 		uint32 GetHeight() const  {return m_Height; }
 
+		virtual uint32 GetRendererID() const = 0;
+
 		FPixelData GetData() const  { return PixelData; };
 
 		WinPath GetExternalFilePath() const { return m_Path; }

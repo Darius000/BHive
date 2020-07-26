@@ -36,9 +36,9 @@ namespace BHive
 
 	void Rotator::NormalizeAxis(EAxis axis)
 	{
-		if (axis == X) roll = MathLibrary::ModuloAngle(roll, 360.0f); return;
-		if (axis == Y) yaw = MathLibrary::ModuloAngle(yaw, 360.0f); return;
-		if (axis == Z) pitch = MathLibrary::ModuloAngle(pitch, 360.0f); return;
+		if (axis == EAxis::X) {roll = MathLibrary::ModuloAngle(roll, 360.0f); return;}
+		if (axis == EAxis::Y) {yaw = MathLibrary::ModuloAngle(yaw, 360.0f); return;}
+		if (axis == EAxis::Z) {pitch = MathLibrary::ModuloAngle(pitch, 360.0f); return;}
 	}
 
 	bool Rotator::IsNearlyZero(float tolerance)
@@ -63,8 +63,8 @@ namespace BHive
 
 	float Rotator::GetAxis(EAxis axis) const
 	{
-		if (axis == X) return roll;
-		if (axis == Y) return yaw;
+		if (axis == EAxis::X) return roll;
+		if (axis == EAxis::Y) return yaw;
 		return pitch;
 	}
 

@@ -119,7 +119,7 @@ namespace BHive
 				MeshFile.close();
 			}
 		}
-		catch (std::ifstream::failure exception)
+		catch (std::ifstream::failure& exception)
 		{
 			BH_CORE_ERROR("ERROR {1}{0}", *Path, exception.what());
 		}

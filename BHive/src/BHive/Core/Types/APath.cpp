@@ -5,7 +5,7 @@
 namespace BHive
 {
 	WinPath::WinPath()
-		:m_Name(nullptr), m_Ext(nullptr)
+		:m_Name(nullptr), m_Ext(nullptr), m_Directory(false)
 	{
 		m_Path = Make_Scope<ANSICHAR[]>(0);
 		m_Length = 0;

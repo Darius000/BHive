@@ -11,10 +11,11 @@ namespace BHive
 	class BHive_API Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "BHive App");
 		virtual ~Application();
 
 		void Run();
+		void Close();
 
 		void OnEvent(Event& e);
 
@@ -25,6 +26,7 @@ namespace BHive
 
 		static inline Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
+		inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
