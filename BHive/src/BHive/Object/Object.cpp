@@ -10,7 +10,7 @@ namespace BHive
 	{
 
 #ifdef BH_DEBUG
-		BH_CORE_TRACE("Name:{0} ; ID:{1}", GetClass(), m_ObjectID);
+		//BH_CORE_TRACE("Name:{0} ; ID:{1}", GetClass(), m_ObjectID);
 #endif
 
 		OnSelectedEvent.AddBinding(BIND_EVENT_ONE_PARAM(Object::OnSelected));

@@ -52,7 +52,7 @@ namespace BHive
 		float m_AspectRatio = 16.0f / 9.0f;
 		float m_CameraRotation = 0.0f;
 		float m_RotationSpeed = 1.0f;
-		float m_CameraSpeed = 1.0f;
+		float m_CameraSpeed = 0.5f;
 		bool m_Rotation;
 		bool m_bLeftMouseButtonPressed = false;
 		

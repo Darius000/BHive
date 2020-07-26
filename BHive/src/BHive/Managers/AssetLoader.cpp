@@ -16,7 +16,7 @@ namespace BHive
 		auto& it = fs::directory_iterator(*path);
 		if (it->exists())
 		{
-			BH_CORE_TRACE("found directory: {0} ", *path);
+			//BH_CORE_TRACE("found directory: {0} ", *path);
 
 			for (auto& sub : it)
 			{
@@ -28,7 +28,7 @@ namespace BHive
 
 	void AssetLoader::LoadFile(const WinPath& filepath)
 	{
-		BH_CORE_TRACE("found file: {0}", *filepath);
+		//BH_CORE_TRACE("found file: {0}", *filepath);
 
 		BString ext = filepath.GetExtension();
 		auto& it = std::find(m_TexExts.begin(), m_TexExts.end(), ext);
@@ -39,7 +39,7 @@ namespace BHive
 		}
 		else if (it != m_TexExts.end())
 		{
-			Texture2D::Create(BString(filepath.GetName()) + filepath.GetExtension(), filepath);
+			Texture2D::Create(BString(filepath.GetName()), filepath);
 		}
 	}
 

@@ -8,10 +8,10 @@ namespace BHive
 	struct WindowProps
 	{
 		BName Title;
-		unsigned int Width;
-		unsigned int Height;
+		uint32 Width;
+		uint32 Height;
 
-		WindowProps(const BName& title = "BHive Engine", unsigned int width = 1280, unsigned int height = 720)
+		WindowProps(const BName& title = "BHive Engine", uint32 width = 1280, uint32 height = 720)
 			:Title(title), Width(width), Height(height)
 		{
 
@@ -28,8 +28,8 @@ namespace BHive
 
 		virtual void OnUpdate() = 0;
 
-		virtual unsigned int GetWidth() const = 0;
-		virtual unsigned int GetHeight() const = 0;
+		virtual uint32 GetWidth() const = 0;
+		virtual uint32 GetHeight() const = 0;
 		float GetAspectRatio() { return (float)GetWidth() / (float)GetHeight();};
 
 		virtual void SetEventCallback(const EventCallbackFn& callback) = 0;

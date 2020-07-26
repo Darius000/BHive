@@ -6,29 +6,29 @@ namespace BHive
 	{
 		#define PI 22.0f/7.0f
 
-		template<typename T> inline T const& Clamp(T const& value, T const& min, T const& max);
-		template<typename T> inline T const Normalize(T const& value, T const& min, T const& max);
-		template<typename T> inline T const Absolute(T const& value);
-		template<typename T> inline T const Lerp(T const& v0, T const& v1, T const& t);
-		template<typename T> inline T const ToRadians(T const& degrees);
-		template<typename T> inline T const ToDegrees(T const& radians);
-		template<typename T> inline T const Modulo(T const& x, T const& y);
-		template<typename T> inline T const ModuloAngle(T& x, T const& y);
-		template<typename T> inline T const ClampAngle(T const& angle, T const& min, T const& max);
-		template<typename T> inline T const Increment(T& x, T const& amount);
-		template<typename T> inline T const Decrement(T& x, T const& amount);
+		template<typename T> inline const T& Clamp( const T& value, const T& min,  const T& max);
+		template<typename T> inline const T  Normalize( const T& value,  const T& min,  const T& max);
+		template<typename T> inline const T  Absolute( const T& value);
+		template<typename T> inline const T  Lerp(const T& v0,  const T& v1,  const T& t);
+		template<typename T> inline const T  ToRadians(const T& degrees);
+		template<typename T> inline const T  ToDegrees(const T& radians);
+		template<typename T> inline const T  Modulo(const T& x, const T& y);
+		template<typename T> inline const T  ModuloAngle(T& x, const T& y);
+		template<typename T> inline const T  ClampAngle(const T& angle, const T& min, const T& max);
+		template<typename T> inline const T  Increment(T& x, const T& amount);
+		template<typename T> inline const T  Decrement(T& x, const T& amount);
 		template<typename T> inline T Min(T  a, T  b);
 		template<typename T> inline T Max(T  a, T  b);
-		template<typename T> inline bool const IsInfinte(T const& a);
-		template<typename T> inline bool const IsUndefinded(T const& a);
+		template<typename T> inline bool const IsInfinte( const T& a);
+		template<typename T> inline bool const IsUndefinded( const T& a);
 
 		//inline Vector2 const ClampVector2(const Vector2 & value, const Vector2 &min, const Vector2 &max);
 		//inline Vector3 const ClampVector3(const Vector3 & value, const Vector3 &min, const Vector3 &max);
 		//inline Rotator const ClampRotator(const Rotator & value, const Rotator &min, const Rotator &max);
 
-		template<typename T> inline Vector2<T> const LerpVector2(const Vector2<T> &v0, const Vector2<T> &v1, float const& t);
-		template<typename T> inline Vector3<T> const LerpVector3(const Vector3<T> &v0, const Vector3<T> &v1, float const& t);
-		inline Rotator const LerpRotator(const Rotator &r0, const Rotator &r1, float const& t);
+		template<typename T> inline  const Vector2<T> LerpVector2(const Vector2<T>& v0, const Vector2<T>& v1, const float& t);
+		template<typename T> inline  const Vector3<T> LerpVector3(const Vector3<T>& v0, const Vector3<T>& v1, const float& t);
+		inline const Rotator LerpRotator(const Rotator &r0, const Rotator &r1,  const float& t);
 		inline float Cos(float radians);
 		inline float Sin(float radians);
 		//inline Color const Lerp(const Color &v, const Color &min, const Color &max);

@@ -24,10 +24,10 @@ namespace BHive
 
 	void Color::Clamp()
 	{
-		MathLibrary::Clamp(r, (uint8)0, (uint8)255);
-		MathLibrary::Clamp(g, (uint8)0, (uint8)255);
-		MathLibrary::Clamp(b, (uint8)0, (uint8)255);
-		MathLibrary::Clamp(a, (uint8)0, (uint8)255);
+		r = MathLibrary::Clamp(r, (uint8)0, (uint8)255);
+		g = MathLibrary::Clamp(g, (uint8)0, (uint8)255);
+		b = MathLibrary::Clamp(b, (uint8)0, (uint8)255);
+		a = MathLibrary::Clamp(a, (uint8)0, (uint8)255);
 	}
 
 	BString Color::ToString() const
@@ -79,10 +79,10 @@ namespace BHive
 
 	void LinearColor::Clamp()
 	{
-		MathLibrary::Clamp(r, 0.0f, 1.0f);
-		MathLibrary::Clamp(g, 0.0f, 1.0f);
-		MathLibrary::Clamp(b, 0.0f, 1.0f);
-		MathLibrary::Clamp(a, 0.0f, 1.0f);
+		r = MathLibrary::Clamp(r, 0.0f, 1.0f);
+		g = MathLibrary::Clamp(g, 0.0f, 1.0f);
+		b = MathLibrary::Clamp(b, 0.0f, 1.0f);
+		a = MathLibrary::Clamp(a, 0.0f, 1.0f);
 	}
 
 	BString LinearColor::ToString() const
@@ -107,7 +107,7 @@ namespace BHive
 
 	LinearColor::operator FVector4() const
 	{
-		return (r, g, b, a);
+		return FVector4(r, g, b, a);
 	}
 
 	void LinearColor::operator+=(const LinearColor& col)

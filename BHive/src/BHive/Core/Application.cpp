@@ -17,13 +17,13 @@ namespace BHive
 {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 
 		BH_CORE_ASSERT(!s_Instance, "Application Already Exists!");
 		s_Instance = this;
 
-		m_Window = Scope<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create(WindowProps(name)));
 		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
 
 		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
@@ -97,7 +97,7 @@ namespace BHive
 	{
 		BH_PROFILE_FUNCTION();
 
-		ActorManager::Start();
+		//ActorManager::Start();
 
 		while (m_Running)
 		{
@@ -110,7 +110,7 @@ namespace BHive
 					layer->OnUpdate(*m_Time);
 				}
 
-				ActorManager::Update(*m_Time);
+				//ActorManager::Update(*m_Time);
 			}
 
 			m_ImGuiLayer->Begin();
@@ -122,8 +122,14 @@ namespace BHive
 
 			m_Window->OnUpdate();
 
-			ObjectManager::CheckPendingDestroy();
+			//ObjectManager::CheckPendingDestroy();
 		}
+	}
+
+
+	void Application::Close()
+	{
+		m_Running = false;
 	}
 
 	bool Application::OnWindowClosed(WindowCloseEvent& e)

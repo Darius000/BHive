@@ -64,40 +64,19 @@ namespace BHive
 		ImGui::DestroyContext();
 	}
 
+
 	void ImGuiLayer::OnImGuiRender()
-	{	
-		if (ImGui::BeginMainMenuBar())
+	{
+
+	}
+
+	void ImGuiLayer::OnEvent(Event& e)
+	{
+		if (!m_BlockEvents)
 		{
-			if (ImGui::BeginMenu("Menu"))
-			{
-				ShowMenuItems();
-				ImGui::EndMenu();
-			}
-
-			if (ImGui::BeginMenu("Windows"))
-			{
-				ShowWindowItems();
-				ImGui::EndMenu();
-			}
-
-			ImGui::EndMainMenuBar();
-		}
-
-		if (m_ShowStyleEditor)
-		{
-			ImGui::Begin("Style Editor", &m_ShowStyleEditor);
-			ImGui::ShowStyleEditor(m_Style.get());
-			ImGui::End();
-		}
-
-		if (m_ShowDemoWindow)
-		{
-			ImGui::ShowDemoWindow(&m_ShowDemoWindow);
-		}
-
-		if (m_ShowProfiler)
-		{
-			ShowProfiler(&m_ShowProfiler);
+			ImGuiIO& io = ImGui::GetIO();
+			e.m_Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			e.m_Handled |= e.IsInCategory(EventCategoryKeyBoard) & io.WantCaptureKeyboard;
 		}
 	}
 
@@ -126,52 +105,4 @@ namespace BHive
 			glfwMakeContextCurrent(backup_current_context);
 		}
 	}
-
-	void ImGuiLayer::ShowMenuItems()
-	{
-		ImGui::MenuItem("(dummy menu)", nullptr, false, false);
-		if (ImGui::MenuItem("New")) {}
-		if (ImGui::MenuItem("Open", "Ctrl+O")) {}
-	
-		if (ImGui::MenuItem("Save", "Ctrl+S")) {}
-		if (ImGui::MenuItem("Save As..")) {}
-	}
-
-	void ImGuiLayer::ShowWindowItems()
-	{
-		if (ImGui::MenuItem("Style Editor"))
-		{
-			m_ShowStyleEditor = true;
-		}
-
-		if (ImGui::MenuItem("Demo Window"))
-		{
-			m_ShowDemoWindow = true;
-		}
-
-		if (ImGui::MenuItem("Profiler"))
-		{
-			m_ShowProfiler = true;
-		}
-	}
-
-	void ImGuiLayer::ShowProfiler(bool *open)
-	{
-		/*if (ImGui::Begin("Profiler", open))
-		{
-			for (auto& result : InstrumentionTimer::ProfilerResults)
-			{
-				const char* label = Format("%.3fms %s", result.m_Duration, result.m_Name);
-				ImGui::Text(label, result.m_Duration);
-			}
-
-			InstrumentionTimer::ProfilerResults.clear();
-
-			ImGui::End();
-		}*/
-	}
-
-	/*bool ImGuiLayer::m_ShowStyleEditor = false;
-	bool ImGuiLayer::m_ShowDemoWindow = false;
-	bool ImGuiLayer::m_ShowProfiler = false;*/
 }

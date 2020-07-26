@@ -10,25 +10,18 @@ namespace BHive
 		ImGuiLayer();
 		~ImGuiLayer();
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
-		virtual void OnImGuiRender() override;
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnImGuiRender() override;
+		void OnEvent(Event& e) override; 
 
 		void Begin();
 		void End();
 
-	private:
-		void ShowMenuItems();
-		void ShowWindowItems();
-		void ShowProfiler(bool* open = (bool*)nullptr);
-
+		void BlockEvents(bool block) { m_BlockEvents = block;}
 	private:
 		float m_Time = 0.0f;
+		bool m_BlockEvents = true;
 		Scope<ImGuiStyle> m_Style;
-
-	private:
-		bool m_ShowStyleEditor = false;
-		bool m_ShowDemoWindow = false;
-		bool m_ShowProfiler = false;
 	};
 }

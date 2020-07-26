@@ -13,7 +13,7 @@ namespace BHive
 		m_Shader = ShaderLibrary::Get("Default");
 		m_Texture = TextureManager::Get("White");
 		
-		BH_CORE_TRACE("White tex use count {0}", m_Texture.use_count());
+		//BH_CORE_TRACE("White tex use count {0}", m_Texture.use_count());
 	}
 
 	RenderComponent::RenderComponent(const RenderComponent& other)

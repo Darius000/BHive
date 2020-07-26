@@ -78,7 +78,7 @@ namespace BHive
 	bool PerspectiveCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_ZoomLevel = e.GetYOffset() * m_ZoomSpeed;
-		BH_TRACE("Zoom Level: {0}", m_ZoomLevel * m_ZoomSpeed);
+		//BH_TRACE("Zoom Level: {0}", m_ZoomLevel * m_ZoomSpeed);
 
 		m_CameraPosition.z += m_ZoomLevel;
 		m_Camera->GetTransform().SetPosition(m_CameraPosition);
@@ -97,22 +97,21 @@ namespace BHive
 			m_CameraPosition.x -= m_CameraSpeed * DeltaMousePos.x * m_DeltaTime; 
 			m_CameraPosition.y += m_CameraSpeed * DeltaMousePos.y * m_DeltaTime;
 			m_Camera->GetTransform().SetPosition(m_CameraPosition);
-			BH_CORE_TRACE("mouse delta : {0}", DeltaMousePos.ToString());
+			//BH_CORE_TRACE("mouse delta : {0}", DeltaMousePos.ToString());
 		}
 
 		if (m_bLeftMouseButtonPressed)
 		{
 			//ADD ROTATION HERE
 
-			/*float WindowHeight	= (float)Application::Get().GetWindow().GetHeight();
-			float WindowWidth	= (float)Application::Get().GetWindow().GetWidth();
+			/*float WindowHeight = (float)Application::Get().GetWindow().GetHeight();
+			float WindowWidth = (float)Application::Get().GetWindow().GetWidth();
 			Vector2 MouseToCenterPos = Vector2(WindowHeight / 2.0f - MousePos.x, WindowWidth / 2.0f - MousePos.y);
-			m_Angles +=  MouseToCenterPos * m_RotationSpeed * m_DeltaTime;
-			Vector3 Direction = Vector3(cos(m_Angles.y) * sin(m_Angles.x),
-			sin(m_Angles.y),
-			cos(m_Angles.y) * cos(m_Angles.x));
+			BH_CORE_TRACE("{0}", FVector2::Normalize(MouseToCenterPos));
+			m_Angles +=  MouseToCenterPos.Normalize() * m_RotationSpeed * m_DeltaTime;
+			m_CameraPosition = m_CameraPosition *  Vector3(cos(m_Angles.x), 1.0f , sin(m_Angles.x));
 
-			m_Camera->GetTransform().SetPosition(m_CameraPosition + Direction);*/
+			m_Camera->GetTransform().SetPosition(m_CameraPosition);*/
 		}
 
 		return false;
@@ -125,7 +124,7 @@ namespace BHive
 		{
 			m_bMiddleMouseButtonPressed = true;
 
-			BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
+			//BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
 		}
 		else if(e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
 		{
@@ -142,7 +141,7 @@ namespace BHive
 		{
 			m_bMiddleMouseButtonPressed = false;
 
-			BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
+			//BH_CORE_TRACE("{0}", m_bMiddleMouseButtonPressed);
 		}
 		else if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
 		{

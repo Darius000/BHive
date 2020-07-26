@@ -94,7 +94,7 @@ namespace BHive
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, PixelData.m_DataFormat, GL_UNSIGNED_BYTE, PixelData.m_Data);
 
-		BH_CORE_ERROR("Name = {0}, R_ID = {1}", GetName(), m_RendererID);
+		//BH_CORE_ERROR("Name = {0}, R_ID = {1}", GetName(), m_RendererID);
 	}
 
 }

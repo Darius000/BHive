@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 namespace BHive
 {
 	template<typename T>
@@ -21,6 +23,7 @@ namespace BHive
 		static const Vector2 Zero(); 
 		static const Vector2 One(); 
 		static float GetAngle(const Vector2& a, const Vector2& b);
+		static Vector2 Normalize(Vector2& v);
 
 		Vector2 operator+(const Vector2& _other);
 		Vector2 operator-(const Vector2& _other);
@@ -37,13 +40,21 @@ namespace BHive
 		bool operator!=(const Vector2& _other);
 		const T* operator*() const;
 
+		friend std::ostream& operator<<(std::ostream& os, const Vector2& _vector2);
 		BString ToString() const { return Format("{ %f, %f}", x, y); }
 	};
 
 	template<typename T>
+	Vector2<T> Vector2<T>::Normalize(Vector2<T>& v)
+	{
+		float mag = v.GetMagnitude();
+		return v / mag;
+	}
+
+	template<typename T>
 	inline std::ostream& operator<<(std::ostream& os, const Vector2<T>& _vector2)
 	{
-		return os << _vector2.ToString();
+		return os << "{" << _vector2.x << "," << _vector2.y << "}";
 	}
 
 	template<typename T>

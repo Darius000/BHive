@@ -11,6 +11,7 @@ namespace BHive
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported"); return nullptr;
 		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(filePath);
+		case RendererAPI::API::DirectX: break;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");
@@ -23,6 +24,7 @@ namespace BHive
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported"); return nullptr;
 		case RendererAPI::API::OpenGL: return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+		case RendererAPI::API::DirectX: break;
 		}
 
 		BH_CORE_ASSERT(false, "Unknown API");

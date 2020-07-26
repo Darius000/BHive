@@ -13,6 +13,7 @@ namespace BHive
 		OpenGLTexture2D(BName TextureName, const WinPath& path);
 		virtual ~OpenGLTexture2D();
 
+		virtual uint32 GetRendererID() const override { return m_RendererID; }
 		virtual void Bind(uint32 slot = 0) const override;
 
 	protected:

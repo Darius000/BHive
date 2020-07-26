@@ -17,10 +17,13 @@ IncludeDir["Refl"] = "BHive/vendor/reflection/include"
 IncludeDir["ImGui"] = "BHive/vendor/imgui"
 IncludeDir["GLM"] = "BHive/vendor/glm/include"
 IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
+IncludeDir["entt"] = "BHive/vendor/entt/include"
 
-include "BHive/vendor/glfw"
-include "BHive/vendor/glad"
-include "BHive/vendor/imgui"
+group "Dependencies"
+    include "BHive/vendor/glfw"
+    include "BHive/vendor/glad"
+    include "BHive/vendor/imgui"
+group  ""
 
 project "BHive"
     location "BHive"
@@ -69,7 +72,8 @@ project "BHive"
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Refl}",
 		"%{IncludeDir.GLM}",
-		"%{IncludeDir.STB_Image}"
+		"%{IncludeDir.STB_Image}",
+        "%{IncludeDir.entt}"
     }
     
     --libdirs {"%{prj.name}/vendor/assimp/lib"}
@@ -130,13 +134,74 @@ project "Sandbox"
     includedirs
     {
         "BHive/vendor/spdlog/include",
-        "BHive/vendor/glm/include",
 		"BHive/vendor/imgui",
         "BHive/vendor/assimp/include",
         "BHive/vendor/glad/include",
         "BHive/vendor",
         "BHive/src",
-		"BHive/src/BHive"
+		"BHive/src/BHive",
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.GLM}"
+    }
+    
+    links
+    {
+        "BHive"
+    }
+
+    filter"system:windows"
+        systemversion "latest"
+
+        defines
+        {
+            "BH_PLATFORM_WINDOWS",
+        }
+        
+        prebuildcommands{ ("{COPY} %{prj.location}../BHive/vendor/assimp/dll/assimp-vc140-mt.dll %{cfg.targetdir}")}
+        
+        filter "configurations:Debug"
+            defines "BH_DEBUG"
+            runtime "Debug"
+            symbols "on"
+
+        filter "configurations:Release"
+            defines "BH_RELEASE"
+            runtime "Release"
+            optimize "on"
+
+        filter "configurations:Dist"
+            defines "BH_DIST"
+            runtime "Release"
+            optimize "on"
+
+project "BHive-Editor"
+    location "BHive-Editor"
+    kind "ConsoleApp"
+    language "C++"
+    cppdialect "C++17"
+    staticruntime "on"
+
+    targetdir ("bin/" ..outputdir.. "/%{prj.name}")
+    objdir ("bin-int/" ..outputdir.. "/%{prj.name}")
+
+    files
+    {
+        "%{prj.name}/src/**.h",
+        "%{prj.name}/src/**.cpp",
+		"%{prj.name}/Assets/**"
+    }
+
+    includedirs
+    {
+        "BHive/vendor/spdlog/include",
+		"BHive/vendor/imgui",
+        "BHive/vendor/assimp/include",
+        "BHive/vendor/glad/include",
+        "BHive/vendor",
+        "BHive/src",
+		"BHive/src/BHive",
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.GLM}"
     }
     
     links

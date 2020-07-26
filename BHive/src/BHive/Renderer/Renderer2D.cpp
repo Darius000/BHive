@@ -17,7 +17,7 @@ namespace BHive
 
 	void Renderer2D::Begin(const CameraComponent& camera)
 	{
-		RenderCommands::SetClearColor(BHive::LinearColor(.1f, .1f, .1f, 1.0f));
+		RenderCommands::SetClearColor(BHive::LinearColor(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommands::Clear();
 	}
 

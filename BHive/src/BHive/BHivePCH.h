@@ -26,6 +26,9 @@
 #include <thread>
 
 
+//----------SPDLOG---------
+#include "spdlog/fmt/ostr.h"
+
 //---------------GLM--------------
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -49,6 +52,7 @@
 #include "BHive/Core/Time/Time.h"
 #include "BHive/Core/Layer.h"
 #include "BHive/Core/Application.h"
+#include "BHive/Object/Entity.h"
 
 //#include <assimp/Importer.hpp>
 //#include <assimp/scene.h>
