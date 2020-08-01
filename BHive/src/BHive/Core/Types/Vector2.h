@@ -9,13 +9,14 @@ namespace BHive
 	{
 		struct Vector3;
 
-		Vector2():x(0), y(0){};
-		Vector2(T _x, T _y = (T)0.0f) :x(_x), y(_y) {};
+		Vector2():x((T)0), y((T)0){};
+		Vector2(T _x, T _y) :x(_x), y(_y) {};
 		Vector2(const Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
 		Vector2(Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
+		Vector2(const Vector2& other):x(other.x), y(other.y){};
 
-		union { float x, r; }; 
-		union { float y, g; };
+		union { T x, r; }; 
+		union { T y, g; };
 
 		float GetMagnitude() const; 
 		Vector2 Normalize(); 
@@ -39,6 +40,7 @@ namespace BHive
 		bool operator==(const Vector2& _other);
 		bool operator!=(const Vector2& _other);
 		const T* operator*() const;
+		T* operator*();
 
 		friend std::ostream& operator<<(std::ostream& os, const Vector2& _vector2);
 		BString ToString() const { return Format("{ %f, %f}", x, y); }
@@ -103,6 +105,12 @@ namespace BHive
 	float Vector2<T>::operator*(const Vector2& _other)
 	{
 		return (x * _other.x) + (y * _other.y);
+	}
+
+	template<typename T>
+	T* Vector2<T>::operator*()
+	{
+		return &x;
 	}
 
 	template<typename T>

@@ -4,7 +4,7 @@ namespace BHive
 {
 	namespace MathLibrary
 	{
-		#define PI 22.0f/7.0f
+		//#define PI 22.0f/7.0f
 
 		template<typename T> inline const T& Clamp( const T& value, const T& min,  const T& max);
 		template<typename T> inline const T  Normalize( const T& value,  const T& min,  const T& max);

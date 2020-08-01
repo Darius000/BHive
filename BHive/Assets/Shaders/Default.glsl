@@ -33,10 +33,16 @@ in vec4 v_Color;
 in vec2 v_TexCoord;
 in vec3 v_Normal;
 
-uniform vec4 u_Color;
-uniform sampler2D u_Texture;
+struct Material
+{
+	vec4 color;
+	sampler2D texture;
+};
+
+uniform Material material;
 
 void main()
 {
-	color = texture(u_Texture, v_TexCoord) * u_Color;
+	vec4 colorTexture = texture(material.texture, v_TexCoord);
+	color =  colorTexture * material.color;
 }

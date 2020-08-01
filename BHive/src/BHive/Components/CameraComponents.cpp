@@ -1,81 +1,70 @@
 #include "BHivePCH.h"
 #include "CameraComponents.h"
-#include "BHive/Renderer/Shader.h"
+
 
 namespace BHive
 {
-	CameraComponent::CameraComponent()
-		:m_ProjectionMatrix(1.0f), m_ViewMatrix(1.0f), m_ViewProjectionMatrix(1.0f)
+	CameraComponent* CameraSystem::m_ActiveCamera = nullptr;
+
+	CameraComponent::CameraComponent(Projection projection)
+		:m_Camera(projection)
 	{
-	
+		if (CameraSystem::m_ActiveCamera == nullptr)
+		{
+			SetPrimaryCamera(true);
+		}
 	}
 
-	void CameraComponent::OnTransformUpdated(const Transform& transform)
+	void CameraComponent::OnImGuiRender()
 	{
-		RecalulateViewMatrix(transform);
-		glm::mat4 VP = GetViewProjectionMatrix();
-		ShaderLibrary::UpdateShaderViewProjectionMatrices(VP); //TODO : change this
-	}
+		ImGui::Separator();
 
-	OrthographicCameraComponent::OrthographicCameraComponent()
-		:CameraComponent()
-	{
+		const char* projections = "Perspective\0Orthographic\0";
+		static int item = 0;
 
-	}
+		if (ImGui::Combo("Projection", &item, projections))
+		{
+			switch (item)
+			{
+			case 0:
+				m_Camera.m_ProjectionType = Projection::Perspective;
+				m_Camera.SetPerspective(m_Camera.m_PerspSettings);
+				break;
+			case 1:
+				m_Camera.m_ProjectionType = Projection::Orthographic;
+				m_Camera.SetOthographic(m_Camera.m_OrthoSettings);
+				break;
+			}
+		}
 
-	OrthographicCameraComponent::OrthographicCameraComponent(float left, float right, float bottom, float top)
-		:OrthographicCameraComponent()
-	{
-		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
+		if (m_Camera.m_ProjectionType == Projection::Perspective)
+		{
+			PerspectiveSettings settings = m_Camera.m_PerspSettings;
 
-	void OrthographicCameraComponent::SetProjection(float left, float right, float bottom, float top)
-	{
-		m_ProjectionMatrix = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
+			ImGui::Text("Camera Settings");
+			if (ImGui::InputFloat("FOV", &settings.FieldofView, .01f, 1.0f, 2) ||
+				ImGui::InputFloat2("Aspect Ratio", *settings.AspectRatio, 2) ||
+				ImGui::InputFloat("Near", &settings.Near, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Far", &settings.Far, .01f, 1.0f, 2))
+			{
+				m_Camera.SetPerspective(settings);
+			}
+		}
+		else
+		{
+			OrthographicSettings  settings = m_Camera.m_OrthoSettings;
 
-	void OrthographicCameraComponent::RecalulateViewMatrix(const Transform& transform)
-	{
-		glm::mat4 matrix = transform.GetMatrix();
-		m_ViewMatrix = glm::inverse(matrix);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix; //need to be this order
-	}
-
-	PerspectiveCameraComponent::PerspectiveCameraComponent()
-		:CameraComponent()
-	{
-
-	}
-
-	PerspectiveCameraComponent::PerspectiveCameraComponent(float fov, float aspect, float zNear, float zFar)
-		:PerspectiveCameraComponent()
-	{
-		m_ProjectionMatrix = glm::perspective(fov, aspect, zNear, zFar);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
-	
-
-	void PerspectiveCameraComponent::SetProjection(float fov, float aspect, float zNear, float zFar)
-	{
-		m_ProjectionMatrix = glm::perspective(glm::radians(fov), aspect, zNear, zFar);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
-
-	void PerspectiveCameraComponent::LookAt(FVector3 location)
-	{
-		FVector3 loc = GetTransform().GetPosition();
-		m_ViewMatrix = glm::lookAt(glm::vec3(loc.x, loc.y, loc.z), glm::vec3(location.x, location.y, location.z), glm::vec3(0.0f, 1.0f, 0.0f));
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-	}
-
-	void PerspectiveCameraComponent::RecalulateViewMatrix(const Transform& transform)
-	{
-		glm::mat4 matrix = transform.GetMatrix();
-		m_ViewMatrix = glm::inverse(matrix);
-		m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), 16.0f / 9.0f, .1f, 1000.0f);
-		m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+			ImGui::Separator();
+			if (ImGui::InputFloat("Top", &settings.Top, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Bottom", &settings.Bottom, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Left", &settings.Left, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Right", &settings.Right, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Near", &settings.Near, .01f, 1.0f, 2) ||
+				ImGui::InputFloat("Far", &settings.Far, .01f, 1.0f, 2))
+			{
+				m_Camera.SetOthographic(settings);
+			}
+		}
 	}
 
 }

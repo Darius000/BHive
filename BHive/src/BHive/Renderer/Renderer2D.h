@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RenderCommands.h"
-#include "BHive/Components/CameraComponents.h"
+#include "BHive/Renderer/Mesh.h"
 
 namespace BHive
 {
@@ -11,8 +11,11 @@ namespace BHive
 		static void Init();
 		static void ShutDown();
 
-		static void Begin(const CameraComponent& camera);
+		static void Begin();
 		static void End();
+
+		static Ref<Model> Plane(float width, float height);
+		static Ref<Model> Triangle(float width, float height);
 
 		static void Draw(const std::shared_ptr<VertexArray>& vertexArray);
 

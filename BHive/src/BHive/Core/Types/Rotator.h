@@ -43,7 +43,8 @@ namespace BHive
 		float operator[](unsigned int index);
 		bool operator==(const Rotator& r);
 		bool operator!=(const Rotator& r);
-
+		float* operator*();
+		const float* operator*() const;
 		static const Rotator Zero();
 	};
 

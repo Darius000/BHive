@@ -1,9 +1,10 @@
 #include "EditorLayer.h"
 
+
 namespace BHive
 { 
 EditorLayer::EditorLayer()
-		:Layer("EditorLayer"), triangle(nullptr), m_Plane(nullptr)
+		:Layer("EditorLayer")
 	{
 	
 	}
@@ -15,71 +16,54 @@ EditorLayer::EditorLayer()
 		fbSpec.Height = 720;
 		m_Framebuffer = BHive::FrameBuffer::Create(fbSpec);
 
-		Ref<PerspectiveCameraComponent> camera = std::make_shared<BHive::PerspectiveCameraComponent>(65.0f, (16.0f / 9.0f), .01f, 1000.f);
-		camera->GetTransform().SetPosition(0.0f, 0.0f, 1.0f);
-		m_OrthoCameraController = std::make_shared<BHive::PerspectiveCameraController>(camera);
-		//Texture2D::Create("CheckerMap", "Import/Textures/checkermap.png");
+		Scene* scene = SceneManager::CreateScene("Default");
+		SceneManager::SetActiveScene("Default");
 
-		m_Texture = BHive::TextureManager::Get("grasspng");
+		m_Texture = BHive::TextureManager::Get("folder");
 		m_Texture2 = BHive::TextureManager::Get("checkermap");
 
-		//BHive::TextureManager::PrintAssetNames();
+		Camera = scene->CreateEntity("Camera");
+		Camera.AddComponent<CameraComponent>(Projection::Perspective);
+		Camera.GetComponent<CameraComponent>().m_Camera.SetPerspective({35.0f, FVector2(16.0f , 9.0f), .01f, 1000.0f});
 
-		//BHive::Timer time2("Sandbox");
+		Ref<Model> Shotgun = Model::Import("Import/Meshes/Shotgun/Shotgun.obj");
+		Ref<Model> triangle = Renderer2D::Triangle(1.0f, 1.0f);
+		Ref<Model> plane = Renderer2D::Plane(1.0f, 1.0f);
 
-		BHive::Actor* actor0 = BHive::SpawnActor<BHive::Actor>("Actor 0", BHive::Transform(BHive::Vector3(0.0f, 0.0f,-.5f), BHive::Rotator(0.0f)));
-
-		m_Plane = actor0->AddComponent<BHive::Plane>();
-		m_Plane->SetShader(BHive::ShaderLibrary::Get("Default"));
-		m_Plane->SetTexture(m_Texture2);
-
+		
+		actor0 = scene->CreateEntity("Shotgun");
+		actor0.AddComponent<RenderComponent>();
+		TransformComponent* transformComponent = &actor0.GetComponent<TransformComponent>();
+		transformComponent->m_Transform.SetPosition(FVector3(0.0f, 0.0f , 0.0f));
 	
-		triangle = actor0->AddComponent<BHive::Triangle>();
-		triangle->SetShader(BHive::ShaderLibrary::Get("Default"));
-		triangle->GetTransform().SetPosition(1.0f, 2.0f, -.5f);
-		triangle->SetTexture(m_Texture2);
-
-		/*BHive::Ref<BHive::FMesh> GrenadeMesh = BHive::LoadFromFile("Import/Meshes/Grenades.obj");
-		BHive::RenderComponent* Grenades = actor0->AddComponent<BHive::RenderComponent>();
-		Grenades->SetMesh(GrenadeMesh);
-		Grenades->SetShader(BHive::ShaderLibrary::Get("Default"));
-		Grenades->GetShader()->SetFloat4("u_Color", 1.0f, 0.0f, 1.0f, 1.0f);
-		Grenades->GetTransform().SetPosition(1.0f, -2.0f, -.5f);*/
-		//Grenades->SetTexture(m_Texture);
-
-		//BH_TRACE("{0}", m_Texture.use_count());
-
-		BHive::ConstructObject<BHive::Object>("1st Object");
-		BHive::ConstructObject<BHive::Object>("2nd Object");
-
-		//BHive::Entity* E0 = scene0->AddEntity<BHive::Entity>();
-
-		//BHive::Ref<BHive::Entity> square = std::shared_ptr<BHive::Entity>(E0);
-
-		//BHive::Plane* T1 = square->AddComponent<BHive::Plane>();
-		//T1->SetShader(shader);
-		//T1->SetTexture(m_Texture);
-
-		//BHive::Renderer2D::AddScene(scene0);
-
-		BHive::ActorManager::Start();
-
+		auto& renderComponent = actor0.GetComponent<RenderComponent>();
+		renderComponent.m_Model = Shotgun;
+		renderComponent.m_Texture = m_Texture2;
+			
+		Entity tri = scene->CreateEntity("Triangle");
+		auto& renderComponent1 = tri.AddComponent<RenderComponent>();
+		renderComponent1.m_Model = triangle;
+		renderComponent1.m_Texture = m_Texture2;
+	
+		Entity pl = scene->CreateEntity("Plane");
+		auto& rendercomponent2 = pl.AddComponent<RenderComponent>();
+		rendercomponent2.m_Model = plane;
+		rendercomponent2.m_Texture = m_Texture2;
+	
 
 		BHive::Renderer2D::Init();
 	}
 
-	void EditorLayer::OnUpdate(const BHive::Time& time)
+	void EditorLayer::OnUpdate(const Time& time)
 	{
 		BH_PROFILE_FUNCTION();
 
 		m_Framebuffer->Bind();
 
-		if(m_ViewportFocused)
-			m_OrthoCameraController->OnUpdate(time);
+		m_DeltaTime = time.GetDeltaTime();
 
-		BHive::Renderer2D::Begin(*m_OrthoCameraController->GetCamera().get());
-		BHive::ActorManager::Update(time);
-		BHive::ObjectManager::CheckPendingDestroy();
+		BHive::Renderer2D::Begin();	
+		SceneManager::GetActiveScene()->OnUpdate(time);		
 		BHive::Renderer2D::End();
 
 		m_Framebuffer->UnBind();
@@ -139,12 +123,21 @@ EditorLayer::EditorLayer()
 			ImGui::EndMenuBar();
 		}
 
-		ImGui::Begin("Transform");
-		BHive::Vector3<float> Position = triangle->GetTransform().GetPosition();
-		if (ImGui::InputFloat3("Position", *Position, 2))
+		ImGui::Begin("Details Panel");
+
 		{
-			triangle->GetTransform().SetPosition(Position);
+			actor0.OnImGuiRender();
+			actor0.GetComponent<TransformComponent>().OnImGuiRender(actor0.GetName());
+			actor0.GetComponent<RenderComponent>().OnImguiRender();
 		}
+
+		{
+			Camera.OnImGuiRender();
+			Camera.GetComponent<TransformComponent>().OnImGuiRender(Camera.GetName());
+			Camera.GetComponent<CameraComponent>().OnImGuiRender();
+			//CameraSystem::m_ActiveCamera->m_Camera.OnImguiRender();
+		}
+
 		ImGui::End();
 
 		//Viewport Window
@@ -172,18 +165,93 @@ EditorLayer::EditorLayer()
 		ImGui::PopStyleVar();
 
 		ImGui::End();
+
+		ImGui::Begin("Content Browser");
+		for (const auto& texture : TextureManager::GetAssets())
+		{
+			ImGui::ImageButton((void*)texture.second->GetRendererID(), ImVec2(100.0f, 100.0f), ImVec2(0, 1), ImVec2(1, 0), 0, ImVec4(0,0,0,0));
+		}
+		ImGui::End();
+
+		ImGui::ShowDemoWindow();
 	}
 
-	void EditorLayer::OnEvent(BHive::Event& event)
+	void EditorLayer::OnEvent(Event& event)
 	{
-		if(m_ViewportFocused)
-			m_OrthoCameraController->OnEvent(event);
+		if (m_ViewportFocused)
+		{
+			EventDispatcher dispatcher(event);
+			dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseScrolled));
+			dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseMoved));
+			dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonPressed));
+			dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonReleased));
+		}
+	}
+
+
+	bool EditorLayer::OnMouseScrolled(MouseScrolledEvent& e)
+	{
+		m_ZoomLevel = e.GetYOffset() * m_ZoomSpeed;
+		m_CameraPosition.z += m_ZoomLevel;
+		Camera.GetComponent<TransformComponent>().m_Transform.SetPosition(m_CameraPosition);
+		return false;
+	}
+
+
+	bool EditorLayer::OnMouseMoved(MouseMovedEvent& e)
+	{
+		FVector2 MousePos = FVector2(e.GetX(), e.GetY());
+		FVector2 DeltaMousePos = MousePos - m_OldMousePos;
+		m_OldMousePos = MousePos;
+		DeltaMousePos.Normalize();
+
+		if (m_bMiddleMouseButtonPressed)
+		{
+			m_CameraPosition.x -= m_CameraSpeed * DeltaMousePos.x * m_DeltaTime;
+			m_CameraPosition.y += m_CameraSpeed * DeltaMousePos.y * m_DeltaTime;
+			Camera.GetComponent<TransformComponent>().m_Transform.SetPosition(m_CameraPosition);
+		}
+
+		if (m_bLeftMouseButtonPressed)
+		{
+			//ADD ROTATION HERE
+		}
+
+		return false;
+	}
+
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_MIDDLE)
+		{
+			m_bMiddleMouseButtonPressed = true;
+		}
+		else if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		{
+			m_bLeftMouseButtonPressed = true;
+		}
+
+		return false;
+	}
+
+
+	bool EditorLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
+	{
+		if (e.GetMouseButton() == BH_MOUSE_BUTTON_MIDDLE)
+		{
+			m_bMiddleMouseButtonPressed = false;
+		}
+		else if (e.GetMouseButton() == BH_MOUSE_BUTTON_LEFT)
+		{
+			m_bLeftMouseButtonPressed = false;
+		}
+
+		return false;
 	}
 
 	void EditorLayer::OnDetach()
 	{
-		BHive::ActorManager::Shutdown();
-
 		BHive::Renderer2D::ShutDown();
 	}
 

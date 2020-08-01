@@ -9,41 +9,46 @@ namespace BHive
 	{
 	public:
 		Entity();
-		Entity(entt::entity entityhandle, Scene* scene);
+		Entity(const std::string& name, entt::entity entityhandle, Scene* scene);
 		Entity(const Entity& other) = default;
+		
+		void OnImGuiRender();
 
 		template<typename T, typename... Args>
-		T* AddComponent(Args&&... args)
+		T& AddComponent(Args&&... args)
 		{
-			BH_CORE_ASSERT(HasComponent<T>(), "Component Already Exists!");
+			BH_CORE_ASSERT(!HasComponent<T>(), "Component Already Exists!");
 
-			m_Scene.m_Registry.emplace(m_EntityHandle, std::forward<Args>(args));
+			return m_Scene->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
 		}
 
 		template<typename T>
-		T* GetComponent()
+		T& GetComponent()
 		{
-			BH_CORE_ASSERT(!HasComponent<T>(), "Component Doesn't Exists!");
+			BH_CORE_ASSERT(HasComponent<T>(), "Component Doesn't Exists!");
 
-			return m_Scene->m_Registry.get<T>(m_EntityHandle);
+			return m_Scene->GetRegistry().get<T>(m_EntityHandle);
 		}
 
 		template<typename T>
 		bool HasComponent()
 		{
-			return m_Scene->m_Registry.has<T>(m_EntityHandle);
+			return m_Scene->GetRegistry().has<T>(m_EntityHandle);
 		}
 
 		template<typename T>
 		void RemoveComponent()
 		{
-			BH_CORE_ASSERT(!HasComponent<T>(), "Component Doesn't Exists!");
+			BH_CORE_ASSERT(HasComponent<T>(), "Component Doesn't Exists!");
 
-			m_Scene->m_Registry.remove<T>(m_EntityHandle);
+			m_Scene->GetRegistry().remove<T>(m_EntityHandle);
 		}
 
+		std::string& GetName() {return m_Name; }
+
 	private:
-		entt::entity m_EntityHandle = {entt::null};
+		std::string m_Name;
+		entt::entity m_EntityHandle {entt::null};
 		Scene* m_Scene = nullptr;
 	};
 }

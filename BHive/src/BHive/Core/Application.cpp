@@ -6,8 +6,6 @@
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Renderer/RenderCommands.h"
 #include "BHive/Core/Input.h"
-#include "BHive/Object/ActorManager.h"
-#include "BHive/Object/Object.h"
 #include "BHive/Renderer/Shader.h"
 #include "BHive/Managers/AssetLoader.h"
 #include "BHive/Managers/AssetManagers.h"

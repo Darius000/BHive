@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "BHive/Object/Object.h"
+
 
 namespace BHive
 {

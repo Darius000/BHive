@@ -60,6 +60,20 @@ namespace BHive
 			std::move(substring(0, dotPos - 1));
 	}
 
+
+	WinPath::WinPath(WinPath&& other) noexcept
+	{
+		BH_CORE_INFO("Moved!");
+		m_Name = std::move(other.m_Name); 
+		m_Ext = std::move(other.m_Ext);
+		m_Directory = other.m_Directory;
+		m_Path = std::move(other.m_Path);
+		m_Length = other.m_Length;
+		
+		other.m_Length = 0;
+		other.m_Directory = false;
+	}
+
 	WinPath::~WinPath()
 	{
 		
