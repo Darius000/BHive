@@ -89,7 +89,6 @@ namespace BHive
 		case RendererAPI::API::OpenGL: {
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, path)); 
 			TextureManager::Add(TextureName, tex); 
-			BH_CORE_INFO("{0}", TextureName);
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;
