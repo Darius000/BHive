@@ -13,16 +13,17 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "BHive/vendor/glfw/include"
 IncludeDir["Glad"] = "BHive/vendor/glad/include"
-IncludeDir["Refl"] = "BHive/vendor/reflection/include"
 IncludeDir["ImGui"] = "BHive/vendor/imgui"
 IncludeDir["GLM"] = "BHive/vendor/glm/include"
 IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
 IncludeDir["entt"] = "BHive/vendor/entt/include"
+IncludeDir["Assimp"] = "BHive/vendor/Assimp/include"
 
 group "Dependencies"
     include "BHive/vendor/glfw"
     include "BHive/vendor/glad"
     include "BHive/vendor/imgui"
+    --include "BHive/vendor/Assimp"
 group  ""
 
 project "BHive"
@@ -47,9 +48,9 @@ project "BHive"
 		"%{prj.name}/vendor/stb_image/**cpp",
 		"%{prj.name}/vendor/glm/**hpp",
 		"%{prj.name}/vendor/glm/**inl",
-        "%{prj.name}/vendor/reflection/**.h",
-        "%{prj.name}/vendor/reflection/**.cpp",
-        "%{prj.name}/vendor/reflection/**.hpp",
+        "%{prj.name}/vendor/Assimp/**h",
+        "%{prj.name}/vendor/Assimp/**hpp",
+        "%{prj.name}/vendor/Assimp/**inl",
 		"%{prj.name}/Assets/**",
 		"premake5.lua"
     }
@@ -64,26 +65,27 @@ project "BHive"
         "%{prj.name}/src",
         "%{prj.name}/src/BHive",
         "%{prj.name}/vendor/spdlog/include",
-        --"%{prj.name}/vendor/glm/include",
-        --"%{prj.name}/Shaders",
-        --"%{prj.name}/vendor/assimp/include",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.Glad}",
         "%{IncludeDir.ImGui}",
         "%{IncludeDir.Refl}",
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.STB_Image}",
-        "%{IncludeDir.entt}"
+        "%{IncludeDir.entt}",
+        "%{IncludeDir.Assimp}"
     }
     
-    --libdirs {"%{prj.name}/vendor/assimp/lib"}
+    libdirs {"%{prj.name}/vendor/assimp/lib"}
 
     links
     {
         "GLFW",
         "Glad",
         "ImGui",
-        --"assimp-vc140-mt.lib",
+        --"Assimp",
+        "assimp.lib",
+        "zlibstaticd.lib",
+        "IrrXMLd.lib",
         "opengl32.lib"
     }
 
@@ -135,13 +137,13 @@ project "Sandbox"
     {
         "BHive/vendor/spdlog/include",
 		"BHive/vendor/imgui",
-        "BHive/vendor/assimp/include",
         "BHive/vendor/glad/include",
         "BHive/vendor",
         "BHive/src",
 		"BHive/src/BHive",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.GLM}"
+        "%{IncludeDir.GLM}",
+        "%{IncludeDir.Assimp}"
     }
     
     links
@@ -156,9 +158,7 @@ project "Sandbox"
         {
             "BH_PLATFORM_WINDOWS",
         }
-        
-        prebuildcommands{ ("{COPY} %{prj.location}../BHive/vendor/assimp/dll/assimp-vc140-mt.dll %{cfg.targetdir}")}
-        
+
         filter "configurations:Debug"
             defines "BH_DEBUG"
             runtime "Debug"
@@ -195,20 +195,20 @@ project "BHive-Editor"
     {
         "BHive/vendor/spdlog/include",
 		"BHive/vendor/imgui",
-        "BHive/vendor/assimp/include",
         "BHive/vendor/glad/include",
         "BHive/vendor",
         "BHive/src",
 		"BHive/src/BHive",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.GLM}"
+        "%{IncludeDir.GLM}",
+        "%{IncludeDir.Assimp}"
     }
     
     links
     {
         "BHive"
     }
-
+    
     filter"system:windows"
         systemversion "latest"
 
@@ -217,8 +217,7 @@ project "BHive-Editor"
             "BH_PLATFORM_WINDOWS",
         }
         
-        prebuildcommands{ ("{COPY} %{prj.location}../BHive/vendor/assimp/dll/assimp-vc140-mt.dll %{cfg.targetdir}")}
-        
+
         filter "configurations:Debug"
             defines "BH_DEBUG"
             runtime "Debug"

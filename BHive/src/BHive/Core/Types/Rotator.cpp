@@ -113,6 +113,17 @@ namespace BHive
 		return *this = *this * s;
 	}
 
+
+	float* Rotator::operator*()
+	{
+		return &roll;
+	}
+
+	const float* Rotator::operator*() const
+	{
+		return &roll;
+	}
+
 	float Rotator::operator[](unsigned int index)
 	{
 		if (index <= 0) return roll;

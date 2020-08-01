@@ -74,4 +74,49 @@ namespace BHive
 
 		return;
 	}
+
+	inline std::istream& GetLine(std::istream& is, std::string& result, char delim = '\n')
+	{
+		char ch;
+		result.clear();
+		while (is.get(ch))
+		{
+			if (ch == delim)
+			{
+				break;
+			}
+			else
+			{
+				result += ch;
+			}
+		}
+
+		return is;
+	}
+
+	inline std::string CheckNextLine(std::istream& is, char delim = '\n')
+	{
+		char ch;
+		std::string result;
+
+		//Get current position
+		std::streampos len = is.tellg();
+
+		while (is.get(ch))
+		{
+			if (ch == delim)
+			{
+				break;
+			}
+			else
+			{
+				result += ch;
+			}
+		}
+
+		//return to position
+		is.seekg(len, std::ios_base::beg);
+
+		return result;
+	}
 }

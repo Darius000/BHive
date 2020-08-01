@@ -15,7 +15,7 @@ namespace BHive
 	{
 	public:
 		Transform();
-		Transform(const FVector3& location, 
+		Transform(const FVector3& position, 
 			const Rotator& rotation = Rotator(0.0f), 
 			const FVector3& scale = FVector3(1.0f));
 	public:

@@ -7,112 +7,37 @@
 
 namespace BHive
 {
-	RenderComponent::RenderComponent()
-		//:m_VertexArray(nullptr)
-	{
-		m_Shader = ShaderLibrary::Get("Default");
-		m_Texture = TextureManager::Get("White");
-		
-		//BH_CORE_TRACE("White tex use count {0}", m_Texture.use_count());
-	}
-
-	RenderComponent::RenderComponent(const RenderComponent& other)
-		:m_Shader(other.m_Shader)
-	{
-		//m_VertexArray.reset(other.m_VertexArray.get());
-	}
-
-	void RenderComponent::ComponentInit()
-	{
-		Super::ComponentInit();
-		
-	}
-
-	void RenderComponent::ComponentStart()
-	{
-		Super::ComponentStart();
-
-		//CreateBuffers();
-	}
-
-	void RenderComponent::ComponentUpdate(const Time& time)
-	{
-		Super::ComponentUpdate(time);
-
-		Draw();
-	}
-
-	void RenderComponent::OnTransformUpdated(const Transform& transform)
-	{
-		Super::OnTransformUpdated(transform);
-
-		//BH_CORE_TRACE("RenderComponent OnTransformUpdate!");
-
-		if(m_Shader) m_Shader->Bind();
-	}
-
-	void RenderComponent::SetShader(Ref<Shader> shader)
-	{
-		m_Shader = shader;
-	}
-
-	void RenderComponent::SetTexture(Ref<Texture2D> texture)
-	{
-		m_Texture = texture;
-	}
-
-
-	void RenderComponent::SetMesh(Ref<FMesh> Mesh)
-	{
-		m_Mesh = Mesh;
-	}
-
-	void RenderComponent::CreateBuffers()
-	{
-		/*m_VertexArray.reset(VertexArray::Create());
-
-		BufferLayout layout = {
-			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float3, "a_Color"},
-			{ ShaderDataType::Float2, "a_TexCoord"},
-			{ ShaderDataType::Float3, "a_Normal" }
-		};
-
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		m_VertexBuffer.reset(VertexBuffer::Create(m_Vertices.data(), (uint32)(m_Vertices.size() * sizeof(float))));
-		m_VertexBuffer->SetLayout(layout);
-
-		m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
-		m_IndexBuffer.reset(IndexBuffer::Create(m_Indices.data(), (uint32)(m_Indices.size() * sizeof(uint32))));
-
-		m_VertexArray->SetIndexBuffer(m_IndexBuffer);*/
-	}
-
 	void RenderComponent::Draw()
-	{	
-		if (m_Shader)
-		{
-			m_Shader->Bind();
-			m_Shader->SetMat4("u_Model", GetTransform().GetMatrix());
-			m_Shader->SetVec4("u_Color", LinearColor(1.0f, 1.0f, 1.0f, 1.0f));
-			m_Shader->SetInt("u_Texture", 0);
-		}
-
+	{
 		if (m_Texture)
 		{
 			m_Texture->Bind();
 		}
 
-		if (m_Mesh)
+		if (m_Model)
 		{
-			m_Mesh->Render();
+			m_Model->Render();
 		}
+	}
 
-		/*if (m_VertexArray)
+
+	void RenderComponent::OnImguiRender()
+	{
+		ImGui::Separator();
+		ImGui::Text("Texture");
+		ImGui::Image((void*)m_Texture->GetRendererID(), ImVec2(100.0f, 100.0f), ImVec2(0, 1), ImVec2(1, 0));	
+		ImGui::SameLine();
+		if (ImGui::BeginCombo("##Textures", *m_Texture->GetName(), ImGuiComboFlags_NoArrowButton))
 		{
-			Renderer::Draw(m_VertexArray);
-		}*/
+			for (int n = 0; n < TextureManager::GetNames().size(); n++)
+			{
+				std::string name = TextureManager::GetNames()[n];
+				if (ImGui::Selectable(*name, name == m_Texture->GetName()))
+				{
+					m_Texture = TextureManager::Get(name);
+				}
+			}
+			ImGui::EndCombo();
+		}
 	}
 }

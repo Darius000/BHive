@@ -1,6 +1,7 @@
 #include "BHivePCH.h"
 #include "Renderer2D.h"
 #include "BHive/Renderer/Shader.h"
+#include "BHive/Renderer/Material.h"
 
 namespace BHive
 {
@@ -15,7 +16,7 @@ namespace BHive
 
 	}
 
-	void Renderer2D::Begin(const CameraComponent& camera)
+	void Renderer2D::Begin(/*const CameraComponent& camera*/)
 	{
 		RenderCommands::SetClearColor(BHive::LinearColor(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommands::Clear();
@@ -24,6 +25,56 @@ namespace BHive
 	void Renderer2D::End()
 	{
 		
+	}
+
+
+	Ref<Model> Renderer2D::Plane(float width, float height)
+	{
+		std::vector<FVertex> m_Vertices =
+		{
+			FVertex({-width / 2.0f, -height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({width / 2.0f, -height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({width / 2.0f, height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 1.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({-width / 2.0f, height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 1.0f},	{0.0f, 0.0f, 1.0f})
+		};
+
+
+		std::vector<uint32> m_Indices =
+		{
+			0, 1, 2, 2, 3, 0
+		};
+
+		Ref<FMesh> plane(new FMesh());
+		Ref<DefaultMaterial> DMaterial(new DefaultMaterial());
+		DMaterial->SetColor(LinearColor(1.0f, 0.5f, 1.0f, 1.0f));
+		plane->SetVerticesAndIndices(m_Vertices, m_Indices);
+		Ref<Model> m_Model = Make_Ref<Model>(plane);
+		m_Model->SetMaterial(DMaterial);
+		return m_Model;
+	}
+
+
+	Ref<Model> Renderer2D::Triangle(float width, float height)
+	{
+		std::vector<FVertex> m_Vertices =
+		{
+			FVertex({-width / 2.0f, 0.0f, 0.0f},	{1.0f, 0.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({width / 2.0f, 0.0f, 0.0f},	{1.0f, 0.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({0.0f, height, 0.0f},			{1.0f, 0.0f, 0.0f},		{0.5f, 1.0f},	{0.0f, 0.0f, 1.0f})
+		};
+
+		std::vector<uint32> m_Indices =
+		{
+			0 , 1, 2
+		};
+
+		Ref<FMesh> triangle(new FMesh());
+		Ref<DefaultMaterial> DMaterial(new DefaultMaterial());
+		DMaterial->SetColor(LinearColor(1.0f, 0.5f, 0.0f, 1.0f));
+		triangle->SetVerticesAndIndices(m_Vertices, m_Indices);
+		Ref<Model> m_Model = Make_Ref<Model>(triangle);
+		m_Model->SetMaterial(DMaterial);
+		return m_Model;
 	}
 
 	void Renderer2D::Draw(const std::shared_ptr<VertexArray>& vertexArray)

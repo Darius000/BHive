@@ -9,6 +9,7 @@ namespace BHive
 		WinPath();
 		WinPath(const ANSICHAR* path);
 		WinPath(const WinPath& other);
+		WinPath(WinPath&& other) noexcept;
 		~WinPath();
 
 		const ANSICHAR* GetName() const { return m_Name.get(); }

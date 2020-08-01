@@ -12,59 +12,77 @@ namespace BHive
 		AssetManager();
 
 	public:
-		static Ref<assetType> Get(const BName& name);
+		static Ref<assetType> Get(const std::string& name);
 
-		static void CreateAsset(BName AssetName, Ref<assetType> Asset);
+		static void CreateAsset(const std::string& AssetName, Ref<assetType> Asset);
 
-		static void Add(BName AssetName, Ref<assetType> Asset);
+		static void Add(const std::string& AssetName, Ref<assetType> Asset);
 
-		static void Remove(const BName& name);
+		static void Remove(const std::string& name);
 
-		static bool Exists(const BName& name);
+		static bool Exists(const std::string& name);
 
-		static std::unordered_map<BName, Ref<assetType>> GetAssets();
+		static std::unordered_map<std::string, Ref<assetType>> GetAssets();
+
+		static std::vector<std::string> GetNames();
 
 		static void PrintAssetNames();
 
 	private:
-		static std::unordered_map<BName, Ref<assetType>> s_Assets;
+		static std::unordered_map<std::string, Ref<assetType>> s_Assets;
+		static std::vector<std::string> s_Names;
 	};
 
 	template<class assetType>
-	bool BHive::AssetManager<assetType>::Exists(const BName& name)
+	std::vector<std::string> AssetManager<assetType>::GetNames()
+	{
+		return s_Names;
+	}
+
+	template<class assetType>
+	bool AssetManager<assetType>::Exists(const std::string& name)
 	{
 		return s_Assets.find(name) != s_Assets.end();
 	}
 
 	template<class assetType>
-	void BHive::AssetManager<assetType>::CreateAsset(BName AssetName, Ref<assetType> Asset)
+	void AssetManager<assetType>::CreateAsset(const std::string& AssetName, Ref<assetType> Asset)
 	{
 		if(Exists(AssetName)) BH_CORE_ERROR("Asset with name already exists");
 		s_Assets.insert({AssetName, Asset});
+		s_Names.push_back(AssetName);
 	}
 
 	template<class assetType>
-	BHive::AssetManager<assetType>::AssetManager()
+	AssetManager<assetType>::AssetManager()
 	{
 
 	}
 
 	template<class assetType>
-	BHive::Ref<assetType> BHive::AssetManager<assetType>::Get(const BName& name)
+	Ref<assetType> AssetManager<assetType>::Get(const std::string& name)
 	{
 		return Exists(name) ? s_Assets[name] : nullptr;
 	}
 
 	template<class assetType>
-	void BHive::AssetManager<assetType>::Add(BName AssetName, Ref<assetType> Asset)
+	void AssetManager<assetType>::Add(const std::string& AssetName, Ref<assetType> Asset)
 	{
-		if(!Exists(AssetName)) s_Assets.insert({ AssetName, Asset });
+		if(!Exists(AssetName)) 
+		{
+			s_Assets.insert({ AssetName, Asset });
+			s_Names.push_back(AssetName);
+		}
 	}
 
 	template<class assetType>
-	void BHive::AssetManager<assetType>::Remove(const BName& name)
+	void AssetManager<assetType>::Remove(const std::string& name)
 	{
-		if(Exists(name)) s_Assets.erase(name);
+		if(Exists(name)) 
+		{
+			s_Assets.erase(name);
+			s_Names.erase(name);
+		}
 	}
 
 	template<class assetType>
@@ -74,7 +92,7 @@ namespace BHive
 	}
 
 	template<class assetType>
-	void BHive::AssetManager<assetType>::PrintAssetNames()
+	void AssetManager<assetType>::PrintAssetNames()
 	{
 		for (auto Asset : s_Assets)
 		{
@@ -83,8 +101,10 @@ namespace BHive
 	}
 
 	template<class assetType>
-	std::unordered_map<BName, Ref<assetType>> AssetManager<assetType>::s_Assets;
+	std::unordered_map<std::string, Ref<assetType>> AssetManager<assetType>::s_Assets;
 
+	template<class assetType>
+	std::vector<std::string> AssetManager<assetType>::s_Names;
 
 	class TextureManager : public AssetManager<Texture2D>
 	{

@@ -39,6 +39,7 @@ namespace BHive
 		Vector4 operator*=(T _scalar);
 		Vector4 operator/=(T _scalar);
 		Vector4 operator-();
+		T* operator*();
 		const T* operator*() const;
 		float operator*(const Vector4& _other);
 
@@ -159,6 +160,12 @@ namespace BHive
 	bool Vector4<T>::operator==(const Vector4<T>& _other)
 	{
 		return (x == _other.x) && (y == _other.y) && (z == _other.z) && (w == _other.w);
+	}
+
+	template<typename T>
+	T* Vector4<T>::operator*()
+	{
+		return &x;
 	}
 
 	template<typename T>

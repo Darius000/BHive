@@ -1,64 +1,40 @@
 #pragma once
 
-#include "BHive/Components/TransformComponent.h"
+#include "Object/Camera.h"
 
 namespace BHive
 {
-	class CameraComponent : public TransformComponent
+	class CameraComponent;
+
+	class CameraSystem
 	{
-		
 	public:
-		CameraComponent();
-		virtual ~CameraComponent() {}
+		CameraSystem() = default;
+		static CameraComponent* m_ActiveCamera;
+	};
 
+	class CameraComponent
+	{
 	public:
-		const glm::mat4& GetProjectionMatrix() const  { return m_ProjectionMatrix; }
-		const glm::mat4& GetViewMatrix() const  { return m_ViewMatrix; }
-		const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+		CameraComponent()
+		{
+			if (CameraSystem::m_ActiveCamera == nullptr)
+			{
+				SetPrimaryCamera(true);
+			}
+		}
+		CameraComponent(Projection projection);
+		CameraComponent(const CameraComponent&) = default;
 
-	protected:
-		virtual void OnTransformUpdated(const Transform& transform) override;
+		void OnImGuiRender();
 
-	private:
-		virtual void RecalulateViewMatrix(const Transform& transform) = 0;
+		void SetPrimaryCamera(bool active)
+		{
+			if(active) CameraSystem::m_ActiveCamera = this;
+		}
 
-	protected:
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewMatrix;
-		glm::mat4 m_ViewProjectionMatrix;
+		Camera m_Camera;
+	};
 
-		friend class CameraController;
 	
-	};
-
-	class OrthographicCameraComponent : public CameraComponent
-	{
-		BCLASS(OrthographicCameraComponent, ComponentCategory, CameraComponent)
-
-	public:
-		OrthographicCameraComponent();
-		OrthographicCameraComponent(float left, float right, float bottom, float top) ;
-
-		void SetProjection(float left, float right, float bottom, float top);
-
-	private:
-		virtual void RecalulateViewMatrix(const Transform& transform) override;
-	
-	};
-
-	class PerspectiveCameraComponent : public CameraComponent
-	{
-		BCLASS(PerspectiveCameraComponent, ComponentCategory, CameraComponent)
-
-	public:
-		PerspectiveCameraComponent();
-		PerspectiveCameraComponent(float fov, float aspect, float zNear, float zFar);
-
-		void SetProjection(float fov, float aspect, float zNear, float zFar);
-		void LookAt(FVector3 location);
-
-	private:
-		virtual void RecalulateViewMatrix(const Transform& transform) override;
-
-	};
 }
