@@ -50,7 +50,7 @@ namespace BHive
 
 		BH_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete");
 		
-		glBindFramebuffer(GL_FRAMEBUFFER, 0 );
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0 );
 	}
 
 	void OpenglFramebuffer::Bind()
