@@ -5,7 +5,6 @@
 #include  <assimp/postprocess.h>
 
 #include "Material.h"
-#include "Components/TransformComponent.h"
 
 namespace BHive
 {
@@ -20,10 +19,13 @@ namespace BHive
 
 		void Render();
 		virtual void SetVerticesAndIndices(const std::vector<FVertex>& Vertices, const std::vector<uint32>& Indices);
-		void SetName(const BName& NewName );
-
+		void SetName(const BName& NewName );	
+		void SetMaterial(Ref<Material> material);
+		
 	public:
 		BName GetName() { return m_Name; }
+		Ref<Shader> GetShader() const { return m_Material->m_Shader; }
+		Ref<Material> GetMaterial() { return m_Material; }
 		
 	private:
 		void CreateBuffers();
@@ -36,35 +38,48 @@ namespace BHive
 
 	private:
 		Ref<VertexArray> m_VertexArray;
+		Ref<Material> m_Material;
 		
 	};
 
+	using Meshes = std::unordered_map<uint32, Ref<FMesh>>;
 	
 	class Model
 	{
+		
 	public:
-		Model();
-		Model(Ref<FMesh>& mesh);
-		Model(std::initializer_list<Ref<FMesh>> meshes);
-		Model(std::vector<Ref<FMesh>> meshes);
-		~Model(){};
+		Model() = default;
+		virtual ~Model() = default;
 
-		void AddMesh(Ref<FMesh>& Mesh);
 		void Render();
-		void SetTransform(const Transform& transform);
-		Ref<Shader> GetShader() const { return m_Material->m_Shader; }
-
-		void SetMaterial(Ref<Material> material);
-		Ref<Material> GetMaterial() { return m_Material; }
-
+	
 	public:
-		static Ref<Model> Import(const WinPath& Path);
-		static void ProcessNode(aiNode* node, const aiScene *scene, Ref<Model> model);
-		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		static Ref<Model> Import(const WinPath& path);
 
 	private:
-		std::vector<Ref<FMesh>> m_Meshes;
-		Ref<Material> m_Material;
-		Transform m_Transform;
+		static void ProcessNode(uint32& id, aiNode* node, const aiScene *scene, Ref<Model> model);
+		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		static void ProcessTexture(aiMaterial* material, aiTextureType textureType);
+
+	public:
+		Ref<FMesh> GetMesh(uint32 id)
+		{ 
+			BH_CORE_ASSERT(m_Meshes.find(id) != m_Meshes.end(), "Mesh doesn't exist!");
+			return m_Meshes[id]; 
+		}
+
+		Meshes& GetMeshes() { return m_Meshes; }
+		std::string& GetName() { return m_Name; }
+		WinPath& GetDirectory() { return m_OriginalDirectory; }
+
+	public:
+		void AddMesh(uint32 id, Ref<FMesh>& Mesh);
+
+	private:
+		 Meshes m_Meshes;	
+		 WinPath m_OriginalDirectory;
+		 std::string m_Name;
+
+		 static WinPath s_LastLoadedDirectory;
 	};
 }

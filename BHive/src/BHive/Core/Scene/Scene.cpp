@@ -1,8 +1,7 @@
 #include "BHivePCH.h"
 #include "Scene.h"
-#include "Components/RenderComponent.h"
-#include "Components/TransformComponent.h"
-#include "Components/CameraComponents.h"
+#include "Components/Component.h"
+
 
 namespace BHive
 {
@@ -24,52 +23,93 @@ namespace BHive
 
 	Entity Scene::CreateEntity(const std::string& name)
 	{
-		Entity entity = {name, m_Registry.create(), this};
+		Entity entity = {m_Registry.create(), this};
 		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
+		tag.Tags.emplace_back(name.empty() ? "Entity" : name);
 		return entity;
 	}
 
 	void Scene::OnBegin()
 	{
-		
+		//Update Scripts----------------------------------------------------
+		{
+			auto view = m_Registry.view<NativeScriptComponent>();
+			for (auto entity : view)
+			{
+				auto nsc = view.get<NativeScriptComponent>(entity);
+				if (nsc.OnCreateFunc)
+				{
+					if (!nsc.Instance)
+					{
+						nsc.InstantiateFunc();
+					}
+
+					nsc.Instance->m_Entity = Entity{ entity , this };
+
+					nsc.OnCreateFunc(nsc.Instance.get());
+				}
+
+			}
+		}
 	}
 
 	void Scene::OnUpdate(const Time& time)
 	{
+		for (auto& system : RegisteredSystems::m_ComponentSystems)
 		{
-			auto group = m_Registry.view<RenderComponent, TransformComponent>();
-			for (auto entity : group)
-			{
-				auto& render = group.get<RenderComponent>(entity);
-				auto& transform = group.get<TransformComponent>(entity);
-				render.m_Model->SetTransform(transform.m_Transform);
-				render.Draw();
-			}
-		}
+			system->OnUpdate(time, m_Registry);
+		}	
+
+		//Update Scripts----------------------------------------------------
 		{
-			auto group = m_Registry.view<CameraComponent, TransformComponent>();
-			for (auto entity : group)
+			auto view = m_Registry.view<NativeScriptComponent>();
+			for(auto entity : view)
 			{
-				auto& camera = group.get<CameraComponent>(entity);
-				auto& transform = group.get<TransformComponent>(entity);
+				auto nsc = view.get<NativeScriptComponent>(entity);
+				if (nsc.OnUpdateFunc)
+				{
+					if (!nsc.Instance)
+					{
+						nsc.InstantiateFunc();
+					}
 
-				CameraComponent* ActiveCamera = CameraSystem::m_ActiveCamera;
-				if(ActiveCamera == &camera)
-				{ 
-					glm::mat4 m_ProjectionMatrix = camera.m_Camera.GetProjection();
+					nsc.Instance->m_Entity = Entity{ entity , this };
 
-					glm::mat4 matrix = transform.m_Transform.GetMatrix();
-					glm::mat4 m_ViewMatrix = glm::inverse(matrix);
-					glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-					ShaderLibrary::UpdateShaderViewProjectionMatrices(m_ViewProjectionMatrix);
+					nsc.OnUpdateFunc(nsc.Instance.get(), time);
 				}
+
 			}
 		}
 	}
 
 	void Scene::OnEnd()
 	{
-		
+		//Update Scripts----------------------------------------------------
+		{
+			auto view = m_Registry.view<NativeScriptComponent>();
+			for (auto entity : view)
+			{
+				auto nsc = view.get<NativeScriptComponent>(entity);
+				if (nsc.OnDestroyFunc)
+				{
+					if (!nsc.Instance)
+					{
+						nsc.InstantiateFunc();
+					}
+
+					nsc.Instance->m_Entity = Entity{ entity , this };
+
+					nsc.OnDestroyFunc(nsc.Instance.get());
+				}
+
+			}
+		}
+	}
+
+	void Scene::OnViewportResize(uint32 width, uint32 height)
+	{
+		m_RenderSystem.OnViewportResize(width, height, m_Registry);
 	}
 
 	Scene* SceneManager::CreateScene(const std::string& name)
@@ -82,12 +122,20 @@ namespace BHive
 	void SceneManager::SetActiveScene(const std::string& name)
 	{
 		BH_CORE_ASSERT(HasScene(name), "Scene doesn't existed!");
+		if (m_ActiveScene)
+		{
+			m_ActiveScene->OnEnd();
+		}
+
 		m_ActiveScene = m_Scenes[name].get();
+		m_ActiveScene->OnBegin();
 	}
 
 	void SceneManager::DestroyScene(const std::string& name)
 	{
 		BH_CORE_ASSERT(!HasScene(name), "Scene doesn't existed!");
+		BH_CORE_ASSERT(m_ActiveScene != m_Scenes[name].get(), "Scene currently Active! Cannot Destroy!");
+
 		m_Scenes.erase(name);
 	}
 
@@ -104,5 +152,5 @@ namespace BHive
 
 	std::unordered_map<std::string, Scope<Scene>> SceneManager::m_Scenes;
 
-	Scene* SceneManager::m_ActiveScene;
+	Scene* SceneManager::m_ActiveScene = nullptr;
 }

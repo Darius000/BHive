@@ -18,12 +18,12 @@ IncludeDir["GLM"] = "BHive/vendor/glm/include"
 IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
 IncludeDir["entt"] = "BHive/vendor/entt/include"
 IncludeDir["Assimp"] = "BHive/vendor/Assimp/include"
+IncludeDir["RTTR"] = "BHive/vendor/rttr/include"
 
 group "Dependencies"
     include "BHive/vendor/glfw"
     include "BHive/vendor/glad"
     include "BHive/vendor/imgui"
-    --include "BHive/vendor/Assimp"
 group  ""
 
 project "BHive"
@@ -46,11 +46,11 @@ project "BHive"
 		"%{prj.name}/src/**.inl",
 		"%{prj.name}/vendor/stb_image/**h",
 		"%{prj.name}/vendor/stb_image/**cpp",
-		"%{prj.name}/vendor/glm/**hpp",
-		"%{prj.name}/vendor/glm/**inl",
-        "%{prj.name}/vendor/Assimp/**h",
-        "%{prj.name}/vendor/Assimp/**hpp",
-        "%{prj.name}/vendor/Assimp/**inl",
+		--"%{prj.name}/vendor/glm/**hpp",
+		--"%{prj.name}/vendor/glm/**inl",
+        --"%{prj.name}/vendor/Assimp/**h",
+        --"%{prj.name}/vendor/Assimp/**hpp",
+        --"%{prj.name}/vendor/Assimp/**inl",
 		"%{prj.name}/Assets/**",
 		"premake5.lua"
     }
@@ -72,17 +72,18 @@ project "BHive"
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.STB_Image}",
         "%{IncludeDir.entt}",
-        "%{IncludeDir.Assimp}"
+        "%{IncludeDir.Assimp}",
+        "%{IncludeDir.RTTR}"
     }
     
-    libdirs {"%{prj.name}/vendor/assimp/lib"}
+    libdirs {"%{prj.name}/vendor/assimp/lib", "%{prj.name}/vendor/rttr/lib"}
 
     links
     {
         "GLFW",
         "Glad",
         "ImGui",
-        --"Assimp",
+        "rttr_core_lib_s_d.lib",
         "assimp.lib",
         "zlibstaticd.lib",
         "IrrXMLd.lib",
@@ -143,7 +144,8 @@ project "Sandbox"
 		"BHive/src/BHive",
         "%{IncludeDir.entt}",
         "%{IncludeDir.GLM}",
-        "%{IncludeDir.Assimp}"
+        "%{IncludeDir.Assimp}",
+        "%{IncludeDir.RTTR}"
     }
     
     links
@@ -201,7 +203,8 @@ project "BHive-Editor"
 		"BHive/src/BHive",
         "%{IncludeDir.entt}",
         "%{IncludeDir.GLM}",
-        "%{IncludeDir.Assimp}"
+        "%{IncludeDir.Assimp}",
+        "%{IncludeDir.RTTR}"
     }
     
     links

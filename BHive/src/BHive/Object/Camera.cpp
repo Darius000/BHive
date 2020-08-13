@@ -4,12 +4,18 @@
 namespace BHive
 {
 	Camera::Camera()
-		:Camera(Projection::Perspective)
+		//:Camera(Projection::Perspective)
 	{
 
 	}
 
-	Camera::Camera(Projection projection)
+	Camera::Camera(glm::mat4 projection)
+		:m_Projection(projection)
+	{
+
+	}
+
+	/*Camera::Camera(Projection projection)
 		: m_ProjectionType(Projection::Perspective), m_Projection(1.0f), m_PerspSettings(), m_OrthoSettings()
 	{
 		if (projection == Projection::Perspective)
@@ -37,5 +43,5 @@ namespace BHive
 		m_OrthoSettings = orthographic;
 		m_Projection = glm::ortho(orthographic.Left, orthographic.Right, orthographic.Bottom, orthographic.Top,
 			orthographic.Near, orthographic.Far);
-	}
+	}*/
 }

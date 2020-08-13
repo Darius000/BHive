@@ -27,6 +27,7 @@ namespace BHive
 		static inline Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 		inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+		AssetLoader* GetAssetLoader() { return m_ApplicationAssetLoader.get(); }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);

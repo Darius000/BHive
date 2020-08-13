@@ -6,9 +6,12 @@
 #include "imgui.h"
 #include "BHive/Layers/ImGuiLayer.h"
 #include "Bhive/Object/Camera.h"
-#include "BHive/Components/CameraComponents.h"
-#include "BHive/Components/RenderComponent.h"
+#include "BHive/Components/Component.h"
 #include "BHive/Managers/AssetManagers.h"
+
+
+//-------AssetEditors-----------------
+#include "BHive/Layers/AssetEditors/TextureEditorLayer.h"
 
 //-------Renderer----------------
 

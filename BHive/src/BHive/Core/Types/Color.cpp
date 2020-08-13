@@ -41,7 +41,12 @@ namespace BHive
 		return Color(other.r, other.g, other.b, other.a);
 	}
 
-	uint8* const Color::operator*()
+	const uint8* Color::operator*() const
+	{
+		return &r;
+	}
+
+	uint8* Color::operator*()
 	{
 		return &r;
 	}
@@ -100,7 +105,12 @@ namespace BHive
 		return *this;
 	}
 
-	float* const LinearColor::operator*()
+	const float* LinearColor::operator*() const
+	{
+		return &r;
+	}
+
+	float* LinearColor::operator*()
 	{
 		return &r;
 	}

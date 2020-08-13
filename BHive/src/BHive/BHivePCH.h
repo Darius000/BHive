@@ -53,6 +53,7 @@
 #include "BHive/Core/Layer.h"
 #include "BHive/Core/Application.h"
 #include "BHive/Object/Entity.h"
+#include "BHive/Core/Types/Array.h"
 
 
 //#include <assimp/Importer.hpp>

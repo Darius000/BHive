@@ -32,6 +32,11 @@ namespace BHive
 			s_RendererAPI->DrawIndexed(vertexArray);
 		}
 
+		inline static void SetEnableBackfaceCulling(bool enable)
+		{
+			s_RendererAPI->EnableBackFaceCulling(enable);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
 	};

@@ -13,5 +13,6 @@ namespace BHive
 		virtual void Clear() override;
 		virtual void SetViewport(uint32 x, uint32 y, uint32 width, uint32 height) override;
 		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) override;
+		virtual void EnableBackFaceCulling(bool enable) override;
 	};
 }

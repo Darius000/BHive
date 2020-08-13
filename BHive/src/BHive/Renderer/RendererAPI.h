@@ -19,6 +19,7 @@ namespace BHive
 		virtual void SetViewport(uint32 x, uint32 y, uint32 width, uint32 height) = 0;
 
 		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+		virtual void EnableBackFaceCulling(bool enable) = 0;
 
 		inline static API GetAPI() { return s_API; }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include <rttr/registration.h>
+
 namespace BHive
 {
 	template<typename T>
@@ -50,6 +52,8 @@ namespace BHive
 	public:
 		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
 	};
+
+
 
 	template<typename T>
 	inline std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3)
@@ -193,6 +197,16 @@ namespace BHive
 	using UVector3 = Vector3<uint32>;
 	using IVector3 = Vector3<int32>;
 	using BVector3 = Vector3<bool>;
+
+	template<typename T>
+	inline void RegisterVector3Template(std::string name)
+	{
+		rttr::registration::class_<Vector3<T>>(name)
+			.constructor<>()
+			.property("x", &Vector3<T>::x)
+			.property("y", &Vector3<T>::y)
+			.property("z", &Vector3<T>::z);
+	}
 }
 
 

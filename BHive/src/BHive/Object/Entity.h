@@ -2,24 +2,24 @@
 
 #include "entt.hpp"
 #include "BHive/Core/Scene/Scene.h"
+#include "Components/Component.h"
 
 namespace BHive
 {
 	class Entity
 	{
 	public:
-		Entity();
-		Entity(const std::string& name, entt::entity entityhandle, Scene* scene);
+		Entity() = default;
+		Entity(entt::entity entityhandle, Scene* scene);
 		Entity(const Entity& other) = default;
 		
-		void OnImGuiRender();
-
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
 			BH_CORE_ASSERT(!HasComponent<T>(), "Component Already Exists!");
 
-			return m_Scene->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			auto& component = m_Scene->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+			return component;
 		}
 
 		template<typename T>
@@ -44,11 +44,67 @@ namespace BHive
 			m_Scene->GetRegistry().remove<T>(m_EntityHandle);
 		}
 
-		std::string& GetName() {return m_Name; }
+		int32 GetID() { return (int32)m_EntityHandle; }
+
+		operator bool() const { return m_EntityHandle != entt::null; }
 
 	private:
-		std::string m_Name;
 		entt::entity m_EntityHandle {entt::null};
 		Scene* m_Scene = nullptr;
+	};
+
+	inline const char* operator+(const std::string& String, entt::entity entity)
+	{
+		return *(String + std::to_string((uint32)entity));
+	}
+
+	class ScriptEntity
+	{
+	public:
+		ScriptEntity() = default;	
+
+		template<typename T, typename... Args>
+		T& AddComponent(Args&&... args)
+		{
+			return m_Entity.AddComponent<T>(std::forward<Args>(args)...);
+		}
+
+		template<typename T>
+		T& GetComponent()
+		{
+			return m_Entity.GetComponent<T>();
+		}
+
+		template<typename T>
+		bool HasComponent()
+		{
+			return m_Entity.HasComponent<T>();
+		}
+
+		template<typename T>
+		void RemoveComponent()
+		{
+			m_Entity.RemoveComponent<T>();
+		}
+
+	private:
+		Entity m_Entity;
+		friend class Scene;
+	};
+
+	class Player : public ScriptEntity
+	{
+	public:
+		Player() = default;
+
+		void OnCreate()
+		{
+			GetComponent<DirectionalLightComponent>().m_LightBrightness = 0.0f;
+		}
+
+		void OnUpdate(const Time& time)
+		{
+			GetComponent<DirectionalLightComponent>().m_LightBrightness += .001f;
+		}
 	};
 }

@@ -53,27 +53,27 @@ namespace BHive
 	class BHive_API MouseButtonEvent : public Event
 	{
 	public:
-		inline int GetMouseButton() const { return m_Button; }
+		inline MouseButton GetMouseButton() const { return m_Button; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 
 	protected:
-		MouseButtonEvent(int button)
+		MouseButtonEvent(MouseButton button)
 			:m_Button(button) {}
 
-		int m_Button;
+		MouseButton m_Button;
 	};
 
 	class BHive_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(int button)
+		MouseButtonPressedEvent(MouseButton button)
 			:MouseButtonEvent(button) {}
 
 		BString ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonPressedEvent: " << m_Button;
+			ss << "MouseButtonPressedEvent: " << (int32_t)m_Button;
 			return ss.str().c_str();
 		}
 
@@ -83,13 +83,13 @@ namespace BHive
 	class BHive_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(int button)
+		MouseButtonReleasedEvent(MouseButton button)
 			:MouseButtonEvent(button) {}
 
 		BString ToString() const override
 		{
 			std::stringstream ss;
-			ss << "MouseButtonReleasedEvent: " << m_Button;
+			ss << "MouseButtonReleasedEvent: " << (int32_t)m_Button;
 			return ss.str().c_str();
 		}
 

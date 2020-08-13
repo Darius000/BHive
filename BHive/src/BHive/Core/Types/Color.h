@@ -18,7 +18,8 @@ namespace BHive
 		Color operator=(const Color& other) const;
 		bool operator==(const Color& col);
 		void operator+=(const Color& col);
-		uint8* const operator*();
+		const uint8* operator*() const;
+		uint8* operator*();
 
 	public:
 		uint8 r;
@@ -49,7 +50,8 @@ namespace BHive
 		LinearColor operator=(const LinearColor& other);
 		bool operator==(const LinearColor& col);
 		void operator+=(const LinearColor& col);
-		float* const operator*();
+		const float* operator*() const;
+		float* operator*();
 		operator FVector4 () const;
 	public:
 		float r;	

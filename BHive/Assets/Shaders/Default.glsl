@@ -35,14 +35,18 @@ in vec3 v_Normal;
 
 struct Material
 {
-	vec4 color;
+	vec3 ambient;
+	vec3 diffuse;
+	float transparency;
 	sampler2D texture;
+	vec2 tiling;
 };
 
 uniform Material material;
 
 void main()
 {
-	vec4 colorTexture = texture(material.texture, v_TexCoord);
-	color =  colorTexture * material.color;
+	vec4 colorTexture = texture(material.texture, v_TexCoord * material.tiling);
+	vec4 diffuse = colorTexture * vec4(material.diffuse, material.transparency);
+	color =  vec4(material.ambient, 0.0) + diffuse;
 }
