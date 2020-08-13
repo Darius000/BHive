@@ -7,44 +7,38 @@
 
 namespace BHive
 {
-	OpenGLTexture2D::OpenGLTexture2D(BName TextureName, const WinPath& path)
-		:Texture2D(TextureName)
+	OpenGLTexture2D::OpenGLTexture2D(const WinPath& path)
+		:Texture2D(path.GetName())
 	{
-		stbi_set_flip_vertically_on_load(1);
+		stbi_set_flip_vertically_on_load(true);
 
 		int width, height, channels;
 		PixelData.m_Data = stbi_load(*path, &width, &height, &channels, 0);
 
 		BH_CORE_ASSERT(PixelData.m_Data, "failed to load image!");
-		m_Name  = TextureName;
+		m_Name  = path.GetName();
 		m_Path = path;
 		m_Width = width;
 		m_Height = height;
-		uint32 Channels = channels;
+		m_Channels = channels;
 
-		if (channels == 4)
+		if (m_Channels == 4)
 		{
 			PixelData.m_InternalFormat = GL_RGBA8;
 			PixelData.m_DataFormat = GL_RGBA;
 		}
-		else if (channels == 3)
+		else if (m_Channels == 3)
 		{
 			PixelData.m_InternalFormat = GL_RGB8;
 			PixelData.m_DataFormat = GL_RGB;
 		}
 
-		BH_CORE_ASSERT(PixelData.m_InternalFormat & PixelData.m_DataFormat, "Format not supported!");
-
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
-		glTextureStorage2D(m_RendererID, 1, PixelData.m_InternalFormat , m_Width, m_Height);
-
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	
+		InValidate();
 
 		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, PixelData.m_DataFormat, GL_UNSIGNED_BYTE, PixelData.m_Data);
+		glGenerateMipmap(m_RendererID);
 
 		m_StbImageCreated = true;
 	}
@@ -59,7 +53,12 @@ namespace BHive
 		PixelData.m_InternalFormat = internalFormat;
 		PixelData.m_Data = static_cast<uint8*>(data);
 
-		SetupTextureParameters();
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+
+		InValidate();
+
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, PixelData.m_DataFormat, GL_UNSIGNED_BYTE, PixelData.m_Data);
+		glGenerateMipmap(m_RendererID);
 
 		m_StbImageCreated = false;
 	}
@@ -79,22 +78,23 @@ namespace BHive
 		glBindTextureUnit(slot, m_RendererID);
 	}
 
-	void OpenGLTexture2D::SetupTextureParameters()
+
+	void OpenGLTexture2D::InValidate()
 	{
+		
 		BH_CORE_ASSERT(PixelData.m_InternalFormat & PixelData.m_DataFormat, "Format not supported!");
 
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, PixelData.m_InternalFormat, m_Width, m_Height);
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, ColorMethodToGLEnum(m_MinFilterColorMethod));
+		glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, ColorMethodToGLEnum(m_MagFilterColorMethod));
 
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		if (m_TilingMethod == TilingMethod::ClampToBorder)
+		{
+			glTextureParameterfv(m_RendererID, GL_TEXTURE_BORDER_COLOR, *m_BorderColor);
+		}
 
-		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, PixelData.m_DataFormat, GL_UNSIGNED_BYTE, PixelData.m_Data);
-
-		//BH_CORE_ERROR("Name = {0}, R_ID = {1}", GetName(), m_RendererID);
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, TilingMethodToGLEnum(m_TilingMethod));
+		glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, TilingMethodToGLEnum(m_TilingMethod));		
 	}
-
 }

@@ -5,69 +5,45 @@
 namespace BHive
 {
 	WinPath::WinPath()
-		:m_Name(nullptr), m_Ext(nullptr), m_Directory(false)
 	{
-		m_Path = Make_Scope<ANSICHAR[]>(0);
-		m_Length = 0;
+
 	}
 
 	WinPath::WinPath(const ANSICHAR* path)
 	{
+		m_Length = StringLibrary::GetLength(path);
+
+		if (m_Length == 0) return;
+
 		m_Directory = std::filesystem::is_directory(path);
 
-		uint64 i = 0;
-		while (path[i] != '\0') ++i;
-		m_Length = i;
+		StringLibrary::copy(m_FullPath, path);
 
-		m_Path = Make_Scope<ANSICHAR[]>(m_Length > 0 ? m_Length + 1 : 0);
-
-		i = 0;
-		while (i < m_Length)
-		{
-			m_Path[i] = path[i];
-			++i;
-		}
-
-		if(m_Length == 0) return;
-
-		m_Path[m_Length] = '\0';
-
-		int64 dotPos = find_last_of({'.'});
-		m_Ext = m_Directory ? Make_Scope<ANSICHAR[]>(0) : std::move(substring(dotPos + 1, m_Length));
-
-		int64 lastslashPos = find_last_of({ '/', '\\' });
-
-		m_Name = lastslashPos != -1 ? std::move(substring(lastslashPos + 1, m_Directory ? m_Length : dotPos - 1)) :
-			std::move(substring(0, m_Directory ? m_Length : dotPos - 1));
-	
+		ConstructPath();
 	}
 
 	WinPath::WinPath(const WinPath& other)
 	{
 		m_Length = other.m_Length;
-		m_Path = Make_Scope<ANSICHAR[]>(m_Length + (uint64)1);
-		copy(m_Path.get(), other.m_Path.get());
-		
-		if (m_Length == 0) return;
 
-		uint64 dotPos = find_last_of({ '.' });
-		m_Ext = std::move(substring(dotPos + 1, m_Length));
+		if (m_Length == 0) return;
 
 		m_Directory = other.m_Directory;
 
-		uint64 lastslashPos = find_last_of({ '/', '\\' });
-		m_Name = lastslashPos != -1 ? std::move(substring(lastslashPos + 1, dotPos - 1)) : 
-			std::move(substring(0, dotPos - 1));
+		StringLibrary::copy(m_FullPath, other.m_FullPath);
+
+		ConstructPath();
 	}
 
 
 	WinPath::WinPath(WinPath&& other) noexcept
 	{
-		BH_CORE_INFO("Moved!");
+		//BH_CORE_INFO("Moved!");
 		m_Name = std::move(other.m_Name); 
 		m_Ext = std::move(other.m_Ext);
 		m_Directory = other.m_Directory;
 		m_Path = std::move(other.m_Path);
+		m_FullPath = std::move(other.m_FullPath);
 		m_Length = other.m_Length;
 		
 		other.m_Length = 0;
@@ -76,82 +52,146 @@ namespace BHive
 
 	WinPath::~WinPath()
 	{
-		
+		::operator delete(m_Path, (StringLibrary::GetLength(m_Path) + 1) * sizeof(ANSICHAR));
+		::operator delete(m_FullPath, (m_Length + 1) * sizeof(ANSICHAR));
+		::operator delete(m_Name, (StringLibrary::GetLength(m_Name) + 1) * sizeof(ANSICHAR));
+		::operator delete(m_Ext, (StringLibrary::GetLength(m_Ext)  + 1) * sizeof(ANSICHAR));
 	}
 
-	WinPath WinPath::operator=(const WinPath& Other)
+
+	void WinPath::ConstructPath()
 	{
-		copy(m_Path.get(), Other.m_Path.get());
+		uint64 dotPos = StringLibrary::find_last_of(m_FullPath, { '.' });
+		uint64 lastslashPos = StringLibrary::find_last_of(m_FullPath, { '/', '\\' });
+
+		bool HasDot = dotPos != -1;
+		bool HasSlash = lastslashPos != -1;
+
+		uint64 start = 0; uint64 end = 0;
+
+		start = HasDot ? dotPos + 1 : m_Length;
+		end = m_Length;
+		m_Ext = std::move(StringLibrary::substring(m_FullPath, start, end));
+
+		start = HasSlash ? lastslashPos + 1 : 0;
+		end = HasDot && !m_Directory ? dotPos - 1 : m_Length;
+		m_Name = std::move(StringLibrary::substring(m_FullPath, start, end));
+
+		start = 0;
+		end = HasSlash ? lastslashPos : m_Length;
+		m_Path = std::move(StringLibrary::substring(m_FullPath, start, end ));
+	}
+
+	WinPath& WinPath::operator=(const WinPath& Other)
+	{
+		//BH_CORE_INFO("Copied!");
+
+		StringLibrary::copy(m_Name, Other.m_Name);
+		StringLibrary::copy(m_Ext, Other.m_Ext);
+		StringLibrary::copy(m_Path, Other.m_Path);
+		StringLibrary::copy(m_FullPath, Other.m_FullPath);
+
+		m_Directory = Other.m_Directory;
+		m_Length = Other.m_Length;
 		return *this;
 	}
 
-	void WinPath::copy(ANSICHAR* to, const ANSICHAR* from)
+	namespace StringLibrary
 	{
-		uint64 i = 0;
-		while (i < m_Length)
+		void copy(ANSICHAR*& to, const ANSICHAR* from)
 		{
-			to[i] = from[i];
-			++i;
-		}
-	}
-
-	Scope<ANSICHAR[]> WinPath::substring(uint64 start, uint64 end)
-	{
-		uint64 length = (end - start) + 1; //extra for null terminator
-		auto str = std::make_unique<ANSICHAR[]>(length + 1);
-
-		uint64 i = 0;
-		uint64 j = start;
-		while (j <= end)
-		{
-			str[i] = m_Path[j];
-			++i;
-			++j;
-		}
-
-		str[length] = '\0';
-
-		return str;
-	}
-
-	int64 WinPath::find_first_of(std::vector<ANSICHAR> x)
-	{
-		uint64 i = 0;
-		uint64 pos = 0;
-
-		for (uint64 i = 0; i < m_Length; i++)
-		{
-			auto& it = std::find(x.begin(), x.end(), m_Path[i]);
-			if (it != x.end())
+			
+			if (from == nullptr)
 			{
-				pos = i;
-
-				return (int64)pos;
-			}
-		}
-
-		return -1;
-	}
-
-	int64 WinPath::find_last_of(std::vector<ANSICHAR> x)
-	{
-		uint64 i = 0;
-		uint64 pos = 0;
-		bool found = false;
-
-		while (i < m_Length)
-		{
-			auto& it = std::find(x.begin(), x.end(), m_Path[i]);
-			if (it != x.end())
-			{
-				pos = i;
-				found = true;
+				return;
 			}
 
-			++i;
+			uint64 length = GetLength(from);
+			to = (ANSICHAR*)::operator new (length + 1);
+
+			uint64 i = 0;
+			while (i < length)
+			{
+				to[i] = from[i];
+				++i;
+			}
+
+			to[length] = '\0';
 		}
 
-		return found ? (int64)pos : -1;
-	}
+		ANSICHAR* substring(ANSICHAR* from, uint64 start, uint64 end)
+		{
+			if(end < start) return nullptr;
 
+			const uint64 length = (end - start) + 1; //extra for null terminator
+			auto str = (ANSICHAR*)::operator new (length + 1);
+
+			uint64 i = 0;
+			uint64 j = start;
+			while (j <= end)
+			{
+				str[i] = from[j];
+				++i;
+				++j;
+			}
+
+			str[length] = '\0';
+
+			return str;
+		}
+
+		int64 find_first_of(ANSICHAR* from, std::vector<ANSICHAR> x)
+		{
+			uint64 i = 0;
+			uint64 pos = 0;
+			uint64 length = GetLength(from);
+
+			for (uint64 i = 0; i < length; i++)
+			{
+				auto& it = std::find(x.begin(), x.end(), from[i]);
+				if (it != x.end())
+				{
+					pos = i;
+
+					return (int64)pos;
+				}
+			}
+
+			return -1;
+		}
+
+		int64 find_last_of(ANSICHAR* from, std::vector<ANSICHAR> x)
+		{
+			uint64 i = 0;
+			uint64 pos = 0;
+			bool found = false;
+			uint64 length = GetLength(from);
+
+			while (i < length)
+			{
+				auto& it = std::find(x.begin(), x.end(), from[i]);
+				if (it != x.end())
+				{
+					pos = i;
+					found = true;
+				}
+
+				++i;
+			}
+
+			return found ? (int64)pos : -1;
+		}
+
+		int64 GetLength(const ANSICHAR* from)
+		{
+			if (from == nullptr)
+			{
+				return 0;
+			}
+
+			uint64 i = 0;
+			while (from[i] != '\0') ++i;
+			return i;
+		}
+	}
 }

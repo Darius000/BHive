@@ -1,6 +1,7 @@
 #pragma once
 
 #include "entt.hpp"
+#include "BHive/Systems/RenderSystem.h"
 
 namespace BHive
 {
@@ -19,6 +20,8 @@ namespace BHive
 		virtual void OnUpdate(const Time& time);
 		virtual void OnEnd();
 
+		void OnViewportResize(uint32 width, uint32 height);
+
 	public:
 		const std::string& GetName() const { return m_Name; }
 
@@ -28,6 +31,10 @@ namespace BHive
 		entt::registry m_Registry;
 
 		std::string m_Name;
+
+	private:
+	//Systems
+		RenderSystem m_RenderSystem;
 	};
 
 	class SceneManager

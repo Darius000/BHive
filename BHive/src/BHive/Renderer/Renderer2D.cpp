@@ -16,7 +16,7 @@ namespace BHive
 
 	}
 
-	void Renderer2D::Begin(/*const CameraComponent& camera*/)
+	void Renderer2D::Begin()
 	{
 		RenderCommands::SetClearColor(BHive::LinearColor(0.2f, 0.2f, 0.2f, 1.0f));
 		RenderCommands::Clear();
@@ -45,11 +45,11 @@ namespace BHive
 		};
 
 		Ref<FMesh> plane(new FMesh());
-		Ref<DefaultMaterial> DMaterial(new DefaultMaterial());
-		DMaterial->SetColor(LinearColor(1.0f, 0.5f, 1.0f, 1.0f));
+		Ref<PhongMaterial> DMaterial(new PhongMaterial());
 		plane->SetVerticesAndIndices(m_Vertices, m_Indices);
-		Ref<Model> m_Model = Make_Ref<Model>(plane);
-		m_Model->SetMaterial(DMaterial);
+		Ref<Model> m_Model = Make_Ref<Model>();
+		m_Model->AddMesh(0, plane);
+		plane->SetMaterial(DMaterial);
 		return m_Model;
 	}
 
@@ -69,11 +69,11 @@ namespace BHive
 		};
 
 		Ref<FMesh> triangle(new FMesh());
-		Ref<DefaultMaterial> DMaterial(new DefaultMaterial());
-		DMaterial->SetColor(LinearColor(1.0f, 0.5f, 0.0f, 1.0f));
+		Ref<PhongMaterial> DMaterial(new PhongMaterial());
 		triangle->SetVerticesAndIndices(m_Vertices, m_Indices);
-		Ref<Model> m_Model = Make_Ref<Model>(triangle);
-		m_Model->SetMaterial(DMaterial);
+		Ref<Model> m_Model = Make_Ref<Model>();
+		m_Model->AddMesh(0, triangle);
+		triangle->SetMaterial(DMaterial);
 		return m_Model;
 	}
 

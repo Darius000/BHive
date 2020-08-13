@@ -10,8 +10,9 @@ namespace BHive
 		glLineWidth(1.0f);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
-		glEnable(GL_CULL_FACE);
+		EnableBackFaceCulling(true);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBlendEquation(GL_FUNC_ADD);
 	}
 
 	void OpenGLRendererAPI::SetClearColor(const LinearColor& color)
@@ -32,6 +33,12 @@ namespace BHive
 	void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
 	{
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetSize(), GL_UNSIGNED_INT, nullptr);
+	}
+
+
+	void OpenGLRendererAPI::EnableBackFaceCulling(bool enable)
+	{
+		enable ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
 	}
 
 }

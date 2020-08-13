@@ -3,7 +3,7 @@
 
 namespace BHive
 {
-	enum class Projection : uint32
+	/*enum class Projection : uint32
 	{
 		Orthographic = 0,
 		Perspective = 1
@@ -25,26 +25,27 @@ namespace BHive
 		FVector2 AspectRatio = FVector2(16.0f, 9.0f);
 		float Near = .01f;
 		float Far = 1000.0f;
-	};
+	};*/
 
 	class Camera
 	{
 	public:
 		Camera();
-		Camera(Projection projection );
-	
-	public:
-		void SetPerspective(PerspectiveSettings perspective);
-		void SetOthographic(OrthographicSettings orthographic);
+		Camera(glm::mat4 projection);
+		//Camera(Projection projection );
+	//
+	//public:
+	//	void SetPerspective(PerspectiveSettings perspective);
+	//	void SetOthographic(OrthographicSettings orthographic);
 
 	public:
 		glm::mat4 GetProjection() const { return m_Projection; }
 
-	public:
+	/*public:
 		OrthographicSettings m_OrthoSettings;
 		PerspectiveSettings m_PerspSettings;
-		Projection m_ProjectionType;
-	private:
-		glm::mat4 m_Projection;
+		Projection m_ProjectionType;*/
+	protected:
+		glm::mat4 m_Projection = glm::mat4(1.0f);
 	};
 }

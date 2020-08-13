@@ -14,7 +14,7 @@ namespace BHive
 		virtual ~Time() {}
 
 	protected:
-		virtual float GetPlatformTime() = 0;
+		virtual float GetPlatformTime(){ return 0.0f; };
 
 	public:
 		float GetTime() const { return m_Time;}
@@ -40,6 +40,6 @@ namespace BHive
 		virtual ~WindowsTime() {}
 
 	protected:
-		virtual float GetPlatformTime() override;
+		float GetPlatformTime() override;
 	};
 }

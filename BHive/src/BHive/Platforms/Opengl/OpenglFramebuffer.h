@@ -23,8 +23,11 @@ namespace BHive
 
 	private:
 		RendererID m_RendererID = 0;
+		RendererID m_MultiSampleRenderID = 0;
+		uint32 m_multisampleAttachment = 0;
 		uint32 m_ColorAttachment = 0;
 		uint32 m_DepthAttachment = 0;
+		uint32 samples = 8;
 		FrameBufferSpecification m_Specification;
 	};
 }

@@ -4,7 +4,7 @@
 #include "BHive/Renderer/VertexArray.h"
 #include "Buffer.h"
 #include "Mesh.h"
-
+#include "Managers/AssetManagers.h"
 
 
 namespace BHive
@@ -28,6 +28,11 @@ namespace BHive
 
 	void FMesh::Render()
 	{
+		if (m_Material)
+		{
+			m_Material->Render();
+		}
+
 		if(m_VertexArray) 
 		{
 			Renderer::Draw(m_VertexArray);
@@ -47,6 +52,11 @@ namespace BHive
 		m_Name = NewName;
 
 		BH_CORE_INFO("{0}", m_Name);
+	}
+
+	void FMesh::SetMaterial(Ref<Material> material)
+	{
+		m_Material = material;
 	}
 
 	void FMesh::CreateBuffers()
@@ -72,61 +82,18 @@ namespace BHive
 		m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 	}	
 
-	Model::Model()
-	{
-
-	}
-
-	Model::Model(std::initializer_list<Ref<FMesh>> meshes)
-		:m_Meshes(meshes)
-	{
-		
-	}
-
-	Model::Model(Ref<FMesh>& mesh)
-	{
-		AddMesh(mesh);
-	}
-
-	Model::Model(std::vector<Ref<FMesh>> meshes)
-		:m_Meshes(meshes)
-	{
-
-	}
-
-	void Model::AddMesh(Ref<FMesh>& Mesh)
-	{
-		m_Meshes.emplace_back(Mesh);
-	}
-
 	void Model::Render()
 	{
-		for (const auto& mesh : m_Meshes)
+		for (auto& mesh : m_Meshes)
 		{
-			if (m_Material) 
-			{
-				m_Material->m_Shader->SetMat4("u_Model", m_Transform.GetMatrix());
-				m_Material->Render();
-			}
-
-			mesh->Render();
+			mesh.second->Render();
 		}
 	}
 
-	void Model::SetMaterial(Ref<Material> material)
-	{
-		m_Material = material;
-	}
-
-	void Model::SetTransform(const Transform& transform)
-	{
-		m_Transform = transform;
-	}
-
-	Ref<Model> Model::Import(const WinPath& Path)
+	Ref<Model> Model::Import(const WinPath& path)
 	{
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(*Path, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile(path.GetFullPath(), aiProcess_Triangulate | aiProcess_FlipUVs);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
@@ -135,23 +102,26 @@ namespace BHive
 		}
 
 		Ref<Model> model(new Model());
-		Ref<LambertMaterial> DMaterial(new LambertMaterial());
-		model->SetMaterial(DMaterial);
-		ProcessNode(scene->mRootNode, scene, model);
+		model->m_OriginalDirectory = path;
+		model->m_Name = path.GetName();
+		s_LastLoadedDirectory = path;
+		uint32 id = 0;
+		ProcessNode(id, scene->mRootNode, scene, model);
 		return model;
 	}
 
-	void Model::ProcessNode(aiNode* node, const aiScene* scene, Ref<Model> model)
+	void Model::ProcessNode(uint32& id, aiNode* node, const aiScene* scene, Ref<Model> model)
 	{
 		for (uint32 i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			model->AddMesh(ProcessMesh(mesh, scene));
+			model->AddMesh(id, ProcessMesh(mesh, scene));
+			id++;
 		}
 
 		for (uint32 i = 0; i < node->mNumChildren; i++)
 		{
-			ProcessNode(node->mChildren[i], scene, model);
+			ProcessNode(id, node->mChildren[i], scene, model);
 		}
 	}
 
@@ -210,10 +180,11 @@ namespace BHive
 
 		if (mesh->mMaterialIndex >= 0)
 		{
-			/*aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-			aiString path;
-			aiReturn tex = material->GetTexture(aiTextureType_DIFFUSE, 0, &path);
-			Texture2D::Create(path.C_Str(), (WinPath("BHiveEditor\\Import\\Meshes\\Shotgun\\") + WinPath(path.C_Str()));*/
+			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+			for (uint32 i = 0; i < AI_TEXTURE_TYPE_MAX; i++)
+			{
+				ProcessTexture(material, (aiTextureType)i);
+			}
 		}
 
 		for (uint32 i = 0; i < mesh->mNumFaces; i++)
@@ -225,9 +196,37 @@ namespace BHive
 			}
 		}
 
-		
+		Ref<PhongMaterial> Material(new PhongMaterial());
+		Mesh->SetMaterial(Material);
 		Mesh->SetVerticesAndIndices(Vertices, Indices);
 		return Mesh;
 	}
 
+	void Model::ProcessTexture(aiMaterial* material, aiTextureType textureType)
+	{
+		aiString path;
+		uint32 numtextures = material->GetTextureCount(textureType);
+
+		if(numtextures == 0) return;
+
+		for (uint32 i = 0; i < numtextures; i++)
+		{
+			aiReturn returnVal = material->GetTexture(textureType, i, &path);
+			if (returnVal == aiReturn_SUCCESS)
+			{
+				if (!TextureManager::Exists(path.C_Str()))
+				{
+					WinPath WindowsPath(s_LastLoadedDirectory.GetPath() + WinPath(path.C_Str()));
+					Texture2D::Create(WindowsPath);
+				}
+			}
+		}
+	}
+
+	void Model::AddMesh(uint32 id, Ref<FMesh>& Mesh)
+	{
+		m_Meshes.emplace(std::pair{ id , Mesh });
+	}
+
+	WinPath Model::s_LastLoadedDirectory = "";
 }

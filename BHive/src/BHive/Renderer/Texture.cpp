@@ -18,6 +18,19 @@ namespace BHive
 	{
 
 	}
+
+	void Texture::Serialize(Ref<Texture> texture, const WinPath& path)
+	{
+		std::ofstream file;
+		file.open(*(std::string(*path) + "\\" + texture->GetName() + ".bh"), std::ios::out | std::ios::trunc);
+		uint32 m_Size = texture->m_Channels * texture->m_Width * texture->m_Height;
+		file << texture->GetName() << std::endl;
+		file << m_Size << " " << texture->m_Width << " " << texture->m_Height << " " << texture->m_Channels << std::endl;
+		file << texture->PixelData.m_DataFormat << " " << texture->PixelData.m_InternalFormat << std::endl;
+		file.write(reinterpret_cast<const char*>(texture->PixelData.m_Data), m_Size);
+		file.close();
+	}
+
 	/*unsigned int Texture::GetIconData() const
 	{
 		return m_TextureData;
@@ -81,14 +94,14 @@ namespace BHive
 		stbi_image_free(m_PixelData);
 	}*/
 
-	Ref<Texture2D> Texture2D::Create(BName TextureName, const WinPath& path)
+	Ref<Texture2D> Texture2D::Create(const WinPath& path)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
 		case RendererAPI::API::OpenGL: {
-			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, path)); 
-			TextureManager::Add(TextureName, tex); 
+			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(path)); 
+			TextureManager::Add(tex->GetName(), tex); 
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;

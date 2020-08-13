@@ -14,7 +14,8 @@ namespace BHive
 		AssetLoader();
 
 		void OpenDirectory(const WinPath& path);
-		void LoadFile(const WinPath& filename);
+		void LoadFile(const WinPath& path);
+		
 
 		std::vector<BString> m_TexExts;
 	};
