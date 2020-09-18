@@ -1,9 +1,11 @@
 #pragma once
 #include <glad/glad.h>
-
+#include "Asset.h"
 
 namespace BHive
 {	
+	class Viewport;
+
 	enum class TilingMethod : uint8
 	{
 		ClampToEdge, ClampToBorder, MirroredRepeat, Repeat, MirroredClampToEdge
@@ -75,14 +77,15 @@ namespace BHive
 		GLenum m_DataFormat;
 	};
 
-	class Texture 
+	class Texture : public Asset
 	{
 	public:
-		Texture(BName Name);
+		Texture(const std::string& Name);
 		virtual ~Texture() = default;
 
 	public:
-		BName GetName() const { return m_Name; };
+		
+		AssetType GetAssetType() const override { return AssetType::Texture;}
 
 		uint32 GetWidth() const  { return m_Width; }
 
@@ -96,11 +99,17 @@ namespace BHive
 
 		virtual void Bind(uint32 slot = 0) const = 0;
 
+		virtual void UnBind(uint32 slot = 0) const = 0;
+
 		virtual void InValidate() = 0;
 
-	protected:
-		BName m_Name;
+		operator uint32() const {return GetRendererID(); }
 
+		operator void*() const { return (void*)&m_RendererID; }
+
+		static Ref<Texture2D> CreateFromFrameBuffer(Viewport* framebuffer);
+
+	protected:
 		WinPath m_Path;
 
 		uint32 m_Width;
@@ -121,9 +130,9 @@ namespace BHive
 
 		uint32 m_Channels = 0;
 
-		friend class TextureEditorLayer;
+		void Serialize(const WinPath& path);
 
-		static void Serialize(Ref<Texture> texture, const WinPath& path);
+		friend class TextureEditor;
 	};
 
 	class Texture2D : public Texture

@@ -1,17 +1,17 @@
 #pragma  once
 
 #include "Shader.h"
+#include "Managers/AssetManagers.h"
 
 namespace BHive
 {
 	class Material
 	{
 	public:
-		Material():m_Shader(nullptr){};
+		Material();
 		virtual ~Material(){};
 
 		void Render();
-		virtual void OnImGuiRender();
 		virtual void OnShaderBind(Ref<Shader>& shader) = 0;
 
 		Ref<Texture2D> m_Texture;
@@ -26,14 +26,10 @@ namespace BHive
 	class DefaultMaterial : public Material
 	{
 	public:
-		DefaultMaterial()
-		{
-			m_Shader = ShaderLibrary::Get("Default");
-		}
+		DefaultMaterial();
 		virtual ~DefaultMaterial(){}
 
-		virtual void OnImGuiRender() override;
-		virtual void OnShaderBind(Ref<Shader>& shader) override;
+		void OnShaderBind(Ref<Shader>& shader) override;
 
 	public:
 		FVector3 m_DiffuseColor		= FVector3(1.0f);
@@ -45,14 +41,10 @@ namespace BHive
 	class LambertMaterial : public DefaultMaterial
 	{
 	public:
-		LambertMaterial()
-		{
-			m_Shader = ShaderLibrary::Get("Lambert");
-		}
+		LambertMaterial();
 		virtual ~LambertMaterial(){}
 
-		virtual void OnImGuiRender() override;
-		virtual void OnShaderBind(Ref<Shader>& shader) override;
+		void OnShaderBind(Ref<Shader>& shader) override;
 
 		FVector2 m_TextureTiling = FVector2(1.0f, 1.0f);
 	};
@@ -60,15 +52,11 @@ namespace BHive
 	class PhongMaterial : public Material
 	{
 	public:
-		PhongMaterial()
-		{
-			m_Shader = ShaderLibrary::Get("Phong");
-		}
+		PhongMaterial();
 
 		virtual ~PhongMaterial(){}
 
-		virtual void OnImGuiRender() override;
-		virtual void OnShaderBind(Ref<Shader>& shader) override;
+		void OnShaderBind(Ref<Shader>& shader) override;
 
 		FVector3 m_Ambient = FVector3(0.0f);
 		FVector3 m_Diffuse = FVector3(1.0f);
@@ -85,13 +73,10 @@ namespace BHive
 	class GridMaterial : public Material
 	{
 	public:
-		GridMaterial()
-		{
-			m_Shader = ShaderLibrary::Get("2DGrid");
-		}
+		GridMaterial();
 
-		virtual void OnImGuiRender() override;
-		virtual void OnShaderBind(Ref<Shader>& shader) override;
+
+		void OnShaderBind(Ref<Shader>& shader) override;
 
 		float m_Scale = 261.0f;
 		float m_Resolution  = .05f;

@@ -12,14 +12,12 @@ namespace BHive
 {
 	struct TagComponent
 	{
-		std::vector<std::string> Tags;
+		std::string Tag;
 
 		TagComponent() = default;
 		TagComponent(const TagComponent&) = default;
-		TagComponent(const std::vector<std::string>& tags)
-			:Tags(tags) {}
-		TagComponent(std::initializer_list<std::string> tags)
-			:Tags(tags) {}
+		TagComponent(const std::string& tag)
+			:Tag(tag) {}
 	};
 
 	struct RenderComponent
@@ -45,7 +43,32 @@ namespace BHive
 
 		FVector3 m_LightColor = FVector3(1.0f);
 		float m_LightBrightness = 1.0f;
-		FVector3 m_LightDirection = FVector3(0.5f, 1.0f, 0.0f);
+	};
+
+	struct PointLightComponent
+	{
+		PointLightComponent() = default;
+		PointLightComponent(const PointLightComponent&) = default;
+
+		FVector3 m_Color = FVector3(1.0f);
+		float m_Constant  =1.0f;
+		float m_Linear = 0.09f;
+		float m_Quadratic = 0.032f;
+		float m_Brightness = 1.0f;
+	};
+
+	struct SpotLightComponent
+	{
+		SpotLightComponent() = default;
+		SpotLightComponent(const SpotLightComponent&)  = default;
+
+		FVector3 m_Color = FVector3(1.0);
+		float m_Cutoff = 12.5f;
+		float m_OuterCutoff = 17.5;
+		float m_Constant = 1.0f;
+		float m_Linear = 0.09f;
+		float m_Quadratic = 0.032f;
+		float m_Brightness = 1.0f;
 	};
 
 	struct CameraComponent 
@@ -56,11 +79,6 @@ namespace BHive
 		SceneCamera m_Camera;
 		bool m_PrimaryCamera = true;
 		bool m_FixedAspectRatio = false;
-		OrthographicSettings m_OrthographicSettings;
-		PerspectiveSettings m_PerspectiveSettings;
-
-	private:
-		int item = 0;
 	};
 
 	class ScriptEntity;

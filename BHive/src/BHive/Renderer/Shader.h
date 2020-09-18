@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Asset.h"
+
 namespace BHive
 {
-	class ShaderLibrary;
 
-	class BHive_API Shader
+	class BHive_API Shader : public Asset
 	{
 	public:
+		Shader(const std::string& name): Asset(name){}
 		virtual ~Shader() = default;
 
 		virtual void Bind() const = 0;
@@ -25,30 +27,10 @@ namespace BHive
 		virtual void SetMat3(const BString& name, const glm::mat3& mat) const = 0;
 		virtual void SetMat4(const BString& name, const glm::mat4& mat) const = 0;
 
-		virtual const BName& GetName() const = 0;
+		AssetType GetAssetType() const override { return AssetType::Shader; }
 
 		static Ref<Shader> Create(const WinPath& filePath);
 		static Ref<Shader> Create(const BName& name, const BString& vertexSrc, const BString& fragmentSrc);
 	
-	};
-
-	class ShaderLibrary
-	{
-	public:
-		static void Add(const BName& name, const Ref<Shader>& shader);
-		static void Add(const Ref<Shader>& shader);
-		
-		static Ref<Shader> Load(const WinPath& filePath);
-		static Ref<Shader> Load(const BName& name, const WinPath& filePath);
-
-		static Ref<Shader> Get(const BName& name);
-		static std::unordered_map<BName, Ref<Shader>> GetShaders() { return m_Shaders; }
-
-		static bool Exists(const BName& name);
-
-	private:
-		static std::unordered_map<BName, Ref<Shader>> m_Shaders;
-	public:
-		static void UpdateShaderViewProjectionMatrices(glm::mat4 VP);
 	};
 }

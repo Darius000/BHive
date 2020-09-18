@@ -3,5 +3,9 @@
 
 namespace BHive
 {
+	AssetManager::AssetManager()
+	{
+
+	}
 
 }

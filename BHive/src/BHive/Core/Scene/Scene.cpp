@@ -26,7 +26,7 @@ namespace BHive
 		Entity entity = {m_Registry.create(), this};
 		entity.AddComponent<TransformComponent>();
 		auto& tag = entity.AddComponent<TagComponent>();
-		tag.Tags.emplace_back(name.empty() ? "Entity" : name);
+		tag.Tag = name.empty() ? "Entity" : name;
 		return entity;
 	}
 
@@ -114,9 +114,9 @@ namespace BHive
 
 	Scene* SceneManager::CreateScene(const std::string& name)
 	{
-		Scope<Scene> scene(new Scene(name));
+		Scope<Scene> scene = Make_Scope<Scene>(name);
 		AddScene(scene);
-		return m_Scenes.find(name)->second.get();
+		return m_Scenes[name].get();
 	}
 
 	void SceneManager::SetActiveScene(const std::string& name)

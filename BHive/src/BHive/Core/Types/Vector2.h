@@ -10,6 +10,7 @@ namespace BHive
 		struct Vector3;
 
 		Vector2():x((T)0), y((T)0){};
+		Vector2(T _x) : x(_x), y(_x){};
 		Vector2(T _x, T _y) :x(_x), y(_y) {};
 		Vector2(const Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
 		Vector2(Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
@@ -184,4 +185,7 @@ namespace BHive
 	using UVector2 = Vector2<uint32>;
 	using IVector2 = Vector2<int32>;
 	using BVector2 = Vector2<bool>;
+
+
+	
 }

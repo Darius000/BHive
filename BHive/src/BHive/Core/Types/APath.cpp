@@ -36,19 +36,19 @@ namespace BHive
 	}
 
 
-	WinPath::WinPath(WinPath&& other) noexcept
-	{
-		//BH_CORE_INFO("Moved!");
-		m_Name = std::move(other.m_Name); 
-		m_Ext = std::move(other.m_Ext);
-		m_Directory = other.m_Directory;
-		m_Path = std::move(other.m_Path);
-		m_FullPath = std::move(other.m_FullPath);
-		m_Length = other.m_Length;
-		
-		other.m_Length = 0;
-		other.m_Directory = false;
-	}
+	//WinPath::WinPath(WinPath&& other) noexcept
+	//{
+	//	//BH_CORE_INFO("Moved!");
+	//	m_Name = std::move(other.m_Name); 
+	//	m_Ext = std::move(other.m_Ext);
+	//	m_Directory = other.m_Directory;
+	//	m_Path = std::move(other.m_Path);
+	//	m_FullPath = std::move(other.m_FullPath);
+	//	m_Length = other.m_Length;
+	//	
+	//	other.m_Length = 0;
+	//	other.m_Directory = false;
+	//}
 
 	WinPath::~WinPath()
 	{
@@ -56,6 +56,7 @@ namespace BHive
 		::operator delete(m_FullPath, (m_Length + 1) * sizeof(ANSICHAR));
 		::operator delete(m_Name, (StringLibrary::GetLength(m_Name) + 1) * sizeof(ANSICHAR));
 		::operator delete(m_Ext, (StringLibrary::GetLength(m_Ext)  + 1) * sizeof(ANSICHAR));
+		::operator delete(m_NameAndExt, (StringLibrary::GetLength(m_NameAndExt) + 1) * sizeof(ANSICHAR));
 	}
 
 
@@ -77,6 +78,10 @@ namespace BHive
 		end = HasDot && !m_Directory ? dotPos - 1 : m_Length;
 		m_Name = std::move(StringLibrary::substring(m_FullPath, start, end));
 
+		start = HasSlash ? lastslashPos + 1 : 0;
+		end = m_Length;
+		m_NameAndExt = std::move(StringLibrary::substring(m_FullPath, start, end));
+
 		start = 0;
 		end = HasSlash ? lastslashPos : m_Length;
 		m_Path = std::move(StringLibrary::substring(m_FullPath, start, end ));
@@ -90,6 +95,7 @@ namespace BHive
 		StringLibrary::copy(m_Ext, Other.m_Ext);
 		StringLibrary::copy(m_Path, Other.m_Path);
 		StringLibrary::copy(m_FullPath, Other.m_FullPath);
+		StringLibrary::copy(m_NameAndExt, Other.m_NameAndExt);
 
 		m_Directory = Other.m_Directory;
 		m_Length = Other.m_Length;

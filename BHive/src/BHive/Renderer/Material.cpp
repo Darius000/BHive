@@ -5,6 +5,11 @@
 namespace BHive
 {
 
+	Material::Material() :m_Shader(nullptr)
+	{
+
+	}
+
 	void Material::Render()
 	{
 		if (m_Shader)
@@ -14,53 +19,25 @@ namespace BHive
 			OnShaderBind(m_Shader);
 		}
 
-		/*if (m_Texture)
+		if (m_Texture)
 		{
-			m_Texture->Bind();
-		}*/
-
-	}
-
-	void Material::OnImGuiRender()
-	{
-		ImGui::Separator();
-		ImGui::Text("Material");
-		ImGui::SameLine();
-		if (ImGui::BeginCombo("", *m_Texture->GetName(), ImGuiComboFlags_NoArrowButton))
-		{
-			for (int n = 0; n < TextureManager::GetNames().size(); n++)
-			{
-				std::string name = TextureManager::GetNames()[n];
-				if (ImGui::Selectable(*name, name == m_Texture->GetName()))
-				{
-					m_Texture = TextureManager::Get(name);
-				}
-			}
-			ImGui::EndCombo();
+			m_Shader->SetInt("material.diffuseTexture", 1);
+			m_Texture->Bind(1);
 		}
 	}
 
-	void DefaultMaterial::OnImGuiRender()
+	DefaultMaterial::DefaultMaterial()
 	{
-		Material::OnImGuiRender();
-
-		ImGui::ColorEdit3("Ambient Color", *m_AmbientColor);
-		ImGui::ColorEdit3("Diffuse Color##", *m_DiffuseColor);
-		ImGui::DragFloat("Transparency", &m_Transparency, 0.01f, 0.0f, 1.0f);
-		ImGui::DragFloat2("Texture Tiling##", *m_TextureTiling, 0.1f);
+		m_Shader = AssetManager::Get<Shader>("Default");
 	}
 
 	void DefaultMaterial::OnShaderBind(Ref<Shader>& shader)
 	{
+
 		shader->SetVec3("material.ambient", m_AmbientColor);
 		shader->SetVec3("material.diffuse", m_DiffuseColor);
 		shader->SetFloat("material.transparency", 1.0f - m_Transparency);
 		shader->SetVec2("material.tiling", m_TextureTiling);
-	}
-
-	void LambertMaterial::OnImGuiRender()
-	{
-		DefaultMaterial::OnImGuiRender();
 	}
 
 	void LambertMaterial::OnShaderBind(Ref<Shader>& shader)
@@ -68,67 +45,9 @@ namespace BHive
 		DefaultMaterial::OnShaderBind(shader);
 	}
 
-	void PhongMaterial::OnImGuiRender()
+	LambertMaterial::LambertMaterial()
 	{
-		ImGui::Separator();
-		ImGui::Text("Phong Material");
-		ImGui::Separator();
-		
-		static std::string dtextureName = "None";
-		if (ImGui::BeginCombo("Diffuse texture", *dtextureName, ImGuiComboFlags_NoArrowButton))
-		{
-			for (int n = 0; n < TextureManager::GetNames().size(); n++)
-			{
-				std::string name = TextureManager::GetNames()[n];
-
-				if (ImGui::Selectable(*name, name == dtextureName))
-				{
-					m_DiffuseTexture = TextureManager::Get(name);
-					dtextureName = m_DiffuseTexture->GetName();
-				}
-			}
-			ImGui::EndCombo();
-		}
-		
-		static std::string stextureName = "None";
-		if (ImGui::BeginCombo("Specular Texture", *stextureName, ImGuiComboFlags_NoArrowButton))
-		{
-			for (int n = 0; n < TextureManager::GetNames().size(); n++)
-			{
-				std::string name = TextureManager::GetNames()[n];
-
-				if (ImGui::Selectable(*name, name == stextureName))
-				{
-					m_SpecularTexture = TextureManager::Get(name);
-					stextureName = m_SpecularTexture->GetName();
-				}
-			}
-			ImGui::EndCombo();
-		}
-		
-		static std::string etextureName = "None";
-		if (ImGui::BeginCombo("Emission Texture", *etextureName, ImGuiComboFlags_NoArrowButton))
-		{
-			for (int n = 0; n < TextureManager::GetNames().size(); n++)
-			{
-				std::string name = TextureManager::GetNames()[n];
-
-				if (ImGui::Selectable(*name, name == etextureName))
-				{
-					m_EmissionTexture = TextureManager::Get(name);
-					etextureName = m_EmissionTexture->GetName();
-				}
-			}
-			ImGui::EndCombo();
-		}
-		
-		ImGui::ColorEdit3("Ambient Color", *m_Ambient);
-		ImGui::ColorEdit3("Diffuse Color", *m_Diffuse);
-		ImGui::ColorEdit3("Specular Color", *m_Specular);
-		ImGui::ColorEdit3("Emission Color", *m_Emission);
-		ImGui::DragFloat("Shininess", &m_Shininess, 0.01f, 0.0f, 60.0f);
-		ImGui::DragFloat("Transparency", &m_Transparency, 0.01f, 0.0f, 1.0f);
-		ImGui::DragFloat2("Texture Tiling", *m_TextureTiling, 0.1f);
+		m_Shader = AssetManager::Get<Shader>("Lambert");
 	}
 
 	void PhongMaterial::OnShaderBind(Ref<Shader>& shader)
@@ -161,12 +80,14 @@ namespace BHive
 		}
 	}
 
-	void GridMaterial::OnImGuiRender()
+	PhongMaterial::PhongMaterial()
 	{
-		ImGui::DragFloat("Grid Scale", &m_Scale, .01f, 0.0f, 1000.0f);
-		ImGui::DragFloat("Grid Resolution", &m_Resolution, .01f, 0.0f, 1.0f);
-		ImGui::ColorEdit4("Grid Color", *m_LineColor);
-		ImGui::ColorEdit4("Grid Background Color", *m_BackgroundColor);
+		m_Shader = AssetManager::Get<Shader>("Phong");
+	}
+
+	GridMaterial::GridMaterial()
+	{
+		m_Shader = AssetManager::Get<Shader>("2DGrid");
 	}
 
 	void GridMaterial::OnShaderBind(Ref<Shader>& shader)

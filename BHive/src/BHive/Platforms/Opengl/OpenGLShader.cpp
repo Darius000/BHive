@@ -18,6 +18,7 @@ namespace BHive
 	}
 
 	OpenGLShader::OpenGLShader(const WinPath& filePath)
+		:Shader("")
 	{
 		m_Name = filePath.GetName();
 
@@ -26,8 +27,8 @@ namespace BHive
 		Compile(shaderSources);
 	}
 
-	OpenGLShader::OpenGLShader(const BName& name, const BString&  vertexSrc, const BString&  fragmentSrc)
-		:m_Name(name)
+	OpenGLShader::OpenGLShader(const std::string& name, const BString&  vertexSrc, const BString&  fragmentSrc)
+		:Shader(name)
 	{
 		std::unordered_map<GLenum, BString> sources;
 		sources[GL_VERTEX_SHADER] = vertexSrc;

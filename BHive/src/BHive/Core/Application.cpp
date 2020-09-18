@@ -25,15 +25,15 @@ namespace BHive
 		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
 
 		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
-		TextureManager::CreateAsset("White", Make_Ref<OpenGLTexture2D>("White", 1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
+		AssetManager::CreateAsset(Texture2D::Create("White", 1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
 	
 		//Create default black texture
 		uint8 BlackTextureData[] = {0x00, 0x00, 0x00, 0xff, '\0'};
-		TextureManager::CreateAsset("Black", Make_Ref<OpenGLTexture2D>("Black", 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
+		AssetManager::CreateAsset(Texture2D::Create("Black", 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
 	
 		LoadAssets();
 
-		Ref<Texture2D> m_WindowsIcon = TextureManager::Get("folder");
+		Ref<Texture2D> m_WindowsIcon = AssetManager::Get<Texture2D>("folder");
 		m_Window->SetIcon(m_WindowsIcon);
 		m_Window->SetVSync(false);
 
@@ -95,8 +95,6 @@ namespace BHive
 	{
 		BH_PROFILE_FUNCTION();
 
-		//ActorManager::Start();
-
 		while (m_Running)
 		{
 			m_Time->Update();
@@ -108,19 +106,15 @@ namespace BHive
 					layer->OnUpdate(*m_Time);
 				}
 
-				//ActorManager::Update(*m_Time);
+				m_ImGuiLayer->Begin();
+				for (Layer* layer : m_LayerStack)
+				{
+					layer->OnImGuiRender();
+				}
+				m_ImGuiLayer->End();
 			}
-
-			m_ImGuiLayer->Begin();
-			for (Layer* layer : m_LayerStack)
-			{
-				layer->OnImGuiRender();
-			}
-			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-
-			//ObjectManager::CheckPendingDestroy();
 		}
 	}
 

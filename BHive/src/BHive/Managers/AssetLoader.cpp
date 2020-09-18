@@ -28,18 +28,19 @@ namespace BHive
 
 	void AssetLoader::LoadFile(const WinPath& path)
 	{
-		//BH_CORE_TRACE("found file: {0}", *filepath);
 
 		BString ext = path.GetExtension();
 		auto& it = std::find(m_TexExts.begin(), m_TexExts.end(), ext);
 
 		if (ext == "glsl")
 		{
-			ShaderLibrary::Load(path);
+			Ref<Shader> m_Shader = Shader::Create(path);
+			AssetManager::Add(m_Shader);
 		}
 		else if (it != m_TexExts.end())
 		{
-			Texture2D::Create(path);
+			Ref<Texture2D> m_Texutre = Texture2D::Create(path);
+			AssetManager::Add(m_Texutre);
 		}
 	}
 }

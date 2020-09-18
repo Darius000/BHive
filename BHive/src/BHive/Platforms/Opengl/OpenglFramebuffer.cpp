@@ -18,6 +18,7 @@ namespace BHive
 		glDeleteFramebuffers(1, &m_RendererID);
 		glDeleteTextures(1, &m_ColorAttachment);
 		glDeleteTextures(1, &m_DepthAttachment);
+
 	}
 
 	void OpenglFramebuffer::Invalidate()
@@ -26,15 +27,15 @@ namespace BHive
 		if (m_RendererID)
 		{
 			glDeleteFramebuffers(1, &m_RendererID);
-			glDeleteFramebuffers(1, &m_MultiSampleRenderID);
-			glDeleteTextures(1, &m_multisampleAttachment);
+			//glDeleteFramebuffers(1, &m_MultiSampleRenderID);
+			//glDeleteTextures(1, &m_multisampleAttachment);
 			glDeleteTextures(1, &m_ColorAttachment);
 			glDeleteTextures(1, &m_DepthAttachment);
 		}
 
 
 		//Create mulitsample framebuffer
-		glCreateFramebuffers(1, &m_MultiSampleRenderID);
+		/*glCreateFramebuffers(1, &m_MultiSampleRenderID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_MultiSampleRenderID);
 
 		glCreateTextures(GL_TEXTURE_2D_MULTISAMPLE, 1, &m_multisampleAttachment);
@@ -44,7 +45,7 @@ namespace BHive
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D_MULTISAMPLE, m_multisampleAttachment, 0);
 
 		BH_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Multisample Framebuffer is incomplete");
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
 
 		//Create screen framebuffer
 		glCreateFramebuffers(1, &m_RendererID);
@@ -69,15 +70,16 @@ namespace BHive
 
 		BH_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete");
 		
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0 );
+		glBindFramebuffer(GL_FRAMEBUFFER, 0 );
 	}
 
 	void OpenglFramebuffer::Bind()
 	{
-		glBindFramebuffer(GL_READ_FRAMEBUFFER, m_MultiSampleRenderID);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_RendererID);
-		glBlitFramebuffer(0, 0, m_Specification.Width, m_Specification.Height, 0, 0, m_Specification.Width, m_Specification.Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
-		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+		//glBindFramebuffer(GL_READ_FRAMEBUFFER, m_MultiSampleRenderID);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
+
+		//glBlitFramebuffer(0, 0, m_Specification.Width, m_Specification.Height, 0, 0, m_Specification.Width, m_Specification.Height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+		glViewport(0, 0, m_Specification.Width, m_Specification.Height);	
 	}
 
 	void OpenglFramebuffer::UnBind()

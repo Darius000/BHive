@@ -4,14 +4,11 @@
 
 #include "BHive/BHivePCH.h"
 #include "imgui.h"
+#include "BHive/ImGui/ImGuiWrappers.h"
 #include "BHive/Layers/ImGuiLayer.h"
 #include "Bhive/Object/Camera.h"
 #include "BHive/Components/Component.h"
 #include "BHive/Managers/AssetManagers.h"
-
-
-//-------AssetEditors-----------------
-#include "BHive/Layers/AssetEditors/TextureEditorLayer.h"
 
 //-------Renderer----------------
 

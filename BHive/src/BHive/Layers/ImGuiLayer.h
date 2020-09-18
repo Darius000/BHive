@@ -2,8 +2,10 @@
 
 #include "imgui.h"
 
+
 namespace BHive
 {
+	
 	class BHive_API ImGuiLayer : public Layer
 	{
 	public:
@@ -12,8 +14,9 @@ namespace BHive
 
 		void OnAttach() override;
 		void OnDetach() override;
-		void OnImGuiRender() override;
 		void OnEvent(Event& e) override; 
+		void OnImGuiRender() override;
+		void OnUpdate(const Time& time) override;
 
 		void Begin();
 		void End();

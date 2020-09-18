@@ -27,9 +27,9 @@ namespace BHive
 		return *(String + std::to_string(Integer));
 	}
 
-	inline const ANSICHAR* operator+(const BString& a, const ANSICHAR* b) 
+	inline BString operator+(const BString& a, const ANSICHAR* b) 
 	{
-		return (a + BString(b)).c_str();
+		return (a + BString(b));
 	}
 
 	inline const char* operator+(const uint32& Integer, const std::string& String)

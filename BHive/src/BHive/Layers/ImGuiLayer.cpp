@@ -22,7 +22,7 @@ namespace BHive
 
 	ImGuiLayer::~ImGuiLayer()
 	{
-
+		
 	}
 
 	void ImGuiLayer::OnAttach()
@@ -64,12 +64,6 @@ namespace BHive
 		ImGui::DestroyContext();
 	}
 
-
-	void ImGuiLayer::OnImGuiRender()
-	{
-
-	}
-
 	void ImGuiLayer::OnEvent(Event& e)
 	{
 		if (!m_BlockEvents)
@@ -78,6 +72,16 @@ namespace BHive
 			e.m_Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
 			e.m_Handled |= e.IsInCategory(EventCategoryKeyBoard) & io.WantCaptureKeyboard;
 		}
+	}
+
+	void ImGuiLayer::OnImGuiRender()
+	{
+		
+	}
+
+	void ImGuiLayer::OnUpdate(const Time& time)
+	{
+		
 	}
 
 	void ImGuiLayer::Begin()

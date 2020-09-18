@@ -11,7 +11,6 @@ namespace BHive
 			:Application("BHive Editor")
 		{
 			PushLayer(new EditorLayer());
-			PushOverlay(new TextureEditorLayer());
 		}
 
 		~BHiveEditor()

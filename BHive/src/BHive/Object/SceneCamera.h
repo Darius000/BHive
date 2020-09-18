@@ -36,7 +36,6 @@ namespace BHive
 		void RecalculateProjection();
 		void OnViewportResize(uint32 width, uint32 height);
 
-	private:
 		OrthographicSettings m_OrthographicSettings;
 		PerspectiveSettings m_PerspectiveSettings;
 		Projection m_CurrentProjection = Projection::Orthographic;
