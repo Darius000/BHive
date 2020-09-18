@@ -1,11 +1,7 @@
 #include "BHivePCH.h"
 #include <glad/glad.h>
 #include "BHive/Renderer/Renderer.h"
-#include "BHive/Renderer/VertexArray.h"
-#include "Buffer.h"
 #include "Mesh.h"
-#include "Managers/AssetManagers.h"
-
 
 namespace BHive
 {
@@ -51,7 +47,7 @@ namespace BHive
 	{
 		m_Name = NewName;
 
-		BH_CORE_INFO("{0}", m_Name);
+		//BH_CORE_INFO("{0}", m_Name);
 	}
 
 	void FMesh::SetMaterial(Ref<Material> material)
@@ -90,7 +86,12 @@ namespace BHive
 		}
 	}
 
-	Ref<Model> Model::Import(const WinPath& path)
+	Ref<Model> Model::Create(const WinPath& path)
+	{
+		return Import(path, false);
+	}
+
+	Ref<Model> Model::Import(const WinPath& path, bool ImportTextures)
 	{
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(path.GetFullPath(), aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -101,31 +102,37 @@ namespace BHive
 			return nullptr;
 		}
 
-		Ref<Model> model(new Model());
+		Ref<Model> model = Make_Ref<Model>();
 		model->m_OriginalDirectory = path;
 		model->m_Name = path.GetName();
 		s_LastLoadedDirectory = path;
 		uint32 id = 0;
-		ProcessNode(id, scene->mRootNode, scene, model);
+		ProcessNode(id, scene->mRootNode, scene, model, ImportTextures);
 		return model;
 	}
 
-	void Model::ProcessNode(uint32& id, aiNode* node, const aiScene* scene, Ref<Model> model)
+	bool Model::IsExtensionSupported(const std::string& ext)
+	{
+		Assimp::Importer importer;
+		return importer.IsExtensionSupported(ext);
+	}
+
+	void Model::ProcessNode(uint32& id, aiNode* node, const aiScene* scene, Ref<Model> model, bool ImportTextures)
 	{
 		for (uint32 i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			model->AddMesh(id, ProcessMesh(mesh, scene));
+			model->AddMesh(id, ProcessMesh(mesh, scene, ImportTextures));
 			id++;
 		}
 
 		for (uint32 i = 0; i < node->mNumChildren; i++)
 		{
-			ProcessNode(id, node->mChildren[i], scene, model);
+			ProcessNode(id, node->mChildren[i], scene, model, ImportTextures);
 		}
 	}
 
-	Ref<FMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+	Ref<FMesh> Model::ProcessMesh(aiMesh* mesh, const aiScene* scene, bool ImportTextures)
 	{
 		Ref<FMesh> Mesh(new FMesh());
 		Mesh->SetName(mesh->mName.C_Str());
@@ -181,9 +188,13 @@ namespace BHive
 		if (mesh->mMaterialIndex >= 0)
 		{
 			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-			for (uint32 i = 0; i < AI_TEXTURE_TYPE_MAX; i++)
-			{
-				ProcessTexture(material, (aiTextureType)i);
+
+			if(ImportTextures)
+			{ 
+				for (uint32 i = 0; i < AI_TEXTURE_TYPE_MAX; i++)
+				{
+					ProcessTexture(material, (aiTextureType)i);
+				}
 			}
 		}
 
@@ -214,7 +225,7 @@ namespace BHive
 			aiReturn returnVal = material->GetTexture(textureType, i, &path);
 			if (returnVal == aiReturn_SUCCESS)
 			{
-				if (!TextureManager::Exists(path.C_Str()))
+				if (!AssetManager::Exists(path.C_Str()))
 				{
 					WinPath WindowsPath(s_LastLoadedDirectory.GetPath() + WinPath(path.C_Str()));
 					Texture2D::Create(WindowsPath);

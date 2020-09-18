@@ -18,7 +18,7 @@ namespace BHive
 
 	void Renderer2D::Begin()
 	{
-		RenderCommands::SetClearColor(BHive::LinearColor(0.2f, 0.2f, 0.2f, 1.0f));
+		RenderCommands::SetClearColor(BHive::LinearColor(0.5f, 0.5f, 0.50f, 1.0f));
 		RenderCommands::Clear();
 	}
 
@@ -50,6 +50,7 @@ namespace BHive
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, plane);
 		plane->SetMaterial(DMaterial);
+		m_Model->m_Name = "plane";
 		return m_Model;
 	}
 
@@ -74,6 +75,7 @@ namespace BHive
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, triangle);
 		triangle->SetMaterial(DMaterial);
+		m_Model->m_Name = "triangle";
 		return m_Model;
 	}
 

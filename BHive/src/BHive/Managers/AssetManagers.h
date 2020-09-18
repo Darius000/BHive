@@ -1,116 +1,102 @@
 #pragma once
 
 #include "BHivePCH.h"
+#include "BHive/Renderer/Asset.h"
 #include "BHive/Renderer/Texture.h"
 
 namespace BHive
 {
-	template<class assetType>
+	
+	template<class T = Asset>
+	using Assets = std::unordered_map<std::string, Ref<T>>;
+
+	template<class T = Asset>
+	class AssetList
+	{
+		
+	public:
+		static Assets<T> s_Assets;
+
+		friend class AssetManager;
+	};
+
+	template<class T>
+	Assets<T> AssetList<T>::s_Assets;
+
 	class AssetManager
 	{
 	private:
 		AssetManager();
 
 	public:
-		static Ref<assetType> Get(const std::string& name);
+		template<class T = Asset>
+		static Ref<T> Get(const std::string& name);
 
-		static void CreateAsset(const std::string& AssetName, Ref<assetType> Asset);
+		template<class T= Asset>
+		static void CreateAsset(Ref<T> asset);
 
-		static void Add(const std::string& AssetName, Ref<assetType> Asset);
+		template<class T = Asset>
+		static void Add(Ref<T> asset);
 
+		template<class T = Asset>
 		static void Remove(const std::string& name);
 
+		template<class T = Asset>
 		static bool Exists(const std::string& name);
 
-		static std::unordered_map<std::string, Ref<assetType>> GetAssets();
-
-		static std::vector<std::string> GetNames();
-
-		static void PrintAssetNames();
-
-	private:
-		static std::unordered_map<std::string, Ref<assetType>> s_Assets;
-		static std::vector<std::string> s_Names;
+		template<class T = Asset>
+		static Assets<T> GetAssets();
 	};
 
-	template<class assetType>
-	std::vector<std::string> AssetManager<assetType>::GetNames()
+	template<class T>
+	Ref<T> AssetManager::Get(const std::string& name)
 	{
-		return s_Names;
+		if(Exists<T>(name) )
+			return AssetList<T>::s_Assets[name];
+		else
+			return nullptr;
 	}
 
-	template<class assetType>
-	bool AssetManager<assetType>::Exists(const std::string& name)
+	template<class T>
+	bool AssetManager::Exists(const std::string& name)
 	{
-		return s_Assets.find(name) != s_Assets.end();
+		return AssetList<T>::s_Assets.find(name) != AssetList<T>::s_Assets.end()
+		&& AssetList<Asset>::s_Assets.find(name) != AssetList<Asset>::s_Assets.end();
 	}
 
-	template<class assetType>
-	void AssetManager<assetType>::CreateAsset(const std::string& AssetName, Ref<assetType> Asset)
+	template<class T>
+	void AssetManager::CreateAsset(Ref<T> asset)
 	{
-		if(Exists(AssetName)) BH_CORE_ERROR("Asset with name already exists");
-		s_Assets.insert({AssetName, Asset});
-		s_Names.push_back(AssetName);
+		std::string& name = asset->GetName();
+		if (Exists<T>(name)) BH_CORE_ERROR("Asset with name already exists");
+		AssetList<T>::s_Assets.insert({ name, asset });
+		AssetList<Asset>::s_Assets.insert({name, asset});
 	}
 
-	template<class assetType>
-	AssetManager<assetType>::AssetManager()
+	template<class T>
+	void AssetManager::Add(Ref<T> asset)
 	{
-
-	}
-
-	template<class assetType>
-	Ref<assetType> AssetManager<assetType>::Get(const std::string& name)
-	{
-		return Exists(name) ? s_Assets[name] : nullptr;
-	}
-
-	template<class assetType>
-	void AssetManager<assetType>::Add(const std::string& AssetName, Ref<assetType> Asset)
-	{
-		if(!Exists(AssetName)) 
+		std::string& name = asset->GetName();
+		if (!Exists<T>(name))
 		{
-			s_Assets.insert({ AssetName, Asset });
-			s_Names.push_back(AssetName);
+			AssetList<T>::s_Assets.insert({ name, asset });
+			AssetList<Asset>::s_Assets.insert({ name, asset });
 		}
 	}
 
-	template<class assetType>
-	void AssetManager<assetType>::Remove(const std::string& name)
+	template<class T>
+	void AssetManager::Remove(const std::string& name)
 	{
-		if(Exists(name)) 
+		if (Exists<T>(name))
 		{
-			s_Assets.erase(name);
-			s_Names.erase(name);
+			AssetList<T>::s_Assets.erase(name);
+			AssetList<Asset>::s_Assets.erase(name);
 		}
 	}
 
-	template<class assetType>
-	std::unordered_map<BName, Ref<assetType>> BHive::AssetManager<assetType>::GetAssets()
+	template<class T>
+	Assets<T> AssetManager::GetAssets()
 	{
-		return s_Assets;
+		return AssetList<T>::s_Assets;
 	}
-
-	template<class assetType>
-	void AssetManager<assetType>::PrintAssetNames()
-	{
-		for (auto Asset : s_Assets)
-		{
-			BH_CORE_INFO("{0}", Asset.first);
-		}
-	}
-
-	template<class assetType>
-	std::unordered_map<std::string, Ref<assetType>> AssetManager<assetType>::s_Assets;
-
-	template<class assetType>
-	std::vector<std::string> AssetManager<assetType>::s_Names;
-
-	class TextureManager : public AssetManager<Texture2D>
-	{
-	public:
-
-	};
-	
-	
 }

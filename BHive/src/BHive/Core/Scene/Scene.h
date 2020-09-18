@@ -35,6 +35,8 @@ namespace BHive
 	private:
 	//Systems
 		RenderSystem m_RenderSystem;
+
+		friend class SceneHierarchyPanel;
 	};
 
 	class SceneManager

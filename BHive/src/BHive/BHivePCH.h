@@ -34,6 +34,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+
+//----------------------ImGui--------
+#include "BHive/ImGui/ImGuiWrappers.h"
+
 //-------------Core----------------
 #include "BHive/Core/Core.h"
 #include "BHive/Core/Log.h"

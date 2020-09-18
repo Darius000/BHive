@@ -9,7 +9,7 @@ namespace BHive
 	{
 	public:
 		OpenGLShader(const WinPath&  filePath);
-		OpenGLShader(const BName& name, const BString&  vertexSrc, const BString&  fragmentSrc);
+		OpenGLShader(const std::string& name, const BString&  vertexSrc, const BString&  fragmentSrc);
 		~OpenGLShader();
 
 		virtual void Bind() const override;
@@ -28,8 +28,6 @@ namespace BHive
 		void SetMat3(const BString& name, const glm::mat3& mat) const override;
 		void SetMat4(const BString& name, const glm::mat4& mat) const override;
 
-		virtual const BName& GetName() const override { return m_Name; };
-
 	protected:
 		bool CheckShaderStatus(uint32 Shader);
 		bool CheckLinkStatus(uint32 ShaderProgram);
@@ -41,6 +39,5 @@ namespace BHive
 
 	private:
 		uint32 id;
-		BName m_Name;
 	};
 }

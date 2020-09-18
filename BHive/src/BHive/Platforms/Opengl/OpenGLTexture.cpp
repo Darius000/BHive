@@ -79,6 +79,11 @@ namespace BHive
 	}
 
 
+	void OpenGLTexture2D::UnBind(uint32 slot) const
+	{
+		glBindTextureUnit(slot, 0);
+	}
+
 	void OpenGLTexture2D::InValidate()
 	{
 		

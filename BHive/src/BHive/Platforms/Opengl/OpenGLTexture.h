@@ -15,6 +15,7 @@ namespace BHive
 
 		virtual uint32 GetRendererID() const override { return m_RendererID; }
 		virtual void Bind(uint32 slot = 0) const override;
+		virtual void UnBind(uint32 slot = 0) const override;
 
 	public:
 		void InValidate() override;

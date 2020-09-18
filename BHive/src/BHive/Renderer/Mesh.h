@@ -4,6 +4,8 @@
 #include  <assimp/scene.h>
 #include  <assimp/postprocess.h>
 
+#include "VertexArray.h"
+#include "Buffer.h"
 #include "Material.h"
 
 namespace BHive
@@ -44,7 +46,7 @@ namespace BHive
 
 	using Meshes = std::unordered_map<uint32, Ref<FMesh>>;
 	
-	class Model
+	class Model : public Asset
 	{
 		
 	public:
@@ -52,13 +54,17 @@ namespace BHive
 		virtual ~Model() = default;
 
 		void Render();
-	
+		static Ref<Model> Create(const WinPath& path);
+
+		AssetType GetAssetType() const override { return AssetType::Mesh; } ;
+
 	public:
-		static Ref<Model> Import(const WinPath& path);
+		static Ref<Model> Import(const WinPath& path, bool ImportTextures);
+		static bool IsExtensionSupported(const std::string& ext);
 
 	private:
-		static void ProcessNode(uint32& id, aiNode* node, const aiScene *scene, Ref<Model> model);
-		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene);
+		static void ProcessNode(uint32& id, aiNode* node, const aiScene *scene, Ref<Model> model, bool ImportTextures);
+		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene, bool ImportTextures);
 		static void ProcessTexture(aiMaterial* material, aiTextureType textureType);
 
 	public:
@@ -78,8 +84,7 @@ namespace BHive
 	private:
 		 Meshes m_Meshes;	
 		 WinPath m_OriginalDirectory;
-		 std::string m_Name;
-
+	
 		 static WinPath s_LastLoadedDirectory;
 	};
 }

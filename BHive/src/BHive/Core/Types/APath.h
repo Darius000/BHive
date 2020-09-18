@@ -9,25 +9,29 @@ namespace BHive
 		WinPath();
 		WinPath(const ANSICHAR* path);
 		WinPath(const WinPath& other);
-		WinPath(WinPath&& other) noexcept;
+		//WinPath(WinPath&& other) noexcept;
 		~WinPath();
 
 		const ANSICHAR* GetName() const { return m_Name; }
+		const ANSICHAR* GetNameWithExtentsion() const { return m_NameAndExt; }
 		const ANSICHAR* GetPath() const { return m_Path; }
 		const ANSICHAR* GetExtension() const { return m_Ext; }
 		const ANSICHAR* GetFullPath() const { return m_FullPath; }
 		uint64 GetLength() const { return m_Length; }
 
-		bool IsDirectory() { return m_Directory; }
+		bool IsDirectory() const { return m_Directory; }
+		bool IsValid() const { return m_FullPath != nullptr && m_Length != 0; }
 
 		const ANSICHAR* operator*() const { return m_FullPath; }
-		ANSICHAR& operator[](uint64 index){ return m_Path[index]; }
-		const ANSICHAR& operator[](uint64 index) const { return m_Path[index]; }
+		ANSICHAR& operator[](uint64 index){ return m_FullPath[index]; }
+		const ANSICHAR& operator[](uint64 index) const { return m_FullPath[index]; }
 		WinPath& operator= (const WinPath& Other);
 		friend WinPath operator+(const WinPath& a, const ANSICHAR* b);
 		friend bool operator==(const WinPath& a, const WinPath& b);
-		friend std::iostream& operator >> (std::iostream& io, const WinPath& path);
-		friend std::ifstream& operator << (std::ifstream& io, WinPath& path);
+		friend bool operator!=(const WinPath& a, const WinPath& b);
+
+		friend std::ostream& operator << (std::ostream& io, const WinPath& a);
+		friend std::istream& operator >> (std::istream& io, WinPath& a);
 
 	private:
 		void ConstructPath();
@@ -37,6 +41,7 @@ namespace BHive
 		ANSICHAR* m_FullPath = nullptr;
 		ANSICHAR* m_Name = nullptr;
 		ANSICHAR* m_Ext = nullptr;
+		ANSICHAR* m_NameAndExt = nullptr;
 
 		bool m_Directory = false;
 		uint64 m_Length = 0;
@@ -52,14 +57,14 @@ namespace BHive
 		return (std::string(a.GetPath()) + std::string(b)).c_str();
 	}
 
-	inline std::iostream& operator >> (std::iostream& io, const WinPath& path)
+	inline std::ostream& operator << (std::ostream& io, const WinPath& a)
 	{
-		return io >> path.GetFullPath();
+		return io << a.m_FullPath;
 	}
 
-	inline std::ifstream& operator << (std::ifstream& io, WinPath& path)
+	inline std::istream& operator >> (std::istream& io, WinPath& a)
 	{
-		return io << path;
+		return io >> a.m_FullPath;
 	}
 
 	inline bool operator==(const WinPath& a, const WinPath& b)
@@ -76,6 +81,11 @@ namespace BHive
 		}
 
 		return true;
+	}
+
+	inline bool operator!=(const WinPath& a, const WinPath& b)
+	{
+		return !(a == b);
 	}
 
 	namespace StringLibrary

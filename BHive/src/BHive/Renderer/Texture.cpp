@@ -3,6 +3,7 @@
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Platforms/Opengl/OpenGLTexture.h"
 #include "BHive/Managers/AssetManagers.h"
+#include "Core/Viewport/Viewport.h"
 
 namespace BHive
 {
@@ -13,21 +14,27 @@ namespace BHive
 	}
 
 
-	Texture::Texture(BName Name)
-		: m_Name(Name), m_Path(""), m_Width(0), m_Height(0), m_RendererID(0)
+	Texture::Texture(const std::string& Name)
+		:Asset(Name), m_Path(""), m_Width(0), m_Height(0), m_RendererID(0)
 	{
 
 	}
 
-	void Texture::Serialize(Ref<Texture> texture, const WinPath& path)
+
+	Ref<Texture2D> Texture::CreateFromFrameBuffer(Viewport* framebuffer)
+	{
+		return Texture2D::Create("FrameBufferEx", framebuffer->GetFrameBuffer()->GetSpecification().Width, framebuffer->GetFrameBuffer()->GetSpecification().Height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer->m_Data);
+	}
+
+	void Texture::Serialize(const WinPath& path)
 	{
 		std::ofstream file;
-		file.open(*(std::string(*path) + "\\" + texture->GetName() + ".bh"), std::ios::out | std::ios::trunc);
-		uint32 m_Size = texture->m_Channels * texture->m_Width * texture->m_Height;
-		file << texture->GetName() << std::endl;
-		file << m_Size << " " << texture->m_Width << " " << texture->m_Height << " " << texture->m_Channels << std::endl;
-		file << texture->PixelData.m_DataFormat << " " << texture->PixelData.m_InternalFormat << std::endl;
-		file.write(reinterpret_cast<const char*>(texture->PixelData.m_Data), m_Size);
+		file.open(*(std::string(*path) + "\\" + GetName() + ".bh"), std::ios::out | std::ios::trunc);
+		uint32 m_Size = m_Channels * m_Width * m_Height;
+		file << GetName() << std::endl;
+		file << m_Size << " " << m_Width << " " << m_Height << " " << m_Channels << std::endl;
+		file << PixelData.m_DataFormat << " " << PixelData.m_InternalFormat << std::endl;
+		file.write(reinterpret_cast<const char*>(PixelData.m_Data), m_Size);
 		file.close();
 	}
 
@@ -101,7 +108,6 @@ namespace BHive
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported") return nullptr;
 		case RendererAPI::API::OpenGL: {
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(path)); 
-			TextureManager::Add(tex->GetName(), tex); 
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;
@@ -118,7 +124,6 @@ namespace BHive
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
 		case RendererAPI::API::OpenGL:{
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(TextureName, width, height, internalFormat, dataFormat, data)); 
-			TextureManager::Add(TextureName, tex);
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;

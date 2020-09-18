@@ -11,120 +11,57 @@ namespace BHive
 	};
 
 	Transform::Transform(const FVector3& position, const Rotator& rotation, const FVector3& scale)
-		:m_Position(position), m_Rotation(rotation), m_Scale(scale), m_TranslationMatrix(1.0f),
-		m_RotationMatrix(1.0f), m_ScaleMatrix(1.0f), m_ModelMatrix(1.0f), m_RotationOrder(ERotationOrder::XYZ)
+		:m_Position(position), m_Rotation(rotation), m_Scale(scale), 
+		m_ModelMatrix(1.0f), m_RotationOrder(ERotationOrder::XYZ)
 	{
-		m_TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(m_Position.x, m_Position.y, m_Position.z));
-		m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-		m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-		m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-		m_ScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale.x, m_Scale.y, m_Scale.z));
-		m_ModelMatrix = m_TranslationMatrix * m_RotationMatrix * m_ScaleMatrix;
+		RecalulateModelMatrix();
 	}
 
 	void Transform::SetPosition(const FVector3& position)
 	{
 		m_Position = position;
 
-		m_TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, position.z));
-
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetPosition(float x, float y, float z)
 	{
-		m_Position.x = x;
-		m_Position.y = y;
-		m_Position.z = z;
-
-		m_TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(x, y, z));
+		m_Position = FVector3(x, y, z);
 
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetRotation(const Rotator& rotation)
 	{
 		m_Rotation = rotation;
 
-		switch (m_RotationOrder)
-		{
-		case ERotationOrder::XYZ:
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			break;						   
-		case ERotationOrder::XZY:		   
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			break;						  
-		case ERotationOrder::YXZ:		  
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			break;						   
-		case ERotationOrder::YZX:		  
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			break;						   
-		case ERotationOrder::ZXY:		   
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			break;						   
-		case ERotationOrder::ZYX:		   
-			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix , glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
-			break;
-		}
-
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetRotation(float roll, float yaw, float pitch)
 	{
-		SetRotation({ roll, yaw, pitch });
+		SetRotation(Rotator(roll, yaw, pitch ));
 	}
 
 	void Transform::SetScale(const FVector3& scale)
 	{
 		m_Scale = scale;
 
-		m_ScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale.x, m_Scale.y, m_Scale.z));
-
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetScale(float size)
 	{
-		m_Scale = { size, size, size };
-
-		m_ScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale.x, m_Scale.y, m_Scale.z));
+		m_Scale = FVector3(size);
 
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetScale(float x, float y, float z)
 	{
-		m_Scale = { x, y, z };
-
-		m_ScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale.x, m_Scale.y, m_Scale.z));
+		m_Scale = FVector3(x, y ,z);
 
 		RecalulateModelMatrix();
-
-		OnTransformUpdated.Broadcast(*this);
 	}
 
 	void Transform::SetRotationOrder(const ERotationOrder& rotationOrder)
@@ -139,7 +76,48 @@ namespace BHive
 
 	void Transform::RecalulateModelMatrix()
 	{
+		//Position
+		glm::mat4 m_TranslationMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(m_Position.x, m_Position.y, m_Position.z));
+		glm::mat4 m_ScaleMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(m_Scale.x, m_Scale.y, m_Scale.z));
+		glm::mat4 m_RotationMatrix = glm::mat4(1.0);
+
+		switch (m_RotationOrder)
+		{
+		case ERotationOrder::XYZ:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			break;
+		case ERotationOrder::XZY:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			break;
+		case ERotationOrder::YXZ:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			break;
+		case ERotationOrder::YZX:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			break;
+		case ERotationOrder::ZXY:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			break;
+		case ERotationOrder::ZYX:
+			m_RotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.pitch), glm::vec3(0.0f, 0.0f, 1.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.yaw), glm::vec3(0.0f, 1.0f, 0.0f));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, glm::radians(m_Rotation.roll), glm::vec3(1.0f, 0.0f, 0.0f));
+			break;
+		}
+
 		m_ModelMatrix = m_TranslationMatrix * m_RotationMatrix * m_ScaleMatrix;
+
+		OnTransformUpdated.Broadcast(*this);
 	}
 
 }
