@@ -64,25 +64,93 @@ namespace BHive
 		return r == col.r && g == col.g && b == col.b && a == col.a;
 	}
 
-	LinearColor::LinearColor()
-		:LinearColor(1.0f, 1.0f)
+	LinearColor3::LinearColor3()
+		:LinearColor3(1.0f)
 	{
 
 	}
 
-	LinearColor::LinearColor(float color, float A )
-		:LinearColor(color, color, color, A)
+	LinearColor3::LinearColor3(float color)
+		: LinearColor3(color, color, color)
 	{
 
 	}
 
-	LinearColor::LinearColor(float R, float G, float B, float A )
+	LinearColor3::LinearColor3(float R, float G, float B)
+		: r(R), g(G), b(B)
+	{
+		Clamp();
+	}
+
+	void LinearColor3::Clamp()
+	{
+		r = MathLibrary::Clamp(r, 0.0f, 1.0f);
+		g = MathLibrary::Clamp(g, 0.0f, 1.0f);
+		b = MathLibrary::Clamp(b, 0.0f, 1.0f);
+	}
+
+	BString LinearColor3::ToString() const
+	{
+		return Format("{ %f, %f, %f }", r, g, b);
+	}
+
+
+	LinearColor3 LinearColor3::operator=(const LinearColor3& other)
+	{
+		r = other.r;
+		g = other.g;
+		b = other.b;
+		return *this;
+	}
+
+	const float* LinearColor3::operator*() const
+	{
+		return &r;
+	}
+
+	float* LinearColor3::operator*()
+	{
+		return &r;
+	}
+
+	LinearColor3::operator FVector3() const
+	{
+		return FVector3(r, g, b);
+	}
+
+	void LinearColor3::operator+=(const LinearColor3& col)
+	{
+		r += col.r;
+		g += col.g;
+		b += col.b;
+
+		Clamp();
+	}
+
+	bool LinearColor3::operator==(const LinearColor3& col)
+	{
+		return r == col.r && g == col.g && b == col.b;
+	}
+
+	LinearColor4::LinearColor4()
+		:LinearColor4(1.0f, 1.0f)
+	{
+
+	}
+
+	LinearColor4::LinearColor4(float color, float A )
+		:LinearColor4(color, color, color, A)
+	{
+
+	}
+
+	LinearColor4::LinearColor4(float R, float G, float B, float A )
 		:r(R), g(G), b(B), a(A)
 	{
 		Clamp();
 	}
 
-	void LinearColor::Clamp()
+	void LinearColor4::Clamp()
 	{
 		r = MathLibrary::Clamp(r, 0.0f, 1.0f);
 		g = MathLibrary::Clamp(g, 0.0f, 1.0f);
@@ -90,13 +158,13 @@ namespace BHive
 		a = MathLibrary::Clamp(a, 0.0f, 1.0f);
 	}
 
-	BString LinearColor::ToString() const
+	BString LinearColor4::ToString() const
 	{
 		return Format("{ %f, %f, %f }", r, g, b);
 	}
 
 
-	LinearColor LinearColor::operator=(const LinearColor& other)
+	LinearColor4 LinearColor4::operator=(const LinearColor4& other)
 	{
 		r = other.r;
 		g = other.g;
@@ -105,22 +173,22 @@ namespace BHive
 		return *this;
 	}
 
-	const float* LinearColor::operator*() const
+	const float* LinearColor4::operator*() const
 	{
 		return &r;
 	}
 
-	float* LinearColor::operator*()
+	float* LinearColor4::operator*()
 	{
 		return &r;
 	}
 
-	LinearColor::operator FVector4() const
+	LinearColor4::operator FVector4() const
 	{
 		return FVector4(r, g, b, a);
 	}
 
-	void LinearColor::operator+=(const LinearColor& col)
+	void LinearColor4::operator+=(const LinearColor4& col)
 	{
 		r += col.r;
 		g += col.g;
@@ -130,8 +198,10 @@ namespace BHive
 		Clamp();
 	}
 
-	bool LinearColor::operator==(const LinearColor& col)
+	bool LinearColor4::operator==(const LinearColor4& col)
 	{
 		return r == col.r && g == col.g && b == col.b && a == col.a;
 	}
+
+	
 }

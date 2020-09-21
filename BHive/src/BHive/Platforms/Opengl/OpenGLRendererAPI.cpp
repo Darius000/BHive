@@ -15,7 +15,7 @@ namespace BHive
 		glBlendEquation(GL_FUNC_ADD);
 	}
 
-	void OpenGLRendererAPI::SetClearColor(const LinearColor& color)
+	void OpenGLRendererAPI::SetClearColor(const LinearColor4& color)
 	{
 		glClearColor(color.r, color.g,color.b,color.a);
 	}

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "BHive.h"
-#include "../Editors/Editor.h"
-#include "BHive/Core/ComponentDetails/DetailsCustomization.h"
+#include "BHive/Core/ImGuiPanel.h"
+#include "BHive/Core/ComponentDetails/PropertyDetailsBuilder.h"
 
 namespace BHive
 {
@@ -14,16 +14,17 @@ namespace BHive
 		//Set the scene the panel should display
 		void SetContext(Scene* context);
 
-		void OnImGuiRender() override;
+		void OnRenderWindow() override;
 
 	private:
 		//Draw entity dropdown node in panel
 		void DrawEntityNode(Entity entity);
 		void DrawEnityComponents(Entity entity);
+		void DrawAddRemoveComponents(Entity entity);
 
 	private:
 		Scene* m_SceneContext = nullptr;
 		Entity m_SelectedContext;
-		DetailsBuilder m_DetailsBuilder;
+		PropertyDetailsBuilder m_DetailsBuilder;
 	};
 }

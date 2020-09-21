@@ -37,7 +37,7 @@ struct Material
 {
 	vec3 ambient;
 	vec3 diffuse;
-	float transparency;
+	float opacity;
 	sampler2D texture;
 	vec2 tiling;
 };
@@ -47,6 +47,6 @@ uniform Material material;
 void main()
 {
 	vec4 colorTexture = texture(material.texture, v_TexCoord * material.tiling);
-	vec4 diffuse = colorTexture * vec4(material.diffuse, material.transparency);
+	vec4 diffuse = colorTexture * vec4(material.diffuse, material.opacity);
 	color =  vec4(material.ambient, 0.0) + diffuse;
 }

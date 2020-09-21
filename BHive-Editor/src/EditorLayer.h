@@ -4,9 +4,8 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/AssetBrowserPanel.h"
 #include "Panels/ViewportPanel.h"
-#include "Panels/StyleEditorPanel.h"
 #include "PopUps/FileBrowser.h"
-#include "Editors/EditorStack.h"
+#include "BHive/Core/EditorStack.h"
 
 namespace BHive
 { 
@@ -45,10 +44,7 @@ namespace BHive
 		SceneHierarchyPanel* m_SceneHierarchyPanel = nullptr;
 		AssetBrowserPanel* m_AssetBrowserPanel = nullptr;
 		Viewport* m_Viewport = nullptr;
-		Viewport* m_Viewport2 = nullptr;
+		//Viewport* m_Viewport2 = nullptr;
 		ViewportPanel* m_ViewportPanel = nullptr;
-		ViewportPanel* m_ViewportPanel2 = nullptr;
-		StyleEditorPanel* m_StyleEditorPanel = nullptr;
-		DemoWindowPanel* m_DemoWindowPanel = nullptr;
 	};	
 }

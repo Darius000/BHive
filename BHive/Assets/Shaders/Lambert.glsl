@@ -38,7 +38,7 @@ struct Material
 	sampler2D texture;
 	vec3 ambient;
 	vec3 diffuse;
-	float transparency;
+	float opacity;
 	vec2 tiling;
 };
 
@@ -59,7 +59,7 @@ vec4 CalculateLambertDirLight(vec3 normal,  DirectionalLight light, Material mat
 
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = diff * light.color * light.brightness * mat.diffuse;
-	return  vec4(diffuse, mat.transparency)  * texture(mat.texture, texcoord * mat.tiling);
+	return  vec4(diffuse, mat.opacity)  * texture(mat.texture, texcoord * mat.tiling);
 }
 
 void main()

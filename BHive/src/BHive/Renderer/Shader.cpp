@@ -5,6 +5,92 @@
 
 namespace BHive
 {
+
+	void Shader::SetUniform(const Uniform& uniform)
+	{
+		const char* name = uniform.m_Name;
+		ShaderUniformType type = uniform.m_Type;
+		void* value = uniform.m_Value;
+
+		switch (type)
+		{
+		case ShaderUniformType::Bool:
+			SetBool(name, *reinterpret_cast<bool*>(value));
+			break;
+		case ShaderUniformType::Int:
+			SetInt(name, *reinterpret_cast<int*>(value));
+			break;
+		case ShaderUniformType::Float:
+			SetFloat(name, *reinterpret_cast<float*>(value));
+			break;
+		case ShaderUniformType::Float2:
+			{
+				FVector2 v2 = *reinterpret_cast<FVector2*>(value);
+				SetFloat2(name, v2.x, v2.y);
+			}
+			break;
+		case ShaderUniformType::Float3:				
+			{
+				FVector3 v3 = *reinterpret_cast<FVector3*>(value);
+				SetFloat3(name, v3.x, v3.y, v3.z);
+			}
+			break;
+		case ShaderUniformType::Float4:
+			{
+				FVector4 v4 = *reinterpret_cast<FVector4*>(value);
+				SetFloat4(name, v4.x, v4.y, v4.z, v4.w);
+			}
+			break;
+		
+		case ShaderUniformType::Color3:
+			{
+				LinearColor3 c3 = *reinterpret_cast<LinearColor3*>(value);
+				SetFloat3(name, c3.r, c3.g, c3.b);
+			}
+			break;
+		case ShaderUniformType::Color4:
+			{
+				LinearColor4 c4 = *reinterpret_cast<LinearColor4*>(value);
+				SetFloat4(name, c4.r, c4.g, c4.b, c4.a);
+			}
+			break;
+		case ShaderUniformType::Vec2:
+			SetVec2(name, *reinterpret_cast<FVector2*>(value));
+			break;
+		case ShaderUniformType::Vec3:
+			SetVec3(name, *reinterpret_cast<FVector3*>(value));
+			break;
+		case ShaderUniformType::Vec4:
+			SetVec4(name, *reinterpret_cast<FVector4*>(value));
+			break;
+		case ShaderUniformType::Mat2:
+			SetMat2(name, *reinterpret_cast<glm::mat2*>(value));
+			break;
+		case ShaderUniformType::Mat3:
+			SetMat3(name, *reinterpret_cast<glm::mat3*>(value));
+			break;
+		case ShaderUniformType::Mat4:
+			SetMat4(name, *reinterpret_cast<glm::mat4*>(value));
+			break;
+		case ShaderUniformType::Sampler:
+		{
+			Ref<Texture2D> tex = *reinterpret_cast<Ref<Texture2D>*>(value);
+			if(tex)
+			{ 
+				tex->Bind(uniform.m_SamplerIndex);
+				SetInt(name, uniform.m_SamplerIndex );
+			}
+			else
+			{
+				SetInt(name, 0);
+			}
+		}	
+		break;
+		default:
+			break;
+		}
+	}
+
 	Ref<Shader> Shader::Create(const WinPath& filePath)
 	{
 		switch (Renderer::GetAPI())

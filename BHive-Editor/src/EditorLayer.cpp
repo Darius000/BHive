@@ -1,8 +1,8 @@
 #include "EditorLayer.h"
-#include "Editors/TextureEditor.h"
 #include "ImGui/ImGuiWrappers.h"
 #include "BHive/Core/ComponentDetails/DetailsCustomization.h"
 #include "BHive/Core/ComponentDetails/ComponentDetails.h"
+#include "BHive/Core/Registry/ClassRegistry.h"
 
 namespace BHive
 { 
@@ -19,16 +19,25 @@ namespace BHive
 		fbSpec.Height = 720;
 
 		//Register Component Class Property Details
-		ClassPropertyRegistry::RegisterClassDetails("TransformComponent", MakeInstance<TransformComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("TagComponent", MakeInstance<TagComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("DirectionalLightComponent", MakeInstance<DirectionalLightComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("SpotLightComponent", MakeInstance<SpotLightComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("PointLightComponent", MakeInstance<PointLightComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("CameraComponent", MakeInstance<CameraComponentDetails>());
-		ClassPropertyRegistry::RegisterClassDetails("RenderComponent", MakeInstance<RenderComponentDetails>());
+		ClassRegistry::RegisterClassDetails("TransformComponent", Make_Ref<TransformComponentDetails>());
+		ClassRegistry::RegisterClassDetails("TagComponent", Make_Ref<TagComponentDetails>());
+		ClassRegistry::RegisterClassDetails("DirectionalLightComponent", Make_Ref<DirectionalLightComponentDetails>());
+		ClassRegistry::RegisterClassDetails("SpotLightComponent", Make_Ref<SpotLightComponentDetails>());
+		ClassRegistry::RegisterClassDetails("PointLightComponent", Make_Ref<PointLightComponentDetails>());
+		ClassRegistry::RegisterClassDetails("CameraComponent", Make_Ref<CameraComponentDetails>());
+		ClassRegistry::RegisterClassDetails("RenderComponent", Make_Ref<RenderComponentDetails>());
+		ClassRegistry::RegisterClassDetails("NativeScriptComponent", Make_Ref<NativeScriptComponentDetails>());
+		ClassRegistry::RegisterClassName("TransformComponent");
+		ClassRegistry::RegisterClassName("TagComponent");
+		ClassRegistry::RegisterClassName("DirectionalLightComponent");
+		ClassRegistry::RegisterClassName("PointLightComponent");
+		ClassRegistry::RegisterClassName("CameraComponent");
+		ClassRegistry::RegisterClassName("RenderComponent");
+		ClassRegistry::RegisterClassName("NativeScriptComponent");
+		ClassRegistry::RegisterEditorCustomizationDetailsForAsset("Texture2D", Make_Ref<TextureEditorCustomizationDetails>());
 
 		Scene* scene = SceneManager::CreateScene("Default");
-		Scene* scene2 = SceneManager::CreateScene("New Scene");
+		//Scene* scene2 = SceneManager::CreateScene("New Scene");
 
 		m_Texture = AssetManager::Get<Texture2D>("folder");
 		m_Texture2 = AssetManager::Get<Texture2D>("checkermap");
@@ -43,18 +52,24 @@ namespace BHive
 
 		Ref<Model> Shotgun	= Model::Import("Import/Meshes/Grenades.obj", false);
 		Import("D:/Wallpaper/7_tornado.jpg");
+		Import("Import/Textures/container.jpg");
+		Import("Import/Textures/grass.png");
+		Import("Import/Textures/matrix.jpg");
+		Import("Import/Textures/smoke.png");
+		Import("D:/Wallpaper/7_tornado.jpg");
 		Ref<Texture2D> m_Texture3 = AssetManager::Get<Texture2D>("7_tornado");
-		//Ref<Material> material = Shotgun->GetMesh(0)->GetMaterial();
-		//dynamic_cast<PhongMaterial*>(material.get())->m_DiffuseTexture = TextureManager::Get("SO_SG_Mat_albedo");
+		
+
 		Ref<Model> triangle = Renderer2D::Triangle(1.0f, 1.0f);
 		Ref<Model> plane	= Renderer2D::Plane(5.0f, 5.0f);
-		//Ref<Model> lantern	= Model::Import("Import/Meshes/lantern.obj");
+		Ref<Model> lantern	= Model::Import("Import/Meshes/lantern.obj", false);
 
-		AssetManager::Add<Model>(triangle);
-		AssetManager::Add<Model>(plane);
-		AssetManager::Add<Model>(Shotgun);
+		AssetManager::Add(triangle);
+		AssetManager::Add(plane);
+		AssetManager::Add(Shotgun);
+		AssetManager::Add(lantern);
 		
-		actor0 = scene2->CreateEntity("Shotgun");
+		actor0 = scene->CreateEntity("Shotgun");
 		actor0.AddComponent<RenderComponent>();
 	
 		auto& renderComponent = actor0.GetComponent<RenderComponent>();
@@ -75,37 +90,31 @@ namespace BHive
 		//plane->GetMesh(0)->SetMaterial(Make_Ref<GridMaterial>());
 		//rendercomponent2.m_Model->GetMesh(0)->GetMaterial()->m_Texture = m_Texture2;
 	
-		Light = scene->CreateEntity("Directional Light");
-		Light.AddComponent<DirectionalLightComponent>();
+		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
+		scene->CreateEntity("Directional Light2").AddComponent<DirectionalLightComponent>();
 		//Light.AddComponent<NativeScriptComponent>().Bind<Player>();
-
-		Entity PointLight = scene->CreateEntity("Point Light");
-		PointLight.AddComponent<PointLightComponent>();
-
-		Entity PointLight2 = scene->CreateEntity("Point Light2");
-		PointLight2.AddComponent<PointLightComponent>();
-
-		Entity SpotLight = scene->CreateEntity("Spot Light");
-		SpotLight.AddComponent<SpotLightComponent>();
-
+		scene->CreateEntity("Point Light").AddComponent<PointLightComponent>();
+		scene->CreateEntity("Point Light2").AddComponent<PointLightComponent>();
+		scene->CreateEntity("Spot Light").AddComponent<SpotLightComponent>();
+		scene->CreateEntity("Spot Light2").AddComponent<SpotLightComponent>();
 
 		SceneManager::SetActiveScene("Default");
 		Renderer2D::Init();
 
 		m_Viewport = new Viewport(fbSpec, SceneManager::GetActiveScene());
-		
+		//
 
-		m_ViewportPanel = new ViewportPanel("MainViewport", m_Viewport);
+		m_ViewportPanel = new ViewportPanel(std::string("MainViewport"), m_Viewport);
 		m_SceneHierarchyPanel = new SceneHierarchyPanel(SceneManager::GetActiveScene());
 		m_AssetBrowserPanel = new AssetBrowserPanel(0 , ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar);
 		//m_StyleEditorPanel = new StyleEditorPanel();
 		//m_DemoWindowPanel = new DemoWindowPanel();
 
-		FrameBufferSpecification spec2;
+		/*FrameBufferSpecification spec2;
 		spec2.Width = 800;
 		spec2.Height = 600;
 		m_Viewport2 = new Viewport(spec2, scene2);
-		m_ViewportPanel2 = new ViewportPanel("ViewPort2", m_Viewport2);
+		m_ViewportPanel2 = new ViewportPanel("ViewPort2", m_Viewport2);*/
 
 		
 	}
@@ -115,7 +124,7 @@ namespace BHive
 		BH_PROFILE_FUNCTION();
 
 		m_Viewport->OnUpdate(time);
-		m_Viewport2->OnUpdate(time);
+		//m_Viewport2->OnUpdate(time);
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -162,6 +171,8 @@ namespace BHive
 		DisplayMenuBar();
 		EditorStack::OnImGuiRender();
 
+		ImGui::ShowDemoWindow();
+
 		//End Dockspace
 		ImGui::End();
 	}
@@ -177,27 +188,27 @@ namespace BHive
 
 	bool EditorLayer::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		//m_ViewportPanel->OnMouseScrolled(e);
+		m_ViewportPanel->OnMouseScrolled(e);
 		return false;
 	}
 
 	bool EditorLayer::OnMouseMoved(MouseMovedEvent& e)
 	{
-		//m_ViewportPanel->OnMouseMoved(e);
+		m_ViewportPanel->OnMouseMoved(e);
 
 		return false;
 	}
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
-		//m_ViewportPanel->OnMouseButtonPressed(e);
+		m_ViewportPanel->OnMouseButtonPressed(e);
 		
 		return false;
 	}
 
 	bool EditorLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
 	{
-		//m_ViewportPanel->OnMouseButtonReleased(e);
+		m_ViewportPanel->OnMouseButtonReleased(e);
 
 		return false;
 	}

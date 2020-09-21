@@ -56,7 +56,7 @@ namespace BHive
 		void Render();
 		static Ref<Model> Create(const WinPath& path);
 
-		AssetType GetAssetType() const override { return AssetType::Mesh; } ;
+		std::string GetAssetType() const override { return "Mesh"; } ;
 
 	public:
 		static Ref<Model> Import(const WinPath& path, bool ImportTextures);

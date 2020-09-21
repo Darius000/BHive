@@ -7,7 +7,7 @@ namespace BHive
 { 
 	void RenderSystem::OnUpdate(const Time& time, entt::registry& componentRegistry)
 	{
-		
+		FVector3 CameraPosition = FVector3();
 		//------------------------Update Camera-----------------------------
 		{
 			auto group = componentRegistry.view<CameraComponent, TransformComponent>();
@@ -30,6 +30,8 @@ namespace BHive
 						a.second->SetMat4("u_View", m_ViewMatrix);
 						a.second->SetVec3("CameraPosition", transform.m_Transform.GetPosition());
 					}
+
+					CameraPosition = transform.m_Transform.GetPosition();
 				}
 			}
 		}
@@ -37,16 +39,19 @@ namespace BHive
 		//-----------------------------Update Lights--------------------------
 		{
 			auto view = componentRegistry.view<DirectionalLightComponent, TransformComponent>();
+			int numDirLights = 0;
 			for (auto entity : view)
 			{
-				auto& [directionalLight, transform] = view.get<DirectionalLightComponent, TransformComponent>(entity);
-
+				auto& [directionalLight, transform] = view.get<DirectionalLightComponent, TransformComponent>(entity);				
+				std::string uniform = "directionalLights[" + std::to_string(numDirLights) + "].";
+				numDirLights++;
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
 					a.second->Bind();
-					a.second->SetVec3("directionalLight.direction", transform.m_Transform.GetForward());
-					a.second->SetVec3("directionalLight.color", directionalLight.m_LightColor);
-					a.second->SetFloat("directionalLight.brightness", directionalLight.m_LightBrightness);
+					a.second->SetInt("numDirLights", numDirLights);
+					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
+					a.second->SetVec3(uniform + "color", directionalLight.m_LightColor);
+					a.second->SetFloat(uniform + "brightness", directionalLight.m_LightBrightness);
 				}
 			}
 
@@ -58,8 +63,8 @@ namespace BHive
 			for (auto entity : view)
 			{
 				auto& [pointLight, transform] = view.get<PointLightComponent, TransformComponent>(entity);
+				std::string uniform = "pointLights[" + std::to_string(numPointLights) + "].";
 				numPointLights++;
-				std::string uniform = "pointLights[" + std::to_string(numPointLights - 1) + "].";
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
 					a.second->Bind();
@@ -77,22 +82,25 @@ namespace BHive
 
 		{
 			auto view = componentRegistry.view<SpotLightComponent, TransformComponent>();
+			int numSpotLights = 0;
 			for (auto entity : view)
 			{
-				auto& [spotLight, transform] = view.get<SpotLightComponent, TransformComponent>(entity);
-
+				auto& [spotLight, transform] = view.get<SpotLightComponent, TransformComponent>(entity);			
+				std::string uniform = "spotLights[" + std::to_string(numSpotLights) + "].";
+				numSpotLights++;
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
 					a.second->Bind();
-					a.second->SetVec3("spotLight.position", transform.m_Transform.GetPosition());
-					a.second->SetVec3("spotLight.color", spotLight.m_Color);
-					a.second->SetVec3("spotLight.direction", transform.m_Transform.GetForward());
-					a.second->SetFloat("spotLight.cutoff", spotLight.m_Cutoff);
-					a.second->SetFloat("spotLight.outerCutoff", spotLight.m_OuterCutoff);
-					a.second->SetFloat("spotLight.constant", spotLight.m_Constant);
-					a.second->SetFloat("spotLight.linear", spotLight.m_Linear);
-					a.second->SetFloat("spotLight.quadratic", spotLight.m_Quadratic);
-					a.second->SetFloat("spotLight.brightness", spotLight.m_Brightness);
+					a.second->SetInt("numSpotLights", numSpotLights);
+					a.second->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
+					a.second->SetVec3(uniform + "color", spotLight.m_Color);
+					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
+					a.second->SetFloat(uniform + "cutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_Cutoff)));
+					a.second->SetFloat(uniform + "outerCutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_OuterCutoff)));
+					a.second->SetFloat(uniform + "constant", spotLight.m_Constant);
+					a.second->SetFloat(uniform + "linear", spotLight.m_Linear);
+					a.second->SetFloat(uniform + "quadratic", spotLight.m_Quadratic);
+					a.second->SetFloat(uniform + "brightness", spotLight.m_Brightness);
 				}
 			}
 		}
@@ -100,22 +108,41 @@ namespace BHive
 
 		//------------------------------------Draw Meshes---------------------------------------
 		{
+			//Sort models based on distance from camera
+			
+			struct Comp
+			{
+				RenderComponent rc;
+				TransformComponent tc;
+			};
+
 			auto group = componentRegistry.view<RenderComponent, TransformComponent>();
+			std::map<float, Comp> sorted;
+
 			for (auto entity : group)
 			{
 				auto& [render, transform] = group.get<RenderComponent, TransformComponent>(entity);
+				float distance = (CameraPosition - transform.m_Transform.GetPosition()).GetMagnitude();
+				sorted[distance] = {render, transform};
+				
+			}
+
+			//Draw models
+			for (auto it = sorted.rbegin(); it != sorted.rend(); it++)
+			{
+				auto render = it->second.rc;
+				auto transform = it->second.tc;
+
 				if (render.m_Model)
 				{
 					for (auto& mesh : render.m_Model->GetMeshes())
 					{
 						Ref<Shader> shader = mesh.second->GetShader();
-						
-						//shader->Bind();
+
+						shader->Bind();
 						shader->SetMat4("u_Model", transform.m_Transform.GetMatrix());
 						mesh.second->Render();
 					}
-
-					//render.m_Model->Render();
 				}
 			}
 		}

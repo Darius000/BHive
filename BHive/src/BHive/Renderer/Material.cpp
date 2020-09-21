@@ -16,86 +16,59 @@ namespace BHive
 		{
 			m_Shader->Bind();
 
-			OnShaderBind(m_Shader);
-		}
-
-		if (m_Texture)
-		{
-			m_Shader->SetInt("material.diffuseTexture", 1);
-			m_Texture->Bind(1);
+			for (const auto& uniform : GetShaderUniforms())
+			{				
+				m_Shader->SetUniform(uniform);
+			}
 		}
 	}
 
 	DefaultMaterial::DefaultMaterial()
 	{
 		m_Shader = AssetManager::Get<Shader>("Default");
-	}
-
-	void DefaultMaterial::OnShaderBind(Ref<Shader>& shader)
-	{
-
-		shader->SetVec3("material.ambient", m_AmbientColor);
-		shader->SetVec3("material.diffuse", m_DiffuseColor);
-		shader->SetFloat("material.transparency", 1.0f - m_Transparency);
-		shader->SetVec2("material.tiling", m_TextureTiling);
-	}
-
-	void LambertMaterial::OnShaderBind(Ref<Shader>& shader)
-	{
-		DefaultMaterial::OnShaderBind(shader);
+		m_ShaderUniforms.Add({
+			UNIFORM("material.ambient", "Ambient", DefaultMaterial, m_AmbientColor, ShaderUniformType::Color3),
+			UNIFORM("material.diffuse", "Diffuse", DefaultMaterial, m_DiffuseColor, ShaderUniformType::Color3),
+			UNIFORM("material.opacity", "Opacity", DefaultMaterial, m_Opacity, ShaderUniformType::Float),
+			UNIFORM("material.tiling", "Tiling", DefaultMaterial, m_TextureTiling, ShaderUniformType::Vec2)
+		});
 	}
 
 	LambertMaterial::LambertMaterial()
+		:DefaultMaterial()
 	{
 		m_Shader = AssetManager::Get<Shader>("Lambert");
 	}
 
-	void PhongMaterial::OnShaderBind(Ref<Shader>& shader)
-	{
-		shader->SetVec3("material.ambient", m_Ambient);
-		shader->SetVec3("material.diffuse", m_Diffuse);
-		shader->SetVec3("material.specular", m_Specular);
-		shader->SetVec3("material.emission", m_Emission);
-		shader->SetFloat("material.shininess", m_Shininess);
-		shader->SetFloat("material.transparency", 1.0f - m_Transparency);
-		shader->SetVec2("material.tiling", m_TextureTiling);
-		if(m_DiffuseTexture) 
-		{
-			shader->SetInt("material.diffuseTexture", 0);
-			m_DiffuseTexture->Bind(0);
-			
-		}
-		if (m_SpecularTexture)
-		{
-			
-			shader->SetInt("material.specularTexture", 1);
-			m_SpecularTexture->Bind(1);
-		}
-		if (m_EmissionTexture)
-		{
-		
-			shader->SetInt("material.emissionTexture", 2);
-			m_EmissionTexture->Bind(2);
-			
-		}
-	}
-
 	PhongMaterial::PhongMaterial()
 	{
-		m_Shader = AssetManager::Get<Shader>("Phong");
+		m_Shader = AssetManager::Get<Shader>("BlinnPhong");
+
+		m_ShaderUniforms.Add({
+			UNIFORM("material.ambient", "Ambient", PhongMaterial, m_Ambient, ShaderUniformType::Color3),
+			UNIFORM("material.diffuse", "Diffuse", PhongMaterial, m_Diffuse, ShaderUniformType::Color3),
+			UNIFORM("material.specular", "Specular", PhongMaterial, m_Specular, ShaderUniformType::Color3),
+			UNIFORM("material.emission", "Emission", PhongMaterial, m_Emission, ShaderUniformType::Color3),
+			UNIFORM("material.shininess", "Shininess", PhongMaterial, m_Shininess, ShaderUniformType::Float),
+			UNIFORM("material.opacity", "Opacity", PhongMaterial, m_Opacity, ShaderUniformType::Float),
+			UNIFORM("material.cutoff", "Cut Off", PhongMaterial, m_CutOff, ShaderUniformType::Bool),
+			UNIFORM("material.useTextureAsAlpha", "Use Diffuse As Alpha", PhongMaterial, m_UseDiffuseAsAlpha, ShaderUniformType::Bool),
+			SAMPLERUNIFORM("material.diffuseTexture", "Diffuse Texture", PhongMaterial, m_DiffuseTexture, ShaderUniformType::Sampler,1),
+			SAMPLERUNIFORM("material.specularTexture", "Specular Texture", PhongMaterial, m_SpecularTexture, ShaderUniformType::Sampler, 2),
+			SAMPLERUNIFORM("material.emissionTexture", "Emission Texture", PhongMaterial, m_EmissionTexture, ShaderUniformType::Sampler, 3),			
+			UNIFORM("material.tiling", "Tiling", PhongMaterial, m_TextureTiling, ShaderUniformType::Vec2)
+			});
 	}
 
 	GridMaterial::GridMaterial()
 	{
 		m_Shader = AssetManager::Get<Shader>("2DGrid");
-	}
 
-	void GridMaterial::OnShaderBind(Ref<Shader>& shader)
-	{
-		m_Shader->SetFloat("scale", m_Scale);
-		m_Shader->SetFloat("resolution", m_Resolution);
-		m_Shader->SetVec4("lineColor", m_LineColor);
-		m_Shader->SetVec4("backgroundColor", m_BackgroundColor);
+		m_ShaderUniforms.Add({
+			UNIFORM("scale", "Scale", GridMaterial, m_Scale, ShaderUniformType::Float),
+			UNIFORM("resolution", "Resolution", GridMaterial, m_Resolution, ShaderUniformType::Float),
+			UNIFORM("linecolor", "Line Color", GridMaterial, m_LineColor, ShaderUniformType::Color4),
+			UNIFORM("backgroundColor", "Background COlor", GridMaterial, m_BackgroundColor, ShaderUniformType::Color4)
+		});
 	}
-
 }

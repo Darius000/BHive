@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BHive.h"
 #include "Core/UndoRedo.h"
 #include "PopUp.h"
 
