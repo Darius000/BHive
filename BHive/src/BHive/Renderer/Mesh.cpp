@@ -172,7 +172,7 @@ namespace BHive
 			vertex.m_TexCoord = texcoordinate;
 
 			//Get VertexColors
-			LinearColor color(0.0f, 0.0f, 0.0f, 0.0f);
+			LinearColor4 color(0.0f, 0.0f, 0.0f, 0.0f);
 			if (mesh->HasVertexColors(0))
 			{
 				color.r = mesh->mColors[0][i].r;

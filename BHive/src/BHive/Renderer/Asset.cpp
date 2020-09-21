@@ -5,7 +5,7 @@
 namespace BHive
 {
 
-	Asset::Asset(const std::string& name) : m_Name(name)
+	Asset::Asset(const std::string& name) : m_Name(name), m_Thumbnail(nullptr)
 	{
 
 	}

@@ -31,7 +31,7 @@ namespace BHive
 		FVector3& GetPosition() { return m_Position; }
 		Rotator& GetRotation() { return m_Rotation; }
 		FVector3& GetScale() { return m_Scale; }
-		FVector3 GetForward() { return FVector3(-m_ModelMatrix[0][2], -m_ModelMatrix[1][2], -m_ModelMatrix[2][2]).Normalize(); }
+		FVector3 GetForward() { return FVector3(m_ModelMatrix[0][2], m_ModelMatrix[1][2], m_ModelMatrix[2][2]).Normalize(); }
 		FVector3 GetRight() { return FVector3(m_ModelMatrix[0][0], m_ModelMatrix[1][0], m_ModelMatrix[2][0]).Normalize(); }
 		FVector3 GetUp() { return FVector3(m_ModelMatrix[0][1], m_ModelMatrix[1][1], m_ModelMatrix[2][1]).Normalize(); }
 		const glm::mat4& GetMatrix() const { return m_ModelMatrix;}

@@ -33,23 +33,53 @@ namespace BHive
 		return os << color.ToString();
 	}
 
-
-	class LinearColor
+	class LinearColor3
 	{
-		#define MAX_LINEARCOLOR 1.0f
+#define MAX_LINEARCOLOR 1.0f
 
 	public:
-		LinearColor();
-		LinearColor(float color, float A = MAX_LINEARCOLOR);
-		LinearColor(float R, float G, float B, float A = MAX_LINEARCOLOR);
+		LinearColor3();
+		LinearColor3(float color);
+		LinearColor3(float R, float G, float B);
 
 		void Clamp();
 		BString ToString() const;
 
 	public:
-		LinearColor operator=(const LinearColor& other);
-		bool operator==(const LinearColor& col);
-		void operator+=(const LinearColor& col);
+		LinearColor3 operator=(const LinearColor3& other);
+		bool operator==(const LinearColor3& col);
+		void operator+=(const LinearColor3& col);
+		const float* operator*() const;
+		float* operator*();
+		operator FVector3 () const;
+	public:
+		float r;
+		float g;
+		float b;
+	};
+
+	inline std::ostream& operator<<(std::ostream& os, const LinearColor3& color)
+	{
+		return os << color.ToString();
+	}
+
+
+	class LinearColor4
+	{
+		#define MAX_LINEARCOLOR 1.0f
+
+	public:
+		LinearColor4();
+		LinearColor4(float color, float A = MAX_LINEARCOLOR);
+		LinearColor4(float R, float G, float B, float A = MAX_LINEARCOLOR);
+
+		void Clamp();
+		BString ToString() const;
+
+	public:
+		LinearColor4 operator=(const LinearColor4& other);
+		bool operator==(const LinearColor4& col);
+		void operator+=(const LinearColor4& col);
 		const float* operator*() const;
 		float* operator*();
 		operator FVector4 () const;
@@ -60,7 +90,7 @@ namespace BHive
 		float a;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const LinearColor& color)
+	inline std::ostream& operator<<(std::ostream& os, const LinearColor4& color)
 	{
 		return os << color.ToString();
 	}

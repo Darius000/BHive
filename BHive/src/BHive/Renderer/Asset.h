@@ -5,11 +5,6 @@ namespace BHive
 {
 	class Texture2D;
 
-	enum class AssetType : uint8
-	{
-		None, Texture, Shader, Mesh
-	};
-
 	class Asset
 	{
 	public:
@@ -19,7 +14,7 @@ namespace BHive
 
 		std::string GetName() const;
 
-		virtual AssetType GetAssetType() const { return AssetType::None; }
+		virtual std::string GetAssetType() const = 0;
 		
 		void CreateThumbnail(){};
 		Texture2D* GetThumbnail() const;

@@ -11,7 +11,7 @@ namespace BHive
 		ClampToEdge, ClampToBorder, MirroredRepeat, Repeat, MirroredClampToEdge
 	};
 
-	static const char* s_TilingMethods = "ClampToEdge\0ClampToBorder\0MirroredRepeat\0Repeat\0MirroredClampToEdge\0" ;
+	static const char* s_TilingMethods[] = {"ClampToEdge", "ClampToBorder", "MirroredRepeat", "Repeat", "MirroredClampToEdge"} ;
 
 	enum class MagColorMethod : uint8
 	{
@@ -23,8 +23,8 @@ namespace BHive
 		Nearest, Linear, NearestMipMapNearest, LinearMipMapNearest, NearestMipMapLinear, LinearMipMapLinear
 	};
 
-	static const char* s_Min_ColorMethods = "Linear\0Nearest\0NearestMipMapNearest\0LinearMipMapNearest\0NearestMipMapLinear\0LinearMipMapLinear\0";
-	static const char* s_Mag_ColorMethods = "Linear\0Nearest\0";
+	static const char* s_Min_ColorMethods[] = {"Linear","Nearest","NearestMipMapNearest","LinearMipMapNearest","NearestMipMapLinear","LinearMipMapLinear"};
+	static const char* s_Mag_ColorMethods[] = {"Linear", "Nearest"};
 
 	static GLenum TilingMethodToGLEnum(TilingMethod method)
 	{
@@ -85,7 +85,7 @@ namespace BHive
 
 	public:
 		
-		AssetType GetAssetType() const override { return AssetType::Texture;}
+		std::string GetAssetType() const override { return "Texture";}
 
 		uint32 GetWidth() const  { return m_Width; }
 
@@ -112,6 +112,8 @@ namespace BHive
 	protected:
 		WinPath m_Path;
 
+		std::string m_SavedPath;
+
 		uint32 m_Width;
 
 		uint32 m_Height;
@@ -126,13 +128,13 @@ namespace BHive
 
 		MagColorMethod m_MagFilterColorMethod = MagColorMethod::Nearest;
 
-		LinearColor m_BorderColor = LinearColor(0.0f);
+		LinearColor4 m_BorderColor = LinearColor4(0.0f);
 
 		uint32 m_Channels = 0;
 
 		void Serialize(const WinPath& path);
 
-		friend class TextureEditor;
+		friend class TextureEditorCustomizationDetails;
 	};
 
 	class Texture2D : public Texture
@@ -141,6 +143,8 @@ namespace BHive
 		Texture2D(BName Name): Texture(Name){}
 
 		virtual ~Texture2D() = default;
+
+		std::string GetAssetType() const override { return "Texture2D"; }
 
 		static Ref<Texture2D> Create(const WinPath& path);
 

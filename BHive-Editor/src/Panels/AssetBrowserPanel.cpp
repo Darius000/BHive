@@ -1,5 +1,7 @@
 #include "AssetBrowserPanel.h"
 #include "../PopUps/FileBrowser.h"
+#include "BHive/Core/Editor.h"
+#include "BHive/Renderer/Texture.h"
 
 namespace BHive
 {
@@ -17,7 +19,7 @@ namespace BHive
 		{
 			if (ImGui::MenuItem("Edit"))
 			{
-				EditorStack::OpenEditorForAsset(asset);
+				auto editor = new Editor(asset->GetName(), asset);
 			}
 
 			ImGui::EndPopup();
@@ -30,23 +32,19 @@ namespace BHive
 	}
 
 	AssetBrowserPanel::AssetBrowserPanel() 
-		: ImGuiPanel("Content Browser"), m_Columns(0), m_Flags(0)
+		: ImGuiPanel("Content Browser", 0), m_Columns(0)
 	{
 		m_FileBrowser = new IFileBrowser();
 	}
 
 	AssetBrowserPanel::AssetBrowserPanel(unsigned int columns, ImGuiWindowFlags flags)
-		:ImGuiPanel("Content Browser") , m_Columns(columns), m_Flags(flags)
+		:ImGuiPanel("Content Browser", flags) , m_Columns(columns)
 	{
 		m_FileBrowser = new IFileBrowser();
 	}
 
-	void AssetBrowserPanel::OnImGuiRender()
+	void AssetBrowserPanel::OnRenderWindow()
 	{
-		ImGui::Begin(m_Label, &m_isOpen, m_Flags);
-
-		
-
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100.0f, 50.0f));
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.5f, 1.0f, 0.5f, 1.0f));
 		if (ImGui::BeginMenuBar())
@@ -108,15 +106,12 @@ namespace BHive
 			{
 				SelectedAsset = asset.second.get();
 
-				EditorStack::OpenEditorForAsset(asset.second.get());
+				auto editor = new Editor(asset.second->GetName(), asset.second.get());
 			}
 
 			ImGui::PopID();
 			i++;
 		}
-
-
-		ImGui::End();
 	}
 
 }

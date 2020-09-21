@@ -1,8 +1,9 @@
 #pragma once
 
-#include "../Editors/Editor.h"
+#include "BHive.h"
+#include "BHive/Core/ImGuiPanel.h"
 #include "Core/Viewport/Viewport.h"
-#include "Object/Entity.h"
+
 
 namespace BHive
 {
@@ -10,9 +11,9 @@ namespace BHive
 	class ViewportPanel : public ImGuiPanel
 	{
 	public:
-		ViewportPanel(const char* label, Viewport* viewport);
+		ViewportPanel(const std::string& label, Viewport* viewport);
 
-		void OnImGuiRender() override;
+		void OnRenderWindow() override;
 		
 
 		void OnMouseScrolled(MouseScrolledEvent& e);

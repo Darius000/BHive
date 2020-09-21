@@ -5,6 +5,9 @@
 
 namespace BHive
 {
+
+	
+
 	class Material
 	{
 	public:
@@ -12,10 +15,8 @@ namespace BHive
 		virtual ~Material(){};
 
 		void Render();
-		virtual void OnShaderBind(Ref<Shader>& shader) = 0;
-
-		Ref<Texture2D> m_Texture;
-
+		
+		virtual ShaderUniforms& GetShaderUniforms() = 0;
 	protected:
 		Ref<Shader> m_Shader;
 		
@@ -29,13 +30,18 @@ namespace BHive
 		DefaultMaterial();
 		virtual ~DefaultMaterial(){}
 
-		void OnShaderBind(Ref<Shader>& shader) override;
+		ShaderUniforms& GetShaderUniforms() override
+		{
+			return m_ShaderUniforms;
+		}
 
 	public:
-		FVector3 m_DiffuseColor		= FVector3(1.0f);
-		FVector3 m_AmbientColor		= FVector3(0.0f);
-		FVector2 m_TextureTiling	= FVector2(1.0f, 1.0f);
-		float m_Transparency = 0.0;
+		LinearColor3 m_DiffuseColor		= LinearColor3(1.0f);
+		LinearColor3 m_AmbientColor		= LinearColor3(0.0f);
+		FVector2 m_TextureTiling		= FVector2(1.0f, 1.0f);
+		float m_Opacity = 1.0;
+
+		ShaderUniforms m_ShaderUniforms;
 	};
 
 	class LambertMaterial : public DefaultMaterial
@@ -44,9 +50,13 @@ namespace BHive
 		LambertMaterial();
 		virtual ~LambertMaterial(){}
 
-		void OnShaderBind(Ref<Shader>& shader) override;
+		ShaderUniforms& GetShaderUniforms() override
+		{
+			return m_ShaderUniforms;
+		}
 
 		FVector2 m_TextureTiling = FVector2(1.0f, 1.0f);
+		ShaderUniforms m_ShaderUniforms;
 	};
 
 	class PhongMaterial : public Material
@@ -56,18 +66,25 @@ namespace BHive
 
 		virtual ~PhongMaterial(){}
 
-		void OnShaderBind(Ref<Shader>& shader) override;
+		ShaderUniforms& GetShaderUniforms() override
+		{
+			return m_ShaderUniforms;
+		}
 
-		FVector3 m_Ambient = FVector3(0.0f);
-		FVector3 m_Diffuse = FVector3(1.0f);
-		FVector3 m_Emission = FVector3(0.0f);
-		FVector3 m_Specular = FVector3(1.0f);
-		float m_Transparency = 0.0f;
+		LinearColor3 m_Ambient =	LinearColor3(0.0f);
+		LinearColor3 m_Diffuse =	LinearColor3(1.0f);
+		LinearColor3 m_Emission =	LinearColor3(0.0f);
+		LinearColor3 m_Specular =	LinearColor3(1.0f);
+		float m_Opacity = 1.0f;
+		bool m_CutOff = false;
+		bool m_UseDiffuseAsAlpha = false;
 		float m_Shininess = 20.0f;
 		FVector2 m_TextureTiling = FVector2(1.0f, 1.0f);
 		Ref<Texture2D> m_DiffuseTexture;
 		Ref<Texture2D> m_SpecularTexture;
 		Ref<Texture2D> m_EmissionTexture;
+		Ref<Texture2D> m_AlphaTexture;
+		ShaderUniforms m_ShaderUniforms;
 	};
 
 	class GridMaterial : public Material
@@ -75,12 +92,10 @@ namespace BHive
 	public:
 		GridMaterial();
 
-
-		void OnShaderBind(Ref<Shader>& shader) override;
-
 		float m_Scale = 261.0f;
 		float m_Resolution  = .05f;
-		FVector4 m_LineColor = FVector4(1.0f);
-		FVector4 m_BackgroundColor = FVector4(.1f);
+		LinearColor4 m_LineColor		= LinearColor4(1.0f);
+		LinearColor4 m_BackgroundColor	= LinearColor4(.1f);
+		ShaderUniforms m_ShaderUniforms;
 	};
 }

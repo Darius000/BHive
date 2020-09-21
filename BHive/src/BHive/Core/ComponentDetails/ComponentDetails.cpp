@@ -3,7 +3,7 @@
 
 namespace BHive
 {
-	void TransformComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void TransformComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 		auto& transform = entity.GetComponent<TransformComponent>().m_Transform;
@@ -11,9 +11,13 @@ namespace BHive
 		detailsBuilder.Label("Transform Component");
 		ImGui::Separator();
 		detailsBuilder.TransformProperty("Transform", transform);
+		if (detailsBuilder.Button("Remove##TransformComponent"))
+		{
+			entity.RemoveComponent<TransformComponent>();
+		}
 	}
 
-	void TagComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void TagComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
@@ -23,7 +27,7 @@ namespace BHive
 		detailsBuilder.StringProperty("Tag", tag);
 	}
 
-	void DirectionalLightComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void DirectionalLightComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 
@@ -32,25 +36,33 @@ namespace BHive
 		detailsBuilder.Label("Directional Light Component");
 		ImGui::Separator();
 		detailsBuilder.Color3Property("Color", dirLight.m_LightColor);
-		detailsBuilder.FloatProperty("Brightness", dirLight.m_LightBrightness);
+		detailsBuilder.FloatProperty("Brightness", dirLight.m_LightBrightness, 0.01f, 0.0f, 1.0f);
+		if (detailsBuilder.Button("Remove##DirectionalLightComponent"))
+		{
+			entity.RemoveComponent<DirectionalLightComponent>();
+		}
 	}
 
-	void PointLightComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void PointLightComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 
 		auto& pLight = entity.GetComponent<PointLightComponent>();
 
-		detailsBuilder.Label("Directional Light Component");
+		detailsBuilder.Label("Point Light Component");
 		ImGui::Separator();
 		detailsBuilder.Color3Property("Color", pLight.m_Color);
 		detailsBuilder.FloatProperty("Constant", pLight.m_Constant);
 		detailsBuilder.FloatProperty("Linear", pLight.m_Linear);
 		detailsBuilder.FloatProperty("Quadratic", pLight.m_Quadratic);
-		detailsBuilder.FloatProperty("Brightness", pLight.m_Brightness);
+		detailsBuilder.FloatProperty("Brightness", pLight.m_Brightness, 0.01f, 0.0f, 1.0f);
+		if (detailsBuilder.Button("Remove##PointLightComponent"))
+		{
+			entity.RemoveComponent<PointLightComponent>();
+		}
 	}
 
-	void SpotLightComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void SpotLightComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 
@@ -59,15 +71,19 @@ namespace BHive
 		detailsBuilder.Label("SpotLight Component");
 		ImGui::Separator();
 		detailsBuilder.Color3Property("Color", spLight.m_Color);
-		detailsBuilder.FloatProperty("Cut Off", spLight.m_Cutoff);
-		detailsBuilder.FloatProperty("Outer Cut Off", spLight.m_OuterCutoff);
-		detailsBuilder.FloatProperty("Constant", spLight.m_Constant);
-		detailsBuilder.FloatProperty("Linear", spLight.m_Linear);
-		detailsBuilder.FloatProperty("Quadratic", spLight.m_Quadratic);
-		detailsBuilder.FloatProperty("Brightness", spLight.m_Brightness);
+		detailsBuilder.FloatProperty("Cut Off", spLight.m_Cutoff, 0.1f, 0.0f, spLight.m_OuterCutoff);
+		detailsBuilder.FloatProperty("Outer Cut Off", spLight.m_OuterCutoff, 0.1f, 0.0f);
+		detailsBuilder.FloatProperty("Constant", spLight.m_Constant, 0.01f, 0.0f, 1.0f);
+		detailsBuilder.FloatProperty("Linear", spLight.m_Linear, 0.01f, 0.0f, 1.0f);
+		detailsBuilder.FloatProperty("Quadratic", spLight.m_Quadratic, 0.01f, 0.0f, 1.0f);
+		detailsBuilder.FloatProperty("Brightness", spLight.m_Brightness, 0.01f, 0.0f, 1.0f);
+		if (detailsBuilder.Button("Remove##SpotLightComponent"))
+		{
+			entity.RemoveComponent<SpotLightComponent>();
+		}
 	}
 
-	void CameraComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void CameraComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 
@@ -90,11 +106,15 @@ namespace BHive
 		{
 			camera.RecalculateProjection();
 		}
+		if (detailsBuilder.Button("Remove##CameraComponent"))
+		{
+			entity.RemoveComponent<CameraComponent>();
+		}
 
 		ImGui::EndGroup();
 	}
 
-	void RenderComponentDetails::CreateCustomizedDetails(DetailsBuilder& detailsBuilder)
+	void RenderComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
 	{
 		auto& entity = detailsBuilder.GetEntityBeingEdited();
 
@@ -104,6 +124,22 @@ namespace BHive
 		ImGui::Separator();
 		detailsBuilder.AssetProperty("Mesh", mesh);
 		detailsBuilder.MeshProperty("Sub Meshes", mesh);
+		if (detailsBuilder.Button("Remove##RenderComponent"))
+		{
+			entity.RemoveComponent<RenderComponent>();
+		}
 	}
 
+	void NativeScriptComponentDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder)
+	{
+		auto& entity = detailsBuilder.GetEntityBeingEdited();
+
+		auto& script = entity.GetComponent<NativeScriptComponent>();
+		detailsBuilder.Label("C++ Script");
+		ImGui::Separator();
+		if (detailsBuilder.Button("Remove##ScriptComponent"))
+		{
+			entity.RemoveComponent<NativeScriptComponent>();
+		}
+	}
 }

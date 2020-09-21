@@ -15,7 +15,7 @@ namespace BHive
 		m_Camera.AddComponent<CameraComponent>();
 		m_Camera.GetComponent<CameraComponent>().m_Camera.SetPerspective({ 35.0f, .01f, 1000.0f });
 		m_Camera.GetComponent<CameraComponent>().m_PrimaryCamera = true;
-		m_Camera.GetComponent<TransformComponent>().m_Transform.SetPosition({ 0.0f, 0.0f, 2.0f });
+		m_Camera.GetComponent<TransformComponent>().m_Transform.SetPosition({ 0.0f, 0.0f, 10.0f });
 	}
 
 	void Viewport::OnUpdate(const Time& time)

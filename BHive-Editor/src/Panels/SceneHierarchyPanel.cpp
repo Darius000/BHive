@@ -1,12 +1,12 @@
 #include "SceneHierarchyPanel.h"
-
+#include "BHive/Core/Registry/ClassRegistry.h"
 #include <imgui/imgui.h>
 
 namespace BHive
 {
 
 	SceneHierarchyPanel::SceneHierarchyPanel(Scene* context)
-		:ImGuiPanel("Scene Hierarchy")
+		:ImGuiPanel("Scene Hierarchy", 0)
 	{
 		SetContext(context);
 	}
@@ -16,11 +16,9 @@ namespace BHive
 		m_SceneContext = context;
 	}
 
-	void SceneHierarchyPanel::OnImGuiRender()
+	void SceneHierarchyPanel::OnRenderWindow()
 	{
 		if (!m_SceneContext || !m_isOpen) return;
-
-		ImGui::Begin(m_Label, &m_isOpen);
 
 		m_SceneContext->m_Registry.each([&](auto entityID)
 		{
@@ -35,7 +33,6 @@ namespace BHive
 			m_SelectedContext = {};
 		}
 
-		ImGui::End();
 
 		ImGui::Begin("Properties");
 		if (m_SelectedContext)
@@ -68,44 +65,105 @@ namespace BHive
 	{
 		if (entity.HasComponent<TagComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("TagComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("TagComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<TransformComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("TransformComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("TransformComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<DirectionalLightComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("DirectionalLightComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("DirectionalLightComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<PointLightComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("PointLightComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("PointLightComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<SpotLightComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("SpotLightComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("SpotLightComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<CameraComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("CameraComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("CameraComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
 
 		if (entity.HasComponent<RenderComponent>())
 		{
-			auto DetailsCustomization = ClassPropertyRegistry::GetDetailsCustomizationInstance("RenderComponent");
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("RenderComponent");
 			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
 		}
+
+		if (entity.HasComponent<NativeScriptComponent>())
+		{
+			auto DetailsCustomization = ClassRegistry::GetDetailsCustomizationInstance("NativeScriptComponent");
+			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
+		}
+
+		DrawAddRemoveComponents(entity);
 	}
+
+	void SceneHierarchyPanel::DrawAddRemoveComponents(Entity entity)
+	{
+
+		if (ImGui::Button("Add Component"))
+		{
+			ImGui::OpenPopup("Components");
+		}
+
+
+		if (ImGui::BeginPopup("Components"))
+		{
+			for (auto Class : ClassRegistry::GetClassRegistryList())
+			{
+				const char* name = Class;
+				if (ImGui::Selectable(name))
+				{
+					if (name == "TransformComponent")
+					{
+						entity.AddComponent<TransformComponent>();
+					}
+					else if (name == "RenderComponent")
+					{
+						entity.AddComponent<RenderComponent>();
+					}
+					else if (name == "PointLightComponent")
+					{
+						entity.AddComponent<PointLightComponent>();
+					}			
+					else if (name == "TagComponent")
+					{
+						entity.AddComponent<TagComponent>();
+					}
+					else if (name == "DirectionalLightComponent")
+					{
+						entity.AddComponent<DirectionalLightComponent>();
+					}				
+					else if (name == "CameraComponent")
+					{
+						entity.AddComponent<CameraComponent>();
+					}			
+					else if (name == "NativeScriptComponent")
+					{
+						entity.AddComponent<NativeScriptComponent>();
+					}
+					
+				}
+			}
+			
+			ImGui::EndPopup();
+		}
+	}
+
 }

@@ -18,7 +18,7 @@ namespace BHive
 
 	void Renderer2D::Begin()
 	{
-		RenderCommands::SetClearColor(BHive::LinearColor(0.5f, 0.5f, 0.50f, 1.0f));
+		RenderCommands::SetClearColor(LinearColor4(0.5f, 0.5f, 0.50f, 1.0f));
 		RenderCommands::Clear();
 	}
 
