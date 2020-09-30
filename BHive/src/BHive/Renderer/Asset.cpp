@@ -10,7 +10,7 @@ namespace BHive
 
 	}
 
-	std::string Asset::GetName() const
+	std::string& Asset::GetName()
 	{
 		return m_Name;
 	}

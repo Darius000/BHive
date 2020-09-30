@@ -19,7 +19,7 @@ namespace BHive
 		ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 0.0f);
 		if(m_RuntimeCreated) 
 		{	
-			ImGui::SetNextWindowSize(ImVec2(500, 500), ImGuiCond_Once);
+			ImGui::SetNextWindowSize(ImVec2(700, 500), ImGuiCond_Once);
 			m_Flags = m_Flags | ImGuiWindowFlags_NoSavedSettings;
 		}
 

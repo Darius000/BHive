@@ -10,12 +10,30 @@ namespace BHive
 	void AssetBrowserPanel::DrawAssetIcon(Asset* asset)
 	{
 		ImVec4 BgColor = asset == SelectedAsset ? ImVec4(1, 1, 0, 1) : ImVec4(0, 0, 0, 0);
+		std::string& name = asset->GetName();
 
 		ImGui::BeginGroup();
 		uint32 iconID = AssetManager::Get<Texture2D>(asset->GetThumbnailName())->GetRendererID();
+		
 		ImGui::ImageButton((void*)iconID, IconSize, ImVec2(0, 1), ImVec2(1, 0), 0, BgColor);
-		ImGui::Text(asset->GetName().c_str());
+
+		if (ImGui::IsItemHovered())
+		{
+			ImGui::BeginTooltip();
+			ImGui::SetTooltip("%s", name.c_str());
+			ImGui::EndTooltip();
+		}
+		
+		ImGui::PushItemWidth(IconSize.x);
+		const char* base = "a";
+		float fontsize = ImGui::CalcTextSize(base).x;
+		uint32 iconwidth = (uint32)(floor(IconSize.x) / fontsize - fontsize);
+		uint32 lastChar = name.size() > iconwidth ? iconwidth : name.size();
+
+		ImGui::TextUnformatted(name.c_str(), &name[lastChar]);
+		ImGui::PopItemWidth();
 		ImGui::EndGroup();
+
 		if (ImGui::BeginPopupContextItem("Asset Popup"))
 		{
 			if (ImGui::MenuItem("Edit"))
@@ -92,7 +110,7 @@ namespace BHive
 		for (auto& asset : AssetManager::GetAssets<Asset>())
 		{
 			auto AvailableWidth = (int32)floor(ContentBrowserSize.x);
-			auto IconWidth = (int32)floor(IconSize.x - (IconSpacing));
+			auto IconWidth = (int32)floor(IconSize.x + (IconSpacing));
 
 			int32 Columns = 0;
 

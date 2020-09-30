@@ -12,7 +12,7 @@ namespace BHive
 		Asset(const std::string& name);
 		virtual ~Asset() = default;
 
-		std::string GetName() const;
+		std::string& GetName();
 
 		virtual std::string GetAssetType() const = 0;
 		
