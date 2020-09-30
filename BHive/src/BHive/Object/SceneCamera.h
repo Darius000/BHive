@@ -11,6 +11,8 @@ namespace BHive
 		
 	};
 
+	static const char* s_Projections[] = {"Perspective", "Orthographic"};
+
 	struct OrthographicSettings
 	{
 		float Size = 1.0f;

@@ -35,23 +35,21 @@ namespace BHive
 	template<typename T>
 	inline ESuccess OnImport(const WinPath& path)
 	{
-		Ref<T> obj = T::Create(path);
-		AssetManager::Add(obj);
+		Ref<T> obj = T::Create(path);	
 		if (!obj) return  ESuccess::FAILED;
+		AssetManager::Add(obj);
 		return ESuccess::SUCESSS;
 	}
 	
 	inline void Import(const WinPath& path)
-	{
-		static std::vector<BString> texExts = {"jpg", "png", "tga"};
+	{	
 		BString ext = path.GetExtension();
-		auto& it = std::find(texExts.begin(), texExts.end(), ext);
 
 		if (ext == "glsl")
 		{
 			OnImport<Shader>(path);
 		}
-		else if (it != texExts.end())
+		else if (Texture::IsExtensionSupported(ext))
 		{
 			OnImport<Texture2D>(path);
 		}

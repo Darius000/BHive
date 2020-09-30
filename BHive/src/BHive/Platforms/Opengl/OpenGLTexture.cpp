@@ -2,7 +2,7 @@
 #include "OpenGLTexture.h"
 
 #include "stb_image.h"
-
+#include <glad/glad.h>
 
 
 namespace BHive
@@ -31,6 +31,11 @@ namespace BHive
 		{
 			PixelData.m_InternalFormat = GL_RGB8;
 			PixelData.m_DataFormat = GL_RGB;
+		}
+		else if (m_Channels == 1)
+		{
+			PixelData.m_InternalFormat = GL_R8;
+			PixelData.m_DataFormat = GL_RED;
 		}
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);

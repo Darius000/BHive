@@ -1,15 +1,20 @@
 #include "EditorLayer.h"
 #include "ImGui/ImGuiWrappers.h"
-#include "BHive/Core/ComponentDetails/DetailsCustomization.h"
-#include "BHive/Core/ComponentDetails/ComponentDetails.h"
-#include "BHive/Core/Registry/ClassRegistry.h"
+#include "ComponentDetails/DetailsCustomization.h"
+#include "ComponentDetails/ComponentDetails.h"
+#include "EditorClassRegistry.h"
 
 namespace BHive
 { 
 	EditorLayer::EditorLayer()
 		:Layer("EditorLayer")
 	{
-	
+		s_Instance = this;
+	}
+
+
+	EditorLayer::~EditorLayer()
+	{
 	}
 
 	void EditorLayer::OnAttach()
@@ -19,14 +24,14 @@ namespace BHive
 		fbSpec.Height = 720;
 
 		//Register Component Class Property Details
-		ClassRegistry::RegisterClassDetails("TransformComponent", Make_Ref<TransformComponentDetails>());
-		ClassRegistry::RegisterClassDetails("TagComponent", Make_Ref<TagComponentDetails>());
-		ClassRegistry::RegisterClassDetails("DirectionalLightComponent", Make_Ref<DirectionalLightComponentDetails>());
-		ClassRegistry::RegisterClassDetails("SpotLightComponent", Make_Ref<SpotLightComponentDetails>());
-		ClassRegistry::RegisterClassDetails("PointLightComponent", Make_Ref<PointLightComponentDetails>());
-		ClassRegistry::RegisterClassDetails("CameraComponent", Make_Ref<CameraComponentDetails>());
-		ClassRegistry::RegisterClassDetails("RenderComponent", Make_Ref<RenderComponentDetails>());
-		ClassRegistry::RegisterClassDetails("NativeScriptComponent", Make_Ref<NativeScriptComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("TransformComponent", Make_Ref<TransformComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("TagComponent", Make_Ref<TagComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("DirectionalLightComponent", Make_Ref<DirectionalLightComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("SpotLightComponent", Make_Ref<SpotLightComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("PointLightComponent", Make_Ref<PointLightComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("CameraComponent", Make_Ref<CameraComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("RenderComponent", Make_Ref<RenderComponentDetails>());
+		EditorClassRegistry::RegisterClassDetails("NativeScriptComponent", Make_Ref<NativeScriptComponentDetails>());
 		ClassRegistry::RegisterClassName("TransformComponent");
 		ClassRegistry::RegisterClassName("TagComponent");
 		ClassRegistry::RegisterClassName("DirectionalLightComponent");
@@ -34,35 +39,53 @@ namespace BHive
 		ClassRegistry::RegisterClassName("CameraComponent");
 		ClassRegistry::RegisterClassName("RenderComponent");
 		ClassRegistry::RegisterClassName("NativeScriptComponent");
-		ClassRegistry::RegisterEditorCustomizationDetailsForAsset("Texture2D", Make_Ref<TextureEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Texture2D", Make_Ref<TextureEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Material", Make_Ref<MaterialEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Mesh", Make_Ref<MeshEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Shader", Make_Ref<ShaderEditorCustomizationDetails>());
 
 		Scene* scene = SceneManager::CreateScene("Default");
-		//Scene* scene2 = SceneManager::CreateScene("New Scene");
 
 		m_Texture = AssetManager::Get<Texture2D>("folder");
 		m_Texture2 = AssetManager::Get<Texture2D>("checkermap");
 
-		//m_Camera = scene->CreateEntity("Camera");
-		//m_Camera.AddComponent<CameraComponent>();
-		//m_Camera.GetComponent<CameraComponent>().m_Camera.SetPerspective({35.0f, .01f, 1000.0f});
+		Ref<PhongMaterial> DMaterial(new PhongMaterial());
+		DMaterial->m_Properties.m_DiffuseTexture = AssetManager::Get<Texture2D>("checkermap");
+		DMaterial->m_Name = DefaultMaterialName;
+		AssetManager::CreateAsset<Material>(DMaterial);
 
-		/*Camera2 = scene->CreateEntity("Camera2");
-		Camera2.AddComponent<CameraComponent>();
-		Camera2.GetComponent<CameraComponent>().m_Camera.SetOrthographic({1.0f, -1.0f, 1.0f});*/
+		Ref<PhongMaterial> Material2(new PhongMaterial());
+		Material2->m_Name = "Material2";
+		AssetManager::CreateAsset<Material>(Material2);
 
-		Ref<Model> Shotgun	= Model::Import("Import/Meshes/Grenades.obj", false);
+		Ref<PhongMaterial> RedMaterial(new PhongMaterial());
+		RedMaterial->m_Name = "RedMaterial";
+		RedMaterial->m_Properties.m_Diffuse = LinearColor3(1.0, 0.0, 0.0);
+		AssetManager::CreateAsset<Material>(RedMaterial);
+
+		Ref<ToonMaterial> toonm = Make_Ref<ToonMaterial>();
+		toonm->m_Name = "Toon Material";
+		AssetManager::CreateAsset<Material>(toonm);
+
+		Ref<Model> Shotgun	= Model::Import("Import/Meshes/Grenades.obj", false, true);
+		AssetManager::Add(Model::Import("Import/Meshes/Shotgun.obj", false, true));
+		Import("Import/Meshes/Cube.obj");
 		Import("D:/Wallpaper/7_tornado.jpg");
 		Import("Import/Textures/container.jpg");
 		Import("Import/Textures/grass.png");
 		Import("Import/Textures/matrix.jpg");
 		Import("Import/Textures/smoke.png");
 		Import("D:/Wallpaper/7_tornado.jpg");
+		Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
+		Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
+		Import("Import/Meshes/Frag1/Frag_1_M_A.png");
+		Import("Import/Meshes/Frag2/Frag_2_M_A.png");
 		Ref<Texture2D> m_Texture3 = AssetManager::Get<Texture2D>("7_tornado");
 		
 
 		Ref<Model> triangle = Renderer2D::Triangle(1.0f, 1.0f);
 		Ref<Model> plane	= Renderer2D::Plane(5.0f, 5.0f);
-		Ref<Model> lantern	= Model::Import("Import/Meshes/lantern.obj", false);
+		Ref<Model> lantern	= Model::Import("Import/Meshes/lantern.obj", false, true);
 
 		AssetManager::Add(triangle);
 		AssetManager::Add(plane);
@@ -74,49 +97,35 @@ namespace BHive
 	
 		auto& renderComponent = actor0.GetComponent<RenderComponent>();
 		renderComponent.m_Model = Shotgun;
-		//renderComponent.m_Model->GetMesh(0)->GetMaterial()->m_Texture = m_Texture2;
-		renderComponent.m_Model->GetMesh(0)->SetMaterial(Ref<PhongMaterial>(new PhongMaterial()));
-			
+
 		tri = scene->CreateEntity("Triangle");
 		tri.AddComponent<RenderComponent>();
 
 		auto& renderComponent1 = tri.GetComponent<RenderComponent>();
 		renderComponent1.m_Model = triangle;
-		//renderComponent1.m_Model->GetMaterial()->m_Texture = m_Texture2;
-	
+
 		pl = scene->CreateEntity("Plane");
 		auto& rendercomponent2 = pl.AddComponent<RenderComponent>();
-		rendercomponent2.m_Model = plane;
-		//plane->GetMesh(0)->SetMaterial(Make_Ref<GridMaterial>());
-		//rendercomponent2.m_Model->GetMesh(0)->GetMaterial()->m_Texture = m_Texture2;
-	
+		rendercomponent2.m_Model = AssetManager::Get<Model>("Plane");
+
 		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
 		scene->CreateEntity("Directional Light2").AddComponent<DirectionalLightComponent>();
-		//Light.AddComponent<NativeScriptComponent>().Bind<Player>();
+
 		scene->CreateEntity("Point Light").AddComponent<PointLightComponent>();
 		scene->CreateEntity("Point Light2").AddComponent<PointLightComponent>();
-		scene->CreateEntity("Spot Light").AddComponent<SpotLightComponent>();
-		scene->CreateEntity("Spot Light2").AddComponent<SpotLightComponent>();
 
 		SceneManager::SetActiveScene("Default");
 		Renderer2D::Init();
 
-		m_Viewport = new Viewport(fbSpec, SceneManager::GetActiveScene());
-		//
-
+		m_Viewport = Make_Ref<Viewport>(fbSpec, SceneManager::GetActiveScene());
+	
 		m_ViewportPanel = new ViewportPanel(std::string("MainViewport"), m_Viewport);
 		m_SceneHierarchyPanel = new SceneHierarchyPanel(SceneManager::GetActiveScene());
 		m_AssetBrowserPanel = new AssetBrowserPanel(0 , ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar);
-		//m_StyleEditorPanel = new StyleEditorPanel();
-		//m_DemoWindowPanel = new DemoWindowPanel();
 
-		/*FrameBufferSpecification spec2;
-		spec2.Width = 800;
-		spec2.Height = 600;
-		m_Viewport2 = new Viewport(spec2, scene2);
-		m_ViewportPanel2 = new ViewportPanel("ViewPort2", m_Viewport2);*/
-
-		
+		OpenPanel(m_ViewportPanel);
+		OpenPanel(m_SceneHierarchyPanel);
+		OpenPanel(m_AssetBrowserPanel);
 	}
 
 	void EditorLayer::OnUpdate(const Time& time)
@@ -169,9 +178,19 @@ namespace BHive
 		}
 
 		DisplayMenuBar();
-		EditorStack::OnImGuiRender();
+		
+		size_t size = m_EditorStack.size();
+		for (uint32 i = 0; i < size; i++)
+		{
+			m_EditorStack[i]->OnRender();
 
-		ImGui::ShowDemoWindow();
+			if (!m_EditorStack[i]->m_isOpen)
+			{
+				m_EditorStack.ClosePanel(i);
+			}
+		}
+
+		//ImGui::ShowDemoWindow();
 
 		//End Dockspace
 		ImGui::End();
@@ -179,14 +198,20 @@ namespace BHive
 
 	void EditorLayer::OnEvent(Event& event)
 	{	
-		EventDispatcher dispatcher(event);
+		/*EventDispatcher dispatcher(event);
 		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseScrolled));
 		dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseMoved));
 		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonPressed));
-		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonReleased));
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonReleased));*/
 	}
 
-	bool EditorLayer::OnMouseScrolled(MouseScrolledEvent& e)
+
+	void EditorLayer::OpenPanel(ImGuiPanel* panel)
+	{
+		m_EditorStack.OpenPanel(panel);
+	}
+
+	/*bool EditorLayer::OnMouseScrolled(MouseScrolledEvent& e)
 	{
 		m_ViewportPanel->OnMouseScrolled(e);
 		return false;
@@ -211,7 +236,7 @@ namespace BHive
 		m_ViewportPanel->OnMouseButtonReleased(e);
 
 		return false;
-	}
+	}*/
 
 	void EditorLayer::DisplayMenuBar()
 	{
@@ -226,13 +251,6 @@ namespace BHive
 
 			if (ImGui::BeginMenu("View"))
 			{
-				//if (ImGui::MenuItem("Style Customization Window")) m_ShowStyleEditor = true;
-				//if (ImGui::MenuItem("Content Browser")) m_ShowContentBrowser = true;
-				//if (ImGui::MenuItem("Viewport")) m_ShowViewport = true;
-				//if (ImGui::MenuItem("Details Panel")) m_ShowDetailsPanel = true;
-				//if (ImGui::MenuItem("Show ImGui Demo Window")) m_ShowDemoWindow = true;
-				//if (ImGui::MenuItem("Show Scene Hierarchy Panel")) m_SceneHierarchyPanel->m_isOpen = true;
-
 				ImGui::EndMenu();
 			}
 
@@ -261,6 +279,8 @@ namespace BHive
 			ImGui::EndMenuBar();
 		}
 	}
+
+	EditorLayer* EditorLayer::s_Instance;
 
 	void EditorLayer::OnDetach()
 	{

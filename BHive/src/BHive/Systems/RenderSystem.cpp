@@ -117,13 +117,13 @@ namespace BHive
 			};
 
 			auto group = componentRegistry.view<RenderComponent, TransformComponent>();
-			std::map<float, Comp> sorted;
+			std::multimap<float, Comp> sorted;
 
 			for (auto entity : group)
 			{
 				auto& [render, transform] = group.get<RenderComponent, TransformComponent>(entity);
-				float distance = (CameraPosition - transform.m_Transform.GetPosition()).GetMagnitude();
-				sorted[distance] = {render, transform};
+				float distance = (CameraPosition - transform.m_Transform.GetPosition()).GetMagnitude2();
+				sorted.insert({distance, {render, transform}});
 				
 			}
 
@@ -137,7 +137,7 @@ namespace BHive
 				{
 					for (auto& mesh : render.m_Model->GetMeshes())
 					{
-						Ref<Shader> shader = mesh.second->GetShader();
+						auto shader = mesh.second->GetMaterial()->GetShader();
 
 						shader->Bind();
 						shader->SetMat4("u_Model", transform.m_Transform.GetMatrix());

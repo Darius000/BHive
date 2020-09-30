@@ -78,11 +78,13 @@ namespace BHive
 			if(tex)
 			{ 
 				tex->Bind(uniform.m_SamplerIndex);
-				SetInt(name, uniform.m_SamplerIndex );
+				SetInt(name + std::string(".texture"), uniform.m_SamplerIndex );
+				SetBool(name + std::string(".set"), true);
 			}
 			else
 			{
-				SetInt(name, 0);
+				SetInt(name + std::string(".texture"), 0);
+				SetBool(name + std::string(".set"), false);
 			}
 		}	
 		break;
@@ -116,4 +118,32 @@ namespace BHive
 		BH_CORE_ASSERT(false, "Unknown API");
 		return nullptr;
 	}
+
+	void Shader::AddAttribute(UniformAttribute* attribute)
+	{
+		m_UniformAttribues.push_back(Scope<UniformAttribute>(attribute));
+	}
+
+
+	void Shader::RemoveAttribute(const std::string name)
+	{
+		auto it = std::find_if(m_UniformAttribues.begin(), m_UniformAttribues.end(), [name](Scope<UniformAttribute>& attr)
+		{
+			if (attr->m_Name == name)
+			{
+				return true;
+			}
+
+			return false;
+		});
+
+		m_UniformAttribues.erase(it);
+	}
+
+	void Shader::RemoveAttribute(unsigned int index)
+	{
+		auto it = std::find(m_UniformAttribues.begin(), m_UniformAttribues.end(), m_UniformAttribues[index]);
+		m_UniformAttribues.erase(it);
+	}
+
 }

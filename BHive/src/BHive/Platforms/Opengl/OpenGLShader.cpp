@@ -5,16 +5,16 @@
 
 namespace BHive
 {
-	static GLenum ShaderTypeFromString(const BString& type)
+	static ShaderType ShaderTypeFromString(const BString& type)
 	{
 		if (type == "VERTEX") 
-			return GL_VERTEX_SHADER;
+			return ShaderType::VertexShader;
 		if (type == "FRAGMENT" || type == "PIXEL")
-			return GL_FRAGMENT_SHADER;
+			return ShaderType::FragmentShader;
 
 		BH_CORE_ASSERT(false, "Unkown shader type!");
 
-		return 0;
+		return ShaderType::None;
 	}
 
 	OpenGLShader::OpenGLShader(const WinPath& filePath)
@@ -23,17 +23,16 @@ namespace BHive
 		m_Name = filePath.GetName();
 
 		BString source = ReadFile(filePath);	
-		auto shaderSources = PreProccess(source);
-		Compile(shaderSources);
+		PreProccess(source);
+		Compile();
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name, const BString&  vertexSrc, const BString&  fragmentSrc)
 		:Shader(name)
 	{
-		std::unordered_map<GLenum, BString> sources;
-		sources[GL_VERTEX_SHADER] = vertexSrc;
-		sources[GL_FRAGMENT_SHADER] = fragmentSrc;
-		Compile(sources);
+		m_Sources[ShaderType::VertexShader] = vertexSrc;
+		m_Sources[ShaderType::FragmentShader] = fragmentSrc;
+		Compile();
 	}
 
 	
@@ -181,10 +180,8 @@ namespace BHive
 		return result;
 	}
 
-	std::unordered_map<uint32, BString> OpenGLShader::PreProccess(const BString& source)
+	void OpenGLShader::PreProccess(const BString& source)
 	{
-		std::unordered_map<uint32, BString> shaderSources;
-
 		const ANSICHAR* typeToken = "#type";
 		size_t typeTokenLength = strlen(typeToken);
 		size_t pos = source.find(*typeToken, 0);
@@ -195,28 +192,26 @@ namespace BHive
 			BH_CORE_ASSERT(eol != BString::npos, "Syntax Error");
 			size_t begin = pos + typeTokenLength + 1;
 			BString type = source.substr(begin, eol - begin);
-			BH_CORE_ASSERT(ShaderTypeFromString(type), "Invalid Shader Type Specified");
+			BH_CORE_ASSERT(ShaderTypeFromString(type) != ShaderType::None, "Invalid Shader Type Specified");
 
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol);
 			pos = source.find(typeToken, nextLinePos);
-			shaderSources[ShaderTypeFromString(type)] = source.substr(nextLinePos,
+			m_Sources[ShaderTypeFromString(type)] = source.substr(nextLinePos,
 				pos - (nextLinePos == BString::npos ? source.size() - 1 : nextLinePos));
 		}
-
-		return shaderSources;
 	}
 
-	void OpenGLShader::Compile(std::unordered_map<uint32, BString>& sources)
+	void OpenGLShader::Compile()
 	{
 		GLuint program = glCreateProgram();
-		BH_CORE_ASSERT(sources.size() <= 2, "Only support 2  shaders for now!");
+		BH_CORE_ASSERT(m_Sources.size() <= 2, "Only support 2  shaders for now!");
 
 		std::array<uint32, 2> glShaderIDs;
 
 		uint32 index = 0;
-		for (auto& kv : sources)
+		for (auto& kv : m_Sources)
 		{
-			GLenum shaderType = kv.first;
+			GLenum shaderType = (GLenum)kv.first;
 			const BString& source = kv.second;
 
 			GLuint shader = glCreateShader(shaderType);

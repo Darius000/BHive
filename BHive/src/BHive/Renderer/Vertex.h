@@ -15,5 +15,12 @@ namespace BHive
 		LinearColor4 m_Color;
 		Vector2<float> m_TexCoord;
 		Vector3<float> m_Normal;
+		Vector3<float> m_Tangent;
+		Vector3<float> m_BitTangent;
+	};
+
+	struct FFace
+	{
+		std::vector<uint32> indices;
 	};
 }

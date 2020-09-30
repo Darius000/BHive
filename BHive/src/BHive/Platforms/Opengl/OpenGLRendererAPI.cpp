@@ -41,4 +41,26 @@ namespace BHive
 		enable ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
 	}
 
+
+	void OpenGLRendererAPI::EnableDepthTest()
+	{
+		glEnable(GL_DEPTH_TEST);
+	}
+
+
+	void OpenGLRendererAPI::DisableDepthTest()
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+
+
+	void OpenGLRendererAPI::BindTexture(uint32 slot, uint32 textureID)
+	{
+		glBindTextureUnit(slot, textureID);
+	}
+
+	void OpenGLRendererAPI::UnBindTexture(uint32 slot)
+	{
+		glBindTextureUnit(slot, 0);
+	}
 }

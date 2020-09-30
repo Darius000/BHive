@@ -37,6 +37,26 @@ namespace BHive
 			s_RendererAPI->EnableBackFaceCulling(enable);
 		}
 
+		inline static void EnableDepthTest()
+		{
+			s_RendererAPI->EnableDepthTest();
+		}
+
+		inline static void DisableDepthTest()
+		{
+			s_RendererAPI->DisableDepthTest();
+		}
+
+		inline static void BindTexture(uint32 slot, uint32 textureID)
+		{
+			s_RendererAPI->BindTexture(slot, textureID);
+		}
+
+		inline static void UnBindTexture(uint32 slot)
+		{
+			s_RendererAPI->UnBindTexture(slot);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
 	};

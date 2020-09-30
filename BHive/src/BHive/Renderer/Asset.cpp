@@ -5,7 +5,7 @@
 namespace BHive
 {
 
-	Asset::Asset(const std::string& name) : m_Name(name), m_Thumbnail(nullptr)
+	Asset::Asset(const std::string& name) : m_Name(name)
 	{
 
 	}
@@ -14,15 +14,4 @@ namespace BHive
 	{
 		return m_Name;
 	}
-
-	Texture2D* Asset::GetThumbnail() const
-	{
-		return m_Thumbnail;
-	}
-
-	uint32 Asset::GetThumnailID() const
-	{
-		return m_Thumbnail->GetRendererID();
-	}
-
 }

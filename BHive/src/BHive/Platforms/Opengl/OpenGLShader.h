@@ -8,12 +8,13 @@ namespace BHive
 	class BHive_API OpenGLShader : public Shader
 	{
 	public:
+		OpenGLShader() = default;
 		OpenGLShader(const WinPath&  filePath);
 		OpenGLShader(const std::string& name, const BString&  vertexSrc, const BString&  fragmentSrc);
 		~OpenGLShader();
 
-		virtual void Bind() const override;
-		virtual void UnBind() const override;
+		void Bind() const override;
+		void UnBind() const override;
 
 		void SetBool(const BString& name, bool value) const override;
 		void SetInt(const BString& name, int value) const override;
@@ -34,8 +35,8 @@ namespace BHive
 
 	private:
 		BString ReadFile(const WinPath& filePath);
-		std::unordered_map<uint32, BString> PreProccess(const BString& source);
-		void Compile(std::unordered_map<uint32, BString>& sources);
+		void PreProccess(const BString& source);
+		void Compile() override;
 
 	private:
 		uint32 id;

@@ -27,6 +27,10 @@ namespace BHive
 		int attributes;
 		glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &attributes);
 		BH_CORE_INFO(" Vertex attributes supported: {0}", attributes);
+
+		int texture_units;
+		glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &texture_units);
+		BH_CORE_INFO("Max texture units supported: {0}", texture_units);
 	}
 
 	void OpenGLContext::SwapBuffers()

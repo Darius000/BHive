@@ -1,6 +1,6 @@
 #pragma once
 #include <glad/glad.h>
-#include "Asset.h"
+#include "BHive/Managers/AssetManagers.h"
 
 namespace BHive
 {	
@@ -107,7 +107,7 @@ namespace BHive
 
 		operator void*() const { return (void*)&m_RendererID; }
 
-		static Ref<Texture2D> CreateFromFrameBuffer(Viewport* framebuffer);
+		static bool IsExtensionSupported(const std::string& ext);
 
 	protected:
 		WinPath m_Path;
@@ -134,6 +134,8 @@ namespace BHive
 
 		void Serialize(const WinPath& path);
 
+		static std::vector<std::string> extensions; 
+
 		friend class TextureEditorCustomizationDetails;
 	};
 
@@ -149,5 +151,10 @@ namespace BHive
 		static Ref<Texture2D> Create(const WinPath& path);
 
 		static Ref<Texture2D> Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
+
+		const std::string GetThumbnailName() const override
+		{
+			return m_Name;
+		}
 	};
 }

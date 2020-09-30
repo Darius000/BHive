@@ -7,41 +7,46 @@
 #include "VertexArray.h"
 #include "Buffer.h"
 #include "Material.h"
+#include "BHive/Managers/AssetManagers.h"
 
 namespace BHive
 {
+
 	class FMesh
 	{
 	public:
 	
 		FMesh();
-		FMesh(const std::vector<FVertex>& Vertices, const std::vector<uint32>& Indices);
+		FMesh(const std::vector<FVertex>& Vertices, const std::vector<uint32>& Indices, const std::vector<FFace>& Faces);
 		FMesh(const FMesh& Other);
 		virtual ~FMesh(){};
 
 		void Render();
-		virtual void SetVerticesAndIndices(const std::vector<FVertex>& Vertices, const std::vector<uint32>& Indices);
+		virtual void SetVerticesAndIndices(const std::vector<FVertex>& Vertices, const std::vector<uint32>& Indices, const std::vector<FFace>& Faces);
 		void SetName(const BName& NewName );	
 		void SetMaterial(Ref<Material> material);
+		void CalculateTangetsandBitTangets();
+		bool ImportedTangentAndBitTangents() const {  return m_ImportedTangentAndBitTangents; }
 		
 	public:
 		BName GetName() { return m_Name; }
-		Ref<Shader> GetShader() const { return m_Material->m_Shader; }
 		Ref<Material> GetMaterial() { return m_Material; }
 		
 	private:
 		void CreateBuffers();
 
-	protected:
-
+	public:
 		std::vector<FVertex> m_Vertices;
 		std::vector<uint32> m_Indices;
+		std::vector<FFace> m_Faces;
+		bool m_ImportedTangentAndBitTangents = false;
 		BName m_Name;
 
 	private:
 		Ref<VertexArray> m_VertexArray;
 		Ref<Material> m_Material;
 		
+		friend class MeshEditorCustomizationDetails;
 	};
 
 	using Meshes = std::unordered_map<uint32, Ref<FMesh>>;
@@ -59,12 +64,12 @@ namespace BHive
 		std::string GetAssetType() const override { return "Mesh"; } ;
 
 	public:
-		static Ref<Model> Import(const WinPath& path, bool ImportTextures);
+		static Ref<Model> Import(const WinPath& path, bool ImportTextures, bool ImportTangetsAndBitTangets);
 		static bool IsExtensionSupported(const std::string& ext);
 
 	private:
-		static void ProcessNode(uint32& id, aiNode* node, const aiScene *scene, Ref<Model> model, bool ImportTextures);
-		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene, bool ImportTextures);
+		static void ProcessNode(uint32& id, aiNode* node, const aiScene *scene, Ref<Model> model, bool ImportTextures, bool ImportTangetsAndBitTangets);
+		static Ref<FMesh> ProcessMesh(aiMesh* mesh, const aiScene* scene, bool ImportTextures, bool ImportTangetsAndBitTangets);
 		static void ProcessTexture(aiMaterial* material, aiTextureType textureType);
 
 	public:
@@ -77,6 +82,11 @@ namespace BHive
 		Meshes& GetMeshes() { return m_Meshes; }
 		std::string& GetName() { return m_Name; }
 		WinPath& GetDirectory() { return m_OriginalDirectory; }
+
+		const std::string GetThumbnailName() const override
+		{
+			return "meshicon";
+		}
 
 	public:
 		void AddMesh(uint32 id, Ref<FMesh>& Mesh);
