@@ -6,7 +6,7 @@
 namespace BHive
 {
 	AssetLoader::AssetLoader()
-		:m_TexExts({ "jpg", "png", "tga" })
+		:m_TexExts({ "jpg","jpeg", "tga", "png", "tga" })
 	{
 
 	}
@@ -21,7 +21,7 @@ namespace BHive
 			for (auto& sub : it)
 			{
 				WinPath subPath(sub.path().string().c_str());
-				subPath.IsDirectory() ? OpenDirectory(subPath) : LoadFile(subPath);
+				subPath.IsDirectory() ? OpenDirectory(subPath) : Import(subPath);
 			}
 		}
 	}

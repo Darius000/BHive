@@ -10,7 +10,11 @@ namespace BHive
 	OpenglFramebuffer::OpenglFramebuffer(const FrameBufferSpecification& spec)
 		:m_Specification(spec)
 	{
-		Invalidate();
+		glCreateFramebuffers(1, &m_RendererID);
+		
+		Invalidate();	
+
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	OpenglFramebuffer::~OpenglFramebuffer()
@@ -26,7 +30,7 @@ namespace BHive
 
 		if (m_RendererID)
 		{
-			glDeleteFramebuffers(1, &m_RendererID);
+			//glDeleteFramebuffers(1, &m_RendererID);
 			//glDeleteFramebuffers(1, &m_MultiSampleRenderID);
 			//glDeleteTextures(1, &m_multisampleAttachment);
 			glDeleteTextures(1, &m_ColorAttachment);
@@ -48,13 +52,13 @@ namespace BHive
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);*/
 
 		//Create screen framebuffer
-		glCreateFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Specification.Width, m_Specification.Height , 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Specification.Width, 
+			m_Specification.Height , 0, m_Format, m_Type, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -70,7 +74,7 @@ namespace BHive
 
 		BH_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete");
 		
-		glBindFramebuffer(GL_FRAMEBUFFER, 0 );
+		
 	}
 
 	void OpenglFramebuffer::Bind()
@@ -100,5 +104,4 @@ namespace BHive
 
 		Invalidate();
 	}
-
 }

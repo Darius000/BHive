@@ -44,12 +44,17 @@ namespace BHive
 			0, 1, 2, 2, 3, 0
 		};
 
+		std::vector<FFace> m_Faces = 
+		{
+			{{0, 1, 2}}, {{2, 3, 0}}
+		};
+
 		Ref<FMesh> plane(new FMesh());
-		Ref<PhongMaterial> DMaterial(new PhongMaterial());
-		plane->SetVerticesAndIndices(m_Vertices, m_Indices);
+		
+		plane->SetVerticesAndIndices(m_Vertices, m_Indices, m_Faces);
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, plane);
-		plane->SetMaterial(DMaterial);
+		plane->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
 		m_Model->m_Name = "plane";
 		return m_Model;
 	}
@@ -69,13 +74,49 @@ namespace BHive
 			0 , 1, 2
 		};
 
+		std::vector<FFace> m_Faces = 
+		{
+			{{0 ,1 ,2}}
+		};
+
 		Ref<FMesh> triangle(new FMesh());
-		Ref<PhongMaterial> DMaterial(new PhongMaterial());
-		triangle->SetVerticesAndIndices(m_Vertices, m_Indices);
+		triangle->SetVerticesAndIndices(m_Vertices, m_Indices, m_Faces);
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, triangle);
-		triangle->SetMaterial(DMaterial);
+		triangle->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
 		m_Model->m_Name = "triangle";
+		return m_Model;
+	}
+
+
+	Ref<Model> Renderer2D::Quad()
+	{
+		std::vector<FVertex> m_Vertices =
+		{
+			FVertex({-1.0, -1.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({1.0f, -1.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({1.0f, 1.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 1.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({-1.0f, 1.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 1.0f},	{0.0f, 0.0f, 1.0f})
+		};
+
+
+		std::vector<uint32> m_Indices =
+		{
+			0, 1, 2, 2, 3, 0
+		};
+
+		std::vector<FFace> m_Faces =
+		{
+			{{0, 1, 2}}, {{2, 3, 0}}
+		};
+
+		Ref<FMesh> quad(new FMesh());
+
+		quad->SetVerticesAndIndices(m_Vertices, m_Indices, m_Faces);
+		Ref<Model> m_Model = Make_Ref<Model>();
+		m_Model->AddMesh(0, quad);
+		quad->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
+		m_Model->m_Name = "Quad";
 		return m_Model;
 	}
 

@@ -33,6 +33,7 @@ namespace BHive
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
 
+  
 		Transform m_Transform;
 	};
 

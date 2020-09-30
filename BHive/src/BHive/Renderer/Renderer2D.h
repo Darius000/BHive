@@ -16,6 +16,7 @@ namespace BHive
 
 		static Ref<Model> Plane(float width, float height);
 		static Ref<Model> Triangle(float width, float height);
+		static Ref<Model> Quad();
 
 		static void Draw(const std::shared_ptr<VertexArray>& vertexArray);
 

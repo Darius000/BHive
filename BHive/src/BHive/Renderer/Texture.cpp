@@ -20,10 +20,10 @@ namespace BHive
 
 	}
 
-
-	Ref<Texture2D> Texture::CreateFromFrameBuffer(Viewport* framebuffer)
+	bool Texture::IsExtensionSupported(const std::string& ext)
 	{
-		return Texture2D::Create("FrameBufferEx", framebuffer->GetFrameBuffer()->GetSpecification().Width, framebuffer->GetFrameBuffer()->GetSpecification().Height, GL_RGBA, GL_UNSIGNED_BYTE, framebuffer->m_Data);
+		
+		return std::find(extensions.begin(), extensions.end(), ext) != extensions.end();
 	}
 
 	void Texture::Serialize(const WinPath& path)
@@ -37,6 +37,9 @@ namespace BHive
 		file.write(reinterpret_cast<const char*>(PixelData.m_Data), m_Size);
 		file.close();
 	}
+
+
+	std::vector<std::string> Texture::extensions = { "jpg", "jpeg", "png", "tga" };
 
 	/*unsigned int Texture::GetIconData() const
 	{

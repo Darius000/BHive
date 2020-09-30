@@ -26,6 +26,45 @@ group "Dependencies"
     include "BHive/vendor/imgui"
 group  ""
 
+project "HeaderTool"
+    location "HeaderTool"
+    kind "ConsoleApp"
+    language "C#"
+    
+    targetdir ("bin/" ..outputdir.. "/%{prj.name}")
+    objdir ("bin-int/" ..outputdir.. "/%{prj.name}")
+    
+    files
+    {
+        "%{prj.name}/src/**.cs"
+    }
+    
+    includedirs
+    {
+        "%{prj.name}/src"
+    }
+    
+    --configuration "windows"
+   -- postbuildcommands{"{COPY} $(TargetPath) $(SolutionDir)\\scripts"}
+    
+    filter"system:windows"
+        systemversion "latest"
+
+        filter "configurations:Debug"
+            defines "HEADER_TOOL_DEBUG"
+            runtime "Debug"
+            symbols "on"
+
+        filter "configurations:Release"
+            defines "HEADER_TOOL_RELEASE"
+            runtime "Release"
+            optimize "on"
+
+        filter "configurations:Dist"
+            defines "HEADER_TOOL_DIST"
+            runtime "Release"
+            optimize "on"
+
 project "BHive"
     location "BHive"
     kind "StaticLib"
@@ -46,11 +85,6 @@ project "BHive"
 		"%{prj.name}/src/**.inl",
 		"%{prj.name}/vendor/stb_image/**h",
 		"%{prj.name}/vendor/stb_image/**cpp",
-		--"%{prj.name}/vendor/glm/**hpp",
-		--"%{prj.name}/vendor/glm/**inl",
-        --"%{prj.name}/vendor/Assimp/**h",
-        --"%{prj.name}/vendor/Assimp/**hpp",
-        --"%{prj.name}/vendor/Assimp/**inl",
 		"%{prj.name}/Assets/**",
 		"premake5.lua"
     }
@@ -200,6 +234,8 @@ project "BHive-Editor"
         "BHive/vendor/glad/include",
         "BHive/vendor",
         "BHive/src",
+        "%{prj.name}/src",
+        "%{prj.name}/src/Core",
 		"BHive/src/BHive",
         "%{IncludeDir.entt}",
         "%{IncludeDir.GLM}",

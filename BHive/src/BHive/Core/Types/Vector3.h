@@ -22,6 +22,7 @@ namespace BHive
 
 	public:
 		T GetMagnitude() const;
+		T GetMagnitude2() const;
 		Vector3 Normalize();
 
 	public:
@@ -53,6 +54,11 @@ namespace BHive
 		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
 	};
 
+	template<typename T>
+	T Vector3<T>::GetMagnitude2() const
+	{
+		return (x * x) + (y * y) + (z * z);
+	}
 
 
 	template<typename T>

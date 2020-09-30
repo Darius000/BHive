@@ -21,6 +21,9 @@ namespace BHive
 		uint32 GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
 		const FrameBufferSpecification& GetSpecification() const override { return m_Specification; }
 
+		int32 m_InternalFormat = GL_RGBA8;
+		uint32 m_Format = GL_RGBA;
+		uint32 m_Type = GL_UNSIGNED_BYTE;
 	private:
 
 		RendererID m_RendererID = 0;

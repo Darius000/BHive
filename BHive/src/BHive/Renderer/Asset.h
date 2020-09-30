@@ -17,10 +17,8 @@ namespace BHive
 		virtual std::string GetAssetType() const = 0;
 		
 		void CreateThumbnail(){};
-		Texture2D* GetThumbnail() const;
-		uint32 GetThumnailID() const;
+		virtual const std::string GetThumbnailName() const = 0;
 
 		BName m_Name;
-		Texture2D* m_Thumbnail;
 	};
 }

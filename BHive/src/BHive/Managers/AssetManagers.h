@@ -2,7 +2,7 @@
 
 #include "BHivePCH.h"
 #include "BHive/Renderer/Asset.h"
-#include "BHive/Renderer/Texture.h"
+
 
 namespace BHive
 {

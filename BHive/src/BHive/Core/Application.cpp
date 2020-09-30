@@ -26,10 +26,13 @@ namespace BHive
 
 		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
 		AssetManager::CreateAsset(Texture2D::Create("White", 1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
-	
+
 		//Create default black texture
 		uint8 BlackTextureData[] = {0x00, 0x00, 0x00, 0xff, '\0'};
 		AssetManager::CreateAsset(Texture2D::Create("Black", 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
+
+		uint8 BlueTextureData[] = {0x00, 0x00, 0xff, 0xff, '\0'};
+		AssetManager::CreateAsset(Texture2D::Create("Blue", 1, 1, GL_RGB8, GL_RGB, (void*)&BlueTextureData));
 	
 		LoadAssets();
 
