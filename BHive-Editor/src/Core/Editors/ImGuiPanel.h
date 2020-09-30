@@ -9,7 +9,7 @@ namespace BHive
 	{
 	public:
 		ImGuiPanel() = default;
-		ImGuiPanel(const std::string& label, ImGuiWindowFlags flags);
+		ImGuiPanel(const std::string& label, ImGuiWindowFlags flags, bool runtimecreated  = false);
 		virtual ~ImGuiPanel();
 
 		void OnBeginWindow();
@@ -17,8 +17,11 @@ namespace BHive
 		void OnRender();
 		void OnEndWindow();
 
-		bool m_isOpen = true;
+		bool m_isOpen = true;	
 		std::string m_Label;
 		ImGuiWindowFlags m_Flags = 0;
+
+	private:
+		bool m_RuntimeCreated = false;
 	};
 }

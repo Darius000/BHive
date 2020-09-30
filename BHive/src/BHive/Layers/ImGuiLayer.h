@@ -21,6 +21,7 @@ namespace BHive
 		void Begin();
 		void End();
 
+		void SaveStyle();
 		void BlockEvents(bool block) { m_BlockEvents = block;}
 	private:
 		float m_Time = 0.0f;

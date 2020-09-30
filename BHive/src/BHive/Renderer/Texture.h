@@ -93,7 +93,7 @@ namespace BHive
 
 		virtual uint32 GetRendererID() const = 0;
 
-		FPixelData GetData() const  { return PixelData; };
+		FPixelData& GetData() { return PixelData; };
 
 		WinPath GetExternalFilePath() const { return m_Path; }
 

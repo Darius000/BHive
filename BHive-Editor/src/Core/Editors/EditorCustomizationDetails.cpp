@@ -10,12 +10,22 @@ namespace BHive
 
 		ImGui::Columns(2, "Columns");
 
-		float ImageSize = 512.0f;
+		ImVec2 availableSize = ImGui::GetContentRegionAvail();
+		float ImageSize = MathLibrary::Min(availableSize.x, availableSize.y);
 		uint32 ID = asset->GetRendererID();
 		detailsBuilder.Image(ID, ImageSize);
 
 		ImGui::NextColumn();
 
+		//Info panel
+		ImGui::BeginChild("##Info", ImVec2(0, 100), true);
+		ImGui::Text("Size: %dx%d", asset->GetWidth(), asset->GetWidth());
+		std::string hasAlpha = asset->m_Channels == 4 ? "true" : "false";
+		ImGui::Text("Has Alpha Channel: %s", hasAlpha.c_str());
+		ImGui::EndChild();
+
+		//Editor panel
+		ImGui::BeginChild("##Properties", ImVec2(0, 0), true);
 		if (detailsBuilder.Property<TilingMethod, 5>("Tiling", s_TilingMethods, asset->m_TilingMethod)|
 			detailsBuilder.Property<MinColorMethod, 6>("Min-Filter", s_Min_ColorMethods, asset->m_MinFilterColorMethod)|
 			detailsBuilder.Property<MagColorMethod, 2>("Mag-Filter", s_Mag_ColorMethods, asset->m_MagFilterColorMethod)|
@@ -30,6 +40,7 @@ namespace BHive
 		{
 			asset->Serialize(asset->m_SavedPath.c_str());
 		}
+		ImGui::EndChild();
 	}
 
 	void MaterialEditorCustomizationDetails::CreateCustomizedDetails(PropertyDetailsBuilder& detailsBuilder, Asset* _asset)

@@ -39,7 +39,8 @@ namespace BHive
 		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 
 		// Setup Dear ImGui style
-		ImGui::StyleColorsDark(m_Style.get());
+		ImGui::StyleColorsLight(m_Style.get());
+		
 		//ImGui::StyleColorsClassic();
 
 		// When view ports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
@@ -109,4 +110,10 @@ namespace BHive
 			glfwMakeContextCurrent(backup_current_context);
 		}
 	}
+
+	void ImGuiLayer::SaveStyle()
+	{
+		ImGui::SaveIniSettingsToDisk("WindowSettings");
+	}
+
 }

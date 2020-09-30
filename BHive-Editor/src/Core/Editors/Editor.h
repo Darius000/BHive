@@ -13,7 +13,7 @@ namespace BHive
 	{
 	public:
 		Editor(const std::string& label, Asset* asset)
-			:ImGuiPanel(label, ImGuiWindowFlags_MenuBar), m_Asset(asset){}
+			:ImGuiPanel(label, ImGuiWindowFlags_MenuBar, true), m_Asset(asset){}
 
 		void OnRenderWindow() override;
 
