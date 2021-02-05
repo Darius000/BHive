@@ -62,12 +62,12 @@ namespace BHive
 
 		}
 
-		template<typename T>
-		bool Dispatch(EventFn<T> func)
+		template< typename E, typename T>
+		bool Dispatch(T* obj, bool (T::* func) (E&))
 		{
-			if (m_Event.GetEventType() == T::GetStaticType())
+			if (m_Event.GetEventType() == E::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				m_Event.m_Handled = (obj->*func)(*(E*)&m_Event);
 				return true;
 			}
 

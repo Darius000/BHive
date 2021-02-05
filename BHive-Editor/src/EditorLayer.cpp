@@ -3,13 +3,38 @@
 #include "ComponentDetails/DetailsCustomization.h"
 #include "ComponentDetails/ComponentDetails.h"
 #include "EditorClassRegistry.h"
+#include "Factory/Factory.h"
+#include "BHive/Components/Component.h"
+#include "Editors/EditorStack.h"
+
 
 namespace BHive
 { 
+
+	class MoveCubeScript : public ScriptEntity
+	{
+	public:
+		MoveCubeScript() = default;
+
+		void OnCreate()
+		{
+			GetComponent<TransformComponent>().m_Transform.SetRotation(0.0f, 0.0f, 0.0f);
+		}
+
+		void OnUpdate(const Time& time)
+		{
+			auto& transform = GetComponent<TransformComponent>().m_Transform;
+			auto pos = transform.GetPosition();
+			auto forw = transform.GetForward();
+			pos += forw * 1.0f * time.GetDeltaTime();
+			transform.SetPosition(pos);
+		}
+	};
+
 	EditorLayer::EditorLayer()
 		:Layer("EditorLayer")
 	{
-		s_Instance = this;
+		//s_Instance = this;
 	}
 
 
@@ -41,91 +66,80 @@ namespace BHive
 		ClassRegistry::RegisterClassName("NativeScriptComponent");
 		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Texture2D", Make_Ref<TextureEditorCustomizationDetails>());
 		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Material", Make_Ref<MaterialEditorCustomizationDetails>());
-		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Mesh", Make_Ref<MeshEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Model", Make_Ref<MeshEditorCustomizationDetails>());
 		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Shader", Make_Ref<ShaderEditorCustomizationDetails>());
+		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("FontFamily", Make_Ref<FontEditorCustomizationDetails>());
 
 		Scene* scene = SceneManager::CreateScene("Default");
 
 		m_Texture = AssetManager::Get<Texture2D>("folder");
 		m_Texture2 = AssetManager::Get<Texture2D>("checkermap");
 
-		Ref<PhongMaterial> DMaterial(new PhongMaterial());
-		DMaterial->m_Properties.m_DiffuseTexture = AssetManager::Get<Texture2D>("checkermap");
-		DMaterial->m_Name = DefaultMaterialName;
-		AssetManager::CreateAsset<Material>(DMaterial);
 
-		Ref<PhongMaterial> Material2(new PhongMaterial());
-		Material2->m_Name = "Material2";
-		AssetManager::CreateAsset<Material>(Material2);
+		AssetManager::CreateAsset<Material>(DefaultMaterialName, AssetManager::Get<Shader>("BlinnPhong"));
+		AssetManager::CreateAsset<Material>("Material2", AssetManager::Get<Shader>("BlinnPhong"));
 
-		Ref<PhongMaterial> RedMaterial(new PhongMaterial());
-		RedMaterial->m_Name = "RedMaterial";
-		RedMaterial->m_Properties.m_Diffuse = LinearColor3(1.0, 0.0, 0.0);
-		AssetManager::CreateAsset<Material>(RedMaterial);
+		//Ref<Material> RedMaterial = Make_Ref<Material>(AssetManager::Get<Shader>("Toon"));
+		//RedMaterial->m_Name = "RedMaterial";
+		//RedMaterial->GetShader()->m_Properties.m_Diffuse = LinearColor3(1.0, 0.0, 0.0);
+		//AssetManager::CreateAsset<Material>(RedMaterial);
 
-		Ref<ToonMaterial> toonm = Make_Ref<ToonMaterial>();
-		toonm->m_Name = "Toon Material";
-		AssetManager::CreateAsset<Material>(toonm);
+		//Ref<Material> toonm = Make_Ref<Material>(AssetManager::Get<Shader>("Toon"));
+		//toonm->m_Name = "Toon Material";
+		//AssetManager::CreateAsset<Material>(toonm);
 
-		Ref<Model> Shotgun	= Model::Import("Import/Meshes/Grenades.obj", false, true);
-		AssetManager::Add(Model::Import("Import/Meshes/Shotgun.obj", false, true));
+		//AssetManager::Add(Model::Import("Import/Meshes/Grenades.obj", false, true));
+		//AssetManager::Add(Model::Import("Import/Meshes/Shotgun.obj", false, true));
 		Import("Import/Meshes/Cube.obj");
-		Import("D:/Wallpaper/7_tornado.jpg");
-		Import("Import/Textures/container.jpg");
-		Import("Import/Textures/grass.png");
-		Import("Import/Textures/matrix.jpg");
-		Import("Import/Textures/smoke.png");
-		Import("D:/Wallpaper/7_tornado.jpg");
-		Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
-		Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
-		Import("Import/Meshes/Frag1/Frag_1_M_A.png");
-		Import("Import/Meshes/Frag2/Frag_2_M_A.png");
-		Ref<Texture2D> m_Texture3 = AssetManager::Get<Texture2D>("7_tornado");
+		//Import("D:/Wallpaper/7_tornado.jpg");
+		//Import("Import/Textures/container.jpg");
+		//Import("Import/Textures/grass.png");
+		//Import("Import/Textures/matrix.jpg");
+		//Import("Import/Textures/smoke.png");
+		//Import("D:/Wallpaper/7_tornado.jpg");
+		//Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
+		//Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
+		//Import("Import/Meshes/Frag1/Frag_1_M_A.png");
+		//Import("Import/Meshes/Frag2/Frag_2_M_A.png");
+		//Ref<Texture2D> m_Texture3 = AssetManager::Get<Texture2D>("7_tornado");
 		
 
-		Ref<Model> triangle = Renderer2D::Triangle(1.0f, 1.0f);
-		Ref<Model> plane	= Renderer2D::Plane(5.0f, 5.0f);
-		Ref<Model> lantern	= Model::Import("Import/Meshes/lantern.obj", false, true);
+		AssetManager::Add("Triangle" , Renderer2D::Triangle(1.0f, 1.0f));
+		AssetManager::Add("Plane" , Renderer2D::Plane(5.0f, 5.0f));
+		//AssetManager::Add(Model::Import("Import/Meshes/lantern.obj", false, true));
 
-		AssetManager::Add(triangle);
-		AssetManager::Add(plane);
-		AssetManager::Add(Shotgun);
-		AssetManager::Add(lantern);
-		
 		actor0 = scene->CreateEntity("Shotgun");
-		actor0.AddComponent<RenderComponent>();
+		//actor0.AddComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("Shotgun");
+		
 	
-		auto& renderComponent = actor0.GetComponent<RenderComponent>();
-		renderComponent.m_Model = Shotgun;
+		//scene->CreateEntity("Grenades").AddComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("Grenades");
 
 		tri = scene->CreateEntity("Triangle");
 		tri.AddComponent<RenderComponent>();
 
 		auto& renderComponent1 = tri.GetComponent<RenderComponent>();
-		renderComponent1.m_Model = triangle;
+		renderComponent1.m_Model = AssetManager::Get<Model>("Triangle");
 
 		pl = scene->CreateEntity("Plane");
 		auto& rendercomponent2 = pl.AddComponent<RenderComponent>();
-		rendercomponent2.m_Model = AssetManager::Get<Model>("Plane");
+		rendercomponent2.m_Model = AssetManager::Get<Model>("Cube");
+		auto& script = pl.AddComponent<NativeScriptComponent>();
+		script.Bind<MoveCubeScript>();
 
 		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
-		scene->CreateEntity("Directional Light2").AddComponent<DirectionalLightComponent>();
 
 		scene->CreateEntity("Point Light").AddComponent<PointLightComponent>();
-		scene->CreateEntity("Point Light2").AddComponent<PointLightComponent>();
 
 		SceneManager::SetActiveScene("Default");
 		Renderer2D::Init();
 
 		m_Viewport = Make_Ref<Viewport>(fbSpec, SceneManager::GetActiveScene());
 	
-		m_ViewportPanel = new ViewportPanel(std::string("MainViewport"), m_Viewport);
-		m_SceneHierarchyPanel = new SceneHierarchyPanel(SceneManager::GetActiveScene());
-		m_AssetBrowserPanel = new AssetBrowserPanel(0 , ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar);
-
-		OpenPanel(m_ViewportPanel);
-		OpenPanel(m_SceneHierarchyPanel);
-		OpenPanel(m_AssetBrowserPanel);
+		//Open the default panels
+		EditorStack::Get()->OpenPanel<ViewportPanel>(std::string("MainViewport"), m_Viewport);
+		EditorStack::Get()->OpenPanel<SceneHierarchyPanel>(SceneManager::GetActiveScene());
+		EditorStack::Get()->OpenPanel<AssetBrowserPanel>(0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar);
+		EditorStack::Get()->OpenPanel<PropertiesPanel>();
 	}
 
 	void EditorLayer::OnUpdate(const Time& time)
@@ -133,7 +147,6 @@ namespace BHive
 		BH_PROFILE_FUNCTION();
 
 		m_Viewport->OnUpdate(time);
-		//m_Viewport2->OnUpdate(time);
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -159,7 +172,7 @@ namespace BHive
 		}
 
 		// When using ImGuiDockNodeFlags_PassthruDockspace, DockSpace() will render our background and handle the pass-thru hole, so we ask Begin() to not render a background.
-		if (opt_flags & ImGuiDockNodeFlags_PassthruDockspace)
+		if (opt_flags & ImGuiDockNodeFlags_PassthruCentralNode)
 			window_flags |= ImGuiWindowFlags_NoBackground;
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
@@ -171,72 +184,30 @@ namespace BHive
 
 		// Dockspace
 		ImGuiIO& io = ImGui::GetIO();
+		ImGuiStyle& style = ImGui::GetStyle();
+		float windowMinSize = style.WindowMinSize.x;
+		style.WindowMinSize.x = 370.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
 		}
 
+		style.WindowMinSize.x = windowMinSize;
+
 		DisplayMenuBar();
 		
-		size_t size = m_EditorStack.size();
-		for (uint32 i = 0; i < size; i++)
-		{
-			m_EditorStack[i]->OnRender();
+		EditorStack::Get()->Update();
 
-			if (!m_EditorStack[i]->m_isOpen)
-			{
-				m_EditorStack.ClosePanel(i);
-			}
-		}
-
-		//ImGui::ShowDemoWindow();
-
-		//End Dockspace
+		ImGui::ShowDemoWindow();
+		
 		ImGui::End();
 	}
 
 	void EditorLayer::OnEvent(Event& event)
 	{	
-		/*EventDispatcher dispatcher(event);
-		dispatcher.Dispatch<MouseScrolledEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseScrolled));
-		dispatcher.Dispatch<MouseMovedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseMoved));
-		dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonPressed));
-		dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_ONE_PARAM(EditorLayer::OnMouseButtonReleased));*/
+		EditorStack::Get()->ExecutePanelEvents(event);
 	}
-
-
-	void EditorLayer::OpenPanel(ImGuiPanel* panel)
-	{
-		m_EditorStack.OpenPanel(panel);
-	}
-
-	/*bool EditorLayer::OnMouseScrolled(MouseScrolledEvent& e)
-	{
-		m_ViewportPanel->OnMouseScrolled(e);
-		return false;
-	}
-
-	bool EditorLayer::OnMouseMoved(MouseMovedEvent& e)
-	{
-		m_ViewportPanel->OnMouseMoved(e);
-
-		return false;
-	}
-
-	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
-	{
-		m_ViewportPanel->OnMouseButtonPressed(e);
-		
-		return false;
-	}
-
-	bool EditorLayer::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
-	{
-		m_ViewportPanel->OnMouseButtonReleased(e);
-
-		return false;
-	}*/
 
 	void EditorLayer::DisplayMenuBar()
 	{
@@ -262,8 +233,26 @@ namespace BHive
 				ImGui::EndMenu();
 			}
 
-			uint32 playbuttonID = AssetManager::Get<Texture2D>("back")->GetRendererID();
-			if (ImGui::Button("play"))
+
+			//Window Views
+			if (ImGui::BeginMenu("View"))
+			{
+				if (ImGui::MenuItem("Viewport")) 
+					EditorStack::Get()->OpenPanel<ViewportPanel>("Viewport", m_Viewport);
+
+				if (ImGui::MenuItem("Hierarchy")) 
+					EditorStack::Get()->OpenPanel<SceneHierarchyPanel>(SceneManager::GetActiveScene());
+				
+				if (ImGui::MenuItem("Content Browser"))
+					EditorStack::Get()->OpenPanel<AssetBrowserPanel>();
+
+				if (ImGui::MenuItem("Properties"))
+					EditorStack::Get()->OpenPanel<PropertiesPanel>();
+
+				ImGui::EndMenu();
+			}
+
+			/*if (ImGui::Button("play"))
 			{
 
 			}
@@ -274,13 +263,11 @@ namespace BHive
 			if (ImGui::Button("stop"))
 			{
 
-			}
+			}*/
 
 			ImGui::EndMenuBar();
 		}
 	}
-
-	EditorLayer* EditorLayer::s_Instance;
 
 	void EditorLayer::OnDetach()
 	{

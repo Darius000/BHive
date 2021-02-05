@@ -22,10 +22,11 @@ namespace BHive
 		void End();
 
 		void SaveStyle();
+		void SetDarkThemeColors();
 		void BlockEvents(bool block) { m_BlockEvents = block;}
 	private:
 		float m_Time = 0.0f;
-		bool m_BlockEvents = true;
-		Scope<ImGuiStyle> m_Style;
+		bool m_BlockEvents = false;
+		ImGuiStyle* m_Style;
 	};
 }

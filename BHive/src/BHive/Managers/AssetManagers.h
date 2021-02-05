@@ -1,16 +1,16 @@
 #pragma once
 
 #include "BHivePCH.h"
-#include "BHive/Renderer/Asset.h"
+#include "Assets/Asset.h"
 
 
 namespace BHive
 {
 	
-	template<class T = Asset>
+	template<class T = IAssetType>
 	using Assets = std::unordered_map<std::string, Ref<T>>;
 
-	template<class T = Asset>
+	template<class T = IAssetType>
 	class AssetList
 	{
 		
@@ -29,22 +29,22 @@ namespace BHive
 		AssetManager();
 
 	public:
-		template<class T = Asset>
+		template<class T = IAssetType>
 		static Ref<T> Get(const std::string& name);
 
-		template<class T= Asset>
-		static void CreateAsset(Ref<T> asset);
+		template<class T= IAssetType, typename... Args>
+		static Ref<T> CreateAsset(const std::string& name, Args&& ... args);
 
-		template<class T = Asset>
-		static void Add(Ref<T> asset);
+		template<class T = IAssetType>
+		static void Add(const std::string& name, Ref<T> asset);
 
-		template<class T = Asset>
+		template<class T = IAssetType>
 		static void Remove(const std::string& name);
 
-		template<class T = Asset>
+		template<class T = IAssetType>
 		static bool Exists(const std::string& name);
 
-		template<class T = Asset>
+		template<class T = IAssetType>
 		static Assets<T> GetAssets();
 	};
 
@@ -61,26 +61,28 @@ namespace BHive
 	bool AssetManager::Exists(const std::string& name)
 	{
 		return AssetList<T>::s_Assets.find(name) != AssetList<T>::s_Assets.end()
-		&& AssetList<Asset>::s_Assets.find(name) != AssetList<Asset>::s_Assets.end();
+		&& AssetList<IAssetType>::s_Assets.find(name) != AssetList<IAssetType>::s_Assets.end();
 	}
 
-	template<class T>
-	void AssetManager::CreateAsset(Ref<T> asset)
+	template<class T, typename... Args>
+	Ref<T> AssetManager::CreateAsset(const std::string& name, Args&& ... args)
 	{
-		std::string& name = asset->GetName();
+		Ref<T> asset = Make_Ref<T>(std::forward<Args>(args)...);
+		asset->SetName(name);
 		if (Exists<T>(name)) BH_CORE_ERROR("Asset with name already exists");
 		AssetList<T>::s_Assets.insert({ name, asset });
-		AssetList<Asset>::s_Assets.insert({name, asset});
+		AssetList<IAssetType>::s_Assets.insert({name, asset});
+		return asset;
 	}
 
 	template<class T>
-	void AssetManager::Add(Ref<T> asset)
+	void AssetManager::Add(const std::string& name, Ref<T> asset)
 	{
-		std::string& name = asset->GetName();
+		asset->SetName(name);
 		if (!Exists<T>(name))
 		{
 			AssetList<T>::s_Assets.insert({ name, asset });
-			AssetList<Asset>::s_Assets.insert({ name, asset });
+			AssetList<IAssetType>::s_Assets.insert({ name, asset });
 		}
 	}
 
@@ -90,7 +92,7 @@ namespace BHive
 		if (Exists<T>(name))
 		{
 			AssetList<T>::s_Assets.erase(name);
-			AssetList<Asset>::s_Assets.erase(name);
+			AssetList<IAssetType::s_Assets.erase(name);
 		}
 	}
 

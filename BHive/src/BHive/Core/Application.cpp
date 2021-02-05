@@ -2,6 +2,7 @@
 #include "Application.h"
 
 #include "BHive/Core/Log.h"
+#include "BHive/Font/FontLoader.h"
 #include "BHive/Renderer/RendererAPI.h"
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Renderer/RenderCommands.h"
@@ -10,6 +11,7 @@
 #include "BHive/Managers/AssetLoader.h"
 #include "BHive/Managers/AssetManagers.h"
 #include "Platforms/Opengl/OpenGLTexture.h"
+#include "BHive/Font/FontFamily.h"
 
 namespace BHive
 {
@@ -22,17 +24,21 @@ namespace BHive
 		s_Instance = this;
 
 		m_Window = Scope<Window>(Window::Create(WindowProps(name)));
-		m_Window->SetEventCallback(BIND_EVENT_ONE_PARAM(Application::OnEvent));
 
+		//pass window events to application
+		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
+
+
+		//Create default textures
 		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
-		AssetManager::CreateAsset(Texture2D::Create("White", 1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
+		AssetManager::Add("White", Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
 
 		//Create default black texture
 		uint8 BlackTextureData[] = {0x00, 0x00, 0x00, 0xff, '\0'};
-		AssetManager::CreateAsset(Texture2D::Create("Black", 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
+		AssetManager::Add("Black", Texture2D::Create( 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
 
-		uint8 BlueTextureData[] = {0x00, 0x00, 0xff, 0xff, '\0'};
-		AssetManager::CreateAsset(Texture2D::Create("Blue", 1, 1, GL_RGB8, GL_RGB, (void*)&BlueTextureData));
+		uint8 BlueTextureData[] = {0x80, 0x80, 0xff, 0xff, '\0'};
+		AssetManager::Add("Blue", Texture2D::Create( 1, 1, GL_RGB8, GL_RGB, (void*)&BlueTextureData));
 	
 		LoadAssets();
 
@@ -46,6 +52,13 @@ namespace BHive
 		m_ImGuiLayer = new ImGuiLayer();
 
 		PushOverlay(m_ImGuiLayer);
+
+		//Load Fonts
+		Ref<FontFamily> opensans = Make_Ref<FontFamily>();
+		opensans->AddFontToFamily("Regular", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Regular.ttf)");
+		opensans->AddFontToFamily("Bold", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Bold.ttf)");
+		opensans->AddFontToFamily("Italic", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Italic.ttf)");
+		AssetManager::Add("OpenSans", opensans);
 	}
 
 
@@ -57,8 +70,8 @@ namespace BHive
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_ONE_PARAM(Application::OnWindowClosed));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_ONE_PARAM(Application::OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(this, &Application::OnWindowClosed);
+		dispatcher.Dispatch<WindowResizeEvent>(this, &Application::OnWindowResize);
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();)
 		{

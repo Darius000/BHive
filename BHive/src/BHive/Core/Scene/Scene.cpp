@@ -6,14 +6,15 @@
 namespace BHive
 {
 	Scene::Scene()
+		:Scene("New Scene")
 	{
-
+		
 	}
 
 	Scene::Scene(const std::string& name)
 		:m_Name(name)
 	{
-
+		
 	}
 
 	Scene::~Scene()
@@ -30,8 +31,16 @@ namespace BHive
 		return entity;
 	}
 
+	void Scene::DeleteEntity(Entity entity)
+	{
+		m_Registry.destroy(entity);
+	}
+
 	void Scene::OnBegin()
 	{
+		InitializeCamera({0.0f, 20.0f, 20.0f});
+		InitializeUniformBlocks();
+
 		//Update Scripts----------------------------------------------------
 		{
 			auto view = m_Registry.view<NativeScriptComponent>();
@@ -52,10 +61,22 @@ namespace BHive
 
 			}
 		}
+
+		for (auto& system : RegisteredSystems::m_ComponentSystems)
+		{
+			system->OnInitialize();
+		}
 	}
 
-	void Scene::OnUpdate(const Time& time)
+	/*void Scene::OnUpdateEditor(const Time& time, EditorCamera& Camera)
 	{
+
+	}*/
+
+	void Scene::OnUpdateRuntime(const Time& time)
+	{
+		SendDefaultCameraParametersToShaders();
+
 		for (auto& system : RegisteredSystems::m_ComponentSystems)
 		{
 			system->OnUpdate(time, m_Registry);
@@ -110,6 +131,43 @@ namespace BHive
 	void Scene::OnViewportResize(uint32 width, uint32 height)
 	{
 		m_RenderSystem.OnViewportResize(width, height, m_Registry);
+		m_DefaultSceneView.m_Camera.OnViewportResize(width, height);
+	}
+
+	void Scene::InitializeCamera(const FVector3& position)
+	{
+		m_DefaultSceneView.m_Transform.SetPosition(position);
+		m_DefaultSceneView.m_Transform.LookAt({0.0f, 0.0f, 0.0f});
+		m_DefaultSceneView.m_Camera.SetPerspective({ 35.0f, .01f, 1000.0f });
+	}
+
+	void Scene::SendDefaultCameraParametersToShaders()
+	{
+		auto& camera = m_DefaultSceneView.m_Camera;
+		auto& transform = m_DefaultSceneView.m_Transform;
+
+		glm::mat4 m_ProjectionMatrix = camera.GetProjection();
+
+		glm::mat4 matrix = transform.GetMatrix();
+		glm::mat4 m_ViewMatrix = glm::inverse(matrix);
+		glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+
+		UniformBlock* matrices = m_MatrixBlocks["Matrices"];
+		matrices->SendData(0, &m_ViewProjectionMatrix);
+		matrices->SendData(sizeof(glm::mat4), &m_ViewMatrix);
+		matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), &transform.GetPosition());
+	}
+
+	void Scene::InitializeUniformBlocks()
+	{
+		UniformBlock* matricesBlock = new UniformBlock("Matrices", 2 * sizeof(glm::mat4) + sizeof(Vector3<float>));
+
+		m_MatrixBlocks.insert({ matricesBlock->m_Name, matricesBlock });
+
+		for (auto& a : AssetManager::GetAssets<Shader>())
+		{
+			matricesBlock->Bind(a.second, 0);
+		}
 	}
 
 	Scene* SceneManager::CreateScene(const std::string& name)

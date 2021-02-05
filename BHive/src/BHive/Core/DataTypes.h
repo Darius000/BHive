@@ -8,6 +8,7 @@
 #include "Types/Rotator.h"
 #include "Types/Transform.h"
 #include "Types/Color.h"
+#include "Types/Quaternion.h"
 
 
 

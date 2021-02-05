@@ -1,5 +1,7 @@
 #pragma once
+
 #include <glad/glad.h>
+#include "Assets/Asset.h"
 #include "BHive/Managers/AssetManagers.h"
 
 namespace BHive
@@ -23,8 +25,8 @@ namespace BHive
 		Nearest, Linear, NearestMipMapNearest, LinearMipMapNearest, NearestMipMapLinear, LinearMipMapLinear
 	};
 
-	static const char* s_Min_ColorMethods[] = {"Linear","Nearest","NearestMipMapNearest","LinearMipMapNearest","NearestMipMapLinear","LinearMipMapLinear"};
-	static const char* s_Mag_ColorMethods[] = {"Linear", "Nearest"};
+	static const char* s_Min_ColorMethods[] = {"Nearest","Linear","NearestMipMapNearest","LinearMipMapNearest","NearestMipMapLinear","LinearMipMapLinear"};
+	static const char* s_Mag_ColorMethods[] = {"Nearest", "Linear"};
 
 	static GLenum TilingMethodToGLEnum(TilingMethod method)
 	{
@@ -45,7 +47,7 @@ namespace BHive
 		switch (method)
 		{
 			case MinColorMethod::Linear:				return GL_LINEAR;
-			case MinColorMethod::Nearest:				return GL_LINEAR;
+			case MinColorMethod::Nearest:				return GL_NEAREST;
 			case MinColorMethod::NearestMipMapNearest: return GL_NEAREST_MIPMAP_NEAREST;
 			case MinColorMethod::LinearMipMapNearest:	return GL_LINEAR_MIPMAP_NEAREST;
 			case MinColorMethod::NearestMipMapLinear:	return GL_NEAREST_MIPMAP_LINEAR;
@@ -60,7 +62,7 @@ namespace BHive
 		switch (method)
 		{
 		case MagColorMethod::Linear:				return GL_LINEAR;
-		case MagColorMethod::Nearest:				return GL_LINEAR;
+		case MagColorMethod::Nearest:				return GL_NEAREST;
 		}
 
 		return 0;
@@ -77,21 +79,22 @@ namespace BHive
 		GLenum m_DataFormat;
 	};
 
-	class Texture : public Asset
+	class Texture : public IAssetType
 	{
+
+		DEFINE_ASSET_BODY(Texture, m_Name)
+
 	public:
-		Texture(const std::string& Name);
+		Texture();
 		virtual ~Texture() = default;
 
 	public:
 		
-		std::string GetAssetType() const override { return "Texture";}
-
 		uint32 GetWidth() const  { return m_Width; }
 
 		uint32 GetHeight() const  {return m_Height; }
 
-		virtual uint32 GetRendererID() const = 0;
+		virtual uintPtr GetRendererID() const = 0;
 
 		FPixelData& GetData() { return PixelData; };
 
@@ -103,11 +106,13 @@ namespace BHive
 
 		virtual void InValidate() = 0;
 
-		operator uint32() const {return GetRendererID(); }
+		operator uintPtr() const {return GetRendererID(); }
 
-		operator void*() const { return (void*)&m_RendererID; }
+		operator void*() const { return (void*)GetRendererID(); }
 
 		static bool IsExtensionSupported(const std::string& ext);
+
+		void SetParameters(TilingMethod tiling, MinColorMethod minFilter, MagColorMethod magfilter, LinearColor4 borderColor = LinearColor4(0.0f));
 
 	protected:
 		WinPath m_Path;
@@ -128,7 +133,7 @@ namespace BHive
 
 		MagColorMethod m_MagFilterColorMethod = MagColorMethod::Nearest;
 
-		LinearColor4 m_BorderColor = LinearColor4(0.0f);
+		LinearColor4 m_BorderColor = LinearColor4(0.0f); //used if Tiling method is set to clamp to edge
 
 		uint32 m_Channels = 0;
 
@@ -141,20 +146,16 @@ namespace BHive
 
 	class Texture2D : public Texture
 	{
+		DEFINE_ASSET_BODY(Texture2D, m_Name)
+
 	public:
-		Texture2D(BName Name): Texture(Name){}
+		Texture2D(){}
 
 		virtual ~Texture2D() = default;
 
-		std::string GetAssetType() const override { return "Texture2D"; }
-
 		static Ref<Texture2D> Create(const WinPath& path);
 
-		static Ref<Texture2D> Create(BName TextureName, uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
+		static Ref<Texture2D> Create(uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
 
-		const std::string GetThumbnailName() const override
-		{
-			return m_Name;
-		}
 	};
 }

@@ -1,19 +1,19 @@
 #pragma once
 
 
-
 namespace BHive
 {
 	template<typename T>
+	struct Vector3;
+
+	template<typename T>
 	struct Vector2
 	{
-		struct Vector3;
-
 		Vector2():x((T)0), y((T)0){};
 		Vector2(T _x) : x(_x), y(_x){};
 		Vector2(T _x, T _y) :x(_x), y(_y) {};
-		Vector2(const Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
-		Vector2(Vector3& _vector3) :x(_vector3.x), y(_vector3.y) {};
+		Vector2(const Vector3<T>& _vector3) :x(_vector3.x), y(_vector3.y) {};
+		Vector2(Vector3<T>& _vector3) :x(_vector3.x), y(_vector3.y) {};
 		Vector2(const Vector2& other):x(other.x), y(other.y){};
 
 		union { T x, r; }; 
@@ -37,13 +37,15 @@ namespace BHive
 		Vector2 operator/=(T _scalar);
 		Vector2 operator-(); 
 		float operator*(const Vector2& _other);
-		T operator[](uint32 index);
+		T& operator[](uint32 index);
 		bool operator==(const Vector2& _other);
 		bool operator!=(const Vector2& _other);
 		const T* operator*() const;
 		T* operator*();
 
-		friend std::ostream& operator<<(std::ostream& os, const Vector2& _vector2);
+		template<typename U>
+		friend std::ostream& operator<<(std::ostream& os, const Vector2<U>& _vector2);
+
 		BString ToString() const { return Format("{ %f, %f}", x, y); }
 	};
 
@@ -57,7 +59,7 @@ namespace BHive
 	template<typename T>
 	inline std::ostream& operator<<(std::ostream& os, const Vector2<T>& _vector2)
 	{
-		return os << "{" << _vector2.x << "," << _vector2.y << "}";
+		return os << _vector2.ToString();
 	}
 
 	template<typename T>
@@ -121,7 +123,7 @@ namespace BHive
 	}
 
 	template<typename T>
-	T Vector2<T>::operator[](uint32 index)
+	T& Vector2<T>::operator[](uint32 index)
 	{
 		if (index <= 0) return x;
 		else return y;

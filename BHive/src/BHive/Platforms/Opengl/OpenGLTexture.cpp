@@ -8,7 +8,6 @@
 namespace BHive
 {
 	OpenGLTexture2D::OpenGLTexture2D(const WinPath& path)
-		:Texture2D(path.GetName())
 	{
 		stbi_set_flip_vertically_on_load(true);
 
@@ -48,8 +47,7 @@ namespace BHive
 		m_StbImageCreated = true;
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(BName TextureName, uint32 width, uint32 height,  GLenum internalFormat, GLenum dataFormat, void* data)
-		:Texture2D(TextureName)
+	OpenGLTexture2D::OpenGLTexture2D(uint32 width, uint32 height,  GLenum internalFormat, GLenum dataFormat, void* data)
 	{
 		m_Width = width;
 		m_Height = height;
@@ -57,6 +55,26 @@ namespace BHive
 		PixelData.m_DataFormat = dataFormat;
 		PixelData.m_InternalFormat = internalFormat;
 		PixelData.m_Data = static_cast<uint8*>(data);
+
+		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+
+		InValidate();
+
+		glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, PixelData.m_DataFormat, GL_UNSIGNED_BYTE, PixelData.m_Data);
+		glGenerateMipmap(m_RendererID);
+
+		m_StbImageCreated = false;
+	}
+
+
+	OpenGLTexture2D::OpenGLTexture2D(uint32 width, uint32 height, GLenum internalFormat, GLenum dataFormat, uint8* data)
+	{
+		m_Width = width;
+		m_Height = height;
+		m_Path = "";
+		PixelData.m_DataFormat = dataFormat;
+		PixelData.m_InternalFormat = internalFormat;
+		PixelData.m_Data = data;
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 

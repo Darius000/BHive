@@ -2,22 +2,22 @@
 
 pushd ..\
 
-set files[0]=""
-set /a k=1
+Rem set files[0]=""
+Rem set /a k=1
 
-setlocal enabledelayedexpansion
+Rem setlocal enabledelayedexpansion
 
-for /r %%i in (*.h) do (
-    
-     set files[!k!] = %%i
-     echo !k!
-     set /a k+=1    
-     
-)
-
-(for %%a in (%files%) do ( 
-   echo %%a 
-))
+Rem for /r %%i in (*.h) do (
+Rem     
+Rem      set files[!k!] = %%i
+Rem      echo !k!
+Rem      set /a k+=1    
+Rem      
+Rem )
+Rem 
+Rem (for %%a in (%files%) do ( 
+Rem    echo %%a 
+Rem ))
 Rem start "" %~dp0HeaderTool.exe %files%
 
 

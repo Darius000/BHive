@@ -3,8 +3,15 @@
 #include "Components/Component.h"
 #include "Managers/AssetManagers.h"
 
+
 namespace BHive
 { 
+
+	void RenderSystem::OnInitialize()
+	{
+		
+	}
+
 	void RenderSystem::OnUpdate(const Time& time, entt::registry& componentRegistry)
 	{
 		FVector3 CameraPosition = FVector3();
@@ -17,19 +24,24 @@ namespace BHive
 
 				if (camera.m_PrimaryCamera)
 				{
-					glm::mat4 m_ProjectionMatrix = camera.m_Camera.GetProjection();
+					//glm::mat4 m_ProjectionMatrix = camera.m_Camera.GetProjection();
 
-					glm::mat4 matrix = transform.m_Transform.GetMatrix();
-					glm::mat4 m_ViewMatrix = glm::inverse(matrix);
-					glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
+					//glm::mat4 matrix = transform.m_Transform.GetMatrix();
+					//glm::mat4 m_ViewMatrix = glm::inverse(matrix);
+					//glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 
-					for (auto& a : AssetManager::GetAssets<Shader>())
-					{
-						a.second->Bind();
-						a.second->SetMat4("u_ViewProjection", m_ViewProjectionMatrix);
-						a.second->SetMat4("u_View", m_ViewMatrix);
-						a.second->SetVec3("CameraPosition", transform.m_Transform.GetPosition());
-					}
+					//UniformBlock* matrices = m_MatrixBlocks["Matrices"];
+					//matrices->SendData(0, &m_ViewProjectionMatrix);
+					//matrices->SendData(sizeof(glm::mat4), &m_ViewMatrix);
+					//matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), &transform.m_Transform.GetPosition());
+
+					////for (auto& a : AssetManager::GetAssets<Shader>())
+					////{
+					////	a.second->Bind();
+					////	//a.second->SetMat4("u_ViewProjection", m_ViewProjectionMatrix);
+					////	//a.second->SetMat4("u_View", m_ViewMatrix);
+					////	a.second->SetVec3("CameraPosition", transform.m_Transform.GetPosition());
+					////}
 
 					CameraPosition = transform.m_Transform.GetPosition();
 				}
@@ -47,15 +59,18 @@ namespace BHive
 				numDirLights++;
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
-					a.second->Bind();
-					a.second->SetInt("numDirLights", numDirLights);
+					a.second->Bind();			
 					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
 					a.second->SetVec3(uniform + "color", directionalLight.m_LightColor);
 					a.second->SetFloat(uniform + "brightness", directionalLight.m_LightBrightness);
 				}
 			}
 
-
+			for (auto& a : AssetManager::GetAssets<Shader>())
+			{
+				a.second->Bind();
+				a.second->SetInt("numDirLights", numDirLights);
+			}
 		}
 		{
 			auto view = componentRegistry.view<PointLightComponent, TransformComponent>();
@@ -67,8 +82,7 @@ namespace BHive
 				numPointLights++;
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
-					a.second->Bind();
-					a.second->SetInt("numPointLights", numPointLights);
+					a.second->Bind();			
 					a.second->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
 					a.second->SetVec3(uniform + "color", pointLight.m_Color);
 					a.second->SetFloat(uniform + "constant", pointLight.m_Constant);
@@ -77,6 +91,12 @@ namespace BHive
 					a.second->SetFloat(uniform + "brightness", pointLight.m_Brightness);
 					
 				}
+			}
+
+			for (auto& a : AssetManager::GetAssets<Shader>())
+			{
+				a.second->Bind();
+				a.second->SetInt("numPointLights", numPointLights);
 			}
 		}
 
@@ -90,8 +110,7 @@ namespace BHive
 				numSpotLights++;
 				for (auto& a : AssetManager::GetAssets<Shader>())
 				{
-					a.second->Bind();
-					a.second->SetInt("numSpotLights", numSpotLights);
+					a.second->Bind();				
 					a.second->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
 					a.second->SetVec3(uniform + "color", spotLight.m_Color);
 					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
@@ -102,6 +121,12 @@ namespace BHive
 					a.second->SetFloat(uniform + "quadratic", spotLight.m_Quadratic);
 					a.second->SetFloat(uniform + "brightness", spotLight.m_Brightness);
 				}
+			}
+
+			for (auto& a : AssetManager::GetAssets<Shader>())
+			{
+				a.second->Bind();
+				a.second->SetInt("numSpotLights", numSpotLights);
 			}
 		}
 

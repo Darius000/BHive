@@ -5,13 +5,7 @@
 namespace BHive
 { 
 
-#define BIND_EVENT(x) std::bind(&x, this)
-#define BIND_EVENT_ONE_PARAM(x) std::bind(&x, this, std::placeholders::_1)
-#define BIND_EVENT_TWO_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2)
-#define BIND_EVENT_THREE_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3)
-#define BIND_EVENT_FOUR_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4)
-#define BIND_EVENT_FIVE_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5)
-#define BIND_EVENT_SIX_PARAMS(x) std::bind(&x, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6)
+#define BIND_EVENT(x) [this](auto&&... args) -> decltype(auto){ return this->x(std::forward<decltype(args)>(args)...); }
 
 	template<typename FunctionSigniture>
 	struct BHive_API FEventDelegate

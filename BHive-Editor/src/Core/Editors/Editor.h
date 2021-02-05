@@ -2,7 +2,7 @@
 
 
 #include "ImGuiPanel.h"
-#include "BHive/Renderer/Asset.h"
+#include "BHive/Assets/Asset.h"
 #include "ComponentDetails/PropertyDetailsBuilder.h"
 
 
@@ -12,13 +12,13 @@ namespace BHive
 	class Editor : public ImGuiPanel
 	{
 	public:
-		Editor(const std::string& label, Asset* asset)
-			:ImGuiPanel(label, ImGuiWindowFlags_MenuBar, true), m_Asset(asset){}
+		Editor(const std::string& label, IAssetType* asset, uint64 id = 0);
 
+		void OnRenderMenuBar() override;
 		void OnRenderWindow() override;
 
 	protected:
-		Asset* m_Asset;
+		IAssetType* m_Asset;
 		PropertyDetailsBuilder detailsBuilder;
 	};
 

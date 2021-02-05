@@ -1,94 +1,41 @@
 #pragma once
 
-#include "Asset.h"
+#include "Uniform.h"
+#include "Assets/Asset.h"
 #include "BHive/Managers/AssetManagers.h"
+//#include "Core/Core.h"
 
 namespace BHive
 {
-	enum class ShaderUniformType
-	{
-		Bool, Int, Float, Float2, Float3, Float4, Vec2, Vec3, Color3, Color4, Vec4, Mat2, Mat3, Mat4, Sampler
-	};
-
-	static const char* ShaderUniformTypes[] = {"Bool", "Int", "Float", "Float2", "Float3", "Float4", "Vec2", "Vec3", "Vec4", "Color3", "Color4", "Mat2", "Mat3", "Mat4", "Sampler"};
-
-	enum class ShaderType : unsigned int
-	{
-		None = 0,
-		FragmentShader = 0x8B30,
-		VertexShader = 0x8B31	
-	};
-
-	static std::unordered_map<ShaderType, const char*> ShaderTypesToString = {{ShaderType::None,"None"}, {ShaderType::VertexShader, "Vertex Shader"}, { ShaderType::FragmentShader,"Fragment Shader"}};
-
-#define UNIFORM(name, displayName, classname, memberName, type)\
-	{#name, #displayName, &(classname::memberName), ShaderUniformType::##type, -1}
-
-#define SAMPLERUNIFORM(name, displayName, classname, memberName, type, index)\
-	{#name, #displayName, &(classname::memberName), ShaderUniformType::##type, index}
-
-	struct Uniform
-	{
-		const char* m_Name;
-		const char* m_DisplayName;
-		void* m_Value;
-		ShaderUniformType m_Type;
-		int m_SamplerIndex = -1;
-	};
-
-	struct UniformAttribute
-	{
-		UniformAttribute()
-		{
-		}
-
-		std::string m_Name = "";
-		ShaderUniformType m_Type = ShaderUniformType::Bool;
-		int m_SamplerIndex = -1;
-	};
-
 	
+	static std::unordered_map<ShaderType, const char*> ShaderTypesToString = {{ShaderType::None,"None"}, {ShaderType::VertexShader, "Vertex"}, { ShaderType::FragmentShader,"Fragment"}};
 
-	struct SamplerUniformAttribute : public UniformAttribute
-	{
 
-	};
+	using ShaderUniforms = std::unordered_map<std::string, Scope<Uniform>>;
 
-	struct ShaderUniforms
-	{
-		using Uniforms = std::vector<Uniform>;
-		using Iterator = std::vector<Uniform>::iterator;
-
-		Iterator begin() { return m_Uniforms.begin(); }
-		Iterator end() { return m_Uniforms.end(); }
-
-		void Add(std::initializer_list<Uniform> uniforms)
-		{
-			for (auto& uniform : uniforms)
-			{
-				m_Uniforms.push_back(uniform);
-			}	
-		}
-
-		Uniforms m_Uniforms;
-	};
-
-	class BHive_API Shader : public Asset
+	class BHive_API Shader : public IAssetType
 	{
 	public:
+		
+		DEFINE_ASSET_BODY(Shader, "scripticon")
+
 		using ShaderSource = std::unordered_map<ShaderType, std::string>;
-		using ShaderUniformAttributes = std::vector<Scope<UniformAttribute>>;
-
+		using ShaderIDs = std::unordered_map<ShaderType, uint32>;
+		
 	public:
-		Shader(const std::string& name): Asset(name){}
+		Shader(){}
 		virtual ~Shader() = default;
 
 		virtual void Bind() const = 0;
 		virtual void UnBind() const = 0;
 		virtual void Compile() = 0;
 
-		void SetUniform(const Uniform& uniform);
+		void SetUniform(const std::string& name, Uniform* uniform);
 
+		template<ShaderUniformTypes Type>
+		inline void SetUniformImpl(const std::string& name, Uniform* uniform);
+
+		virtual void QueryUniforms(uint32 shader) = 0;
 		virtual void SetBool(const BString& name, bool value) const = 0;
 		virtual void SetInt(const BString& name, int value) const = 0;
 		virtual void SetFloat(const BString& name, float value) const = 0;
@@ -101,23 +48,78 @@ namespace BHive
 		virtual void SetMat2(const BString& name, const glm::mat2& mat) const = 0;
 		virtual void SetMat3(const BString& name, const glm::mat3& mat) const = 0;
 		virtual void SetMat4(const BString& name, const glm::mat4& mat) const = 0;
-
-		std::string GetAssetType() const override { return "Shader"; }
-		const std::string GetThumbnailName() const override
-		{
-			return "scripticon";
-		}
+		virtual uint32& GetID() = 0;
+		virtual void SetUniforms();
+		ShaderUniforms& GetUniforms(){ return m_Unforms; }
 
 		static Ref<Shader> Create(const WinPath& filePath);
 		static Ref<Shader> Create(const BName& name, const BString& vertexSrc, const BString& fragmentSrc);
 
-		void AddAttribute(UniformAttribute* attribute);
-		void RemoveAttribute(const std::string name);
-		void RemoveAttribute(unsigned int index);
 	protected:
 		ShaderSource m_Sources = {{ShaderType::VertexShader, ""}, {ShaderType::FragmentShader, ""}};
-		ShaderUniformAttributes m_UniformAttribues;
+		ShaderIDs m_Ids;
+		ShaderUniforms m_Unforms;
 		
 		friend class ShaderEditorCustomizationDetails;
+		friend class Material;
+
+		template<typename T>
+		friend void Serialize(T* obj, const std::string& filepath);
 	};
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Float>(const std::string& name, Uniform* uniform)
+	{
+		SetFloat(name, Cast<FloatUniform>(uniform)->GetValue());
+	}
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Bool>(const std::string& name, Uniform* uniform)
+	{
+		SetBool(name, Cast<BoolUniform>(uniform)->GetValue());
+	}
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Int>(const std::string& name, Uniform* uniform)
+	{
+		SetInt(name, Cast<IntUniform>(uniform)->GetValue());
+	}
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Vec2>(const std::string& name, Uniform* uniform)
+	{
+		SetVec2(name, Cast<Vector2Uniform>(uniform)->GetValue());
+	}
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Vec3>(const std::string& name, Uniform* uniform)
+	{
+		SetVec3(name, Cast<Vector3Uniform>(uniform)->GetValue());
+	}
+
+	template<>
+	inline void Shader::SetUniformImpl<ShaderUniformTypes::Sampler>(const std::string& name, Uniform* uniform)
+	{
+		SamplerUniform* samplerUniform = Cast<SamplerUniform>(uniform);
+		auto tex = samplerUniform->GetValue();
+		if (tex)
+		{
+			tex->Bind(samplerUniform->m_SamplerIndex);
+			SetInt(name , samplerUniform->m_SamplerIndex);
+			//SetBool(name , true);
+		}
+		else
+		{
+			SetInt(name , 0);
+			//SetBool(name , false);
+		}
+	}
+
+
+	template<ShaderUniformTypes Type>
+	inline void Shader::SetUniformImpl(const std::string& name, Uniform* uniform)
+	{
+
+	}
+
 }

@@ -2,6 +2,10 @@
 
 namespace BHive
 {	
+	#define ColorToImCol32(color) IM_COL32(color.r, color.g, color.b, color.a)
+	#define LColorToImCol32(color) IM_COL32((uint8)(color.r * 255.0f), (uint8)(color.g * 255.0f), \
+		(uint8)(color.b * 255.0f), (uint8)(color.a * 255.0f))
+
 	class Color
 	{
 		#define MAX_COLOR 255

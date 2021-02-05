@@ -3,7 +3,8 @@
 #include "BHive.h"
 #include "BHive/Core/Registry/ClassRegistry.h"
 #include "ComponentDetails/DetailsCustomization.h"
-#include "Editors/EditorCustomizationDetails.h"
+#include "EditorCustomizationDetails/EditorCustomizationDetails.h"
+
 
 namespace BHive
 {
@@ -23,3 +24,5 @@ namespace BHive
 		static AssetEditorList s_AssetEditors;
 	};
 }
+
+#include "EditorCustomizationDetails/CustomizationDetailsInclude.inl"

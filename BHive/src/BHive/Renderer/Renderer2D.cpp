@@ -16,9 +16,9 @@ namespace BHive
 
 	}
 
-	void Renderer2D::Begin()
+	void Renderer2D::Begin(const LinearColor4& clearcolor)
 	{
-		RenderCommands::SetClearColor(LinearColor4(0.5f, 0.5f, 0.50f, 1.0f));
+		RenderCommands::SetClearColor(clearcolor);
 		RenderCommands::Clear();
 	}
 
@@ -55,7 +55,7 @@ namespace BHive
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, plane);
 		plane->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
-		m_Model->m_Name = "plane";
+		m_Model->SetName("plane");
 		return m_Model;
 	}
 
@@ -84,7 +84,6 @@ namespace BHive
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, triangle);
 		triangle->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
-		m_Model->m_Name = "triangle";
 		return m_Model;
 	}
 
@@ -116,7 +115,6 @@ namespace BHive
 		Ref<Model> m_Model = Make_Ref<Model>();
 		m_Model->AddMesh(0, quad);
 		quad->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
-		m_Model->m_Name = "Quad";
 		return m_Model;
 	}
 

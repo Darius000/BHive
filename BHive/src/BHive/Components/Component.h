@@ -85,6 +85,9 @@ namespace BHive
 	class ScriptEntity;
 	struct NativeScriptComponent
 	{
+		NativeScriptComponent() = default;
+		NativeScriptComponent(const NativeScriptComponent&)  = default;
+
 		std::function<void(ScriptEntity*)> OnCreateFunc;
 		std::function<void(ScriptEntity*)> OnDestroyFunc;
 		std::function<void(ScriptEntity*, const Time&)> OnUpdateFunc;

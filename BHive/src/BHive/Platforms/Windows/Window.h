@@ -11,7 +11,7 @@ namespace BHive
 		uint32 Width;
 		uint32 Height;
 
-		WindowProps(const BName& title = "BHive Engine", uint32 width = 1280, uint32 height = 720)
+		WindowProps(const BName& title = "BHive Engine", uint32 width = 1920, uint32 height = 1080)
 			:Title(title), Width(width), Height(height)
 		{
 

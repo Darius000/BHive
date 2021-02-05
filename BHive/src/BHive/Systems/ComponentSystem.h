@@ -8,6 +8,7 @@ namespace BHive
 		ComponentSystem();
 		virtual ~ComponentSystem() = default;
 
+		virtual void OnInitialize() = 0;
 		virtual void OnUpdate(const Time& time, entt::registry& componentRegistry) = 0;
 
 	private:

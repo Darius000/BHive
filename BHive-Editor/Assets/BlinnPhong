@@ -1,0 +1,5727 @@
+#type Vertex Shader
+#version 450 core
+layout(location = 0yout(location = 0) in vec3 a_Position;
+layout(location = 1) ayout(location = 1) in vec4 a_Color;
+layout(location = 2) in vec2 a_TexCoord;
+layout(location = 3)ayout(location = 2) in vec2 a_TexCoord;
+layout(location = 3) in vec3 a_Normal;
+layout(location = 4) in vec3 a_Tangent;
+layout(location = 5)ayout(location = 3) in vec3 a_Normal;
+layout(location = 4) in vec3 a_Tangent;
+layout(location = 5) in vec3 a_BitTangent;
+
+layout(std140) uniform Matrices
+{
+	mat4 u_ViewProjectiayout(location = 4) in vec3 a_Tangent;
+layout(location = 5) in vec3 a_BitTangent;
+
+layout(std140) uniform Matrices
+{
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_ayout(location = 5) in vec3 a_BitTangent;
+
+layout(std140) uniform Matrices
+{
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_Tangen
+layout(std140) uniform Matrices
+{
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Cyout(std140) uniform Matrices
+{
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Momat4 u_View;
+};
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = norma;
+
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) 
+uniform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+iform mat4 u_Model;
+
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	
+out vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, Bt vec4 v_Color;
+out vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal =ut vec3 v_Normal;
+out vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normut vec2 v_TexCoord;
+out vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	vut vec3 v_Position;
+out mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.ut mat3 TBN;
+out vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjut vec3 v_TangentPosition;
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+		
+void main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Positoid main()
+{	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+	
+	v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+v_Color = a_Color;
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+
+	vec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+ec3 T = normalize(vec3(u_Model * vec4(a_Tangent, 0.0)));
+	vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+vec3 N = normalize(vec3(u_Model * vec4(a_Normal, 0.0)));
+	T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+T = normalize(T - dot(T, N) * N);
+	vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+vec3 B = cross(N, T);
+	TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+TBN = transpose(mat3(T, B, N));
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+
+	v_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+_Normal = normalize( vec3(u_Model * vec4(a_Normal, 0.0)));
+	v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+v_TexCoord = a_TexCoord;
+	v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+v_Position =   (u_Model * vec4(a_Position, 1.0f)).xyz;
+	gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+gl_Position =  u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+v_TangentPosition = TBN * v_Position;
+	
+}
+
+
+
+}
+
+
+
+
+
+
+
+#type Fragment Shader
+#version 450 core
+struct OptionalTextruct OptionalTexture
+{
+	sampler2D texture
+	sampler2D texture;
+	bool set;
+};
+
+strucsampler2D texture;
+	bool set;
+};
+
+struct Material
+{
+	Optionalbool set;
+};
+
+struct Material
+{
+	OptionalTexture diffuseTexture;
+	Optiona;
+
+struct Material
+{
+	OptionalTexture diffuseTexture;
+	OptionalTexture specula
+struct Material
+{
+	OptionalTexture diffuseTexture;
+	OptionalTexture specularTexturruct Material
+{
+	OptionalTexture diffuseTexture;
+	OptionalTexture specularTexture;
+	OptionalTextur
+	OptionalTexture diffuseTexture;
+	OptionalTexture specularTexture;
+	OptionalTexture normalTexture;
+	OptionalTexture diffuseTexture;
+	OptionalTexture specularTexture;
+	OptionalTexture normalTexture;
+	OptionalTexture emissionTexture;
+	OpOptionalTexture specularTexture;
+	OptionalTexture normalTexture;
+	OptionalTexture emissionTexture;
+	OptionalTexture displacementTexture;
+	vec3 ambient;
+	vec3 diffuse;
+	OptionalTexture normalTexture;
+	OptionalTexture emissionTexture;
+	OptionalTexture displacementTexture;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	boOptionalTexture emissionTexture;
+	OptionalTexture displacementTexture;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	floatOptionalTexture displacementTexture;
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Matvec3 ambient;
+	vec3 diffuse;
+	vec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vecvec3 diffuse;
+	vec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+ivec3 emission;
+	vec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Posvec3 specular;
+	float opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_Tafloat opacity;
+	bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location bool cutoff;
+	bool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layobool useTextureAsAlpha;
+	bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;bool doublesided;
+	float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+float shininess;
+	float heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncfloat heightScale;
+	bool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 norbool discardEdges;
+	vec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 pvec2 tiling;
+};
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) ;
+
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordco
+
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float
+uniform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gammaiform Material material;
+uniform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(niform vec3 CameraPosition;
+
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 Calcula
+in vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord) vec4 v_Color;
+in vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{n vec3 v_Normal;
+in vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPn vec2 v_TexCoord;
+in vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	n vec3 v_Position;
+in mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(matern mat3 TBN;
+in vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+	n vec3 v_TangentPosition;
+
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView -
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPosyout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = ayout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ayout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdgesayout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			disayout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = Calculaayout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+ayout(location = 7) out vec4 texcoordcolor;
+
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(
+float gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= oat gamma = 2.2;
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? tec3 CalculateNormal(mat3 tbn, vec2 texcoord);
+
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity 
+void main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(mid main()
+{
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse
+	vec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	ivec3 v_TangentView = TBN * CameraPosition;
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgvec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcvec3 viewDirection = vec3(1.0);
+	if(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTextif(material.displacementTexture.set)
+	{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture{
+		viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(e	viewDirection = normalize(v_TangentView - v_TangentPosition);
+		FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacit	FragPos = v_TangentPosition;
+	}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = ve}
+
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 
+	vec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 Parallaec2 texcoord = v_TexCoord * material.tiling;
+
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale
+	if(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float f(material.displacementTexture.set)
+	{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	co{
+		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLa	texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
+		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / num	if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
+			discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = text		discard;
+	}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentT}
+
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= delta
+	vec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoorec3 normal = v_Normal;
+	if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue if(material.normalTexture.set)
+		normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTex	normal = CalculateNormal(TBN, texcoord);
+
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = c
+	if(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float aftf(material.doublesided)
+	{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValu{
+		if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float	if(gl_FrontFacing == false)
+		{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.dis	{
+			normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoo		normal = -normal;
+		}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth 	}
+	}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float wei}
+
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = aft
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepthec4 emission = vec4(material.emission, 0.0);
+
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords
+	if(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.f(material.emissionTexture.set)
+	{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoor{
+		emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tb	emission *= texture(material.emissionTexture.texture, texcoord);
+	}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.t}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	float opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+loat opacity = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	if(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+f(material.cutoff == true && opacity < 0.1)
+	{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+{
+		discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	discard;
+	}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	albedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+lbedocolor = vec4(material.diffuse, opacity);
+	if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+if(material.diffuseTexture.set)
+		albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	albedocolor.rgb *= texture(material.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+pecularcolor = vec4(material.specular, 1.0);
+	if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+if(material.specularTexture.set)
+		specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	specularcolor.rgb *= texture(material.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	emissioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+missioncolor = vec4(emission.rgb, opacity);
+	ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+ambientcolor = vec4(material.ambient, opacity);
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+texcoordcolor = vec4(texcoord, 0.0 , 1.0);
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+c2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
+{
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+const float minLayers = 8.0;
+	const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+const float maxLayers = 32.0;
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	//depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+/depth layers
+	const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+const float numLayers = mix(maxLayers, minLayers, max(dot(vec3(0.0,0.0,1.0), viewDir), 0.0));
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	float layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+loat layerDepth = 1.0 / numLayers;
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	float currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+loat currentLayerDepth = 0.0;
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	vec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+ec2 p = viewDir.xy * scale;
+	vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+vec2 deltaTexCoords = p / numLayers;
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	vec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+ec2 currentTexCoords = texCoords;
+	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+while(currentLayerDepth < currentDepthMapValue)
+	{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+{
+		currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	currentTexCoords -= deltaTexCoords;
+		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+	currentLayerDepth += layerDepth;
+	}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+ec2 prevTexCoords = currentTexCoords + deltaTexCoords;
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	float afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+loat afterDepth = currentDepthMapValue - currentLayerDepth;
+	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+
+	float weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
+
+	return finalTexCoords;
+}
+
+vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
+{
+	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	return 2.0 * normalmap - 1.0;
+}
+loat weight = afterDepth/(afterDepth - beforeDepth);
+	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoor

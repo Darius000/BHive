@@ -35,12 +35,12 @@ namespace BHive
 		if (ext == "glsl")
 		{
 			Ref<Shader> m_Shader = Shader::Create(path);
-			AssetManager::Add(m_Shader);
+			AssetManager::Add(path.GetName(), m_Shader);
 		}
 		else if (it != m_TexExts.end())
 		{
 			Ref<Texture2D> m_Texutre = Texture2D::Create(path);
-			AssetManager::Add(m_Texutre);
+			AssetManager::Add(path.GetName(), m_Texutre);
 		}
 	}
 }

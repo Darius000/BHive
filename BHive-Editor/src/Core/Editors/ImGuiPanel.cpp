@@ -2,8 +2,8 @@
 
 namespace BHive
 {
-	ImGuiPanel::ImGuiPanel(const std::string& label, ImGuiWindowFlags flags, bool runtimecreated)
-		:m_Label(label), m_Flags(flags), m_RuntimeCreated(runtimecreated)
+	ImGuiPanel::ImGuiPanel(const std::string& label, ImGuiWindowFlags flags, uint64 id, bool runtimecreated)
+		:m_Label(label), m_Flags(flags), m_RuntimeCreated(runtimecreated), m_ID(id)
 	{
 		
 	}
@@ -23,12 +23,22 @@ namespace BHive
 			m_Flags = m_Flags | ImGuiWindowFlags_NoSavedSettings;
 		}
 
-		ImGui::Begin(m_Label.c_str(), &m_isOpen, m_Flags | ImGuiWindowFlags_NoScrollbar);
+		ImGui::Begin(m_Label.c_str(), &m_IsOpen, m_Flags | ImGuiWindowFlags_NoScrollbar);
+		ImGui::PushID((int)m_ID);
+
+		//Check if window is focused and hovered
+		b_IsFocused = ImGui::IsWindowFocused();
+		b_IsHovered = ImGui::IsWindowHovered();
 	}
 
 	void ImGuiPanel::OnRender()
 	{
 		OnBeginWindow();
+		if(ImGui::BeginMenuBar())
+		{ 
+			OnRenderMenuBar();
+			ImGui::EndMenuBar();
+		}
 		OnRenderWindow();
 		OnEndWindow();
 	}
@@ -36,6 +46,56 @@ namespace BHive
 	void ImGuiPanel::OnEndWindow()
 	{
 		ImGui::PopStyleVar(2);
+		ImGui::PopID();
 		ImGui::End();	
 	}
+
+	bool OnScrolled(MouseScrolledEvent& e){ return true;}
+
+	void ImGuiPanel::OnRecieveEvent(Event& event)
+	{
+		EventDispatcher dispatcher(event);
+		dispatcher.Dispatch<MouseScrolledEvent>(this, &ImGuiPanel::OnMouseScrolled);
+		dispatcher.Dispatch<MouseMovedEvent>(this, &ImGuiPanel::OnMouseMoved);
+		dispatcher.Dispatch<MouseButtonPressedEvent>(this, &ImGuiPanel::OnMouseButtonPressed);
+		dispatcher.Dispatch<MouseButtonReleasedEvent>(this, &ImGuiPanel::OnMouseButtonReleased);
+		dispatcher.Dispatch<KeyPressedEvent>(this, &ImGuiPanel::OnKeyPressed);
+		dispatcher.Dispatch<KeyReleasedEvent>(this, &ImGuiPanel::OnKeyReleased);
+	}
+
+	void ImGuiPanel::Close()
+	{
+		m_IsOpen = false;
+	}
+
+	bool ImGuiPanel::OnMouseScrolled(MouseScrolledEvent& e)
+	{
+		return false;
+	}
+
+	bool ImGuiPanel::OnMouseMoved(MouseMovedEvent& e)
+	{
+		return false;
+	}
+
+	bool ImGuiPanel::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		return false;
+	}
+
+	bool ImGuiPanel::OnMouseButtonReleased(MouseButtonReleasedEvent& e)
+	{
+		return false;
+	}
+
+	bool ImGuiPanel::OnKeyPressed(KeyPressedEvent& e)
+	{
+		return false;
+	}
+
+	bool ImGuiPanel::OnKeyReleased(KeyReleasedEvent& e)
+	{
+		return false;
+	}
+
 }

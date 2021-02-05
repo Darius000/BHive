@@ -6,12 +6,14 @@ namespace BHive
 	void OpenGLRendererAPI::Init()
 	{
 		glEnable(GL_DEPTH_TEST);
+		//glDepthFunc(GL_ALWAYS);
 		glEnable(GL_MULTISAMPLE);
 		glLineWidth(1.0f);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
 		EnableBackFaceCulling(true);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		
 		glBlendEquation(GL_FUNC_ADD);
 	}
 

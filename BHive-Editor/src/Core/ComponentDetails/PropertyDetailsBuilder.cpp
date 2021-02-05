@@ -1,5 +1,5 @@
 #include "PropertyDetailsBuilder.h"
-#include "imgui.h"
+
 
 namespace BHive
 {
@@ -25,8 +25,33 @@ namespace BHive
 		return false;
 	}
 
-	void PropertyDetailsBuilder::Image(const uint32& ID, FVector2 size)
+	void PropertyDetailsBuilder::Image(const Texture* texture, FVector2 size)
 	{
-		ImGui::Image((void*)ID, ImVec2(size.x, size.y), ImVec2(0, 1), ImVec2(1, 0));
+		if(texture == nullptr) return;
+		ImGui::Image((void*)*texture, ImVec2(size.x, size.y), ImVec2(0, 1), ImVec2(1, 0));
 	}
+
+	void PropertyDetailsBuilder::BeginProperty(const std::string& label)
+	{
+		ImGui::Columns(2, label.c_str(), false);
+
+		ImGui::Text(label.c_str());
+
+		ImGui::NextColumn();
+
+		ImGui::PushID(label.c_str());
+	}
+
+	void PropertyDetailsBuilder::EndProperty()
+	{
+		ImGui::Columns();
+		
+		ImGui::PopID();
+	}
+
+	std::string PropertyDetailsBuilder::GetID(const std::string& label)
+	{
+		return (std::string("##") + label);
+	}
+
 }

@@ -1,12 +1,13 @@
 #include "SceneHierarchyPanel.h"
 #include "EditorClassRegistry.h"
 #include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
 
 namespace BHive
 {
 
-	SceneHierarchyPanel::SceneHierarchyPanel(Scene* context)
-		:ImGuiPanel("Scene Hierarchy", 0)
+	SceneHierarchyPanel::SceneHierarchyPanel(Scene* context, uint64 id)
+		:ImGuiPanel("Scene Hierarchy", ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_AlwaysVerticalScrollbar, id)
 	{
 		SetContext(context);
 	}
@@ -16,9 +17,24 @@ namespace BHive
 		m_SceneContext = context;
 	}
 
+	void SceneHierarchyPanel::OnRenderMenuBar()
+	{
+		//Add buttons to add or delete entity
+
+		if (ImGui::Button("Add Entity"))
+		{
+			m_SceneContext->CreateEntity("Empty Entity");
+		}
+
+		if (ImGui::Button("Delete Entity"))
+		{
+			if(m_SelectedContext) m_SelectedContext.Destroy();
+		}
+	}
+
 	void SceneHierarchyPanel::OnRenderWindow()
 	{
-		if (!m_SceneContext || !m_isOpen) return;
+		if (!m_SceneContext || !IsOpen()) return;
 
 		m_SceneContext->m_Registry.each([&](auto entityID)
 		{
@@ -33,137 +49,51 @@ namespace BHive
 			m_SelectedContext = {};
 		}
 
-
-		ImGui::Begin("Properties");
-		if (m_SelectedContext)
+		//Right click on blank space
+		if (ImGui::BeginPopupContextWindow((const char*)0, 1, false))
 		{
-			DrawEnityComponents(m_SelectedContext);
+			if(ImGui::MenuItem("Create Entity"))
+				m_SceneContext->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
 		}
-		ImGui::End();
 	}
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
 		auto& tag = entity.GetComponent<TagComponent>().Tag;
+		auto id = std::to_string(entity.GetID());
 
 		ImGuiTreeNodeFlags flags = ((m_SelectedContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) |
-			ImGuiTreeNodeFlags_OpenOnArrow;
-		bool opened = ImGui::TreeNodeEx((void*)(uint32*)&entity, flags, tag.c_str());
-		if (ImGui::IsItemClicked())
+			ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+		bool opened = ImGui::TreeNodeEx(id.c_str(), flags, tag.c_str());
+
+		if (ImGui::IsItemClicked((int)MouseButton::Left) || ImGui::IsItemClicked((int)MouseButton::Right))
 		{
 			m_SelectedContext = entity;
 			m_DetailsBuilder.SetEntity(m_SelectedContext);
+		}
+
+		//Get the id of the entity as the id
+		if (ImGui::BeginPopupContextItem(id.c_str()))
+		{
+			if (ImGui::MenuItem("Delete Entity"))
+				m_SelectedContext.Destroy();
+
+			ImGui::EndPopup();
 		}
 
 		if (opened)
 		{
 			ImGui::TreePop();
 		}
-	}
 
-	void SceneHierarchyPanel::DrawEnityComponents(Entity entity)
-	{
-		if (entity.HasComponent<TagComponent>())
+		if (m_SelectedContext.IsBeingDestroyed() && m_SelectedContext == entity)
 		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("TagComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<TransformComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("TransformComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<DirectionalLightComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("DirectionalLightComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<PointLightComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("PointLightComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<SpotLightComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("SpotLightComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<CameraComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("CameraComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<RenderComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("RenderComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		if (entity.HasComponent<NativeScriptComponent>())
-		{
-			auto DetailsCustomization = EditorClassRegistry::GetDetailsCustomizationInstance("NativeScriptComponent");
-			DetailsCustomization->CreateCustomizedDetails(m_DetailsBuilder);
-		}
-
-		DrawAddRemoveComponents(entity);
-	}
-
-	void SceneHierarchyPanel::DrawAddRemoveComponents(Entity entity)
-	{
-
-		if (ImGui::Button("Add Component"))
-		{
-			ImGui::OpenPopup("Components");
-		}
-
-
-		if (ImGui::BeginPopup("Components"))
-		{
-			for (auto Class : ClassRegistry::GetClassRegistryList())
-			{
-				const char* name = Class;
-				if (ImGui::Selectable(name))
-				{
-					if (name == "TransformComponent")
-					{
-						entity.AddComponent<TransformComponent>();
-					}
-					else if (name == "RenderComponent")
-					{
-						entity.AddComponent<RenderComponent>();
-					}
-					else if (name == "PointLightComponent")
-					{
-						entity.AddComponent<PointLightComponent>();
-					}			
-					else if (name == "TagComponent")
-					{
-						entity.AddComponent<TagComponent>();
-					}
-					else if (name == "DirectionalLightComponent")
-					{
-						entity.AddComponent<DirectionalLightComponent>();
-					}				
-					else if (name == "CameraComponent")
-					{
-						entity.AddComponent<CameraComponent>();
-					}			
-					else if (name == "NativeScriptComponent")
-					{
-						entity.AddComponent<NativeScriptComponent>();
-					}
-					
-				}
-			}
-			
-			ImGui::EndPopup();
+			m_SceneContext->DeleteEntity(entity);
+			m_SelectedContext = {};
 		}
 	}
 
+	Entity SceneHierarchyPanel::m_SelectedContext;
 }

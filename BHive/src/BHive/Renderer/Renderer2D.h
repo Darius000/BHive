@@ -11,7 +11,7 @@ namespace BHive
 		static void Init();
 		static void ShutDown();
 
-		static void Begin();
+		static void Begin(const LinearColor4& clearcolor);
 		static void End();
 
 		static Ref<Model> Plane(float width, float height);

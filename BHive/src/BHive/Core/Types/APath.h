@@ -21,6 +21,8 @@ namespace BHive
 
 		bool IsDirectory() const { return m_Directory; }
 		bool IsValid() const { return m_FullPath != nullptr && m_Length != 0; }
+		bool Empty() const { return m_FullPath == nullptr && m_Length == 0; }
+		const ANSICHAR* c_str() const { return m_FullPath; }
 
 		const ANSICHAR* operator*() const { return m_FullPath; }
 		ANSICHAR& operator[](uint64 index){ return m_FullPath[index]; }

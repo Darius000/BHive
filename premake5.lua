@@ -19,6 +19,8 @@ IncludeDir["STB_Image"] = "BHive/vendor/stb_image"
 IncludeDir["entt"] = "BHive/vendor/entt/include"
 IncludeDir["Assimp"] = "BHive/vendor/Assimp/include"
 IncludeDir["RTTR"] = "BHive/vendor/rttr/include"
+IncludeDir["FreeType"] = "BHive/vendor/FreeType/include"
+IncludeDir["ImGuizmo"] = "BHive/vendor/ImGuizmo"
 
 group "Dependencies"
     include "BHive/vendor/glfw"
@@ -26,44 +28,7 @@ group "Dependencies"
     include "BHive/vendor/imgui"
 group  ""
 
-project "HeaderTool"
-    location "HeaderTool"
-    kind "ConsoleApp"
-    language "C#"
-    
-    targetdir ("bin/" ..outputdir.. "/%{prj.name}")
-    objdir ("bin-int/" ..outputdir.. "/%{prj.name}")
-    
-    files
-    {
-        "%{prj.name}/src/**.cs"
-    }
-    
-    includedirs
-    {
-        "%{prj.name}/src"
-    }
-    
-    --configuration "windows"
-   -- postbuildcommands{"{COPY} $(TargetPath) $(SolutionDir)\\scripts"}
-    
-    filter"system:windows"
-        systemversion "latest"
 
-        filter "configurations:Debug"
-            defines "HEADER_TOOL_DEBUG"
-            runtime "Debug"
-            symbols "on"
-
-        filter "configurations:Release"
-            defines "HEADER_TOOL_RELEASE"
-            runtime "Release"
-            optimize "on"
-
-        filter "configurations:Dist"
-            defines "HEADER_TOOL_DIST"
-            runtime "Release"
-            optimize "on"
 
 project "BHive"
     location "BHive"
@@ -85,8 +50,8 @@ project "BHive"
 		"%{prj.name}/src/**.inl",
 		"%{prj.name}/vendor/stb_image/**h",
 		"%{prj.name}/vendor/stb_image/**cpp",
-		"%{prj.name}/Assets/**",
-		"premake5.lua"
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.h",
+        "%{prj.name}/vendor/ImGuizmo/ImGuizmo.cpp"
     }
     
     defines
@@ -107,10 +72,14 @@ project "BHive"
 		"%{IncludeDir.STB_Image}",
         "%{IncludeDir.entt}",
         "%{IncludeDir.Assimp}",
-        "%{IncludeDir.RTTR}"
+        "%{IncludeDir.RTTR}",
+        "%{IncludeDir.FreeType}",
+        "%{IncludeDir.ImGuizmo}"
     }
-    
-    libdirs {"%{prj.name}/vendor/assimp/lib", "%{prj.name}/vendor/rttr/lib"}
+
+    libdirs {"%{prj.name}/vendor/assimp/lib", 
+        "%{prj.name}/vendor/rttr/lib",
+        "%{prj.name}/vendor/FreeType/lib"}
 
     links
     {
@@ -121,8 +90,12 @@ project "BHive"
         "assimp.lib",
         "zlibstaticd.lib",
         "IrrXMLd.lib",
-        "opengl32.lib"
+        "opengl32.lib",
+        "freetype.lib"
     }
+
+    filter "files:vendor/ImGuizmo/**.cpp"
+        flags { "NoPCH"}
 
     filter"system:windows"
         systemversion "latest"

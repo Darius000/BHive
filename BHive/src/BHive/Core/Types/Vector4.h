@@ -3,16 +3,19 @@
 namespace BHive
 {
 	template<typename T>
+	struct Vector2;
+
+	template<typename T>
+	struct Vector3;
+
+	template<typename T>
 	struct Vector4
 	{
-		struct Vector2;
-		struct Vector3;
-
 		Vector4() :x((T)0), y((T)0), z((T)0), w((T)1) {};
 		Vector4(T _x) :x(_x), y(_x), z(_x), w((T)1.0f) {};
 		Vector4(T _x, T _y, T _z, T _w) :x(_x), y(_y), z(_z), w(_w) {};
-		Vector4(const Vector2& _vectorA, const Vector2& _vectorB) :x(_vectorA.x), y(_vectorA.y), z(_vectorB._z), w(_vectorB.w) {};
-		Vector4(const Vector3& _vector, T _w = 1.0f) :x(_vector.x), y(_vector.y), z(_vector.z), w(_w) {};
+		Vector4(const Vector2<T>& _vectorA, const Vector2<T>& _vectorB) :x(_vectorA.x), y(_vectorA.y), z(_vectorB._z), w(_vectorB.w) {};
+		Vector4(const Vector3<T>& _vector, T _w = 1.0f) :x(_vector.x), y(_vector.y), z(_vector.z), w(_w) {};
 		Vector4(const Vector4& other) :x(other.x), y(other.y), z(other.z), w(other.w) {};
 
 		union { T x, r; };
@@ -34,17 +37,20 @@ namespace BHive
 		Vector4 operator-(const Vector4& _other);
 		Vector4 operator*(T _scalar);
 		Vector4 operator/(T _scalar);
-		Vector4 operator+=(const Vector4& _other);
-		Vector4 operator-=(const Vector4& _other);
-		Vector4 operator*=(T _scalar);
-		Vector4 operator/=(T _scalar);
+		Vector4& operator+=(const Vector4& _other);
+		Vector4& operator-=(const Vector4& _other);
+		Vector4& operator*=(T _scalar);
+		Vector4& operator/=(T _scalar);
 		Vector4 operator-();
 		T* operator*();
 		const T* operator*() const;
 		float operator*(const Vector4& _other);
 
-		T operator[](uint32 index);
+		T& operator[](uint32 index);
 		bool operator==(const Vector4& _other);
+
+		template<typename U>
+		friend std::ostream& operator<<(std::ostream& os, const Vector4<U>& _vector);
 
 	public:
 		BString ToString() const { return Format("{%f, %f, %f, %f}", x, y, z, w); }
@@ -117,25 +123,25 @@ namespace BHive
 	}
 
 	template<typename T>
-	Vector4<T> Vector4<T>::operator+=(const Vector4<T>& _other)
+	Vector4<T>& Vector4<T>::operator+=(const Vector4<T>& _other)
 	{
 		return *this = *this + _other;
 	}
 
 	template<typename T>
-	Vector4<T> Vector4<T>::operator-=(const Vector4<T>& _other)
+	Vector4<T>& Vector4<T>::operator-=(const Vector4<T>& _other)
 	{
 		return *this = *this - _other;
 	}
 
 	template<typename T>
-	Vector4<T> Vector4<T>::operator*=(T _scalar)
+	Vector4<T>& Vector4<T>::operator*=(T _scalar)
 	{
 		return *this = *this * _scalar;
 	}
 
 	template<typename T>
-	Vector4<T> Vector4<T>::operator/=(T _scalar)
+	Vector4<T>& Vector4<T>::operator/=(T _scalar)
 	{
 		return *this = *this / _scalar;
 	}
@@ -148,7 +154,7 @@ namespace BHive
 
 
 	template<typename T>
-	T Vector4<T>::operator[](uint32 index)
+	T& Vector4<T>::operator[](uint32 index)
 	{
 		if (index <= 0) return x;
 		else if (index == 1) return y;

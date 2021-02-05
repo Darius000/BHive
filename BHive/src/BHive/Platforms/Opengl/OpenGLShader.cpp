@@ -17,8 +17,29 @@ namespace BHive
 		return ShaderType::None;
 	}
 
+	static Uniform* GetShaderUniformType(GLenum type)
+	{
+		switch (type)
+		{
+			case GL_BOOL:
+				return new BoolUniform();
+			case GL_INT:
+				return new IntUniform();
+			case GL_FLOAT:
+				return new FloatUniform();
+			case GL_FLOAT_VEC3:
+				return new Vector3Uniform();
+			case GL_FLOAT_VEC2:
+				return new Vector2Uniform();
+			case GL_SAMPLER_2D:
+				return new SamplerUniform();
+			default:
+				return nullptr;
+		}
+	}
+
+
 	OpenGLShader::OpenGLShader(const WinPath& filePath)
-		:Shader("")
 	{
 		m_Name = filePath.GetName();
 
@@ -28,7 +49,6 @@ namespace BHive
 	}
 
 	OpenGLShader::OpenGLShader(const std::string& name, const BString&  vertexSrc, const BString&  fragmentSrc)
-		:Shader(name)
 	{
 		m_Sources[ShaderType::VertexShader] = vertexSrc;
 		m_Sources[ShaderType::FragmentShader] = fragmentSrc;
@@ -203,7 +223,7 @@ namespace BHive
 
 	void OpenGLShader::Compile()
 	{
-		GLuint program = glCreateProgram();
+		id = glCreateProgram();
 		BH_CORE_ASSERT(m_Sources.size() <= 2, "Only support 2  shaders for now!");
 
 		std::array<uint32, 2> glShaderIDs;
@@ -214,7 +234,8 @@ namespace BHive
 			GLenum shaderType = (GLenum)kv.first;
 			const BString& source = kv.second;
 
-			GLuint shader = glCreateShader(shaderType);
+			GLint shader = glCreateShader(shaderType);
+			m_Ids.insert({ kv.first, (uint32)shader });
 
 			const GLchar* sourceCode = *source;
 			glShaderSource(shader, 1, &sourceCode, nullptr);
@@ -228,13 +249,13 @@ namespace BHive
 				break;
 			}	
 
-			glAttachShader(program, shader);
+			glAttachShader(id, shader);
 			glShaderIDs[index++] = shader;
 		}	
 		
-		glLinkProgram(program);
+		glLinkProgram(id);
 
-		if (CheckLinkStatus(program) == false)
+		if (CheckLinkStatus(id) == false)
 		{
 			for (auto shaderID : glShaderIDs)
 			{
@@ -248,10 +269,10 @@ namespace BHive
 
 		for (auto shaderID : glShaderIDs)
 		{
-			glDetachShader(program, shaderID);
+			glDetachShader(id, shaderID);
 		}
 
-		id = program;
+		QueryUniforms(id);
 	}
 
 	void OpenGLShader::Bind() const
@@ -263,4 +284,49 @@ namespace BHive
 	{
 		glUseProgram(0);
 	}
+
+	void OpenGLShader::QueryUniforms(uint32 shader)
+	{
+		GLint numUniforms = 0;
+		GLint maxUniformNameLength = 0;
+		GLint numBlocks = 0;
+		glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformNameLength);
+		glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &numUniforms);
+		glGetProgramiv(id, GL_ACTIVE_UNIFORM_BLOCKS, &numBlocks);
+
+
+		for (uint32 i = 0; i < (uint32)numUniforms; i++)
+		{	
+			GLsizei length = 0;
+			GLint size = 0;
+			GLenum type;
+			std::vector<GLchar> name(maxUniformNameLength);
+			glGetActiveUniform(id, (GLint)i, (GLsizei)name.size(), &length, &size, &type, &name[0]);
+			GLuint location = glGetUniformLocation(id, name.data());
+			std::string finalName = name.data();
+
+			size_t pos = finalName.find("material.");
+			size_t texPos = finalName.find("textures.");
+			size_t dotPos = finalName.find_first_of(".");
+			if( pos != std::string::npos || texPos != std::string::npos)
+			{ 
+				Uniform* uniform = GetShaderUniformType(type);
+
+				if (uniform != nullptr)
+				{
+					uniform->m_Location = (uint32)location;
+					uniform->m_Length = (uint64)length;
+					uniform->m_Size = (uint32)size;
+					uniform->m_Name = name.data();
+					uniform->m_DisplayName = finalName.substr(dotPos + 1);
+					GetUniformValue(uniform, type);
+
+					BH_CORE_TRACE("Uniform {0}, {1}, {2}, {3}", length, size, type, name.data());
+
+					m_Unforms.insert({ name.data(), Scope<Uniform>(uniform) });
+				}
+			}
+		}
+	}
+
 }

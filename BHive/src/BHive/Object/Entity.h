@@ -13,6 +13,10 @@ namespace BHive
 		Entity(entt::entity entityhandle, Scene* scene);
 		Entity(const Entity& other) = default;
 		~Entity() = default;
+
+	public:
+		void Destroy();
+		bool IsBeingDestroyed() const { return m_BeingDestroyed; }
 		
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
@@ -61,15 +65,13 @@ namespace BHive
 			return !(*this == other);
 		}
 
+		operator entt::entity() const { return m_EntityHandle; }
+
 	private:
 		entt::entity m_EntityHandle {entt::null};
 		Scene* m_Scene = nullptr;
+		bool m_BeingDestroyed = false;
 	};
-
-	//inline const char* operator+(const std::string& String, entt::entity entity)
-	//{
-	//	return *(String + std::to_string((uint32)entity));
-	//}
 
 	class ScriptEntity
 	{

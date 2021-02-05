@@ -1,19 +1,22 @@
 #pragma once
 
-#include <rttr/registration.h>
+#include <glm/glm.hpp>
+
 
 namespace BHive
 {
 	template<typename T>
+	struct Vector2;
+
+	template<typename T>
 	struct Vector3
 	{
-		struct Vector2;
 
 		Vector3() :x((T)0), y((T)0), z((T)0) {};
 		Vector3(T _x) :x(_x), y(_x), z(_x) {};
 		Vector3(T _x, T _y, T _z) :x(_x), y(_y), z(_z) {};
-		Vector3(const Vector2& _vector2, T _z) :x(_vector2.x), y(_vector2.y), z(_z) {};
-		Vector3(Vector2& _vector2, T _z = 0.0f) :x(_vector2.x), y(_vector2.y), z(_z) {};
+		Vector3(const Vector2<T>& _vector2, T _z) :x(_vector2.x), y(_vector2.y), z(_z) {};
+		Vector3(Vector2<T>& _vector2, T _z = 0.0f) :x(_vector2.x), y(_vector2.y), z(_z) {};
 		Vector3(const Vector3& other) :x(other.x), y(other.y), z(other.z) {};
 
 		union { T x, r; };
@@ -24,12 +27,12 @@ namespace BHive
 		T GetMagnitude() const;
 		T GetMagnitude2() const;
 		Vector3 Normalize();
-
+		T GetDistance(const Vector3& b) const;
 	public:
 		static const Vector3 Zero();
 		static const Vector3 One();
-		static float GetAngle(const Vector3& a, const Vector3& b);
-
+		static float GetAngle(const Vector3& a, const Vector3& b) ;
+		static T GetDistance(const Vector3& a, const Vector3& b);
 	public:
 		Vector3 operator+(const Vector3& _other);
 		Vector3 operator-(const Vector3& _other);
@@ -44,33 +47,41 @@ namespace BHive
 		const T* operator*() const;
 		float operator*(const Vector3& _other);
 		Vector3 operator^(const Vector3& _other);
+		operator glm::vec3() const { return {x, y, z}; }
 
-		T operator[](uint32 index);
+		T& operator[](uint32 index);
 		bool operator==(const Vector3& _other);
-		friend std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3);
-		friend std::istream& operator>>(std::istream& is, Vector3<T>& _vector3);
+
+	public:
+		template<typename U>
+		friend std::ostream& operator<<(std::ostream& os, const Vector3<U>& _vector3);
+
+		template<typename U>
+		friend std::istream& operator>>(std::istream& is, Vector3<U>& _vector3);
 
 	public:
 		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
 	};
 
 	template<typename T>
+	T Vector3<T>::GetDistance(const Vector3& a, const Vector3& b) 
+	{
+		return a.GetDistance(b);
+	}
+
+	template<typename T>
+	T Vector3<T>::GetDistance(const Vector3& b) const
+	{
+		float xd = (x - b.x);
+		float yd = (y - b.y);
+		float zd = (z - b.z);
+		return sqrt( (xd * xd) + (yd * yd) + (zd * zd));
+	}
+
+	template<typename T>
 	T Vector3<T>::GetMagnitude2() const
 	{
 		return (x * x) + (y * y) + (z * z);
-	}
-
-
-	template<typename T>
-	inline std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3)
-	{
-		return os << _vector3.ToString();
-	}
-
-	template<typename T>
-	inline std::istream& operator>>(std::istream& is, Vector3<T>& _vector3)
-	{
-		return is >> _vector3.x >> _vector3.y >> _vector3.z;
 	}
 
 	template<typename T>
@@ -98,7 +109,7 @@ namespace BHive
 	}
 
 	template<typename T>
-	float Vector3<T>::GetAngle(const Vector3& a, const Vector3& b)
+	float Vector3<T>::GetAngle(const Vector3& a, const Vector3& b) 
 	{
 		return (a * b) * 360.0f;
 	}
@@ -174,7 +185,7 @@ namespace BHive
 	}
 
 	template<typename T>
-	T Vector3<T>::operator[](uint32 index)
+	T& Vector3<T>::operator[](uint32 index)
 	{
 		if (index <= 0) return x;
 		else if (index == 1) return y;
@@ -199,20 +210,22 @@ namespace BHive
 		return &x;
 	}
 
+	template<typename T>
+	inline std::ostream& operator<<(std::ostream& os, const Vector3<T>& _vector3)
+	{
+		return os << _vector3.ToString();
+	}
+
+	template<typename T>
+	inline std::istream& operator>>(std::istream& is, Vector3<T>& _vector3)
+	{
+		return is >> _vector3.x >> _vector3.y >> _vector3.z;
+	}
+
 	using FVector3 = Vector3<float>;
 	using UVector3 = Vector3<uint32>;
 	using IVector3 = Vector3<int32>;
 	using BVector3 = Vector3<bool>;
-
-	template<typename T>
-	inline void RegisterVector3Template(std::string name)
-	{
-		rttr::registration::class_<Vector3<T>>(name)
-			.constructor<>()
-			.property("x", &Vector3<T>::x)
-			.property("y", &Vector3<T>::y)
-			.property("z", &Vector3<T>::z);
-	}
 }
 
 

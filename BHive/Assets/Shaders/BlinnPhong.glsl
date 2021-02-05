@@ -8,8 +8,12 @@ layout(location = 3) in vec3 a_Normal;
 layout(location = 4) in vec3 a_Tangent;
 layout(location = 5) in vec3 a_BitTangent;
 
-uniform mat4 u_ViewProjection;
-uniform mat4 u_View;
+layout(std140) uniform Matrices
+{
+	mat4 u_ViewProjection;
+	mat4 u_View;
+};
+
 uniform mat4 u_Model;
 
 out vec4 v_Color;
@@ -49,11 +53,6 @@ struct OptionalTexture
 
 struct Material
 {
-	OptionalTexture diffuseTexture;
-	OptionalTexture specularTexture;
-	OptionalTexture normalTexture;
-	OptionalTexture emissionTexture;
-	OptionalTexture displacementTexture;
 	vec3 ambient;
 	vec3 diffuse;
 	vec3 emission;
@@ -68,49 +67,28 @@ struct Material
 	vec2 tiling;
 };
 
-struct DirectionalLight
+struct Textures
 {
-	vec3 direction;
-	vec3 color;
-	float brightness;
+	OptionalTexture diffuseTexture;
+	OptionalTexture specularTexture;
+	OptionalTexture normalTexture;
+	OptionalTexture emissionTexture;
+	OptionalTexture displacementTexture;
+	OptionalTexture AOTexture;
 };
 
-struct PointLight
-{
-	vec3 position;
-	vec3 color;
-	float constant;
-	float linear;
-	float quadratic;
-	float brightness;
-};
+uniform Textures textures;
 
-struct SpotLight
-{
-	vec3 position;
-	vec3 direction;
-	vec3 color;
-	float cutoff;
-	float outerCutoff;
-	float constant;
-	float linear;
-	float quadratic;
-	float brightness;
-};
-
-uniform Material material;
-
-//Lights
-uniform int numPointLights;
-uniform int numDirLights;
-uniform int numSpotLights;
-
-#define NR_LIGHTS 20
-
-uniform DirectionalLight directionalLights[NR_LIGHTS];
-uniform PointLight pointLights[NR_LIGHTS];
-uniform SpotLight spotLights[NR_LIGHTS];
-
+uniform Material material = {
+	{0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}, {0.0f, 0.0f, 0.0f}, {1.0f, 1.0f, 1.0f},
+	1.0f,
+	false,
+	false,
+	false,
+	20.0f,
+	0.0f,
+	false,
+	{1.0f, 1.0f}};
 uniform vec3 CameraPosition;
 
 in vec4 v_Color;
@@ -120,33 +98,32 @@ in vec3 v_Position;
 in mat3 TBN;
 in vec3 v_TangentPosition;
 
-layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 albedocolor;
+layout(location = 2) out vec4 specularcolor;
+layout(location = 3) out vec4 ambientcolor;
+layout(location = 4) out vec4 emissioncolor;
+layout(location = 5) out vec4 normalcolor;
+layout(location = 6) out vec4 positioncolor;
+layout(location = 7) out vec4 texcoordcolor;
 
 float gamma = 2.2;
 vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale);
-vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord);
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord);
-vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 FragPos, vec3 viewDirection, vec2 texCoord);
 vec3 CalculateNormal(mat3 tbn, vec2 texcoord);
 
 void main()
 {
 	vec3 v_TangentView = TBN * CameraPosition;
-	vec3 viewDirection = normalize(CameraPosition - v_Position);
-	vec3 fragPos = v_Position;
-
-	if(material.displacementTexture.set)
+	vec3 FragPos = v_Position;
+	vec3 viewDirection = vec3(1.0);
+	if(textures.displacementTexture.set)
 	{
 		viewDirection = normalize(v_TangentView - v_TangentPosition);
-		fragPos = v_TangentPosition;
+		FragPos = v_TangentPosition;
 	}
 
-	vec3 result = vec3(0.0);
-
 	vec2 texcoord = v_TexCoord * material.tiling;
-	vec2 tiledTexCoords = v_TexCoord * material.tiling;
 
-	if(material.displacementTexture.set)
+	if(textures.displacementTexture.set)
 	{
 		texcoord = ParallaxMapping(texcoord, viewDirection, material.heightScale);
 		if(material.discardEdges && (texcoord.x > 1.0 || texcoord.y > 1.0 || texcoord.x < 0.0 || texcoord.y < 0.0))
@@ -154,7 +131,7 @@ void main()
 	}
 
 	vec3 normal = v_Normal;
-	if(material.normalTexture.set)
+	if(textures.normalTexture.set)
 		normal = CalculateNormal(TBN, texcoord);
 
 	if(material.doublesided)
@@ -165,33 +142,38 @@ void main()
 		}
 	}
 
-	for(int i = 0; i < numDirLights; i++)
+	vec4 emission = vec4(material.emission, 0.0);
+
+	if(textures.emissionTexture.set)
 	{
-		result += CalcDirectionalLight(directionalLights[i], normal, fragPos, viewDirection, texcoord);
+		emission *= texture(textures.emissionTexture.texture, texcoord);
 	}
 
-	for(int i = 0; i < numPointLights; i++)
-	{
-		result += CalcPointLight(pointLights[i], normal, fragPos, viewDirection, texcoord);
-	}
-	
-	for(int i = 0; i < numSpotLights; i++)
-	{
-		result += CalculateSpotLight(spotLights[i], normal, fragPos, viewDirection, texcoord);
-	}
+	float opacity = material.useTextureAsAlpha ? texture(textures.diffuseTexture.texture, texcoord).a : material.opacity;
 
-	vec4 emission = texture(material.emissionTexture.texture, texcoord) * vec4(material.emission, 0.0);
-	vec4 ambient = vec4(material.ambient, 0.0);
-	float alpha = material.useTextureAsAlpha ? texture(material.diffuseTexture.texture, texcoord).a : material.opacity;
-
-	if(material.cutoff == true && alpha < 0.1)
+	if(material.cutoff == true && opacity < 0.1)
 	{
 		discard;
 	}
 
-	float gamma = 2.2;
-	
-	color = ambient + emission + vec4(pow(result, vec3(1.0/gamma)), alpha);
+	albedocolor = vec4(material.diffuse, opacity);
+	if(textures.diffuseTexture.set)
+		albedocolor.rgb *= texture(textures.diffuseTexture.texture, texcoord).rgb;
+
+	specularcolor = vec4(material.specular, 1.0);
+	if(textures.specularTexture.set)
+		specularcolor.rgb *= texture(textures.specularTexture.texture, texcoord).rgb;
+
+	emissioncolor = vec4(emission.rgb, opacity);
+
+	//AO
+	float AO = textures.AOTexture.set ? texture(textures.AOTexture.texture, texcoord).r : 1.0f;
+
+	ambientcolor = vec4(vec3(AO), 1.0);
+
+	normalcolor = vec4(normal, 1.0);
+	positioncolor = vec4(FragPos, 1.0);
+	texcoordcolor = vec4(texcoord, 0.0 , 1.0);
 }
 
 vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
@@ -210,19 +192,19 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
 	vec2 deltaTexCoords = p / numLayers;
 
 	vec2 currentTexCoords = texCoords;
-	float currentDepthMapValue = texture(material.displacementTexture.texture, texCoords).r;
+	float currentDepthMapValue = texture(textures.displacementTexture.texture, texCoords).r;
 	
 	while(currentLayerDepth < currentDepthMapValue)
 	{
 		currentTexCoords -= deltaTexCoords;
-		currentDepthMapValue = texture(material.displacementTexture.texture, currentTexCoords).r;
+		currentDepthMapValue = texture(textures.displacementTexture.texture, currentTexCoords).r;
 		currentLayerDepth += layerDepth;
 	}
 
 	vec2 prevTexCoords = currentTexCoords + deltaTexCoords;
 
 	float afterDepth = currentDepthMapValue - currentLayerDepth;
-	float beforeDepth = texture(material.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
+	float beforeDepth = texture(textures.displacementTexture.texture, prevTexCoords).r - currentLayerDepth + layerDepth;
 
 	float weight = afterDepth/(afterDepth - beforeDepth);
 	vec2 finalTexCoords = prevTexCoords * weight + currentTexCoords * (1.0 - weight) ;
@@ -232,88 +214,6 @@ vec2 ParallaxMapping(vec2 texCoords, vec3 viewDir, float scale)
 
 vec3 CalculateNormal(mat3 tbn, vec2 texcoord)
 {
-	vec3 normalmap = texture(material.normalTexture.texture, texcoord).rgb ;
+	vec3 normalmap = texture(textures.normalTexture.texture, texcoord).rgb ;
 	return 2.0 * normalmap - 1.0;
-}
-
-vec3 CalcDirectionalLight(DirectionalLight light, vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord)
-{
-	vec3 lightdir = material.normalTexture.set ? normalize(TBN * light.direction)  : normalize(light.direction);
-	vec3 viewDir = normalize(viewDirection - fragPos);
-	vec3 halfwayDir = normalize(lightdir + viewDir);
-
-	//diffuse shading
-	float diff = max(dot(normal, lightdir), 0.0f);
-
-	//spec shading
-	
-	float spec = pow(max(dot(normal, halfwayDir), 0.0f),  max(1.0, material.shininess));
-
-	
-	//combine
-	vec3 diffuse = diff * pow(texture(material.diffuseTexture.texture, texCoord).rgb, vec3(gamma)) * material.diffuse;
-	vec3 specular = spec * vec3(texture(material.specularTexture.texture, texCoord)) * material.specular;
-	return ((diffuse + specular) * light.color) * max(0.0, light.brightness);
-}
-
-vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord)
-{	
-	vec3 lightpos = material.normalTexture.set ? TBN * light.position : light.position;
-	vec3 lightDirection = normalize(lightpos - fragPos);
-	vec3 viewDir = normalize(viewDirection - fragPos);
-	vec3 halfwayDir = normalize(lightDirection + viewDir);
-
-	//diffuse shading
-	float diff = max(dot(normal, lightDirection), 0.0f);
-
-	//specular shading 
-	float spec = pow(max(dot(normal, halfwayDir), 0.0),  max(1.0, material.shininess));
-	
-	//for PointLight
-	float distance = length(lightpos - fragPos);
-	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-
-	vec3 diffuse =	diff *	pow(texture(material.diffuseTexture.texture, texCoord).rgb, vec3(gamma)) * material.diffuse;
-	vec3 specular = spec *	vec3(texture(material.specularTexture.texture, texCoord)) * material.specular ;
-
-
-	specular *= attenuation;
-	diffuse *= attenuation;
-
-	return ((diffuse + specular) * light.color) * max(0.0, light.brightness);
-}
-
-vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord)
-{
-	vec3 lightdir = material.normalTexture.set ? TBN * light.direction : light.direction;
-	vec3 lightpos = material.normalTexture.set ? TBN * light.position : light.position;
-	vec3 lightDirection = normalize(lightpos - fragPos);
-	vec3 viewDir = normalize(viewDirection - fragPos);
-	vec3 halfwayDir = normalize(lightDirection + viewDir);
-
-	//for spotlight
-	float theta = dot(lightDirection, normalize(-lightdir));
-	float epsilon = light.cutoff - light.outerCutoff;
-	float intensity = clamp((theta - light.outerCutoff) / epsilon, 0.0f, 1.0f);
-
-	//diffuse shading
-	float diff = max(dot(normal, lightDirection), 0.0f);
-
-	//specular shading	
-	float spec = pow(max(dot(normal, halfwayDir), 0.0), max(1.0, material.shininess));
-
-	vec3 diffuse = diff *  pow(texture(material.diffuseTexture.texture, texCoord).rgb, vec3(gamma)) * material.diffuse;
-	vec3 specular = spec * vec3(texture(material.specularTexture.texture, texCoord)) * material.specular;
-	
-	diffuse *= intensity;
-	specular *= intensity;
-
-	float distance = length(lightpos - fragPos);
-	float attenuation = 1.0f / (light.constant + light.linear * distance + light.quadratic * (distance * distance));
-
-
-	specular *= attenuation;
-	diffuse *= attenuation;
-
-	return ((diffuse + specular) * light.color) * max(0.0, light.brightness);
 }

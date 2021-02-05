@@ -5,24 +5,22 @@
 
 namespace BHive
 {
-	static const uint32 s_MaxFramebufferSize = 8192;
 
 	OpenglFramebuffer::OpenglFramebuffer(const FrameBufferSpecification& spec)
 		:m_Specification(spec)
 	{
 		glCreateFramebuffers(1, &m_RendererID);
 		
-		Invalidate();	
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		//Invalidate();	
+
+		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	OpenglFramebuffer::~OpenglFramebuffer()
 	{
 		glDeleteFramebuffers(1, &m_RendererID);
 		glDeleteTextures(1, &m_ColorAttachment);
-		glDeleteTextures(1, &m_DepthAttachment);
-
 	}
 
 	void OpenglFramebuffer::Invalidate()
@@ -34,7 +32,6 @@ namespace BHive
 			//glDeleteFramebuffers(1, &m_MultiSampleRenderID);
 			//glDeleteTextures(1, &m_multisampleAttachment);
 			glDeleteTextures(1, &m_ColorAttachment);
-			glDeleteTextures(1, &m_DepthAttachment);
 		}
 
 
@@ -54,27 +51,20 @@ namespace BHive
 		//Create screen framebuffer
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
+		//Color texture
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_ColorAttachment);
 		glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
-
-		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Specification.Width, 
-			m_Specification.Height , 0, m_Format, m_Type, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+		glTexImage2D(GL_TEXTURE_2D, 0, m_InternalFormat, m_Specification.Width, 
+			m_Specification.Height , 0, m_Format, m_Type, nullptr);
+
+		//Light texture
+		//Color texture
+		
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
-	
 
-		//Create Depth Buffer
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_DepthAttachment);
-		glBindTexture(GL_TEXTURE_2D, m_DepthAttachment);
-		glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH24_STENCIL8, m_Specification.Width, m_Specification.Height);
-
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_TEXTURE_2D, m_DepthAttachment, 0);
-
-		BH_CORE_ASSERT(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete");
-		
-		
 	}
 
 	void OpenglFramebuffer::Bind()
@@ -104,4 +94,11 @@ namespace BHive
 
 		Invalidate();
 	}
+
+	void OpenglFramebuffer::CheckFrameBufferStatus() const
+	{
+		if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			BH_CORE_ERROR("Framebuffer is incomplete");
+	}
+
 }

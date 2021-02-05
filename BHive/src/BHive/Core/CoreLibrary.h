@@ -31,4 +31,10 @@ namespace BHive
 	constexpr Ref<T> Make_Ref(Args&& ... args) {
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+	template<typename Derived, typename Base>
+	Derived* Cast(Base* obj)
+	{
+		return dynamic_cast<Derived*>(obj);
+	}
 }

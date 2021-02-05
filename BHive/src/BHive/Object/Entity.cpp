@@ -8,4 +8,9 @@ namespace BHive
 	{
 
 	}
+
+	void Entity::Destroy()
+	{
+		m_BeingDestroyed = true;
+	}
 }

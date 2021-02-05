@@ -40,12 +40,15 @@ namespace BHive
 		Rotator operator/=(float s);
 		Rotator operator*(float s);
 		Rotator operator*=(float s);
-		float operator[](unsigned int index);
+		float& operator[](unsigned int index);
 		bool operator==(const Rotator& r);
 		bool operator!=(const Rotator& r);
 		float* operator*();
 		const float* operator*() const;
 		static const Rotator Zero();
+
+		friend std::ostream& operator<<(std::ostream& os, const Rotator& rotator);
+
 	};
 
 	inline std::ostream& operator<<(std::ostream& os, const Rotator& rotator)

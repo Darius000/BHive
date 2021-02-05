@@ -124,7 +124,7 @@ namespace BHive
 		return &roll;
 	}
 
-	float Rotator::operator[](unsigned int index)
+	float& Rotator::operator[](unsigned int index)
 	{
 		if (index <= 0) return roll;
 		else if (index == 1) return yaw;

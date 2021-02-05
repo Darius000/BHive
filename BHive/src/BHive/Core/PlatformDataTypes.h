@@ -1,17 +1,20 @@
 #pragma  once
 
 #include <cstdint>
+#include <stdint.h>
 
 namespace BHive
 {
-	typedef int8_t		int8;
-	typedef int16_t		int16;
-	typedef int32_t		int32;
-	typedef int64_t		int64;
-	typedef uint8_t		uint8;
-	typedef uint16_t	uint16;
-	typedef uint32_t	uint32;
-	typedef uint64_t	uint64;
-	typedef wchar_t		WIDECHAR;
-	typedef char		ANSICHAR;
+	using int8 = signed char;		
+	using int16 = short;
+	using int32 = int;
+	using int64 = long long;
+	using uint8 = unsigned char;
+	using uint16 = unsigned short;
+	using uint32 = unsigned int;
+	using uint64 =	unsigned long long;
+	using WIDECHAR = wchar_t;
+	using ANSICHAR = char;
+	
+	using uintPtr = uintptr_t;	
 }
