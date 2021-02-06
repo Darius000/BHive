@@ -36,5 +36,6 @@ namespace BHive
 
 		Ref<Viewport> m_Viewport;
 
+		bool b_ShowDemoWindow = false;
 	};	
 }

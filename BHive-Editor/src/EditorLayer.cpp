@@ -199,7 +199,7 @@ namespace BHive
 		
 		EditorStack::Get()->Update();
 
-		ImGui::ShowDemoWindow();
+		if(b_ShowDemoWindow) ImGui::ShowDemoWindow(&b_ShowDemoWindow);
 		
 		ImGui::End();
 	}
@@ -248,6 +248,9 @@ namespace BHive
 
 				if (ImGui::MenuItem("Properties"))
 					EditorStack::Get()->OpenPanel<PropertiesPanel>();
+
+				if (ImGui::MenuItem("ImGui Demo Window"))
+					b_ShowDemoWindow = true;
 
 				ImGui::EndMenu();
 			}
