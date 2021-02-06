@@ -7,7 +7,7 @@ namespace BHive
 	{
 		Shader* shader = (Shader*)_asset;
 
-		if (ImGui::BeginMenuBar())
+		/*if (ImGui::BeginMenuBar())
 		{
 			if (ImGui::BeginMenu("File"))
 			{
@@ -19,7 +19,7 @@ namespace BHive
 			}
 
 			ImGui::EndMenuBar();
-		}
+		}*/
 
 		for (auto& source : shader->m_Sources)
 		{

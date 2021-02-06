@@ -21,6 +21,7 @@ namespace BHive
 			{
 				//Serialize(m_Asset, "Assets/" + m_Asset->m_Name);
 			}
+
 			ImGui::EndMenu();
 		}
 

@@ -137,7 +137,7 @@ namespace BHive
 	}
 
 	AssetBrowserPanel::AssetBrowserPanel(uint64 id)
-		:AssetBrowserPanel(0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar)
+		:AssetBrowserPanel(0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar)
 	{
 		
 	}
@@ -151,7 +151,7 @@ namespace BHive
 
 	void AssetBrowserPanel::OnRenderMenuBar()
 	{
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100.0f, 50.0f));
+		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100.0f, 50.0f));
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.3f, .8f, .3f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.5f, .8f, .5f, 1.0f));
 		if (ImGui::Button("Import"))
@@ -178,45 +178,55 @@ namespace BHive
 			ImGui::EndPopup();
 		}
 
-		if (ImGui::Button("Asset Filter"))
+		//Asset filters
 		{
-			ImGui::OpenPopup("Filters");
-		}
-
-
-		if (ImGui::BeginPopup("Filters"))
-		{
-			for (auto& filterType : m_Assetfilers)
+			if (ImGui::Button("Asset Filter"))
 			{
-				auto* enabledFilter = &filterType.second;
-				const auto& type = filterType.first;
+				ImGui::OpenPopup("Filters");
+			}
 
-				if (ImGui::Checkbox(type.c_str(), enabledFilter))
+
+			if (ImGui::BeginPopup("Filters"))
+			{
+				for (auto& filterType : m_Assetfilers)
 				{
-					ToggleFilter(type, *enabledFilter);
+					auto* enabledFilter = &filterType.second;
+					const auto& type = filterType.first;
+
+					if (ImGui::Checkbox(type.c_str(), enabledFilter))
+					{
+						ToggleFilter(type, *enabledFilter);
+					}
 				}
+				//ImGui::Columns(1);
+				ImGui::EndPopup();
 			}
-			ImGui::Columns(1);
-			ImGui::EndPopup();
-		}
 
-		for (auto& filter : m_CurrentFilters)
-		{
-			ImGui::PushID(filter.c_str());
-			ImGui::BeginGroup();
-			ImGui::Text(filter.c_str());
-			ImGui::SameLine();
-			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
-			if (ImGui::Button("X"))
+			for (auto& filter : m_CurrentFilters)
 			{
-				RemoveFilter(filter);
+				ImGui::PushID(filter.c_str());
+				ImGui::BeginGroup();
+				ImGui::Text(filter.c_str());
+				ImGui::SameLine();
+				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+				if (ImGui::Button("X"))
+				{
+					RemoveFilter(filter);
+				}
+				ImGui::PopStyleColor();
+				ImGui::EndGroup();
+				ImGui::PopID();
 			}
-			ImGui::PopStyleColor();
-			ImGui::EndGroup();
-			ImGui::PopID();
+
 		}
 
-		ImGui::PopStyleVar(ImGuiStyleVar_WindowPadding);
+
+		//Search bar
+		{
+			PropertyDetailsBuilder::SearchBar(m_SearchFilter);
+		}
+
+		//ImGui::PopStyleVar(ImGuiStyleVar_WindowPadding);
 	}
 
 	void AssetBrowserPanel::OnRenderWindow()
@@ -240,6 +250,12 @@ namespace BHive
 				{
 					continue;
 				}
+			}
+
+			if (m_SearchFilter.empty() == false)
+			{
+				auto name = asset.second->GetName();
+				if(!PropertyDetailsBuilder::CheckSearchFilter(name, m_SearchFilter)) continue;
 			}
 
 			auto AvailableWidth = (int32)floor(ContentBrowserSize - IconSize.x);

@@ -47,6 +47,7 @@ namespace BHive
 
 		std::unordered_map<std::string, bool> m_Assetfilers;
 		std::vector<std::string> m_CurrentFilters;
+		std::string m_SearchFilter;
 
 		bool m_CtrlPressed = false;
 	};

@@ -19,11 +19,13 @@ namespace BHive
 
 	void MeshEditorCustomizationDetails::CreateMenuBar(PropertyDetailsBuilder& detailsBuilder, IAssetType* asset)
 	{
-		if (ImGui::BeginMenu("Edit"))
+		ImGui::SetNextWindowSize({ 400.0f, 20.0f * 5.0f });
+		if (ImGui::BeginMenu("Edit##UvMenu"))
 		{
 			//UV Display Settings
 			detailsBuilder.Label("Settings");
-			detailsBuilder.ColorProperty8("Uv Color", m_UvColor);
+			ImGui::Separator();
+			detailsBuilder.Color4Property("Uv Color", m_UvColor);
 			detailsBuilder.FloatProperty("Uv Thickness", m_UvThickness, 1.0f, 2.0f, 6.0f, 2.0f);
 			detailsBuilder.Vector2Property("Uv Padding",  m_UvPadding, 1.0f, 2.0f, 10.0f, 10.0f);
 			detailsBuilder.FloatProperty("Uv Window Size", m_UVCanvasSize, 1.0f, 100.0f, 400.0f, 400.0f);
@@ -123,7 +125,7 @@ namespace BHive
 				float x2 = canvaspos.x + (tc2.x) * contentSize.x;
 				float y2 = canvaspos.y + (1.0f - tc2.y) * contentSize.y;
 
-				drawlist->AddTriangle(ImVec2(x0, y0), ImVec2(x1, y1), ImVec2(x2, y2), ColorToImCol32(m_UvColor), m_UvThickness);
+				drawlist->AddTriangle(ImVec2(x0, y0), ImVec2(x1, y1), ImVec2(x2, y2), LColorToImCol32(m_UvColor), m_UvThickness);
 			}
 		}
 
@@ -135,7 +137,7 @@ namespace BHive
 
 	FVector2 MeshEditorCustomizationDetails::m_UvPadding = { 10.0f, 10.0f };
 
-	Color MeshEditorCustomizationDetails::m_UvColor = Color(255, 0, 0, 255);
+	LinearColor4 MeshEditorCustomizationDetails::m_UvColor = {1.0f, 0.0f, 0.0f, 1.0f};
 
 	float MeshEditorCustomizationDetails::m_UvThickness = 2.0f;
 }

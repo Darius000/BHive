@@ -24,6 +24,10 @@ namespace BHive
 		void operator+=(const Color& col);
 		const uint8* operator*() const;
 		uint8* operator*();
+		operator ImVec4() const
+		{
+			return ImVec4((float)r / 255.0f, (float)g / 255.0f, (float)b / 255.0f, (float)a /255.0f);
+		}
 
 	public:
 		uint8 r;

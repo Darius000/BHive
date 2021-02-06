@@ -58,38 +58,10 @@ namespace BHive
 			return false;
 		}
 
-		bool ColorProperty8(const std::string& label, Color& p, int speed = 1)
-		{
-			bool changed = false;
-			
-			ImGui::Text(label.c_str());
+		static void SearchBar(std::string& filter, float width = 400.0f);
 
-			ImGui::PushID(label.c_str());
-
-			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 5.0f));
-			ImGui::PushMultiItemsWidths(4, ImGui::CalcItemWidth());
-
-			changed |= UInt8Property("R", p.r, speed, {1.0f, 0.0f, 0.0f, 1.0f});
-			ImGui::SameLine();
-			ImGui::PopItemWidth();
-
-			changed |= UInt8Property("G", p.g, speed, { 0.0f, 1.0f, 0.0f, 1.0f });
-			ImGui::SameLine();
-			ImGui::PopItemWidth();
-
-			changed |= UInt8Property("B", p.b, speed, { 0.0f, 0.0f, 1.0f, 1.0f });
-			ImGui::SameLine();
-			ImGui::PopItemWidth();
-
-			changed |= UInt8Property("A", p.a, speed, { .5f, .5f, .5f, 1.0f });
-			ImGui::PopItemWidth();
-
-			ImGui::PopStyleVar();
-
-			ImGui::PopID();
-
-			return changed;
-		}
+		//returns true if found
+		static bool CheckSearchFilter(const std::string& in, const std::string& filter);
 
 		bool FloatProperty(const std::string& label, float& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f, bool button = false, bool columnSpacing = true, ImVec4 color = { 1.0f, 0.0f, 0.0f, 1.0f })
 		{
@@ -235,8 +207,7 @@ namespace BHive
 
 			return false;
 		}
-
-		
+	
 		bool Vector2Property(const std::string& label, FVector2& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f)
 		{
 			std::array<ImVec4, 2> colors = { ImVec4(1.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.0f, 1.0f, 0.0f, 1.0f)};
@@ -562,11 +533,6 @@ namespace BHive
 		void AssetProperty(const std::string& label, Ref<T>& a)
 		{
 			BeginProperty(label);
-
-			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-			ImVec2 comboSize = ImVec2(ImGui::GetContentRegionAvailWidth(), lineHeight);
-
-			//ImGui::SetNextWindowSizeConstraints(ImVec2(0,0), comboSize);
 
 			if (ImGui::BeginCombo("", a.get() ? a->GetName().c_str() : ""))
 			{

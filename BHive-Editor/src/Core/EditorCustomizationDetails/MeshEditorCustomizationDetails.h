@@ -25,7 +25,7 @@ namespace BHive
 	private:
 		static float m_UVCanvasSize;
 		static FVector2 m_UvPadding;
-		static Color m_UvColor;
+		static LinearColor4 m_UvColor;
 		static float m_UvThickness;
 	};
 }
