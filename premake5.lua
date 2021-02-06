@@ -21,11 +21,13 @@ IncludeDir["Assimp"] = "BHive/vendor/Assimp/include"
 IncludeDir["RTTR"] = "BHive/vendor/rttr/include"
 IncludeDir["FreeType"] = "BHive/vendor/FreeType/include"
 IncludeDir["ImGuizmo"] = "BHive/vendor/ImGuizmo"
+IncludeDir["Reflection"] = "BHive/vendor/Reflection/include"
 
 group "Dependencies"
     include "BHive/vendor/glfw"
     include "BHive/vendor/glad"
     include "BHive/vendor/imgui"
+    include "BHive/vendor/Reflection"
 group  ""
 
 
@@ -74,7 +76,8 @@ project "BHive"
         "%{IncludeDir.Assimp}",
         "%{IncludeDir.RTTR}",
         "%{IncludeDir.FreeType}",
-        "%{IncludeDir.ImGuizmo}"
+        "%{IncludeDir.ImGuizmo}",
+        "%{IncludeDir.Reflection}"
     }
 
     libdirs {"%{prj.name}/vendor/assimp/lib", 
@@ -86,6 +89,7 @@ project "BHive"
         "GLFW",
         "Glad",
         "ImGui",
+        "Reflection",
         "rttr_core_lib_s_d.lib",
         "assimp.lib",
         "zlibstaticd.lib",
@@ -95,7 +99,7 @@ project "BHive"
     }
 
     filter "files:vendor/ImGuizmo/**.cpp"
-        flags { "NoPCH"}
+        flags {"NoPCH"}
 
     filter"system:windows"
         systemversion "latest"
