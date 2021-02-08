@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/PlatformDataTypes.h"
 
 namespace BHive
 {
@@ -40,6 +41,10 @@ namespace BHive
 		T& operator[](uint32 index);
 		bool operator==(const Vector2& _other);
 		bool operator!=(const Vector2& _other);
+		bool operator>=(const Vector2& v) const { return x >= v.x && y >= v.y;}
+		bool operator<=(const Vector2& v) const { return x <= v.x && y <= v.y;}
+		bool operator>(const Vector2& v) const { return x > v.x && y > v.y; }
+		bool operator<(const Vector2& v) const { return  x < v.x && y < v.y; }
 		const T* operator*() const;
 		T* operator*();
 

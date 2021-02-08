@@ -2,6 +2,7 @@
 
 #include "DetailsCustomization.h"
 #include "Factory/Factory.h"
+#include "Properties/LimearColor3Property.h"
 
 namespace BHive
 {
@@ -97,6 +98,10 @@ namespace BHive
 	public:
 
 		void OnDisplayPropertyDetails(Entity& entity, ComponentClass& component, PropertyDetailsBuilder& detailsBuilder) override;
+
+		static LinearColor3 m_Color;
+
+		static LColor3Property m_ColorProp;
 	};
 
 	class PointLightComponentDetails : public ComponentDetails<PointLightComponent>

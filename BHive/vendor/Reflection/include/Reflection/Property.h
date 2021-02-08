@@ -13,12 +13,17 @@ namespace Reflection
 	template<typename T>
 	class Property : public IProperty
 	{
+
+	protected:
+		
+		using FunctionCallback = void(*)(T);
+
 	public:
-		Property(const std::string& propertyName, T* val, 
+		Property(){}
+		Property(const std::string& propertyName, T* val, T defaultValue = (T)0,
 			PropertyTags tags = (PropertyTags)0, 
-			PropertyMetaData metaData = (PropertyMetaData)0
-		)
-			:name(propertyName), value(val), tags(tags), metaData(metaData)
+			PropertyMetaData metaData = (PropertyMetaData)0, FunctionCallback callback = nullptr)
+			:name(propertyName), value(val), tags(tags), metaData(metaData), m_FunctionCallback(callback), m_DefaultValue(defaultValue)
 		{}
 
 		Property(const Property<T>& other)
@@ -27,22 +32,47 @@ namespace Reflection
 			name = other.name;
 			tags = other.tags;
 			metaData = other.metaData;
+			m_FunctionCallback = other.m_FunctionCallback;
+			m_DefaultValue = other.m_DefaultValue;
 		}
 
 		virtual ~Property() = default;
 
-		virtual bool operator==(const Property<T>& prop) const { return	*value ==	*prop.value; }
+	public:
+		//Callback function when changed
+		void SetOnChangedCallback(FunctionCallback func)
+		{
+			m_FuntionCallback = func;
+		}
+
+		void CallCallbackFunction()
+		{
+			if (value && m_FunctionCallback)
+				m_FunctionCallback(*value);
+		}
+
+		void ResetValue()
+		{
+			if (value)
+				*value = m_DefaultValue;
+
+			CallCallbackFunction();
+		}
+
+	public:
+
+		/*virtual bool operator==(const Property<T>& prop) const { return	*value ==	*prop.value; }
 		virtual bool operator!=(const Property<T>& prop) const { return	*value !=	*prop.value; }
 		virtual bool operator>=(const Property<T>& prop) const { return	*value >=	*prop.value; }
 		virtual bool operator<=(const Property<T>& prop) const { return	*value <=	*prop.value; }
 		virtual bool operator>(const Property<T>& prop) const { return	*value >	*prop.value; }
 		virtual bool operator<(const Property<T>& prop) const { return	*value <	*prop.value; }
 		virtual bool operator==(const T&  v) const	{ return *value ==	v; }
-		virtual bool operator!=(const T&  v) const	{ return *value !=	v; }
-		virtual bool operator>=(const T&  v) const	{ return *value >=	v; }
+		virtual bool operator!=(const T&  v) const	{ return *value !=	v; }*/
+		/*virtual bool operator>=(const T&  v) const	{ return *value >=	v; }
 		virtual bool operator<=(const T&  v) const	{ return *value <=	v; }
 		virtual bool operator>(const T& v) const		{ return *value >	v; }
-		virtual bool operator<(const T& v) const		{ return *value <	v; }
+		virtual bool operator<(const T& v) const		{ return *value <	v; }*/
 		Property<T>& operator=(const Property<T>& prop)
 		{
 			value = prop.value;
@@ -52,8 +82,23 @@ namespace Reflection
 			return *this;
 		}
 
-		T& operator =(const T& v) {return *value = v;  }
-		T* operator =(T* v) { return value = v; }
+		T& operator =(const T& v)
+		{
+			*value = v;
+
+			CallCallbackFunction();
+
+			return  &value;
+		}
+
+		T* operator =(T* v) 
+		{ 
+			value = v;
+
+			CallCallbackFunction();
+
+			return value; 
+		}
 
 		virtual const T& operator()() const { return *value; }
 		virtual explicit operator const T& () const { return *value; }
@@ -77,6 +122,7 @@ namespace Reflection
 		const PropertyTags& GetTags() const override { return tags; }
 		const PropertyMetaData& GetMetaData() const override { return metaData; }
 		void PrintValue() const override { std::cout << *this << "\n"; }
+
 		//IProperty End
 
 	protected:
@@ -85,6 +131,24 @@ namespace Reflection
 		std::string name;
 		PropertyTags tags;
 		PropertyMetaData metaData;
+		FunctionCallback m_FunctionCallback;
+		T m_DefaultValue;
+
+		void OnImGuiBegin() override
+		{
+			
+		}
+
+		void OnImGuiDraw() override
+		{
+			
+		}
+
+		void OnImGuiEnd() override
+		{
+			
+		}
+
 	};
 
 	#define DEFINE_OPERATOR_EQUALS(classname, type)\

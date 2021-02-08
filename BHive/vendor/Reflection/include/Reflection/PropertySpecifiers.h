@@ -6,6 +6,7 @@ namespace Reflection
 {
 	enum class PropertyTags : int
 	{
+		None,
 		AdvancedDisplay,
 		Callable,
 		ReadOnly,
@@ -22,6 +23,7 @@ namespace Reflection
 
 	enum class PropertyMetaData : int
 	{
+		None,
 		ClampMin,
 		ClampMax,
 		DisplayName,

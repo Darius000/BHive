@@ -208,7 +208,7 @@ namespace BHive
 			return false;
 		}
 	
-		bool Vector2Property(const std::string& label, FVector2& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f)
+		/*bool Vector2Property(const std::string& label, FVector2& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f)
 		{
 			std::array<ImVec4, 2> colors = { ImVec4(1.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.0f, 1.0f, 0.0f, 1.0f)};
 			
@@ -239,7 +239,7 @@ namespace BHive
 			ImGui::Columns();
 
 			return changed;
-		}
+		}*/
 
 		bool Vector3Property(const std::string& label,  FVector3& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f)
 		{
@@ -467,7 +467,7 @@ namespace BHive
 			return ImGui::DragInt(label, &p, speed, (int)min, (int)max);
 		}
 
-		bool BoolProperty(const std::string& label, bool& p, bool resetValue = false)
+		/*bool BoolProperty(const std::string& label, bool& p, bool resetValue = false)
 		{
 			bool changed = false;
 
@@ -496,7 +496,7 @@ namespace BHive
 			ImGui::Columns();
 
 			return changed;
-		}
+		}*/
 
 		template<typename Enum, size_t numItems>
 		bool EnumProperty(const std::string& label, const char* items[], Enum& value)
@@ -530,8 +530,10 @@ namespace BHive
 		}
 
 		template<typename T>
-		void AssetProperty(const std::string& label, Ref<T>& a)
+		bool AssetProperty(const std::string& label, Ref<T>& a)
 		{
+			bool changed = false;
+
 			BeginProperty(label);
 
 			if (ImGui::BeginCombo("", a.get() ? a->GetName().c_str() : ""))
@@ -547,6 +549,7 @@ namespace BHive
 					if (ImGui::Selectable(name.c_str(), name == (a.get() ? a->GetName() : std::string(""))))
 					{
 						a = asset.second;
+						changed = true;
 					}
 					ImGui::PopID();
 				}
@@ -554,6 +557,8 @@ namespace BHive
 			}
 			
 			EndProperty();
+
+			return changed;
 		}
 
 		template<typename T>

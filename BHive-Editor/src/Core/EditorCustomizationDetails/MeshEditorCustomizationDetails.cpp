@@ -25,11 +25,14 @@ namespace BHive
 			//UV Display Settings
 			detailsBuilder.Label("Settings");
 			ImGui::Separator();
-			detailsBuilder.Color4Property("Uv Color", m_UvColor);
-			detailsBuilder.FloatProperty("Uv Thickness", m_UvThickness, 1.0f, 2.0f, 6.0f, 2.0f);
-			detailsBuilder.Vector2Property("Uv Padding",  m_UvPadding, 1.0f, 2.0f, 10.0f, 10.0f);
-			detailsBuilder.FloatProperty("Uv Window Size", m_UVCanvasSize, 1.0f, 100.0f, 400.0f, 400.0f);
-
+			//detailsBuilder.Color4Property("Uv Color", m_UvColor);
+			//detailsBuilder.FloatProperty("Uv Thickness", m_UvThickness, 1.0f, 2.0f, 6.0f, 2.0f);
+			//detailsBuilder.Vector2Property("Uv Padding",  m_UvPadding, 1.0f, 2.0f, 10.0f, 10.0f);
+			//detailsBuilder.FloatProperty("Uv Window Size", m_UVCanvasSize, 1.0f, 100.0f, 400.0f, 400.0f);
+			m_UvColorProp.OnImGuiRender();
+			m_UvPaddingProp.OnImGuiRender();
+			m_UvThicknessProp.OnImGuiRender();
+			m_UvCanvasSizeProp.OnImGuiRender();
 			ImGui::EndMenu();
 		}
 	}
@@ -140,4 +143,18 @@ namespace BHive
 	LinearColor4 MeshEditorCustomizationDetails::m_UvColor = {1.0f, 0.0f, 0.0f, 1.0f};
 
 	float MeshEditorCustomizationDetails::m_UvThickness = 2.0f;
+
+	FloatProperty MeshEditorCustomizationDetails::m_UvThicknessProp = 
+		FloatProperty("UV Thickness", &m_UvThickness, 2.0f, 1.0f, 6.0f);
+
+	FloatProperty MeshEditorCustomizationDetails::m_UvCanvasSizeProp = 
+		FloatProperty("Canvas Size", &m_UVCanvasSize, 400.0f, 100.0f, 1000.0f, 1.0f, false, {1.0f}, true
+		, Reflection::PropertyTags::ReadOnly);
+
+	FVector2Property MeshEditorCustomizationDetails::m_UvPaddingProp =
+		FVector2Property("Uv Padding", &m_UvPadding, FVector2(10.0f, 10.0f));
+
+	LColor4Property MeshEditorCustomizationDetails::m_UvColorProp = 
+		LColor4Property("UV Color", &m_UvColor, { 1.0f, 0.0f, 0.0f, 1.0f }, false);
+
 }

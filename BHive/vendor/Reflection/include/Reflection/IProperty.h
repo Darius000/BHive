@@ -15,6 +15,13 @@ namespace Reflection
 		virtual std::string GetTypeName() = 0;
 		virtual const PropertyTags& GetTags() const = 0;
 		virtual const PropertyMetaData& GetMetaData() const = 0;
+		
+		virtual void OnImGuiRender();
 		virtual void PrintValue() const = 0;
+
+	protected:
+		virtual void OnImGuiBegin() = 0;
+		virtual void OnImGuiDraw() = 0;
+		virtual void OnImGuiEnd() = 0;
 	};
 }

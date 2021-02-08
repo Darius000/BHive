@@ -84,9 +84,7 @@ namespace BHive
 		//RedMaterial->GetShader()->m_Properties.m_Diffuse = LinearColor3(1.0, 0.0, 0.0);
 		//AssetManager::CreateAsset<Material>(RedMaterial);
 
-		//Ref<Material> toonm = Make_Ref<Material>(AssetManager::Get<Shader>("Toon"));
-		//toonm->m_Name = "Toon Material";
-		//AssetManager::CreateAsset<Material>(toonm);
+		AssetManager::CreateAsset<Material>("Toon Mat Test", AssetManager::Get<Shader>("Toon"));
 
 		//AssetManager::Add(Model::Import("Import/Meshes/Grenades.obj", false, true));
 		//AssetManager::Add(Model::Import("Import/Meshes/Shotgun.obj", false, true));
@@ -94,7 +92,7 @@ namespace BHive
 		//Import("D:/Wallpaper/7_tornado.jpg");
 		//Import("Import/Textures/container.jpg");
 		//Import("Import/Textures/grass.png");
-		//Import("Import/Textures/matrix.jpg");
+		Import("Import/Textures/matrix.jpg");
 		//Import("Import/Textures/smoke.png");
 		//Import("D:/Wallpaper/7_tornado.jpg");
 		//Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");

@@ -1,5 +1,5 @@
 #include "ComponentDetails.h"
-
+#include "Properties/BoolProperty.h"
 
 namespace BHive
 {
@@ -16,9 +16,18 @@ namespace BHive
 
 	void DirectionalLightComponentDetails::OnDisplayPropertyDetails(Entity& entity, ComponentClass& component, PropertyDetailsBuilder& detailsBuilder)
 	{
-		detailsBuilder.Color3Property("Color", component.m_LightColor, true);
+		//detailsBuilder.Color3Property("Color", component.m_LightColor, true);
 		detailsBuilder.FloatProperty("Brightness", component.m_LightBrightness, 0.01f);
+
+		m_ColorProp.OnImGuiRender();
+
+		component.m_LightColor = m_Color;
 	}
+
+	LinearColor3 DirectionalLightComponentDetails::m_Color = {1.0f};
+
+	LColor3Property DirectionalLightComponentDetails::m_ColorProp = 
+		LColor3Property("Color", &m_Color, { 1.0f });
 
 	void PointLightComponentDetails::OnDisplayPropertyDetails(Entity& entity, ComponentClass& component, PropertyDetailsBuilder& detailsBuilder)
 	{
@@ -45,8 +54,14 @@ namespace BHive
 	{
 		auto& camera = component.m_Camera;
 
-		detailsBuilder.BoolProperty("Primary", component.m_PrimaryCamera, true);
-		detailsBuilder.BoolProperty("Fixed Aspect Ratio", component.m_FixedAspectRatio, false);
+		//detailsBuilder.BoolProperty("Primary", component.m_PrimaryCamera, true);
+		//detailsBuilder.BoolProperty("Fixed Aspect Ratio", component.m_FixedAspectRatio, false);
+
+		static BoolProperty PrimaryCamera = BoolProperty("Primary", &component.m_PrimaryCamera, true);
+		static BoolProperty FixedAspectRatio = BoolProperty("Fixed Aspect Ratio", &component.m_FixedAspectRatio, false);
+
+		PrimaryCamera.OnImGuiRender();
+		FixedAspectRatio.OnImGuiRender();
 	
 
 		bool ortho = camera.m_CurrentProjection == Projection::Orthographic;

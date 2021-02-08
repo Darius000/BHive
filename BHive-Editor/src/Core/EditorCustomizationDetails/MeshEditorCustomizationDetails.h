@@ -1,6 +1,10 @@
 #pragma once
 
 #include "EditorCustomizationDetails.h"
+#include "Properties/FloatProperty.h"
+#include "Properties/BaseProperty.h"
+#include "Properties/Vector2Property.h"
+#include "Properties/LinearColor4Property.h"
 
 namespace BHive
 {
@@ -27,5 +31,11 @@ namespace BHive
 		static FVector2 m_UvPadding;
 		static LinearColor4 m_UvColor;
 		static float m_UvThickness;
+
+
+		static FloatProperty m_UvThicknessProp;
+		static FloatProperty m_UvCanvasSizeProp;
+		static FVector2Property m_UvPaddingProp;
+		static LColor4Property m_UvColorProp;
 	};
 }

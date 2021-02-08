@@ -22,12 +22,14 @@ IncludeDir["RTTR"] = "BHive/vendor/rttr/include"
 IncludeDir["FreeType"] = "BHive/vendor/FreeType/include"
 IncludeDir["ImGuizmo"] = "BHive/vendor/ImGuizmo"
 IncludeDir["Reflection"] = "BHive/vendor/Reflection/include"
+IncludeDir["Serialization"] = "BHive/vendor/Serialization/include"
 
 group "Dependencies"
     include "BHive/vendor/glfw"
     include "BHive/vendor/glad"
     include "BHive/vendor/imgui"
     include "BHive/vendor/Reflection"
+    include "BHive/vendor/Serialization"
 group  ""
 
 
@@ -41,7 +43,7 @@ project "BHive"
 
     targetdir ("bin/" ..outputdir.. "/%{prj.name}")
     objdir ("bin-int/" ..outputdir.. "/%{prj.name}")
-
+      
     pchheader "BHivePCH.h"
     pchsource "BHive/src/BHive/BHivePCH.cpp"
 
@@ -77,7 +79,8 @@ project "BHive"
         "%{IncludeDir.RTTR}",
         "%{IncludeDir.FreeType}",
         "%{IncludeDir.ImGuizmo}",
-        "%{IncludeDir.Reflection}"
+        "%{IncludeDir.Reflection}",
+        "%{IncludeDir.Serialization}"
     }
 
     libdirs {"%{prj.name}/vendor/assimp/lib", 
@@ -90,6 +93,7 @@ project "BHive"
         "Glad",
         "ImGui",
         "Reflection",
+        "Serialization",
         "rttr_core_lib_s_d.lib",
         "assimp.lib",
         "zlibstaticd.lib",
@@ -97,10 +101,10 @@ project "BHive"
         "opengl32.lib",
         "freetype.lib"
     }
-
-    filter "files:vendor/ImGuizmo/**.cpp"
+    
+    filter "files:BHive/vendor/ImGuizmo/**.cpp"
         flags {"NoPCH"}
-
+ 
     filter"system:windows"
         systemversion "latest"
 
@@ -217,7 +221,8 @@ project "BHive-Editor"
         "%{IncludeDir.entt}",
         "%{IncludeDir.GLM}",
         "%{IncludeDir.Assimp}",
-        "%{IncludeDir.RTTR}"
+        "%{IncludeDir.RTTR}",
+        "%{IncludeDir.Reflection}"
     }
     
     links

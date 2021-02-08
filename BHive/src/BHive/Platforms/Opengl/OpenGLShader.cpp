@@ -17,28 +17,6 @@ namespace BHive
 		return ShaderType::None;
 	}
 
-	static Uniform* GetShaderUniformType(GLenum type)
-	{
-		switch (type)
-		{
-			case GL_BOOL:
-				return new BoolUniform();
-			case GL_INT:
-				return new IntUniform();
-			case GL_FLOAT:
-				return new FloatUniform();
-			case GL_FLOAT_VEC3:
-				return new Vector3Uniform();
-			case GL_FLOAT_VEC2:
-				return new Vector2Uniform();
-			case GL_SAMPLER_2D:
-				return new SamplerUniform();
-			default:
-				return nullptr;
-		}
-	}
-
-
 	OpenGLShader::OpenGLShader(const WinPath& filePath)
 	{
 		m_Name = filePath.GetName();
@@ -271,8 +249,6 @@ namespace BHive
 		{
 			glDetachShader(id, shaderID);
 		}
-
-		QueryUniforms(id);
 	}
 
 	void OpenGLShader::Bind() const
@@ -283,50 +259,6 @@ namespace BHive
 	void OpenGLShader::UnBind() const
 	{
 		glUseProgram(0);
-	}
-
-	void OpenGLShader::QueryUniforms(uint32 shader)
-	{
-		GLint numUniforms = 0;
-		GLint maxUniformNameLength = 0;
-		GLint numBlocks = 0;
-		glGetProgramiv(id, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformNameLength);
-		glGetProgramiv(id, GL_ACTIVE_UNIFORMS, &numUniforms);
-		glGetProgramiv(id, GL_ACTIVE_UNIFORM_BLOCKS, &numBlocks);
-
-
-		for (uint32 i = 0; i < (uint32)numUniforms; i++)
-		{	
-			GLsizei length = 0;
-			GLint size = 0;
-			GLenum type;
-			std::vector<GLchar> name(maxUniformNameLength);
-			glGetActiveUniform(id, (GLint)i, (GLsizei)name.size(), &length, &size, &type, &name[0]);
-			GLuint location = glGetUniformLocation(id, name.data());
-			std::string finalName = name.data();
-
-			size_t pos = finalName.find("material.");
-			size_t texPos = finalName.find("textures.");
-			size_t dotPos = finalName.find_first_of(".");
-			if( pos != std::string::npos || texPos != std::string::npos)
-			{ 
-				Uniform* uniform = GetShaderUniformType(type);
-
-				if (uniform != nullptr)
-				{
-					uniform->m_Location = (uint32)location;
-					uniform->m_Length = (uint64)length;
-					uniform->m_Size = (uint32)size;
-					uniform->m_Name = name.data();
-					uniform->m_DisplayName = finalName.substr(dotPos + 1);
-					GetUniformValue(uniform, type);
-
-					BH_CORE_TRACE("Uniform {0}, {1}, {2}, {3}", length, size, type, name.data());
-
-					m_Unforms.insert({ name.data(), Scope<Uniform>(uniform) });
-				}
-			}
-		}
 	}
 
 }
