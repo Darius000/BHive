@@ -39,6 +39,13 @@ namespace BHive
 		uint64 GetTextLimit(const std::string& text, float limit);
 
 	private:
+		void ShowImportButton();
+		void ShowObjectMenuButton();
+		void NewObjectMenu();
+		void ShowAssetFilters();
+		void ShowSearchBar();
+
+	private:
 		IAssetType* SelectedAsset = nullptr;
 
 		ImVec2 IconSize		= ImVec2(100, 100);

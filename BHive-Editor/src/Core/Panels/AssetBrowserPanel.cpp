@@ -136,6 +136,87 @@ namespace BHive
 		return (uint64)lastChar;
 	}
 
+	void AssetBrowserPanel::ShowImportButton()
+	{
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.3f, .8f, .3f, 1.0f));
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.5f, .8f, .5f, 1.0f));
+		if (ImGui::Button("Import"))
+		{
+			std::string file = FileDialog::OpenFile("All\0*.*\0""Object\0*.obj\0");
+			if (!file.empty())
+			{
+				Import(file.c_str());
+			}
+		}
+
+		ImGui::PopStyleColor(2);
+	}
+
+	void AssetBrowserPanel::ShowObjectMenuButton()
+	{
+		if (ImGui::Button("Add New"))
+		{
+			ImGui::OpenPopup("Object Menu");
+		}
+
+		if (ImGui::BeginPopup("Object Menu"))
+		{
+			NewObjectMenu();
+
+			ImGui::EndPopup();
+		}
+	}
+
+	void AssetBrowserPanel::NewObjectMenu()
+	{
+		
+	}
+
+	void AssetBrowserPanel::ShowAssetFilters()
+	{
+		if (ImGui::Button("Asset Filter"))
+		{
+			ImGui::OpenPopup("Filters");
+		}
+
+		if (ImGui::BeginPopup("Filters"))
+		{
+			for (auto& filterType : m_Assetfilers)
+			{
+				auto* enabledFilter = &filterType.second;
+				const auto& type = filterType.first;
+
+				if (ImGui::Checkbox(type.c_str(), enabledFilter))
+				{
+					ToggleFilter(type, *enabledFilter);
+				}
+			}
+		
+			ImGui::EndPopup();
+		}
+
+		for (auto& filter : m_CurrentFilters)
+		{
+			ImGui::PushID(filter.c_str());
+			ImGui::BeginGroup();
+			ImGui::Text(filter.c_str());
+			ImGui::SameLine();
+			ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
+			if (ImGui::Button("X"))
+			{
+				RemoveFilter(filter);
+			}
+			ImGui::PopStyleColor();
+			ImGui::EndGroup();
+			ImGui::PopID();
+		}
+	}
+
+	void AssetBrowserPanel::ShowSearchBar()
+	{
+		PropertyDetailsBuilder::SearchBar(m_SearchFilter);
+	}
+
 	AssetBrowserPanel::AssetBrowserPanel(uint64 id)
 		:AssetBrowserPanel(0, ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_AlwaysVerticalScrollbar)
 	{
@@ -151,82 +232,10 @@ namespace BHive
 
 	void AssetBrowserPanel::OnRenderMenuBar()
 	{
-		//ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100.0f, 50.0f));
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(.3f, .8f, .3f, 1.0f));
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(.5f, .8f, .5f, 1.0f));
-		if (ImGui::Button("Import"))
-		{
-			std::string file = FileDialog::OpenFile("All\0*.*\0""Object\0*.obj\0");
-			if (!file.empty())
-			{
-				Import(file.c_str());
-			}
-		}
-
-		ImGui::PopStyleColor(2);
-
-		if (ImGui::Button("Add New"))
-		{
-			ImGui::OpenPopup("Object Menu");
-		}
-
-		if (ImGui::BeginPopup("Object Menu"))
-		{
-			/*for (auto& item : ClassRegistry::GetClassRegistryList())
-			{
-			}*/
-			ImGui::EndPopup();
-		}
-
-		//Asset filters
-		{
-			if (ImGui::Button("Asset Filter"))
-			{
-				ImGui::OpenPopup("Filters");
-			}
-
-
-			if (ImGui::BeginPopup("Filters"))
-			{
-				for (auto& filterType : m_Assetfilers)
-				{
-					auto* enabledFilter = &filterType.second;
-					const auto& type = filterType.first;
-
-					if (ImGui::Checkbox(type.c_str(), enabledFilter))
-					{
-						ToggleFilter(type, *enabledFilter);
-					}
-				}
-				//ImGui::Columns(1);
-				ImGui::EndPopup();
-			}
-
-			for (auto& filter : m_CurrentFilters)
-			{
-				ImGui::PushID(filter.c_str());
-				ImGui::BeginGroup();
-				ImGui::Text(filter.c_str());
-				ImGui::SameLine();
-				ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(1.0f, 0.0f, 0.0f, 1.0f));
-				if (ImGui::Button("X"))
-				{
-					RemoveFilter(filter);
-				}
-				ImGui::PopStyleColor();
-				ImGui::EndGroup();
-				ImGui::PopID();
-			}
-
-		}
-
-
-		//Search bar
-		{
-			PropertyDetailsBuilder::SearchBar(m_SearchFilter);
-		}
-
-		//ImGui::PopStyleVar(ImGuiStyleVar_WindowPadding);
+		ShowImportButton();
+		ShowObjectMenuButton();
+		ShowAssetFilters();
+		ShowSearchBar();
 	}
 
 	void AssetBrowserPanel::OnRenderWindow()
