@@ -14,7 +14,7 @@ namespace BHive
 		OpenGLTexture2D(const WinPath& path);
 		virtual ~OpenGLTexture2D();
 
-		uintPtr GetRendererID() const override { return m_RendererID; }
+		
 		void Bind(uint32 slot = 0) const override;
 		void UnBind(uint32 slot = 0) const override;
 

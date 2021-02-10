@@ -91,7 +91,7 @@ namespace BHive
 		};
 
 		//CubeMap
-		AssetManager::Add<CubeTexture>("Cube Map", CubeTexture::Create(faces));
+		AssetManager::Add<CubeTexture>("Cube Map", CubeTexture::Create("Cube Map", faces));
 		AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
 
 		Import("Import/Meshes/Cube.obj");

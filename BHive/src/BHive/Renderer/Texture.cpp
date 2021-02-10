@@ -16,7 +16,6 @@ namespace BHive
 
 
 	Texture::Texture()
-		:m_Path(""), m_Width(0), m_Height(0), m_RendererID(0)
 	{
 
 	}
@@ -37,20 +36,14 @@ namespace BHive
 		InValidate();
 	}
 
-	void Texture::Serialize(const WinPath& path)
-	{
-		std::ofstream file;
-		file.open(*(std::string(*path) + "\\" + m_Name + ".bh"), std::ios::out | std::ios::trunc);
-		uint32 m_Size = m_Channels * m_Width * m_Height;
-		file << m_Name << std::endl;
-		file << m_Size << " " << m_Width << " " << m_Height << " " << m_Channels << std::endl;
-		file << PixelData.m_DataFormat << " " << PixelData.m_InternalFormat << std::endl;
-		file.write(reinterpret_cast<const char*>(PixelData.m_Data), m_Size);
-		file.close();
-	}
-
-
 	std::vector<std::string> Texture::extensions = { "jpg", "jpeg", "png", "tga" };
+
+
+	Texture2D::Texture2D()
+	: m_Width(0), m_Height(0)
+	{
+
+	}
 
 	Ref<Texture2D> Texture2D::Create(const WinPath& path)
 	{
@@ -84,13 +77,20 @@ namespace BHive
 		return nullptr;
 	}
 
-	Ref<CubeTexture> CubeTexture::Create(const std::array<WinPath, 6>& facePaths)
+
+	CubeTexture::CubeTexture()
+		:m_RendererID(0)
+	{
+
+	}
+
+	Ref<CubeTexture> CubeTexture::Create(const std::string& name, const std::array<WinPath, 6>& facePaths)
 	{
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
 		case RendererAPI::API::OpenGL: {
-			Ref<CubeTexture> tex(Make_Ref<OpenglCubeTexture>(facePaths));
+			Ref<CubeTexture> tex(Make_Ref<OpenglCubeTexture>(name, facePaths));
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;
@@ -99,4 +99,28 @@ namespace BHive
 		BH_CORE_ASSERT(false, "Unknown API");
 		return nullptr;
 	}
+
+	uintPtr CubeTexture::GetRendererID() const
+	{
+		return m_RendererID;
+	}
+
+
+	void CubeTexture::Bind(uint32 slot) const
+	{
+		
+	}
+
+
+	void CubeTexture::UnBind(uint32 slot) const
+	{
+		
+	}
+
+
+	void CubeTexture::InValidate()
+	{
+		
+	}
+
 }

@@ -90,15 +90,7 @@ namespace BHive
 
 	public:
 		
-		uint32 GetWidth() const  { return m_Width; }
-
-		uint32 GetHeight() const  {return m_Height; }
-
 		virtual uintPtr GetRendererID() const = 0;
-
-		FPixelData& GetData() { return PixelData; };
-
-		WinPath GetExternalFilePath() const { return m_Path; }
 
 		virtual void Bind(uint32 slot = 0) const = 0;
 
@@ -115,18 +107,7 @@ namespace BHive
 		void SetParameters(TilingMethod tiling, MinColorMethod minFilter, MagColorMethod magfilter, LinearColor4 borderColor = LinearColor4(0.0f));
 
 	protected:
-		WinPath m_Path;
-
-		std::string m_SavedPath;
-
-		uint32 m_Width;
-
-		uint32 m_Height;
-
-		uint32 m_RendererID;
-
-		FPixelData PixelData;
-
+		
 		TilingMethod m_TilingMethod = TilingMethod::Repeat;
 
 		MinColorMethod m_MinFilterColorMethod = MinColorMethod::Linear;
@@ -134,10 +115,6 @@ namespace BHive
 		MagColorMethod m_MagFilterColorMethod = MagColorMethod::Nearest;
 
 		LinearColor4 m_BorderColor = LinearColor4(0.0f); //used if Tiling method is set to clamp to edge
-
-		uint32 m_Channels = 0;
-
-		void Serialize(const WinPath& path);
 
 		static std::vector<std::string> extensions; 
 
@@ -149,34 +126,77 @@ namespace BHive
 		DEFINE_ASSET_BODY(Texture2D, m_Name)
 
 	public:
-		Texture2D(){}
+		Texture2D();
 
 		virtual ~Texture2D() = default;
 
+		uintPtr GetRendererID() const override { return m_RendererID; }
+
+		uint32 GetNumChannels() const { return m_Channels;}
+
+		bool HasAlphaChannel() const { return b_HasAlphaChannel; }
+
+		uint32 GetWidth() const { return m_Width; }
+
+		uint32 GetHeight() const { return m_Height; }
+
+		FPixelData& GetData() { return PixelData; };
+
+	protected:
+
+		WinPath m_Path;
+
+		uint32 m_Width;
+
+		uint32 m_Height;
+
+		uint32 m_Channels = 0;
+
+		FPixelData PixelData;
+
+		uint32 m_RendererID;
+
+		bool b_HasAlphaChannel;
+
+	public:
 		static Ref<Texture2D> Create(const WinPath& path);
 
 		static Ref<Texture2D> Create(uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
 
 	};
 
-	class CubeTexture : public IAssetType
+	struct CubeTexFaceData
 	{
-		DEFINE_ASSET_BODY(CubeTexture, "cubetexture")
+		IVector2 m_Size;
+		uint32 m_Channels;
+		WinPath m_Path;
+		FPixelData m_PixelData;
+	};
 
+	class CubeTexture : public Texture
+	{
 	public:
-		CubeTexture(){};
+
+		DEFINE_ASSET_BODY(CubeTexture, m_Name)
+
+		CubeTexture();
 
 		virtual ~CubeTexture() = default;
 
-		static Ref<CubeTexture> Create(const std::array<WinPath, 6>& facePaths);
+		static Ref<CubeTexture> Create(const std::string& name, const std::array<WinPath, 6>& facePaths);
 
-		virtual void Bind(uint32 slot) const = 0;
-		virtual void UnBind(uint32 slot) const = 0;
+		uintPtr GetRendererID() const override;
 
-		virtual uintPtr GetRendererID() const = 0;
+		void Bind(uint32 slot = 0) const override;
 
-		operator uintPtr() const { return GetRendererID(); }
+		void UnBind(uint32 slot = 0) const override;
 
-		operator void* () const { return (void*)GetRendererID(); }
+		void InValidate() override;
+
+	protected:
+		uint32 m_RendererID;
+
+		std::vector<CubeTexFaceData> m_FaceData;
+
 	};
 }

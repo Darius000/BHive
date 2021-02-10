@@ -14,7 +14,7 @@ namespace BHive
 
 		ImGui::PushID((uint32*)asset);
 		ImGui::BeginGroup();
-		auto texture = AssetManager::Get<Texture2D>(asset->GetThumbnailName());
+		auto texture = (Texture*)AssetManager::Get(asset->GetThumbnailName()).get();
 
 		ImGui::Image((void*)*texture, IconSize, ImVec2(0, 1), ImVec2(1, 0), ImVec4(1,1,1,1), BgColor);
 		ImGui::SetCursorScreenPos(ImGui::GetItemRectMin());

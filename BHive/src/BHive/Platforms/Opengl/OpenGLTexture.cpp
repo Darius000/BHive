@@ -25,16 +25,19 @@ namespace BHive
 		{
 			PixelData.m_InternalFormat = GL_RGBA8;
 			PixelData.m_DataFormat = GL_RGBA;
+			b_HasAlphaChannel = true;
 		}
 		else if (m_Channels == 3)
 		{
 			PixelData.m_InternalFormat = GL_RGB8;
 			PixelData.m_DataFormat = GL_RGB;
+			b_HasAlphaChannel = false;
 		}
 		else if (m_Channels == 1)
 		{
 			PixelData.m_InternalFormat = GL_R8;
 			PixelData.m_DataFormat = GL_RED;
+			b_HasAlphaChannel = false;
 		}
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);

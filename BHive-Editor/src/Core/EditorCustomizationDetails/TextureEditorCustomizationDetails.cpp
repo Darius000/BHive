@@ -19,7 +19,7 @@ namespace BHive
 		//Info panel
 		ImGui::BeginChild("##Info", ImVec2(0, 100), true);
 		ImGui::Text("Size: %dx%d", asset->GetWidth(), asset->GetWidth());
-		std::string hasAlpha = asset->m_Channels == 4 ? "true" : "false";
+		std::string hasAlpha = asset->HasAlphaChannel() ? "true" : "false";
 		ImGui::Text("Has Alpha Channel: %s", hasAlpha.c_str());
 		ImGui::EndChild();
 
@@ -37,12 +37,6 @@ namespace BHive
 			asset->InValidate();
 		}
 
-		detailsBuilder.StringProperty("Save Location", asset->m_SavedPath);
-
-		if (detailsBuilder.Button("Save"))
-		{
-			asset->Serialize(asset->m_SavedPath.c_str());
-		}
 		ImGui::EndChild();
 	}
 }

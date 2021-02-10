@@ -7,15 +7,15 @@
 namespace BHive
 {
 
-	OpenglCubeTexture::OpenglCubeTexture(const std::array<WinPath, 6>& paths)
+	OpenglCubeTexture::OpenglCubeTexture(const std::string& name, const std::array<WinPath, 6>& paths)
 	{
+		m_Name = name;
+
 		//Create texture
-		glGenTextures(1, &m_ID);
-		glBindTexture(GL_TEXTURE_CUBE_MAP, m_ID);
+		glGenTextures(1, &m_RendererID);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, m_RendererID);
 
 		m_FaceData.resize(paths.size());
-
-		
 
 		//Load texture data
 		for (uint32 i = 0; i < paths.size(); i++)
@@ -52,21 +52,26 @@ namespace BHive
 			FaceData.m_Size.x, FaceData.m_Size.y, 0, FaceData.m_PixelData.m_DataFormat, GL_UNSIGNED_BYTE , FaceData.m_PixelData.m_Data);
 		}
 
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, ColorMethodToGLEnum(m_MagFilterColorMethod));
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, ColorMethodToGLEnum(m_MinFilterColorMethod));
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, TilingMethodToGLEnum(m_TilingMethod));
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, TilingMethodToGLEnum(m_TilingMethod));
-		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, TilingMethodToGLEnum(m_TilingMethod));
+		InValidate();
 	}
 
 	void OpenglCubeTexture::Bind(uint32 slot) const
 	{
-		glBindTextureUnit(slot, m_ID);
+		glBindTextureUnit(slot, m_RendererID);
 	}
 
 	void OpenglCubeTexture::UnBind(uint32 slot) const
 	{
 		glBindTextureUnit(slot, 0);
+	}
+
+	void OpenglCubeTexture::InValidate()
+	{
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, ColorMethodToGLEnum(m_MagFilterColorMethod));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, ColorMethodToGLEnum(m_MinFilterColorMethod));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, TilingMethodToGLEnum(m_TilingMethod));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, TilingMethodToGLEnum(m_TilingMethod));
+		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, TilingMethodToGLEnum(m_TilingMethod));
 	}
 
 }
