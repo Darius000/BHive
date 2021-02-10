@@ -82,6 +82,8 @@ namespace BHive
 	{
 		detailsBuilder.AssetProperty("Mesh", component.m_Model);
 
+		if(component.m_Model == nullptr) return;
+
 		if (ImGui::TreeNode("Materials"))
 		{
 			for (auto& mesh : component.m_Model->GetMeshes())

@@ -5,7 +5,7 @@
 
 namespace BHive
 {
-	static const char* DefaultMaterialName = "DefaultMaterial";
+	static const char* DefaultMaterialName = "Default";
 
 	class Material : public IAssetType
 	{

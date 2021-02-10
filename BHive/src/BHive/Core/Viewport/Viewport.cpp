@@ -13,6 +13,7 @@ namespace BHive
 		GBufferAttribute speculatAttr = {GL_RGBA, GL_RGBA, GL_FLOAT, 0};
 		GBufferAttribute positionnormalAttr = { GL_RGBA16F, GL_RGBA, GL_FLOAT, 0 };
 
+
 		m_GBufferAttributes = { 
 			{GBufferType::SceneColor, positionnormalAttr},
 			{GBufferType::Albedo, albedoOpacAttr},
@@ -21,7 +22,7 @@ namespace BHive
 			{GBufferType::Emission, positionnormalAttr},
 			{GBufferType::Normal, positionnormalAttr},
 			{GBufferType::Position , positionnormalAttr},
-			{GBufferType::TexCoord, positionnormalAttr}
+			{GBufferType::TexCoord, positionnormalAttr},
 		};
 
 		m_QuadFrameBuffer = FrameBuffer::Create(specs);
@@ -30,12 +31,6 @@ namespace BHive
 		m_PingPongFrameBuffer[1] = FrameBuffer::Create(specs);
 
 		Resize(specs.Width, specs.Height);
-
-		/*m_Camera = m_Scene->CreateEntity("Camera");
-		m_Camera.AddComponent<CameraComponent>();
-		m_Camera.GetComponent<CameraComponent>().m_Camera.SetPerspective({ 35.0f, .01f, 1000.0f });
-		m_Camera.GetComponent<CameraComponent>().m_PrimaryCamera = true;
-		m_Camera.GetComponent<TransformComponent>().m_Transform.SetPosition({ 0.0f, 0.0f, 10.0f });*/
 
 		quad = Renderer2D::Quad();
 		ppm = AssetManager::CreateAsset<Material>("PPM", AssetManager::Get<Shader>("PostProcessing"));
@@ -107,6 +102,7 @@ namespace BHive
 		ppshader->SetInt("normalcolor", 10);
 		ppshader->SetInt("positioncolor", 11);
 		ppshader->SetInt("bloomtexture", 12);
+		ppshader->SetInt("environmentColor", 13);
 		ppshader->SetBool("hdr", m_HDR);
 		ppshader->SetBool("bloom", m_Bloom);
 		ppshader->SetFloat("exposure", m_Exposure);
@@ -117,6 +113,7 @@ namespace BHive
 		RenderCommands::BindTexture(10, m_GBufferAttributes[GBufferType::Normal].m_Texture);
 		RenderCommands::BindTexture(11, m_GBufferAttributes[GBufferType::Position].m_Texture);
 		RenderCommands::BindTexture(12, m_PingPongFrameBuffer[!horizontal]->GetColorAttachmentRendererID());
+		RenderCommands::BindTexture(13, (uint32)AssetManager::Get<CubeTexture>("Cube Map")->GetRendererID());
 		quad->Render();
 		RenderCommands::UnBindTexture(6);
 		RenderCommands::UnBindTexture(7);

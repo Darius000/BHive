@@ -23,7 +23,8 @@ out vec3 v_TexCoord;
 void main()
 {	
 	v_TexCoord = a_Position;
-	gl_Position =  u_CubeProjection * u_Model * vec4(a_Position, 1.0);	
+	vec4 pos = u_CubeProjection * u_Model * vec4(a_Position, 1.0);
+	gl_Position =  pos;
 }
 
 
@@ -37,7 +38,6 @@ layout(location = 4) out vec4 emissioncolor;
 layout(location = 5) out vec4 normalcolor;
 layout(location = 6) out vec4 positioncolor;
 layout(location = 7) out vec4 texcoordcolor;
-
 
 in vec3 v_TexCoord;
 

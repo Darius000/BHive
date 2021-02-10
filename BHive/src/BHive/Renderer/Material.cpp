@@ -72,7 +72,7 @@ namespace BHive
 					uniform->m_DisplayName = finalName.substr(dotPos + 1);
 					QueryUniformValue(id, uniform, type);
 
-					BH_CORE_TRACE("Uniform {0}, {1}, {2}, {3}", length, size, type, name.data());
+					//BH_CORE_TRACE("Uniform {0}, {1}, {2}, {3}", length, size, type, name.data());
 
 					m_Parameters.insert({ name.data(), Scope<Uniform>(uniform) });
 				}

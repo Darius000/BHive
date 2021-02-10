@@ -25,6 +25,7 @@ layout(location = 9) uniform sampler2D emissioncolor;
 layout(location = 10) uniform sampler2D normalcolor;
 layout(location = 11) uniform sampler2D positioncolor;
 layout(location = 12) uniform sampler2D bloomtexture;
+layout(location = 13) uniform samplerCube environmentTexture;
 
 //HDR
 uniform float exposure;
@@ -81,6 +82,7 @@ uniform SpotLight spotLights[NR_LIGHTS];
 
 uniform vec3 CameraPosition;
 
+
 layout(location = 0) out vec4 FragColor;
 
 vec3 ToneMap(vec3 color)
@@ -101,21 +103,29 @@ LightColor CalculateSpotLight(SpotLight light, float shininess, vec3 normal, vec
 LightColor CalculateLights(float shininess,vec3 normal, vec3 fragPos, vec3 viewDirection, vec2 texCoord);
 
 void main()
-{
+{	
 	vec2 texcoord = v_TexCoord;
-	vec3 result = vec3(0.0);
-	vec3 normal = texture(normalcolor, texcoord).rgb;
-	vec3 albedo = texture(albedocolor, texcoord).rgb;
 	vec3 fragPos = texture(positioncolor, texcoord).rgb;
+	vec3 viewDirection = normalize(CameraPosition - fragPos);
+	vec3 normal = texture(normalcolor, texcoord).rgb;
+
+	vec3 result = vec3(0.0);
+
+	//environment Mapping
+	//vec3 R = reflect(viewDirection, normalize(normal));
+	float ratio = 1.00 / 1.52;
+	vec3 R = refract(viewDirection, normalize(normal), ratio);
+	vec3 EnvironmentColor = texture(environmentTexture, R).rgb;
+	
+	vec3 albedo = texture(albedocolor, texcoord).rgb ;	
 	vec3 specular = texture(specularcolor, texcoord).rgb;
 	vec3 ambient = texture(ambientcolor, texcoord).rgb;
 	vec3 emission = texture(emissioncolor, texcoord).rgb;
 	float opacity = texture(albedocolor, texcoord).a;
 	float shininess = texture(specularcolor, texcoord).a * 200.0f;
-	vec3 viewDirection = normalize(CameraPosition - fragPos);
-
+	
 	LightColor L = CalculateLights(shininess, normal, fragPos, viewDirection, texcoord);
-	result = (L.diffuse  * ambient * albedo + L.specular  * specular ) * L.color  + emission  ;
+	result = (L.diffuse  * ambient * albedo + L.specular  * specular ) * EnvironmentColor * L.color  + emission  ;
 
 	vec3 bloomcolor = texture(bloomtexture, texcoord).rgb;
 	if(bloom == true)

@@ -25,14 +25,6 @@ namespace BHive
 		void DisplayMenuBar();
 
 	private:
-		Ref<Texture2D> m_Texture;
-		Ref<Texture2D> m_Texture2;
-		Entity actor0;
-		
-		Entity Camera2;
-		Entity pl;
-		Entity Light;
-		Entity tri;
 
 		Ref<Viewport> m_Viewport;
 

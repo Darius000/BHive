@@ -72,10 +72,6 @@ namespace BHive
 
 		Scene* scene = SceneManager::CreateScene("Default");
 
-		m_Texture = AssetManager::Get<Texture2D>("folder");
-		m_Texture2 = AssetManager::Get<Texture2D>("checkermap");
-
-
 		AssetManager::CreateAsset<Material>(DefaultMaterialName, AssetManager::Get<Shader>("BlinnPhong"));
 		AssetManager::CreateAsset<Material>("Material2", AssetManager::Get<Shader>("BlinnPhong"));
 		AssetManager::CreateAsset<Material>("Toon Mat Test", AssetManager::Get<Shader>("Toon"));
@@ -91,43 +87,56 @@ namespace BHive
 		};
 
 		//CubeMap
-		AssetManager::Add<CubeTexture>("Cube Map", CubeTexture::Create("Cube Map", faces));
-		AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
+		auto CubeMap = CubeTexture::Create("Cube Map", faces);
+		AssetManager::Add<CubeTexture>("Cube Map", CubeMap);
+		auto CubeMapMaterial = AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
+
 
 		Import("Import/Meshes/Cube.obj");
 		Import("Import/Meshes/CubeFlipped.obj");
-		Import("Import/Textures/container.jpg");
-		Import("Import/Textures/grass.png");
-		Import("Import/Textures/matrix.jpg");
-		Import("Import/Textures/smoke.png");
-		Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
-		Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
-		Import("Import/Meshes/Frag1/Frag_1_M_A.png");
-		Import("Import/Meshes/Frag2/Frag_2_M_A.png");
-		Import("Import/Meshes/lantern.obj");
-		Import("Import/Meshes/Grenades.obj");
-		Import("Import/Meshes/Shotgun.obj");
+		//Import("Import/Textures/container.jpg");
+		//Import("Import/Textures/grass.png");
+		//Import("Import/Textures/matrix.jpg");
+		//Import("Import/Textures/smoke.png");
+		//Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
+		//Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
+		//Import("Import/Meshes/Frag1/Frag_1_M_A.png");
+		//Import("Import/Meshes/Frag2/Frag_2_M_A.png");
+		//Import("Import/Meshes/lantern.obj");
+		//Import("Import/Meshes/Grenades.obj");
+		//Import("Import/Meshes/Shotgun.obj");
 
-		AssetManager::Add("Triangle" , Renderer2D::Triangle(1.0f, 1.0f));
-		AssetManager::Add("Plane" , Renderer2D::Plane(5.0f, 5.0f));
+		auto planeMesh = Renderer2D::Plane(10.0f, 10.0f);
 
-		actor0 = scene->CreateEntity("Shotgun");
+		AssetManager::Add("Triangle" , Renderer2D::Triangle(10.0f, 10.0f));
+		AssetManager::Add("Plane" , planeMesh);
 
-		tri = scene->CreateEntity("Triangle");
+		auto& PlaneEnt = scene->CreateEntity("Plane");
+		auto& planeRC = PlaneEnt.AddComponent<RenderComponent>();
+		planeRC.m_Model = planeMesh;
+
+		auto& tri = scene->CreateEntity("Triangle");
 		tri.AddComponent<RenderComponent>();
 
 		auto& renderComponent1 = tri.GetComponent<RenderComponent>();
 		renderComponent1.m_Model = AssetManager::Get<Model>("Triangle");
 
-		pl = scene->CreateEntity("Plane");
-		auto& rendercomponent2 = pl.AddComponent<RenderComponent>();
+		auto cube = scene->CreateEntity("Cube");
+		cube.GetComponent<TransformComponent>().m_Transform.SetScale(2.0f);
+		auto& rendercomponent2 = cube.AddComponent<RenderComponent>();
 		rendercomponent2.m_Model = AssetManager::Get<Model>("Cube");
-		auto& script = pl.AddComponent<NativeScriptComponent>();
+		auto& script = cube.AddComponent<NativeScriptComponent>();
 		script.Bind<MoveCubeScript>();
 
 		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
 
 		scene->CreateEntity("Point Light").AddComponent<PointLightComponent>();
+
+		auto& skybox = scene->CreateEntity("Sky Box");
+		skybox.AddComponent<RenderComponent>();
+		skybox.GetComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("CubeFlipped");
+		skybox.GetComponent<RenderComponent>().m_Model->GetMesh(0)->SetMaterial(CubeMapMaterial);
+		skybox.GetComponent<TransformComponent>().m_Transform.SetScale(300.0f);
 
 		SceneManager::SetActiveScene("Default");
 		Renderer2D::Init();

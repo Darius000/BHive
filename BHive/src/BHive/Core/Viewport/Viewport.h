@@ -52,7 +52,7 @@ namespace BHive
 		Ref<Model> blurquad;
 		Scene* m_Scene = nullptr;
 		//Entity m_Camera;
-		float m_Exposure = 0.1f;
+		float m_Exposure = 0.8f;
 		bool m_HDR = true;
 		bool m_Bloom = true;
 

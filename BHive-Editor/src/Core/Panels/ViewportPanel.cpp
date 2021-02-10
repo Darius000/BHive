@@ -14,7 +14,7 @@ namespace BHive
 
 	void ViewportPanel::OnRenderMenuBar()
 	{
-		ImGui::DragFloat("Exposure", &m_Viewport->m_Exposure);
+		ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
 		ImGui::SameLine();
 		ImGui::Checkbox("HDR", &m_Viewport->m_HDR);
 		ImGui::SameLine();
