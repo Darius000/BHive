@@ -60,7 +60,7 @@ namespace BHive
 
 		//transform Operations
 
-		inline bool DecomposeMatrixToTransform(glm::mat4& transform, FVector3& translation, FVector3& rotation, FVector3& scalefactor);
+		
 	};
 }
 

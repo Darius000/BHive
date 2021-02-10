@@ -15,7 +15,7 @@ namespace BHive
 
 		void OnRenderMenuBar() override;
 		void OnRenderWindow() override;
-		
+		void RenderGizmo(const FVector2& windowPos, const FVector2& windowSize);
 
 		bool OnMouseScrolled(MouseScrolledEvent& e) override;
 		bool OnMouseMoved(MouseMovedEvent& e) override;

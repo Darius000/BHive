@@ -105,6 +105,7 @@ namespace BHive
 			glGetUniformfv(ShaderID, glGetUniformLocation(ShaderID, name), *Cast<Vector3Uniform>(uniform)->m_Value);
 			break;
 		case GL_SAMPLER_2D:
+		case GL_SAMPLER_CUBE:
 			break;
 		default:
 			break;
@@ -128,6 +129,8 @@ namespace BHive
 			return new Vector2Uniform();
 		case GL_SAMPLER_2D:
 			return new SamplerUniform();
+		case GL_SAMPLER_CUBE:
+			return new SamplerCubeUniform();
 		default:
 			return nullptr;
 		}
@@ -156,6 +159,9 @@ namespace BHive
 			break;
 		case ShaderUniformTypes::Sampler:
 			SetUniformImpl<ShaderUniformTypes::Sampler>(name, uniform);
+			break;
+		case ShaderUniformTypes::SamplerCube:
+			SetUniformImpl<ShaderUniformTypes::SamplerCube>(name, uniform);
 			break;
 		default:
 			break;

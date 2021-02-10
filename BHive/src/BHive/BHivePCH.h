@@ -49,6 +49,7 @@
 #include "BHive/Debug/Instrumentor.h"
 #include "BHive/Core/CoreLibrary.h"
 #include "BHive/Core/Math/MathLibrary.h"
+#include "BHive/Core/Math/MatrixLibrary.h"
 #include "BHive/Core/KeyCodes.h"
 #include "BHive/Core/MouseCodes.h"
 #include "BHive/Core/Event.h"

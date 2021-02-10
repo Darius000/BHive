@@ -11,7 +11,8 @@ layout(location = 5) in vec3 a_BitTangent;
 layout(std140) uniform Matrices
 {
 	mat4 u_ViewProjection;
-	mat4 u_View;
+	mat4 u_Projection;
+	vec3 u_CameraPosition;
 };
 
 uniform mat4 u_Model;

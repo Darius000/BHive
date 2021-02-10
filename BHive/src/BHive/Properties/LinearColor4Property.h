@@ -21,7 +21,7 @@ namespace BHive
 		void OnImGuiDraw() override
 		{
 			auto flags = ImGuiColorEditFlags_::ImGuiColorEditFlags_Float;
-			if (m_HDR) flags | ImGuiColorEditFlags_::ImGuiColorEditFlags_HDR;
+			//if (m_HDR) flags | ImGuiColorEditFlags_::ImGuiColorEditFlags_HDR;
 
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			ImVec2 buttonSize = { ImGui::CalcItemWidth(), lineHeight };

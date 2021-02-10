@@ -78,39 +78,40 @@ namespace BHive
 
 		AssetManager::CreateAsset<Material>(DefaultMaterialName, AssetManager::Get<Shader>("BlinnPhong"));
 		AssetManager::CreateAsset<Material>("Material2", AssetManager::Get<Shader>("BlinnPhong"));
-
-		//Ref<Material> RedMaterial = Make_Ref<Material>(AssetManager::Get<Shader>("Toon"));
-		//RedMaterial->m_Name = "RedMaterial";
-		//RedMaterial->GetShader()->m_Properties.m_Diffuse = LinearColor3(1.0, 0.0, 0.0);
-		//AssetManager::CreateAsset<Material>(RedMaterial);
-
 		AssetManager::CreateAsset<Material>("Toon Mat Test", AssetManager::Get<Shader>("Toon"));
 
-		//AssetManager::Add(Model::Import("Import/Meshes/Grenades.obj", false, true));
-		//AssetManager::Add(Model::Import("Import/Meshes/Shotgun.obj", false, true));
+		std::array<WinPath, 6> faces = 
+		{
+			"Import/skybox/right.jpg",
+			"Import/skybox/left.jpg",
+			"Import/skybox/top.jpg",
+			"Import/skybox/bottom.jpg",
+			"Import/skybox/front.jpg",
+			"Import/skybox/back.jpg"
+		};
+
+		//CubeMap
+		AssetManager::Add<CubeTexture>("Cube Map", CubeTexture::Create(faces));
+		AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
+
 		Import("Import/Meshes/Cube.obj");
-		//Import("D:/Wallpaper/7_tornado.jpg");
-		//Import("Import/Textures/container.jpg");
-		//Import("Import/Textures/grass.png");
+		Import("Import/Meshes/CubeFlipped.obj");
+		Import("Import/Textures/container.jpg");
+		Import("Import/Textures/grass.png");
 		Import("Import/Textures/matrix.jpg");
-		//Import("Import/Textures/smoke.png");
-		//Import("D:/Wallpaper/7_tornado.jpg");
-		//Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
-		//Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
-		//Import("Import/Meshes/Frag1/Frag_1_M_A.png");
-		//Import("Import/Meshes/Frag2/Frag_2_M_A.png");
-		//Ref<Texture2D> m_Texture3 = AssetManager::Get<Texture2D>("7_tornado");
-		
+		Import("Import/Textures/smoke.png");
+		Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
+		Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
+		Import("Import/Meshes/Frag1/Frag_1_M_A.png");
+		Import("Import/Meshes/Frag2/Frag_2_M_A.png");
+		Import("Import/Meshes/lantern.obj");
+		Import("Import/Meshes/Grenades.obj");
+		Import("Import/Meshes/Shotgun.obj");
 
 		AssetManager::Add("Triangle" , Renderer2D::Triangle(1.0f, 1.0f));
 		AssetManager::Add("Plane" , Renderer2D::Plane(5.0f, 5.0f));
-		//AssetManager::Add(Model::Import("Import/Meshes/lantern.obj", false, true));
 
 		actor0 = scene->CreateEntity("Shotgun");
-		//actor0.AddComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("Shotgun");
-		
-	
-		//scene->CreateEntity("Grenades").AddComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("Grenades");
 
 		tri = scene->CreateEntity("Triangle");
 		tri.AddComponent<RenderComponent>();
@@ -252,19 +253,6 @@ namespace BHive
 
 				ImGui::EndMenu();
 			}
-
-			/*if (ImGui::Button("play"))
-			{
-
-			}
-			if (ImGui::Button("pause"))
-			{
-
-			}
-			if (ImGui::Button("stop"))
-			{
-
-			}*/
 
 			ImGui::EndMenuBar();
 		}

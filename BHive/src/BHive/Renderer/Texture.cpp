@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include "BHive/Renderer/Renderer.h"
 #include "BHive/Platforms/Opengl/OpenGLTexture.h"
+#include "BHive/Platforms/Opengl/OpenglCubeTexture.h"
 #include "BHive/Managers/AssetManagers.h"
 #include "Core/Viewport/Viewport.h"
 
@@ -74,6 +75,22 @@ namespace BHive
 		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
 		case RendererAPI::API::OpenGL:{
 			Ref<Texture2D> tex(Make_Ref<OpenGLTexture2D>(width, height, internalFormat, dataFormat, data)); 
+			return tex;
+		}
+		case RendererAPI::API::DirectX: break;
+		}
+
+		BH_CORE_ASSERT(false, "Unknown API");
+		return nullptr;
+	}
+
+	Ref<CubeTexture> CubeTexture::Create(const std::array<WinPath, 6>& facePaths)
+	{
+		switch (Renderer::GetAPI())
+		{
+		case RendererAPI::API::None: BH_CORE_ASSERT(false, "RendererAPI::None currently not supported");
+		case RendererAPI::API::OpenGL: {
+			Ref<CubeTexture> tex(Make_Ref<OpenglCubeTexture>(facePaths));
 			return tex;
 		}
 		case RendererAPI::API::DirectX: break;

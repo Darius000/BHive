@@ -7,18 +7,20 @@ namespace BHive
 	{
 	public:
 		using BlockID = uint32;
+		using BindingPoint = uint32;
 
 		UniformBlock() = delete;
 		UniformBlock(const UniformBlock&) = default;
-		UniformBlock(const ANSICHAR* name, size_t blocksize);
+		UniformBlock(const ANSICHAR* name, size_t blocksize, BindingPoint binding);
 
-		void Bind(const Ref<Shader>& shader, uint32 slot = 0);
+		void Bind(const Ref<Shader>& shader);
 
 		template<typename T>
 		void SendData(size_t offset, const T* uniform);
 
 		BlockID m_Id;
 		const ANSICHAR* m_Name;
+		BindingPoint m_Binding;
 	};
 
 	template<typename T>

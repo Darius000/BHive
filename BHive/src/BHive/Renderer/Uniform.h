@@ -20,7 +20,8 @@ namespace BHive
 		Mat2,
 		Mat3,
 		Mat4,
-		Sampler
+		Sampler,
+		SamplerCube
 	};
 
 	static const char* ShaderUniformTypesStrings[] = {
@@ -40,7 +41,8 @@ namespace BHive
 	"Mat2",
 	"Mat3",
 	"Mat4",
-	"Sampler"
+	"Sampler",
+	"SamplerCube"
 	};
 
 	class ShaderUniformType
@@ -146,6 +148,43 @@ namespace BHive
 				}
 
 				for (auto& asset : AssetManager::GetAssets<Texture2D>())
+				{
+					ImGui::PushID(i++);
+					std::string name = asset.second->GetName();
+					if (ImGui::Selectable(name.c_str(), name == (m_Value ? m_Value->GetName() : std::string(""))))
+					{
+						m_Value = asset.second;
+					}
+					ImGui::PopID();
+				}
+				ImGui::EndCombo();
+			}
+			ImGui::SameLine();
+			ImGui::InputInt("SamplerIndex", &m_SamplerIndex);
+		}
+	};
+
+	class SamplerCubeUniform : public TypeUniform<Ref<CubeTexture>>
+	{
+	public:
+		int32 m_SamplerIndex = -1;
+
+		ShaderUniformType GetType() const override { return ShaderUniformTypes::SamplerCube; }
+		void OnRenderGui() override
+		{
+			auto textureID = m_Value ? m_Value->GetRendererID() : -1;
+			ImGui::Image((void*)textureID, ImVec2(50, 50), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::SameLine();
+			if (ImGui::BeginCombo(m_DisplayName.c_str(), m_Value ? m_Value->GetName().c_str() : ""))
+			{
+				int i = 0;
+
+				if (ImGui::Selectable("None"))
+				{
+					m_Value = AssetManager::Get<CubeTexture>("Default");
+				}
+
+				for (auto& asset : AssetManager::GetAssets<CubeTexture>())
 				{
 					ImGui::PushID(i++);
 					std::string name = asset.second->GetName();

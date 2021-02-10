@@ -148,25 +148,35 @@ namespace BHive
 
 		glm::mat4 m_ProjectionMatrix = camera.GetProjection();
 
-		glm::mat4 matrix = transform.GetMatrix();
-		glm::mat4 m_ViewMatrix = glm::inverse(matrix);
+		glm::mat4 m_CameraMatrix = transform.GetMatrix();
+		glm::mat4 m_ViewMatrix = glm::inverse(m_CameraMatrix);
 		glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-
+		
 		UniformBlock* matrices = m_MatrixBlocks["Matrices"];
-		matrices->SendData(0, &m_ViewProjectionMatrix);
-		matrices->SendData(sizeof(glm::mat4), &m_ViewMatrix);
+		matrices->SendData(0, &m_ViewProjectionMatrix);	
+		matrices->SendData(sizeof(glm::mat4), &m_ProjectionMatrix);
 		matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), &transform.GetPosition());
+
+		auto cubeMatrices = m_MatrixBlocks["CubeMatrices"];
+		glm::mat4 m_View = glm::mat4(glm::mat3(m_ViewMatrix));
+		glm::mat4 m_CubeProjection = m_ProjectionMatrix * m_View;
+		cubeMatrices->SendData(0, &m_CubeProjection);
 	}
 
 	void Scene::InitializeUniformBlocks()
 	{
-		UniformBlock* matricesBlock = new UniformBlock("Matrices", 2 * sizeof(glm::mat4) + sizeof(Vector3<float>));
+		auto matricesBlock = new UniformBlock("Matrices", 2 * sizeof(glm::mat4) + sizeof(Vector3<float>), 0);
+		auto CubeProjectionBlock = new UniformBlock("CubeMatrices", sizeof(glm::mat4), 1);
 
 		m_MatrixBlocks.insert({ matricesBlock->m_Name, matricesBlock });
+		m_MatrixBlocks.insert({CubeProjectionBlock->m_Name, CubeProjectionBlock});
 
-		for (auto& a : AssetManager::GetAssets<Shader>())
+		for (auto matrixBlock : m_MatrixBlocks)
 		{
-			matricesBlock->Bind(a.second, 0);
+			for (auto& a : AssetManager::GetAssets<Shader>())
+			{
+				matrixBlock.second->Bind(a.second);
+			}
 		}
 	}
 

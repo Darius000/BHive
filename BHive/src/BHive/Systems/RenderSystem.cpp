@@ -24,25 +24,6 @@ namespace BHive
 
 				if (camera.m_PrimaryCamera)
 				{
-					//glm::mat4 m_ProjectionMatrix = camera.m_Camera.GetProjection();
-
-					//glm::mat4 matrix = transform.m_Transform.GetMatrix();
-					//glm::mat4 m_ViewMatrix = glm::inverse(matrix);
-					//glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
-
-					//UniformBlock* matrices = m_MatrixBlocks["Matrices"];
-					//matrices->SendData(0, &m_ViewProjectionMatrix);
-					//matrices->SendData(sizeof(glm::mat4), &m_ViewMatrix);
-					//matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), &transform.m_Transform.GetPosition());
-
-					////for (auto& a : AssetManager::GetAssets<Shader>())
-					////{
-					////	a.second->Bind();
-					////	//a.second->SetMat4("u_ViewProjection", m_ViewProjectionMatrix);
-					////	//a.second->SetMat4("u_View", m_ViewMatrix);
-					////	a.second->SetVec3("CameraPosition", transform.m_Transform.GetPosition());
-					////}
-
 					CameraPosition = transform.m_Transform.GetPosition();
 				}
 			}

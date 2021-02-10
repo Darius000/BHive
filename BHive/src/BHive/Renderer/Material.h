@@ -93,6 +93,22 @@ namespace BHive
 		}
 	}
 
+	template<>
+	inline void Material::SetUniformImpl<ShaderUniformTypes::SamplerCube>(const std::string& name, Uniform* uniform)
+	{
+		SamplerCubeUniform* samplerUniform = Cast<SamplerCubeUniform>(uniform);
+		auto tex = samplerUniform->GetValue();
+		if (tex)
+		{
+			tex->Bind(samplerUniform->m_SamplerIndex);
+			m_Shader->SetInt(name, samplerUniform->m_SamplerIndex);
+		}
+		else
+		{
+			m_Shader->SetInt(name, 0);
+		}
+	}
+
 	template<ShaderUniformTypes Type>
 	inline void Material::SetUniformImpl(const std::string& name, Uniform* uniform)
 	{

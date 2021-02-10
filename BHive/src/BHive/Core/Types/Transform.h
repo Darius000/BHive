@@ -29,7 +29,7 @@ namespace BHive
 		FVector3 GetForward() const;
 		FVector3 GetRight() const;
 		FVector3 GetUp()  const;
-		const glm::mat4& GetMatrix() const { return m_ModelMatrix;}
+		glm::mat4& GetMatrix() { return m_ModelMatrix;}
 
 		const BString ToString() const;
 

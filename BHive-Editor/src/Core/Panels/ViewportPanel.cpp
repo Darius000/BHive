@@ -45,42 +45,9 @@ namespace BHive
 		ImGui::BeginGroup();
 		ImGui::Image((void*)*QuadFrameBuffer, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
-		//Gizmo's
+		//Gizmos
 
-		Entity SelectedEntity = SceneHierarchyPanel::GetSelectedEntity();
-		if (SelectedEntity && m_GizmoType != -1)
-		{
-			ImGuizmo::SetOrthographic(false);
-			ImGuizmo::SetDrawlist();
-			
-			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-
-			auto cameraTransform = m_Viewport->m_Scene->m_DefaultSceneView.m_Transform;
-			const auto& camera = m_Viewport->m_Scene->m_DefaultSceneView.m_Camera;
-			glm::mat4 cameraMatrix = cameraTransform.GetMatrix();
-			glm::mat4 cameraView = glm::inverse(cameraMatrix);
-			const glm::mat4& cameraProjection = camera.GetProjection();
-
-			auto& tc = SelectedEntity.GetComponent<TransformComponent>();
-			glm::mat4 transform = tc.m_Transform.GetMatrix();
-
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection)
-			, (ImGuizmo::OPERATION)m_GizmoType, (ImGuizmo::MODE)m_GizmoMode, glm::value_ptr(transform));
-
-			m_IsUsingGizmo = ImGuizmo::IsUsing();
-			if (m_IsUsingGizmo)
-			{
-				FVector3 translation, rotation, scale;
-			
-				MathLibrary::DecomposeMatrixToTransform(transform, translation, rotation, scale);
-
-				auto currentRotation = tc.m_Transform.GetRotation().ToVector();
-				auto deltaRotation = rotation - currentRotation;
-				auto newrotation = currentRotation + deltaRotation;
-
-				tc.m_Transform = {translation, Rotator::FromVector(rotation), scale};
-			}
-		}
+		RenderGizmo({ImGui::GetWindowPos().x, ImGui::GetWindowPos().y}, {windowWidth, windowHeight});
 	
 		//uint32 finalcolor = m_Viewport->m_QuadColorAttachment;
 		//uint32 depthcolors = m_Viewport->m_DepthAttachment;
@@ -88,7 +55,7 @@ namespace BHive
 		ImGui::EndGroup();
 
 		//Add Button Overlay
-		ImGui::SetCursorPos({windowWidth - (6 * 16 * 2), 75.0f});
+		/*ImGui::SetCursorPos({windowWidth - (6 * 16 * 2), 75.0f});
 		ImGui::BeginGroup();
 		ImGui::PushMultiItemsWidths(6, ImGui::CalcItemWidth());
 		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("selection"), { 16, 16 }))
@@ -109,7 +76,7 @@ namespace BHive
 		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("refresh"), { 16, 16 }))
 			m_GizmoMode = ImGuizmo::MODE::WORLD;
 		ImGui::PopItemWidth();
-		ImGui::EndGroup();
+		ImGui::EndGroup();*/
 
 		/*int32 i = 0;
 		for (auto& GBuffer: m_Viewport->m_GBufferAttributes)
@@ -139,6 +106,44 @@ namespace BHive
 		ImGui::EndGroup();*/
 
 		ImGui::PopStyleVar();
+	}
+
+	void ViewportPanel::RenderGizmo(const FVector2& windowPos, const FVector2& windowSize)
+	{
+		Entity SelectedEntity = SceneHierarchyPanel::GetSelectedEntity();
+		if (SelectedEntity && m_GizmoType != -1)
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+
+			ImGuizmo::SetRect(windowPos.x, windowPos.y, windowSize.x, windowSize.y);
+
+			auto cameraTransform = m_Viewport->m_Scene->m_DefaultSceneView.m_Transform;
+			const auto& camera = m_Viewport->m_Scene->m_DefaultSceneView.m_Camera;
+			glm::mat4 cameraMatrix = cameraTransform.GetMatrix();
+			glm::mat4 cameraView = glm::inverse(cameraMatrix);
+			const glm::mat4& cameraProjection = camera.GetProjection();
+
+			auto& tc = SelectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 transform = tc.m_Transform.GetMatrix();
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection)
+				, (ImGuizmo::OPERATION)m_GizmoType, (ImGuizmo::MODE)m_GizmoMode, glm::value_ptr(transform));
+
+			m_IsUsingGizmo = ImGuizmo::IsUsing();
+			if (m_IsUsingGizmo)
+			{
+				FVector3 translation = {};
+				Rotator rotation = {};
+				FVector3 scale = {};
+				if (MatrixLibrary::DecomposeMatrixToTransform(transform, translation, rotation, scale))
+				{
+					Rotator deltaRotation = rotation - tc.m_Transform.GetRotation();
+					Rotator newRotation = tc.m_Transform.GetRotation() + deltaRotation;
+					tc.m_Transform = Transform(translation, newRotation, scale);
+				}
+			}
+		}
 	}
 
 	bool ViewportPanel::OnMouseScrolled(MouseScrolledEvent& e)

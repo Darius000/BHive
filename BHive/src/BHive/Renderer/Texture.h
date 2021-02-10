@@ -158,4 +158,25 @@ namespace BHive
 		static Ref<Texture2D> Create(uint32 width, uint32 height, GLenum internalFormat , GLenum dataFormat, void* data);
 
 	};
+
+	class CubeTexture : public IAssetType
+	{
+		DEFINE_ASSET_BODY(CubeTexture, "cubetexture")
+
+	public:
+		CubeTexture(){};
+
+		virtual ~CubeTexture() = default;
+
+		static Ref<CubeTexture> Create(const std::array<WinPath, 6>& facePaths);
+
+		virtual void Bind(uint32 slot) const = 0;
+		virtual void UnBind(uint32 slot) const = 0;
+
+		virtual uintPtr GetRendererID() const = 0;
+
+		operator uintPtr() const { return GetRendererID(); }
+
+		operator void* () const { return (void*)GetRendererID(); }
+	};
 }

@@ -241,11 +241,13 @@ namespace BHive
 			return changed;
 		}*/
 
-		bool Vector3Property(const std::string& label,  FVector3& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f)
+		bool Vector3Property(const std::string& label,  FVector3& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f, float resetValue = 0.0f, bool scale = false)
 		{
 			std::array<ImVec4, 3> colors = { ImVec4(1.0f, 0.0f, 0.0f, 1.0f), ImVec4(0.0f, 1.0f, 0.0f, 1.0f) , ImVec4(0.0f, 0.0f, 1.0f, 1.0f) };
 			
 			bool changed = false;
+
+			static bool uniformScale = false;
 
 			ImGui::Columns(2, label.c_str(), false);
 
@@ -258,16 +260,49 @@ namespace BHive
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 5.0f));
 			ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
 
-			changed |= FloatProperty("X", p.x, speed, min, max, resetValue, true, false, colors[0]);
+			if (FloatProperty("X", p.x, speed, min, max, resetValue, true, false, colors[0]))
+			{
+				changed = true;	
+				if(uniformScale) p.y = p.z = p.x;
+			}
+
 			ImGui::SameLine();
 			ImGui::PopItemWidth();
 
-			changed |= FloatProperty("Y", p.y, speed, min, max, resetValue, true, false, colors[1]);
+			if (FloatProperty("Y", p.y, speed, min, max, resetValue, true, false, colors[1]))
+			{
+				changed = true;
+				if (uniformScale) p.x = p.z = p.y;
+			}
+
 			ImGui::SameLine();
 			ImGui::PopItemWidth();
+			
+			if (FloatProperty("Z", p.z, speed, min, max, resetValue, true, false, colors[2]))
+			{
+				changed = true;
+				
+				if (uniformScale) p.x = p.y = p.z;
+			}
 
-			changed |= FloatProperty("Z", p.z, speed, min, max, resetValue, true, false, colors[2]);
 			ImGui::PopItemWidth();
+
+			if(scale)
+			{ 
+				ImGui::SameLine();
+
+				float lineHeight = GImGui->Font->FontSize;
+				ImVec2 buttonSize = { lineHeight , lineHeight };
+
+				auto texturename = uniformScale ? "lock" : "unlock";
+				auto texture = AssetManager::Get<Texture2D>(texturename);
+				ImVec4 color = uniformScale ? ImVec4(1.0f, 1.0f, 1.0f , 1.0f) : ImVec4(.5f, .5f , .5f,  1.0f);
+
+				if (ImGui::ImageButton((void*)(*texture), buttonSize, ImVec2(0, 1), ImVec2(1, 0), -1, ImVec4(0, 0, 0, 0), color))
+				{
+					uniformScale = !uniformScale;
+				}
+			}
 
 			ImGui::PopStyleVar();
 
@@ -452,7 +487,7 @@ namespace BHive
 				changed = true;
 			}
 				
-			if(Vector3Property("Scale",  p.GetScale(), speed, min, max, 1.0f))
+			if(Vector3Property("Scale",  p.GetScale(), speed, min, max, 1.0f, true))
 			{
 				p.RecalulateModelMatrix();
 				changed = true;
