@@ -81,6 +81,16 @@ namespace BHive
 	void RenderComponentDetails::OnDisplayPropertyDetails(Entity& entity, ComponentClass& component, PropertyDetailsBuilder& detailsBuilder)
 	{
 		detailsBuilder.AssetProperty("Mesh", component.m_Model);
+
+		if (ImGui::TreeNode("Materials"))
+		{
+			for (auto& mesh : component.m_Model->GetMeshes())
+			{
+				detailsBuilder.AssetProperty(mesh.second->GetName(), mesh.second->m_Material);
+			}
+
+			ImGui::TreePop();
+		}
 	}
 
 	void NativeScriptComponentDetails::OnDisplayPropertyDetails(Entity& entity, ComponentClass& component, PropertyDetailsBuilder& detailsBuilder)

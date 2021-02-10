@@ -49,6 +49,7 @@ namespace BHive
 		Ref<Material> m_Material;
 		
 		friend class MeshEditorCustomizationDetails;
+		friend class RenderComponentDetails;
 	};
 
 	
