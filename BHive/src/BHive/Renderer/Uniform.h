@@ -2,48 +2,29 @@
 
 namespace BHive
 { 
-	enum class ShaderUniformTypes
-	{
-		Bool,
-		Int,
-		Float,
-		Float2,
-		Float3,
-		Float4,
-		Vec2,
-		Vec3,
-		Vec4,
-		Color3,
-		Color4,
-		HDRColor3,
-		HDRColor4,
-		Mat2,
-		Mat3,
-		Mat4,
-		Sampler,
-		SamplerCube
-	};
+#define SHADERTYPES(types)\
+	types(Bool),	\
+	types(Int)	,	  \
+	types(Float)	,  \
+	types(Float2),	  \
+	types(Float3),	  \
+	types(Float4),	  \
+	types(Vec2)	,	  \
+	types(Vec3)	 , \
+	types(Vec4)	,	  \
+	types(Color3) , \
+	types(Color4) , \
+	types(HDRColor3) , \
+	types(HDRColor4 ), \
+	types(Mat2)	,	  \
+	types(Mat3)	,	  \
+	types(Mat4)	,	  \
+	types(Sampler)	,  \
+	types(SamplerCube)
 
-	static const char* ShaderUniformTypesStrings[] = {
-	"Bool",
-	"Int",
-	"Float",
-	"Float2",
-	"Float3",
-	"Float4",
-	"Vec2",
-	"Vec3",
-	"Vec4",
-	"Color3",
-	"Color4",
-	"HDRColor3",
-	"HDRColor4",
-	"Mat2",
-	"Mat3",
-	"Mat4",
-	"Sampler",
-	"SamplerCube"
-	};
+CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
+
+	class Uniform;
 
 	class ShaderUniformType
 	{
@@ -56,8 +37,6 @@ namespace BHive
 			return UniformType == other.UniformType;
 		}
 	};
-
-	
 
 	enum class ShaderType : unsigned int
 	{
@@ -78,20 +57,6 @@ namespace BHive
 		uint32 m_Size = 0;
 		std::string m_DisplayName = "";
 
-		/*void* m_Value = nullptr;
-
-		template<typename ValueType>
-		ValueType* ContainerPtrToValuePtr()
-		{
-			return (ValueType*)m_Value;
-		}
-
-		template<typename ValueType>
-		ValueType* ContainerPtrToValuePtr() const
-		{
-			return (ValueType*)m_Value;
-		}
-		*/
 		virtual ShaderUniformType GetType() const = 0;
 		virtual void OnRenderGui() = 0;
 	};
@@ -105,8 +70,12 @@ namespace BHive
 
 		T m_Value;
 
-		T& GetValue() { return m_Value; }
-		const T& GetValue() const { return m_Value;}
+		T& Get() { return m_Value; }
+		const T& Get() const { return m_Value;}
+		void Set(T value)
+		{ 
+			m_Value = value; 
+		}
 
 		ShaderUniformType GetType() const override  = 0;
 		void OnRenderGui() override = 0;
@@ -130,7 +99,7 @@ namespace BHive
 	class SamplerUniform : public TypeUniform<Ref<Texture2D>>
 	{
 	public:
-		int32 m_SamplerIndex = -1;
+		int32 m_SamplerIndex = 1;
 
 		ShaderUniformType GetType() const override { return ShaderUniformTypes::Sampler; }
 		void OnRenderGui() override
@@ -147,13 +116,13 @@ namespace BHive
 					m_Value = AssetManager::Get<Texture2D>("Default");
 				}
 
-				for (auto& asset : AssetManager::GetAssets<Texture2D>())
+				for (auto& asset : AssetManager::GetAssetsOfType<Texture2D>())
 				{
 					ImGui::PushID(i++);
 					std::string name = asset.second->GetName();
 					if (ImGui::Selectable(name.c_str(), name == (m_Value ? m_Value->GetName() : std::string(""))))
 					{
-						m_Value = asset.second;
+						m_Value = CastPointer<Texture2D>(asset.second);
 					}
 					ImGui::PopID();
 				}
@@ -167,7 +136,7 @@ namespace BHive
 	class SamplerCubeUniform : public TypeUniform<Ref<CubeTexture>>
 	{
 	public:
-		int32 m_SamplerIndex = -1;
+		int32 m_SamplerIndex = 0;
 
 		ShaderUniformType GetType() const override { return ShaderUniformTypes::SamplerCube; }
 		void OnRenderGui() override
@@ -184,13 +153,13 @@ namespace BHive
 					m_Value = AssetManager::Get<CubeTexture>("Default");
 				}
 
-				for (auto& asset : AssetManager::GetAssets<CubeTexture>())
+				for (auto& asset : AssetManager::GetAssetsOfType<CubeTexture>())
 				{
 					ImGui::PushID(i++);
 					std::string name = asset.second->GetName();
 					if (ImGui::Selectable(name.c_str(), name == (m_Value ? m_Value->GetName() : std::string(""))))
 					{
-						m_Value = asset.second;
+						m_Value = CastPointer<CubeTexture>(asset.second);
 					}
 					ImGui::PopID();
 				}
@@ -228,7 +197,7 @@ namespace BHive
 		}
 	};
 
-	class Vector3Uniform : public TypeUniform<Vector3<float>>
+	class Vec3Uniform : public TypeUniform<Vector3<float>>
 	{
 	public:
 		float min = 0.0f;
@@ -243,7 +212,7 @@ namespace BHive
 		}
 	};
 
-	class Vector2Uniform : public TypeUniform<Vector2<float>>
+	class Vec2Uniform : public TypeUniform<Vector2<float>>
 	{
 	public:
 		float min = 0.0f;

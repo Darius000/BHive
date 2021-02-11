@@ -6,8 +6,12 @@ namespace BHive
 
 	Quaternion::Quaternion(const Vector3<float>& axis, float angle)
 	{
-		float rangle = ToRadians(angle);
 
+#if DEGREE_ANGLES
+		float rangle = ToRadians(angle);
+#else
+		float rangle = angle;
+#endif
 		w = cos(rangle / 2);
 
 		x = (axis.x) * sin(rangle / 2);
@@ -43,17 +47,17 @@ namespace BHive
 		return degrees  * ((22.0f / 7.0f) / 360.0f);
 	}
 
-	glm::mat4 Quaternion::ToMatrix(const Quaternion& quat)
+	glm::mat4 Quaternion::ToMatrix()
 	{
-		float xx = quat.x * quat.x;
-		float yy = quat.y * quat.y;
-		float zz = quat.z * quat.z;
-		float xy = quat.x * quat.y;
-		float zw = quat.z * quat.w;
-		float xz = quat.x * quat.z;
-		float yw = quat.y * quat.w;
-		float yz = quat.y * quat.z;
-		float xw = quat.x * quat.w;
+		float xx = x * x;
+		float yy = y * y;
+		float zz = z * z;
+		float xy = x * y;
+		float zw = z * w;
+		float xz = x * z;
+		float yw = y * w;
+		float yz = y * z;
+		float xw = x * w;
 
 		float r0c0 = 1 - 2 * yy - 2 * zz;
 		float r0c1 = 2 * xy - 2 * zw;
@@ -71,27 +75,43 @@ namespace BHive
 			{ r2c0, r2c1, r2c2 }
 		); 
 
-		return glm::toMat4(quat.m_Quaternion);
+		return glm::toMat4(m_Quaternion);
 	}
 
-	Rotator Quaternion::ToRotator(const Quaternion& quat)
+	Rotator Quaternion::ToRotator()
 	{
 		//x is pitch, y is yaw, z is roll
-		glm::vec3 euler = glm::eulerAngles(quat.m_Quaternion);
+		glm::vec3 euler = glm::eulerAngles(m_Quaternion);
 
-		float pitch = MathLibrary::ToDegrees(euler.x);
-		float yaw = MathLibrary::ToDegrees(euler.y);
-		float roll = MathLibrary::ToDegrees(euler.z);
+		float pitch, yaw, roll = 0.0f;
 
+#if DEGREE_ANGLES
+		pitch = MathLibrary::ToDegrees(euler.x);
+		yaw  = MathLibrary::ToDegrees(euler.y);
+		roll = MathLibrary::ToDegrees(euler.z);
+#else
+
+		pitch = euler.x;
+		yaw = euler.y;
+		roll = euler.z;
+#endif
 		return Rotator(roll, yaw, pitch);
 	}
 
 	Quaternion Quaternion::FromEuler(float pitch, float yaw, float roll)
 	{
-		float ryaw = ToRadians(yaw);
-		float rpitch = ToRadians(pitch);
-		float rroll = ToRadians(roll);
 
+		float ryaw, rpitch, rroll;
+
+#if DEGREE_ANGLES
+		ryaw = ToRadians(yaw);
+		rpitch = ToRadians(pitch);
+		rroll = ToRadians(roll);
+#else
+		ryaw = yaw;
+		rpitch = pitch;
+		rroll = roll;
+#endif
 		//yaw
 		float cy = cos(ryaw / 2);
 		float sy = sin(ryaw / 2);

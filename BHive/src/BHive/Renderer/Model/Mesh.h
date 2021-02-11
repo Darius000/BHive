@@ -5,9 +5,9 @@
 #include  <assimp/postprocess.h>
 
 
-#include "VertexArray.h"
-#include "Buffer.h"
-#include "Material.h"
+#include "Renderer/VertexArray.h"
+#include "Renderer/Buffer.h"
+#include "Renderer/Material.h"
 #include "BHive/Managers/AssetManagers.h"
 
 namespace BHive

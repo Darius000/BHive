@@ -38,7 +38,7 @@ namespace BHive
 
 	void Scene::OnBegin()
 	{
-		InitializeCamera({0.0f, 20.0f, 20.0f});
+		InitializeCamera({0.0f, 0.0f, 20.0f});
 		InitializeUniformBlocks();
 
 		//Update Scripts----------------------------------------------------
@@ -136,8 +136,10 @@ namespace BHive
 
 	void Scene::InitializeCamera(const FVector3& position)
 	{
-		m_DefaultSceneView.m_Transform.SetPosition(position);
-		m_DefaultSceneView.m_Transform.LookAt({0.0f, 0.0f, 0.0f});
+		auto& transform = m_DefaultSceneView.m_Transform;
+
+		transform.SetPosition(position);
+		transform.LookAt({0, 0, 0});
 		m_DefaultSceneView.m_Camera.SetPerspective({ 35.0f, .01f, 1000.0f });
 	}
 
@@ -173,9 +175,9 @@ namespace BHive
 
 		for (auto matrixBlock : m_MatrixBlocks)
 		{
-			for (auto& a : AssetManager::GetAssets<Shader>())
+			for (auto& a : AssetManager::GetAssetsOfType<Shader>())
 			{
-				matrixBlock.second->Bind(a.second);
+				matrixBlock.second->Bind(CastPointer<Shader>(a.second));
 			}
 		}
 	}

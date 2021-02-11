@@ -38,19 +38,21 @@ namespace BHive
 				auto& [directionalLight, transform] = view.get<DirectionalLightComponent, TransformComponent>(entity);				
 				std::string uniform = "directionalLights[" + std::to_string(numDirLights) + "].";
 				numDirLights++;
-				for (auto& a : AssetManager::GetAssets<Shader>())
+				for (auto& asset : AssetManager::GetAssetsOfType<Shader>())
 				{
-					a.second->Bind();			
-					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
-					a.second->SetVec3(uniform + "color", directionalLight.m_LightColor);
-					a.second->SetFloat(uniform + "brightness", directionalLight.m_LightBrightness);
+					auto shader = CastPointer<Shader>(asset.second);
+					shader->Bind();			
+					shader->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
+					shader->SetVec3(uniform + "color", directionalLight.m_LightColor);
+					shader->SetFloat(uniform + "brightness", directionalLight.m_LightBrightness);
 				}
 			}
 
-			for (auto& a : AssetManager::GetAssets<Shader>())
+			for (auto& asset : AssetManager::GetAssetsOfType<Shader>())
 			{
-				a.second->Bind();
-				a.second->SetInt("numDirLights", numDirLights);
+				auto shader = CastPointer<Shader>(asset.second);
+				shader->Bind();
+				shader->SetInt("numDirLights", numDirLights);
 			}
 		}
 		{
@@ -61,23 +63,25 @@ namespace BHive
 				auto& [pointLight, transform] = view.get<PointLightComponent, TransformComponent>(entity);
 				std::string uniform = "pointLights[" + std::to_string(numPointLights) + "].";
 				numPointLights++;
-				for (auto& a : AssetManager::GetAssets<Shader>())
+				for (auto& asset: AssetManager::GetAssetsOfType<Shader>())
 				{
-					a.second->Bind();			
-					a.second->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
-					a.second->SetVec3(uniform + "color", pointLight.m_Color);
-					a.second->SetFloat(uniform + "constant", pointLight.m_Constant);
-					a.second->SetFloat(uniform + "linear", pointLight.m_Linear);
-					a.second->SetFloat(uniform + "quadratic", pointLight.m_Quadratic);
-					a.second->SetFloat(uniform + "brightness", pointLight.m_Brightness);
+					auto shader = CastPointer<Shader>(asset.second);
+					shader->Bind();			
+					shader->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
+					shader->SetVec3(uniform + "color", pointLight.m_Color);
+					shader->SetFloat(uniform + "constant", pointLight.m_Constant);
+					shader->SetFloat(uniform + "linear", pointLight.m_Linear);
+					shader->SetFloat(uniform + "quadratic", pointLight.m_Quadratic);
+					shader->SetFloat(uniform + "brightness", pointLight.m_Brightness);
 					
 				}
 			}
 
-			for (auto& a : AssetManager::GetAssets<Shader>())
+			for (auto& asset : AssetManager::GetAssetsOfType<Shader>())
 			{
-				a.second->Bind();
-				a.second->SetInt("numPointLights", numPointLights);
+				auto shader = CastPointer<Shader>(asset.second);
+				shader->Bind();
+				shader->SetInt("numPointLights", numPointLights);
 			}
 		}
 
@@ -89,25 +93,27 @@ namespace BHive
 				auto& [spotLight, transform] = view.get<SpotLightComponent, TransformComponent>(entity);			
 				std::string uniform = "spotLights[" + std::to_string(numSpotLights) + "].";
 				numSpotLights++;
-				for (auto& a : AssetManager::GetAssets<Shader>())
+				for (auto& asset : AssetManager::GetAssetsOfType<Shader>())
 				{
-					a.second->Bind();				
-					a.second->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
-					a.second->SetVec3(uniform + "color", spotLight.m_Color);
-					a.second->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
-					a.second->SetFloat(uniform + "cutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_Cutoff)));
-					a.second->SetFloat(uniform + "outerCutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_OuterCutoff)));
-					a.second->SetFloat(uniform + "constant", spotLight.m_Constant);
-					a.second->SetFloat(uniform + "linear", spotLight.m_Linear);
-					a.second->SetFloat(uniform + "quadratic", spotLight.m_Quadratic);
-					a.second->SetFloat(uniform + "brightness", spotLight.m_Brightness);
+					auto shader = CastPointer<Shader>(asset.second);
+					shader->Bind();				
+					shader->SetVec3(uniform + "position", transform.m_Transform.GetPosition());
+					shader->SetVec3(uniform + "color", spotLight.m_Color);
+					shader->SetVec3(uniform + "direction", transform.m_Transform.GetForward());
+					shader->SetFloat(uniform + "cutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_Cutoff)));
+					shader->SetFloat(uniform + "outerCutoff", MathLibrary::Cos(MathLibrary::ToRadians(spotLight.m_OuterCutoff)));
+					shader->SetFloat(uniform + "constant", spotLight.m_Constant);
+					shader->SetFloat(uniform + "linear", spotLight.m_Linear);
+					shader->SetFloat(uniform + "quadratic", spotLight.m_Quadratic);
+					shader->SetFloat(uniform + "brightness", spotLight.m_Brightness);
 				}
 			}
 
-			for (auto& a : AssetManager::GetAssets<Shader>())
+			for (auto& asset : AssetManager::GetAssetsOfType<Shader>())
 			{
-				a.second->Bind();
-				a.second->SetInt("numSpotLights", numSpotLights);
+				auto shader = CastPointer<Shader>(asset.second);
+				shader->Bind();
+				shader->SetInt("numSpotLights", numSpotLights);
 			}
 		}
 

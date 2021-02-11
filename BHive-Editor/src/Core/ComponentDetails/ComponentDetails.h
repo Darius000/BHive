@@ -74,8 +74,8 @@ namespace BHive
 		}
 
 	private:
-		bool m_Opened;
-		bool m_RemoveComponent;
+		bool m_Opened = true;
+		bool m_RemoveComponent = false;
 	};
 
 	class TransformComponentDetails : public ComponentDetails<TransformComponent>

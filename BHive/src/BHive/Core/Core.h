@@ -30,4 +30,5 @@
 
 #include "CoreLibrary.h"
 #include "EventMacros.h"
+#include "Enums/Macros.h"
 

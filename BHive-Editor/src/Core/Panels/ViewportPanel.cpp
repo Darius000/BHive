@@ -9,16 +9,30 @@ namespace BHive
 	ViewportPanel::ViewportPanel(const std::string& label, Ref<Viewport> viewport, uint64 id)
 		:ImGuiPanel(label, ImGuiWindowFlags_MenuBar, id), m_Viewport(viewport)
 	{
-		m_CameraPosition = m_Viewport->m_Scene->m_DefaultSceneView.m_Transform.GetPosition();
+		if (viewport && viewport->m_Scene)
+		{
+			auto& camTransform = viewport->m_Scene->m_DefaultSceneView.m_Transform;
+			m_CameraDistance = camTransform.GetPosition().GetMagnitude();
+			Yaw = camTransform.GetRotation().yaw;
+			Pitch = camTransform.GetRotation().pitch;
+		}	
 	}	
 
 	void ViewportPanel::OnRenderMenuBar()
 	{
+		ImGui::PushMultiItemsWidths(6, ImGui::CalcItemWidth());
 		ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
 		ImGui::SameLine();
 		ImGui::Checkbox("HDR", &m_Viewport->m_HDR);
 		ImGui::SameLine();
 		ImGui::Checkbox("Bloom", &m_Viewport->m_Bloom);
+		ImGui::SameLine();
+		ImGui::InputFloat("Pan Speed", &m_PanSpeed);
+		ImGui::SameLine();
+		ImGui::InputFloat("Zoom Speed", &m_ZoomSpeed);
+		ImGui::SameLine();
+		ImGui::InputFloat("Orbital Speed", &m_OrbitalSpeed);		
+		ImGui::PopItemWidth();
 	}
 
 	void ViewportPanel::OnRenderWindow()
@@ -148,7 +162,7 @@ namespace BHive
 
 	bool ViewportPanel::OnMouseScrolled(MouseScrolledEvent& e)
 	{
-		Zoom(e.GetYOffset());
+		Zoom(e.GetYOffset() * m_ZoomSpeed);
 		
 		return true;
 	}
@@ -157,25 +171,26 @@ namespace BHive
 	{
 		if (m_AltPressed)
 		{
+			auto deltaX = m_OldMousePos.x - e.GetX();
+			auto deltaY = e.GetY() - m_OldMousePos.y;
+
+			float percentageX = MathLibrary::Normalize(deltaX, 0.0f, m_ViewportSize.x);
+			float percentageY = MathLibrary::Normalize(deltaY, 0.0f, m_ViewportSize.y);
+
 			if (m_bMiddleMouseButtonPressed)
 			{
-				auto deltaX = e.GetX() - m_OldMousePos.x;
-				auto deltaY = e.GetY() - m_OldMousePos.y; 
-
-				deltaX = MathLibrary::Normalize(deltaX, 0.0f, m_ViewportSize.x);
-				deltaY = MathLibrary::Normalize(deltaY, 0.0f, m_ViewportSize.y);
-
-				Pan(deltaX, 0.0f);
-
-				m_OldMousePos = FVector2(e.GetX(), e.GetY());
+				Pan(percentageX* m_PanSpeed, percentageY * m_PanSpeed);		
 			}
 
 			if (m_bLeftMouseButtonPressed)
 			{
 				//Rotate
+				Orbit(percentageX, percentageY );
 			}
 
 		}
+
+		m_OldMousePos = FVector2(e.GetX(), e.GetY());
 
 		return true;
 	}
@@ -219,9 +234,7 @@ namespace BHive
 				m_AltPressed = true;
 				return false;
 			case KeyCode::F:
-				m_CameraPosition = FVector3(0.0f, 0.0f, 10.0f);
-				m_CameraRotation = { 0.0f };
-				m_Viewport->m_Scene->m_DefaultSceneView.m_Transform.SetPosition(m_CameraPosition);
+				FocusOnEntity();
 				return true;
 		}
 
@@ -260,6 +273,24 @@ namespace BHive
 		return false;
 	}
 
+	void ViewportPanel::OnUnFocused()
+	{
+		m_AltPressed = false;
+		m_bLeftMouseButtonPressed = false;
+		m_bMiddleMouseButtonPressed = false;
+	}
+
+	void ViewportPanel::FocusOnEntity()
+	{
+		auto& selectedEntity = SceneHierarchyPanel::GetSelectedEntity();
+		
+		if (selectedEntity)
+		{ 
+			m_FocusedPosition = selectedEntity.GetComponent<TransformComponent>().m_Transform.GetPosition();
+			m_Viewport->m_Scene->m_DefaultSceneView.m_Transform.LookAt(m_FocusedPosition);
+		}
+	}
+
 	void ViewportPanel::Zoom(float offset)
 	{
 		auto& CamTransform = m_Viewport->m_Scene->m_DefaultSceneView.m_Transform;
@@ -267,8 +298,7 @@ namespace BHive
 		FVector3 CamPosition = CamTransform.GetPosition();
 		FVector3 NewCamPosition = CamPosition + (CamForward * offset);
 		CamTransform.SetPosition(NewCamPosition);
-
-		BH_CORE_INFO("camera position: {0}, Camera For : {1}", NewCamPosition, m_Viewport->m_Scene->m_DefaultSceneView.m_Transform.GetForward());
+		m_CameraDistance = CamTransform.GetPosition().GetMagnitude();
 	}
 
 	void ViewportPanel::Pan(float xOffset, float yOffset)
@@ -277,8 +307,39 @@ namespace BHive
 		auto CamPosition = CamTransform.GetPosition();
 		auto NewCamPosition = CamPosition  + (CamTransform.GetRight() * xOffset) + (CamTransform.GetUp() * yOffset);
 		CamTransform.SetPosition(NewCamPosition);
-
-		BH_CORE_INFO("{0}{1}, camera position: {2}", xOffset, yOffset, NewCamPosition);
+		m_CameraDistance = CamTransform.GetPosition().GetMagnitude();
+		m_FocusedPosition = CamTransform.GetForward();
 	}
 
+	void ViewportPanel::Orbit(float yaw, float pitch)
+	{
+#if DEGREE_ANGLES
+		float offYaw = yaw;
+		float offPitch = pitch;
+
+#else 
+	offYaw = MathLibrary::ToRadians(yaw);
+	offPitch = MathLibrary::ToRadians(pitch);
+#endif
+
+		Yaw += offYaw * m_OrbitalSpeed;
+		Pitch += offPitch * m_OrbitalSpeed;
+
+		//Get distance form focal point in this case for now {0,0,0}
+		auto& camTransform = m_Viewport->m_Scene->m_DefaultSceneView.m_Transform;
+
+#if DEGREE_ANGLES
+		float x = MathLibrary::CosD(Yaw) * MathLibrary::CosD(Pitch) * m_CameraDistance;
+		float y = MathLibrary::SinD(Pitch) * m_CameraDistance;
+		float z = (MathLibrary::SinD(Yaw) * MathLibrary::CosD(Pitch)) * m_CameraDistance;
+#else
+		float x = MathLibrary::Cos(Yaw) * MathLibrary::Cos(Pitch) * m_CameraDistance;
+		float y = MathLibrary::Sin(Pitch) * m_CameraDistance;
+		float z = (MathLibrary::Sin(Yaw) * MathLibrary::Cos(Pitch)) * m_CameraDistance;
+#endif
+
+		auto newPos = FVector3(x, y, z);
+		camTransform.SetPosition(newPos);
+		camTransform.LookAt(m_FocusedPosition);
+	}
 }

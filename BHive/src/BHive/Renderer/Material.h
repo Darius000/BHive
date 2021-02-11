@@ -2,11 +2,10 @@
 
 #include "Shader.h"
 #include "Assets/Asset.h"
+#include "Uniforms/UniformCasts.h"
 
 namespace BHive
 {
-	static const char* DefaultMaterialName = "Default";
-
 	class Material : public IAssetType
 	{
 	protected:
@@ -28,6 +27,9 @@ namespace BHive
 
 		MaterialParameters& GetParameters(){ return m_Parameters; }
 
+		template<typename T = Uniform>
+		void SetParameter(const std::string& name, const T& value);
+
 	protected:
 		Ref<Shader> m_Shader;
 
@@ -40,6 +42,7 @@ namespace BHive
 		template<ShaderUniformTypes Type>
 		inline void SetUniformImpl(const std::string& name, Uniform* uniform);
 
+	
 	private:
 		MaterialParameters m_Parameters;
 
@@ -50,38 +53,38 @@ namespace BHive
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Float>(const std::string& name, Uniform* uniform)
 	{
-		m_Shader->SetFloat(name, Cast<FloatUniform>(uniform)->GetValue());
+		m_Shader->SetFloat(name, Cast<FloatUniform>(uniform)->Get());
 	}
 
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Bool>(const std::string& name, Uniform* uniform)
 	{
-		m_Shader->SetBool(name, Cast<BoolUniform>(uniform)->GetValue());
+		m_Shader->SetBool(name, Cast<BoolUniform>(uniform)->Get());
 	}
 
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Int>(const std::string& name, Uniform* uniform)
 	{
-		m_Shader->SetInt(name, Cast<IntUniform>(uniform)->GetValue());
+		m_Shader->SetInt(name, Cast<IntUniform>(uniform)->Get());
 	}
 
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Vec2>(const std::string& name, Uniform* uniform)
 	{
-		m_Shader->SetVec2(name, Cast<Vector2Uniform>(uniform)->GetValue());
+		m_Shader->SetVec2(name, Cast<Vec2Uniform>(uniform)->Get());
 	}
 
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Vec3>(const std::string& name, Uniform* uniform)
 	{
-		m_Shader->SetVec3(name, Cast<Vector3Uniform>(uniform)->GetValue());
+		m_Shader->SetVec3(name, Cast<Vec3Uniform>(uniform)->Get());
 	}
 
 	template<>
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Sampler>(const std::string& name, Uniform* uniform)
 	{
 		SamplerUniform* samplerUniform = Cast<SamplerUniform>(uniform);
-		auto tex = samplerUniform->GetValue();
+		auto tex = samplerUniform->Get();
 		if (tex)
 		{
 			tex->Bind(samplerUniform->m_SamplerIndex);
@@ -97,7 +100,7 @@ namespace BHive
 	inline void Material::SetUniformImpl<ShaderUniformTypes::SamplerCube>(const std::string& name, Uniform* uniform)
 	{
 		SamplerCubeUniform* samplerUniform = Cast<SamplerCubeUniform>(uniform);
-		auto tex = samplerUniform->GetValue();
+		auto tex = samplerUniform->Get();
 		if (tex)
 		{
 			tex->Bind(samplerUniform->m_SamplerIndex);
@@ -107,6 +110,22 @@ namespace BHive
 		{
 			m_Shader->SetInt(name, 0);
 		}
+	}
+
+	template<typename T>
+	void Material::SetParameter(const std::string& name, const T& value)
+	{
+		if(m_Parameters.find(name) == m_Parameters.end()) return;
+
+		auto uniform = m_Parameters[name].get();
+		if (auto typeuniform = Cast<TypeUniform<T>>(uniform))
+		{
+			typeuniform->Set(value);
+
+			return;
+		}
+		
+		BH_CORE_ERROR("Uniform Type must derive from template TypeUniform!");
 	}
 
 	template<ShaderUniformTypes Type>

@@ -469,7 +469,7 @@ namespace BHive
 			return changed;
 		}
 
-		bool TransformProperty(const char* label, Transform& p, float speed = 1.0f, float min = 0.0f, float max = 0.0f)
+		bool TransformProperty(const char* label, Transform& p, float speed = .1f, float min = 0.0f, float max = 0.0f)
 		{
 			ImGui::Text(label);
 			ImGui::Separator();
@@ -577,13 +577,13 @@ namespace BHive
 
 				DefaultAssetProperty<T>(a);
 
-				for (auto& asset : AssetManager::GetAssets<T>())
+				for (auto& asset : AssetManager::GetAssetsOfType<T>())
 				{
 					ImGui::PushID(i++);
 					std::string name = asset.second->GetName();
 					if (ImGui::Selectable(name.c_str(), name == (a.get() ? a->GetName() : std::string(""))))
 					{
-						a = asset.second;
+						a = CastPointer<T>(asset.second);
 						changed = true;
 					}
 					ImGui::PopID();
@@ -602,32 +602,6 @@ namespace BHive
 			AssetProperty_Impl(label, a);
 		}
 
-		/*template<>
-		void AssetProperty_Impl(const std::string& label, Ref<Material>& a)
-		{
-			ImGui::PushID(GetID(label).c_str());
-			if (ImGui::BeginCombo(GetID(label).c_str(), a.get() ? a->GetName().c_str() : ""))
-			{
-				int i = 0;
-
-				DefaultAssetProperty<Material>(a);
-
-				for (auto& asset : AssetManager::GetAssets<Material>())
-				{
-					ImGui::PushID(i++);
-					std::string name = asset.second->GetName();
-					if (ImGui::Selectable(name.c_str(), name == (a.get() ? a->GetName() : std::string(""))))
-					{
-						a = asset.second;
-					}
-					ImGui::PopID();
-				}
-				ImGui::EndCombo();
-			}
-
-			ImGui::PopID();
-		}*/
-
 		template<>
 		void Property(const char* label, Ref<Font>& a)
 		{
@@ -637,13 +611,13 @@ namespace BHive
 
 				DefaultAssetProperty<Font>(a);
 
-				for (auto& asset : AssetManager::GetAssets<Font>())
+				for (auto& asset : AssetManager::GetAssetsOfType<Font>())
 				{
 					ImGui::PushID(i++);
 					std::string name = asset.second->GetName();
 					if (ImGui::Selectable(name.c_str(), name == (a.get() ? a->GetName() : std::string(""))))
 					{
-						a = asset.second;
+						a = CastPointer<Font>(asset.second);
 					}
 					ImGui::PopID();
 				}
@@ -687,6 +661,15 @@ namespace BHive
 		if (ImGui::Selectable("None"))
 		{
 			a = nullptr;
+		}
+	}
+
+	template<>
+	inline void PropertyDetailsBuilder::DefaultAssetProperty(Ref<Material>& a)
+	{
+		if (ImGui::Selectable("None"))
+		{
+			a = AssetManager::Get<Material>("WorldDefault");
 		}
 	}
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "RenderCommands.h"
-#include "BHive/Renderer/Mesh.h"
 
 namespace BHive
 {
@@ -13,10 +12,6 @@ namespace BHive
 
 		static void Begin(const LinearColor4& clearcolor);
 		static void End();
-
-		static Ref<Model> Plane(float width, float height);
-		static Ref<Model> Triangle(float width, float height);
-		static Ref<Model> Quad();
 
 		static void Draw(const std::shared_ptr<VertexArray>& vertexArray);
 

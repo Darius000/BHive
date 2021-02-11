@@ -249,7 +249,7 @@ namespace BHive
 		float ContentBrowserSize = ImGui::GetWindowContentRegionWidth();
 
 		size_t i = 0;
-		for (auto& asset : AssetManager::GetAssets<IAssetType>())
+		for (auto& asset : AssetManager::GetAssets())
 		{
 			if (!m_CurrentFilters.empty())
 			{

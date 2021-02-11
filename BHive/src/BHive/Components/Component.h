@@ -5,7 +5,7 @@
 #include "BHive/Renderer/VertexArray.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"
 #include "BHive/Renderer/Texture.h"
-#include "BHive/Renderer/Mesh.h"
+#include "BHive/Renderer/Model/Mesh.h"
 #include "TypeTraits.h"
 
 namespace BHive
@@ -82,18 +82,18 @@ namespace BHive
 		bool m_FixedAspectRatio = false;
 	};
 
-	class ScriptEntity;
+	class CPPScript;
 	struct NativeScriptComponent
 	{
 		NativeScriptComponent() = default;
 		NativeScriptComponent(const NativeScriptComponent&)  = default;
 
-		std::function<void(ScriptEntity*)> OnCreateFunc;
-		std::function<void(ScriptEntity*)> OnDestroyFunc;
-		std::function<void(ScriptEntity*, const Time&)> OnUpdateFunc;
+		std::function<void(CPPScript*)> OnCreateFunc;
+		std::function<void(CPPScript*)> OnDestroyFunc;
+		std::function<void(CPPScript*, const Time&)> OnUpdateFunc;
 		std::function<void()>InstantiateFunc;
 
-		Ref<ScriptEntity> Instance = nullptr;
+		Ref<CPPScript> Instance = nullptr;
 
 		template<typename T>
 		void Bind()
@@ -103,13 +103,13 @@ namespace BHive
 			InstantiateFunc = [&](){ Instance = Make_Ref<T>(); };
 
 			if constexpr (TypeTraits::HasOnCreateFunction<T>())
-				OnCreateFunc = [](ScriptEntity* t){ ((T*)t)->OnCreate(); };
+				OnCreateFunc = [](CPPScript* t){ ((T*)t)->OnCreate(); };
 
 			if constexpr (TypeTraits::HasOnDestroyFunction<T>())
-				OnDestroyFunc = [](ScriptEntity* t) { ((T*)t)->OnDestroy(); };
+				OnDestroyFunc = [](CPPScript* t) { ((T*)t)->OnDestroy(); };
 
 			if constexpr (TypeTraits::HasOnUpdateFunction<T>())
-				OnUpdateFunc = [](ScriptEntity* t, const Time& time) { ((T*)t)->OnUpdate(time); };
+				OnUpdateFunc = [](CPPScript* t, const Time& time) { ((T*)t)->OnUpdate(time); };
 		}
 	};
 }

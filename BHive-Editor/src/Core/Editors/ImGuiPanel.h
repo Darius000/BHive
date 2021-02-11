@@ -33,7 +33,9 @@ namespace BHive
 
 		inline bool IsOpen() const { return m_IsOpen; }
 
-		inline bool IsFocusedAndHoverd() const { return b_IsFocused && b_IsHovered; }
+		virtual void OnFocused();
+		virtual void OnUnFocused();
+		bool IsFocusedAndHoverd() const;
 
 	private:
 		bool m_IsOpen = true;

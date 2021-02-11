@@ -14,8 +14,8 @@ namespace BHive
 
 		static Quaternion FromEuler(const Rotator& angles);
 		static Quaternion FromEuler(float pitch, float yaw, float roll);	
-		static glm::mat4 ToMatrix(const Quaternion& quat);
-		static Rotator ToRotator(const Quaternion& quat);
+		glm::mat4 ToMatrix();
+		Rotator ToRotator();
 
 		glm::quat m_Quaternion;
 

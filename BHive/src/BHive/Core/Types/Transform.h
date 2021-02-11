@@ -2,10 +2,6 @@
 
 namespace BHive
 {
-	struct Transform;
-
-	DECLARE_ONE_PARAMETER_EVENT(TransformUpdated, Transform&, newTransform)
-
 	struct Transform
 	{
 	public:
@@ -33,15 +29,19 @@ namespace BHive
 
 		const BString ToString() const;
 
-		FTransformUpdatedEvent OnTransformUpdated;
-
 		void RecalulateModelMatrix();
 
 	private:
+		void RecalulateModelMatrixInternal(Transform& transform);
+
 		FVector3 m_Position;
 		Rotator m_Rotation;
 		FVector3 m_Scale;
 		glm::mat4  m_ModelMatrix;
+		glm::mat4 m_TranslationMatrix;
+		glm::mat4 m_RotationMatrix;
+		glm::mat4 m_ScaleMatrix;	
+		glm::quat quat;
 	};
 
 	inline std::ostream& operator<<(std::ostream& os, const Transform& transform)

@@ -1,6 +1,6 @@
 #include "BHivePCH.h"
 #include "MeshEditorCustomizationDetails.h"
-#include "BHive/Renderer/Mesh.h"
+
 
 namespace BHive
 {

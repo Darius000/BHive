@@ -4,7 +4,7 @@
 #include <filesystem>
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
-#include "Renderer/Model.h"
+#include "Renderer/Model/Model.h"
 #include "AssetManagers.h"
 
 namespace BHive

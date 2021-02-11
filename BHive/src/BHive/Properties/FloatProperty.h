@@ -12,7 +12,7 @@ namespace BHive
 	public:
 		BH_Property(){};
 		BH_Property(const std::string& propertyName, float* val, float defaultValue = 0.0f,
-			float min = 0.0f, float max = 0.0f, float speed = 1.0f,
+			float min = 0.0f, float max = 0.0f, float speed = .1f,
 			bool button = false, LinearColor4 color = { .5f, .5f, .5f, 1.0f }, bool columnspacing = true,
 			Reflection::PropertyTags tags = (Reflection::PropertyTags)0,
 			Reflection::PropertyMetaData metaData = (Reflection::PropertyMetaData)0, FunctionCallback callback = nullptr)

@@ -37,4 +37,10 @@ namespace BHive
 	{
 		return dynamic_cast<Derived*>(obj);
 	}
+
+	template<typename Derived, typename Base>
+	Ref<Derived> CastPointer(Ref<Base>& obj)
+	{
+		return std::dynamic_pointer_cast<Derived>(obj);
+	}
 }

@@ -18,4 +18,12 @@
 #include "BHive/Renderer/Framebuffer.h"
 #include "BHive/Renderer/Texture.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"
-#include "BHive/Renderer/Mesh.h"
+
+
+//----------Models-------------------
+#include "BHive/Renderer/Model/Mesh.h"
+
+//---------Models with predefined meshes
+#include "BHive/Renderer/Model/Plane.h"
+#include "BHive/Renderer/Model/Triangle.h"
+#include "BHive/Renderer/Model/Quad.h"

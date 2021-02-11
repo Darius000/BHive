@@ -113,8 +113,9 @@ void main()
 
 	//environment Mapping
 	//vec3 R = reflect(viewDirection, normalize(normal));
+	vec3 I = normalize( fragPos - CameraPosition);
 	float ratio = 1.00 / 1.52;
-	vec3 R = refract(viewDirection, normalize(normal), ratio);
+	vec3 R = refract(I, normalize(normal), ratio);
 	vec3 EnvironmentColor = texture(environmentTexture, R).rgb;
 	
 	vec3 albedo = texture(albedocolor, texcoord).rgb ;	

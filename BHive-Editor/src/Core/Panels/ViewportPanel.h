@@ -24,20 +24,30 @@ namespace BHive
 		bool OnKeyPressed(KeyPressedEvent& e) override;
 		bool OnKeyReleased(KeyReleasedEvent& e) override;
 
+		void OnUnFocused() override;
+
 		Ref<Viewport> m_Viewport;
 
+		void FocusOnEntity();
 		void Zoom(float offset);
 		void Pan(float xOffset, float yOffset);
+		void Orbit(float yaw, float pitch);
 
 	private:
 		FVector2 m_ViewportSize = { 0, 0 };
+		FVector3 m_FocusedPosition = {};
 
 		//Mouse
-		float m_ZoomSpeed = .5f;
-		FVector3 m_CameraPosition;
-		float m_CameraSpeed = 1.0f;
-		Rotator m_CameraRotation;
-		float m_ZoomLevel;
+		float m_ZoomSpeed = 1.0f;
+		float m_PanSpeed = 15.0f;
+		float m_CameraDistance = 0.0f;
+
+		float m_OrbitalSpeed = 100.0f;
+
+		/*x = yaw, y = pitch in radians*/
+		float Yaw = 0.0f;
+		float Pitch = 0.0f;
+
 		bool m_AltPressed = false;
 		bool m_bMiddleMouseButtonPressed = false;
 		bool m_bLeftMouseButtonPressed = false;

@@ -8,4 +8,10 @@ namespace BHive
 
 	}
 
+	Assets AssetManager::GetAssets()
+	{
+		return AssetList::s_Assets;
+	}
+
+	Assets AssetList::s_Assets;
 }

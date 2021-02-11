@@ -4,6 +4,12 @@
 
 namespace BHive
 {
+
+	Model::Model(const Ref<FMesh>& mesh)
+	{
+		AddMesh(0 , mesh);
+	}
+
 	void Model::Render()
 	{
 		for (auto& mesh : m_Meshes)
@@ -156,7 +162,7 @@ namespace BHive
 			Faces.push_back(meshFace);
 		}
 
-		Mesh->SetMaterial(AssetManager::Get<Material>(DefaultMaterialName));
+		Mesh->SetMaterial(AssetManager::Get<Material>("WorldDefault"));
 		Mesh->m_ImportedTangentAndBitTangents = ImportTangetsAndBitTangets && mesh->HasTangentsAndBitangents();
 		Mesh->SetVerticesAndIndices(Vertices, Indices, Faces);
 		return Mesh;
@@ -183,7 +189,7 @@ namespace BHive
 		}
 	}
 
-	void Model::AddMesh(uint32 id, Ref<FMesh>& Mesh)
+	void Model::AddMesh(uint32 id, const Ref<FMesh>& Mesh)
 	{
 		m_Meshes.emplace(std::pair{ id , Mesh });
 	}

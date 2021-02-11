@@ -7,21 +7,19 @@
 namespace BHive
 {
 	
-	template<class T = IAssetType>
-	using Assets = std::unordered_map<std::string, Ref<T>>;
+	//template<class T = IAssetType>
+	using Assets = std::unordered_map<std::string, Ref<IAssetType>>;
 
-	template<class T = IAssetType>
+	//template<class T = IAssetType>
 	class AssetList
 	{
 		
 	public:
-		static Assets<T> s_Assets;
+		static Assets s_Assets;
 
 		friend class AssetManager;
 	};
 
-	template<class T>
-	Assets<T> AssetList<T>::s_Assets;
 
 	class AssetManager
 	{
@@ -44,24 +42,35 @@ namespace BHive
 		template<class T = IAssetType>
 		static bool Exists(const std::string& name);
 
-		template<class T = IAssetType>
-		static Assets<T> GetAssets();
+		template<typename T>
+		static Assets GetAssetsOfType();
+
+		//template<class T = IAssetType>
+		static Assets GetAssets();
 	};
 
 	template<class T>
 	Ref<T> AssetManager::Get(const std::string& name)
 	{
-		if(Exists<T>(name) )
-			return AssetList<T>::s_Assets[name];
-		else
-			return nullptr;
+		BH_CORE_ASSERT(Exists<T>(name), "Asset doesn't exist");
+
+		return CastPointer<T>(AssetList::s_Assets[name]);
 	}
 
 	template<class T>
 	bool AssetManager::Exists(const std::string& name)
 	{
-		return AssetList<T>::s_Assets.find(name) != AssetList<T>::s_Assets.end()
-		&& AssetList<IAssetType>::s_Assets.find(name) != AssetList<IAssetType>::s_Assets.end();
+		if (AssetList::s_Assets.find(name) != AssetList::s_Assets.end())
+		{
+			if(Cast<T>(AssetList::s_Assets[name].get()))
+			{ 
+				return true;
+			}
+
+			return true;
+		}
+			
+		return false;
 	}
 
 	template<class T, typename... Args>
@@ -70,8 +79,7 @@ namespace BHive
 		Ref<T> asset = Make_Ref<T>(std::forward<Args>(args)...);
 		asset->SetName(name);
 		if (Exists<T>(name)) BH_CORE_ERROR("Asset with name already exists");
-		AssetList<T>::s_Assets.insert({ name, asset });
-		AssetList<IAssetType>::s_Assets.insert({name, asset});
+		AssetList::s_Assets.insert({ name, asset });
 		return asset;
 	}
 
@@ -81,8 +89,7 @@ namespace BHive
 		asset->SetName(name);
 		if (!Exists<T>(name))
 		{
-			AssetList<T>::s_Assets.insert({ name, asset });
-			AssetList<IAssetType>::s_Assets.insert({ name, asset });
+			AssetList::s_Assets.insert({ name, asset });
 		}
 	}
 
@@ -91,14 +98,23 @@ namespace BHive
 	{
 		if (Exists<T>(name))
 		{
-			AssetList<T>::s_Assets.erase(name);
-			AssetList<IAssetType::s_Assets.erase(name);
+			AssetList::s_Assets.erase(name);
 		}
 	}
 
-	template<class T>
-	Assets<T> AssetManager::GetAssets()
+	template<typename T>
+	Assets AssetManager::GetAssetsOfType()
 	{
-		return AssetList<T>::s_Assets;
+		Assets assets;
+		
+		for (auto asset : AssetList::s_Assets)
+		{
+			if (CastPointer<T>(asset.second))
+			{
+				assets.emplace(asset.first, asset.second);
+			}
+		}
+
+		return assets;
 	}
 }

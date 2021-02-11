@@ -6,31 +6,11 @@
 #include "Factory/Factory.h"
 #include "BHive/Components/Component.h"
 #include "Editors/EditorStack.h"
-
+#include "Scripts/OrbitScript.h"
+#include "Scripts/LookAt.h"
 
 namespace BHive
 { 
-
-	class MoveCubeScript : public ScriptEntity
-	{
-	public:
-		MoveCubeScript() = default;
-
-		void OnCreate()
-		{
-			GetComponent<TransformComponent>().m_Transform.SetRotation(0.0f, 0.0f, 0.0f);
-		}
-
-		void OnUpdate(const Time& time)
-		{
-			auto& transform = GetComponent<TransformComponent>().m_Transform;
-			auto pos = transform.GetPosition();
-			auto forw = transform.GetForward();
-			pos += forw * 1.0f * time.GetDeltaTime();
-			transform.SetPosition(pos);
-		}
-	};
-
 	EditorLayer::EditorLayer()
 		:Layer("EditorLayer")
 	{
@@ -72,7 +52,11 @@ namespace BHive
 
 		Scene* scene = SceneManager::CreateScene("Default");
 
-		AssetManager::CreateAsset<Material>(DefaultMaterialName, AssetManager::Get<Shader>("BlinnPhong"));
+
+		auto WorldDefaultMat = AssetManager::CreateAsset<Material>("WorldDefault", AssetManager::Get<Shader>("BlinnPhong"));
+		WorldDefaultMat->SetParameter("material.diffuse", FVector3(.5f));
+
+		AssetManager::CreateAsset<Material>("Blinn Phong Material", AssetManager::Get<Shader>("BlinnPhong"));
 		AssetManager::CreateAsset<Material>("Material2", AssetManager::Get<Shader>("BlinnPhong"));
 		AssetManager::CreateAsset<Material>("Toon Mat Test", AssetManager::Get<Shader>("Toon"));
 
@@ -94,22 +78,12 @@ namespace BHive
 
 		Import("Import/Meshes/Cube.obj");
 		Import("Import/Meshes/CubeFlipped.obj");
-		//Import("Import/Textures/container.jpg");
-		//Import("Import/Textures/grass.png");
-		//Import("Import/Textures/matrix.jpg");
-		//Import("Import/Textures/smoke.png");
-		//Import("Import/Meshes/Shotgun/SO_SG_Mat_normal.jpeg");
-		//Import("Import/Meshes/Shotgun/SO_SG_Mat_albedo.jpeg");
-		//Import("Import/Meshes/Frag1/Frag_1_M_A.png");
-		//Import("Import/Meshes/Frag2/Frag_2_M_A.png");
-		//Import("Import/Meshes/lantern.obj");
-		//Import("Import/Meshes/Grenades.obj");
-		//Import("Import/Meshes/Shotgun.obj");
 
-		auto planeMesh = Renderer2D::Plane(10.0f, 10.0f);
+		auto planeMesh =  Make_Ref<Plane>(5.0f, 5.0f);
+		auto triangleMesh = Make_Ref<Triangle>(10.0f, 10.0f);
 
-		AssetManager::Add("Triangle" , Renderer2D::Triangle(10.0f, 10.0f));
-		AssetManager::Add("Plane" , planeMesh);
+		AssetManager::Add<Model>("Triangle" , triangleMesh);
+		AssetManager::Add<Model>("Plane" , planeMesh);
 
 		auto& PlaneEnt = scene->CreateEntity("Plane");
 		auto& planeRC = PlaneEnt.AddComponent<RenderComponent>();
@@ -122,11 +96,14 @@ namespace BHive
 		renderComponent1.m_Model = AssetManager::Get<Model>("Triangle");
 
 		auto cube = scene->CreateEntity("Cube");
-		cube.GetComponent<TransformComponent>().m_Transform.SetScale(2.0f);
+		auto& cubetransform = cube.GetComponent<TransformComponent>().m_Transform;
+			
 		auto& rendercomponent2 = cube.AddComponent<RenderComponent>();
 		rendercomponent2.m_Model = AssetManager::Get<Model>("Cube");
-		auto& script = cube.AddComponent<NativeScriptComponent>();
-		script.Bind<MoveCubeScript>();
+
+		PlaneEnt.GetComponent<TransformComponent>().m_Transform.SetPosition(0.0f, 0.0f, 6.0f);
+		auto& script = PlaneEnt.AddComponent<NativeScriptComponent>();
+		script.Bind<OrbitScript>();
 
 		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
 

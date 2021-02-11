@@ -27,6 +27,8 @@ namespace BHive
 		T GetMagnitude() const;
 		T GetMagnitude2() const;
 		Vector3 Normalize();
+		Vector3 Cross(const Vector3& other) const ;
+		T Dot(const Vector3& other) const;
 		T GetDistance(const Vector3& b) const;
 	public:
 		static const Vector3 Zero();
@@ -34,10 +36,10 @@ namespace BHive
 		static float GetAngle(const Vector3& a, const Vector3& b) ;
 		static T GetDistance(const Vector3& a, const Vector3& b);
 	public:
-		Vector3 operator+(const Vector3& _other);
-		Vector3 operator-(const Vector3& _other);
-		Vector3 operator*(T _scalar);
-		Vector3 operator/(T _scalar);
+		Vector3 operator+(const Vector3& _other) const;
+		Vector3 operator-(const Vector3& _other) const;
+		Vector3 operator*(T _scalar) const;
+		Vector3 operator/(T _scalar) const;
 		Vector3 operator+=(const Vector3& _other);
 		Vector3 operator-=(const Vector3& _other);
 		Vector3 operator*=(T _scalar);
@@ -45,8 +47,8 @@ namespace BHive
 		Vector3 operator-();
 		T* operator*();
 		const T* operator*() const;
-		float operator*(const Vector3& _other);
-		Vector3 operator^(const Vector3& _other);
+		float operator*(const Vector3& _other) const;
+		Vector3 operator^(const Vector3& _other) const;
 		operator glm::vec3() const { return {x, y, z}; }
 
 		T& operator[](uint32 index);
@@ -62,6 +64,22 @@ namespace BHive
 	public:
 		BString ToString() const { return Format("{%f, %f, %f}", x, y, z); }
 	};
+
+	template<typename T>
+	T Vector3<T>::Dot(const Vector3& other) const
+	{
+		return (x * other.x) + (y * other.y) + (z * other.z);
+	}
+
+	template<typename T>
+	Vector3<T> Vector3<T>::Cross(const Vector3& other) const
+	{
+		float _x = (y * other.z) - (z * other.y);
+		float _y = (z * other.x) - (x * other.z);
+		float _z = (x * other.y) - (y * other.x);
+
+		return Vector3<T>(_x, _y, _z);
+	}
 
 	template<typename T>
 	T Vector3<T>::GetDistance(const Vector3& a, const Vector3& b) 
@@ -87,7 +105,9 @@ namespace BHive
 	template<typename T>
 	T Vector3<T>::GetMagnitude() const
 	{
-		return sqrt((x * x) + (y * y) + (z * z));
+		float length = sqrt((x * x) + (y * y) + (z * z));
+
+		return length;
 	}
 
 	template<typename T>
@@ -115,13 +135,13 @@ namespace BHive
 	}
 
 	template<typename T>
-	Vector3<T> Vector3<T>::operator+(const Vector3<T>& _other)
+	Vector3<T> Vector3<T>::operator+(const Vector3<T>& _other) const
 	{
 		return Vector3(x + _other.x, y + _other.y, z + _other.z);
 	}
 
 	template<typename T>
-	Vector3<T> Vector3<T>::operator-(const Vector3<T>& _other)
+	Vector3<T> Vector3<T>::operator-(const Vector3<T>& _other) const
 	{
 		return Vector3(x - _other.x, y - _other.y, z - _other.z);
 	}
@@ -133,13 +153,13 @@ namespace BHive
 	}
 
 	template<typename T>
-	Vector3<T> Vector3<T>::operator*(T _scalar)
+	Vector3<T> Vector3<T>::operator*(T _scalar) const
 	{
 		return Vector3(x * _scalar, y * _scalar, z  * _scalar);
 	}
 
 	template<typename T>
-	Vector3<T> Vector3<T>::operator/(T _scalar)
+	Vector3<T> Vector3<T>::operator/(T _scalar) const
 	{
 		return Vector3(x / _scalar, y / _scalar, z / _scalar);
 	}
@@ -169,19 +189,15 @@ namespace BHive
 	}
 
 	template<typename T>
-	float Vector3<T>::operator*(const Vector3<T>& _other)
+	float Vector3<T>::operator*(const Vector3<T>& _other) const
 	{
-		return (x * _other.x) + (y * _other.y) + (z * _other.z);
+		return Dot(_other);
 	}
 
 	template<typename T>
-	Vector3<T> Vector3<T>::operator^(const Vector3<T>& _other)
+	Vector3<T> Vector3<T>::operator^(const Vector3<T>& _other) const
 	{
-		float _x = (y * _other.z) - (z * _other.y);
-		float _y = (z * _other.x) - (x * _other.z);
-		float _z = (x * _other.y) - (y * _other.x);
-
-		return Vector3(_x, _y, _z);
+		return Cross(_other);
 	}
 
 	template<typename T>

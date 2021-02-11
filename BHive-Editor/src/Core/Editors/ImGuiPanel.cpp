@@ -28,7 +28,16 @@ namespace BHive
 
 		//Check if window is focused and hovered
 		b_IsFocused = ImGui::IsWindowFocused();
-		b_IsHovered = ImGui::IsWindowHovered();
+		b_IsHovered = ImGui::IsWindowHovered();	
+
+		/*if (b_IsFocused)
+		{
+			OnFocused();
+		}
+		else
+		{
+			OnUnFocused();
+		}*/
 	}
 
 	void ImGuiPanel::OnRender()
@@ -96,6 +105,21 @@ namespace BHive
 	bool ImGuiPanel::OnKeyReleased(KeyReleasedEvent& e)
 	{
 		return false;
+	}
+
+	void ImGuiPanel::OnFocused()
+	{
+
+	}
+
+	void ImGuiPanel::OnUnFocused()
+	{
+
+	}
+
+	bool ImGuiPanel::IsFocusedAndHoverd() const
+	{
+		return b_IsFocused && b_IsHovered;
 	}
 
 }

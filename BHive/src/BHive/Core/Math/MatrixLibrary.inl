@@ -101,7 +101,7 @@ namespace BHive
 				vec4(Row[2], 0.0f), vec4(0, 0, 0, LocalMatrix[3].w));
 
 			Quaternion quat = Quaternion(matrix);
-			rotation = Quaternion::ToRotator(quat);
+			rotation = quat.ToRotator();
 
 			return true;	
 		}

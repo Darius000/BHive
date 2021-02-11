@@ -14,6 +14,7 @@ namespace BHive
 		DEFINE_ASSET_BODY(Model, "meshicon")
 
 		Model() = default;
+		Model(const Ref<FMesh>& mesh);
 		virtual ~Model() = default;
 
 		void Render();
@@ -38,7 +39,7 @@ namespace BHive
 		Meshes& GetMeshes() { return m_Meshes; }
 		WinPath& GetDirectory() { return m_OriginalDirectory; }
 	public:
-		void AddMesh(uint32 id, Ref<FMesh>& Mesh);
+		void AddMesh(uint32 id, const Ref<FMesh>& Mesh) ;
 
 	private:
 		Meshes m_Meshes;

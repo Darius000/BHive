@@ -61,6 +61,7 @@
 #include "BHive/Core/Layer.h"
 #include "BHive/Core/Application.h"
 #include "BHive/Object/Entity.h"
+#include "BHive/Object/Script.h"
 #include "BHive/Core/Types/Array.h"
 
 
@@ -72,5 +73,5 @@
 	#include <Windows.h>
 #endif // !BH_PLATFORM_WINDOWS
 
-
+#define DEGREE_ANGLES 1
 

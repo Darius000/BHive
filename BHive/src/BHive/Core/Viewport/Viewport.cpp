@@ -2,6 +2,7 @@
 #include "Viewport.h"
 #include "Renderer/Renderer2D.h"
 #include "Platforms/Opengl/OpenglFramebuffer.h"
+#include "Renderer/Model/Quad.h"
 
 namespace BHive
 {
@@ -32,11 +33,11 @@ namespace BHive
 
 		Resize(specs.Width, specs.Height);
 
-		quad = Renderer2D::Quad();
+		quad = Make_Ref<Quad>();
 		ppm = AssetManager::CreateAsset<Material>("PPM", AssetManager::Get<Shader>("PostProcessing"));
 		quad->GetMesh(0)->SetMaterial(ppm);
 
-		blurquad = Renderer2D::Quad();
+		blurquad = Make_Ref<Quad>();
 		blurppm = AssetManager::CreateAsset<Material>("BluePPM", AssetManager::Get<Shader>("BlurPostProcessing"));
 		blurquad->GetMesh(0)->SetMaterial(blurppm);
 	}
