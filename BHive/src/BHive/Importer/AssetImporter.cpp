@@ -55,6 +55,8 @@ namespace BHive
 		{
 			AssetManager::Add(path.GetName(), assetRef);
 
+			BH_CORE_INFO("Successfully Imported {0}", path.GetName());
+
 			return;
 		}
 
