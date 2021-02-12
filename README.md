@@ -17,9 +17,10 @@ Different bloom and HDR settings
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_11.png?raw=true)
 
 ## Editors
-## Textures
-Texture viewer still a work in progress ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_12.png?raw=true)
-## Shaders
+### Textures
+Texture viewer still a work in progress 
+![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_12.png?raw=true)
+### Shaders
 Editor to modify .glsl shading files![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_13.png?raw=true)
 ### Meshes
 Mesh viewer still a work in progress ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_14.png?raw=true)
