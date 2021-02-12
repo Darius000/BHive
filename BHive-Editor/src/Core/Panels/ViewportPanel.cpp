@@ -308,7 +308,6 @@ namespace BHive
 		auto NewCamPosition = CamPosition  + (CamTransform.GetRight() * xOffset) + (CamTransform.GetUp() * yOffset);
 		CamTransform.SetPosition(NewCamPosition);
 		m_CameraDistance = CamTransform.GetPosition().GetMagnitude();
-		m_FocusedPosition = CamTransform.GetForward();
 	}
 
 	void ViewportPanel::Orbit(float yaw, float pitch)

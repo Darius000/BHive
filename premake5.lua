@@ -49,6 +49,8 @@ project "BHive"
 
     files
     {
+        "%{prj.name}/**.inl",
+        "%{prj.name}/**.glsl",
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
 		"%{prj.name}/src/**.inl",
@@ -83,7 +85,7 @@ project "BHive"
         "%{IncludeDir.Serialization}"
     }
 
-    libdirs {"%{prj.name}/vendor/assimp/lib", 
+    libdirs {"%{prj.name}/vendor/Assimp/lib", 
         "%{prj.name}/vendor/rttr/lib",
         "%{prj.name}/vendor/FreeType/lib"}
 
@@ -95,7 +97,7 @@ project "BHive"
         "Reflection",
         "Serialization",
         "rttr_core_lib_s_d.lib",
-        "assimp.lib",
+        "assimp-vc142-mtd.lib",
         "zlibstaticd.lib",
         "IrrXMLd.lib",
         "opengl32.lib",
@@ -146,7 +148,7 @@ project "Sandbox"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-		"%{prj.name}/Assets/**"
+        "%{prj.name}/**.json"
     }
 
     includedirs
@@ -205,7 +207,7 @@ project "BHive-Editor"
     {
         "%{prj.name}/src/**.h",
         "%{prj.name}/src/**.cpp",
-		"%{prj.name}/Assets/**"
+        "%{prj.name}/**.json"
     }
 
     includedirs
