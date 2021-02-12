@@ -9,6 +9,5 @@ namespace BHive
 	{
 		std::string m_Name;
 		Ref<Font> m_Font = nullptr;
-		WinPath m_FilePath = "";
 	};
 }

@@ -32,7 +32,7 @@ namespace BHive
 		return nullptr;
 	}
 
-	bool Shader::IsExtensionSupported(const BString ext)
+	bool Shader::IsExtensionSupported(const std::string& ext)
 	{
 		return std::find(s_SupportedExtension.begin(), s_SupportedExtension.end(), ext) !=
 			s_SupportedExtension.end();

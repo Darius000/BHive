@@ -72,7 +72,7 @@ namespace BHive
 		ImGui::SetCursorPos(buttonPos);
 		if (detailsBuilderPtr->Button("+", FVector2(20.0f, 20.0f)))
 		{
-			fontFamily->AddFontToFamily("None", "");
+			fontFamily->AddFontToFamily("None", Make_Ref<Font>());
 		}
 		ImGui::SetCursorPos(textPos);
 		ImGui::Text(text);
@@ -93,11 +93,11 @@ namespace BHive
 			file = FileDialog::OpenFile("Font\0*.ttf*\0").c_str();
 		}
 
-		if (!file.empty())
+	/*	if (!file.empty())
 		{
 			attributes.m_FilePath = WinPath(file.c_str());
 			fontFamily->ReplaceFont(attributes.m_Name, attributes.m_FilePath);
-		}
+		}*/
 		ImVec2 windowSize = ImGui::GetWindowSize();
 		ImVec2 buttonPos = ImVec2(windowSize.x / 2.0f, windowSize.y - (20.0f + 10.0f));
 		ImGui::SetCursorPos(buttonPos);
@@ -111,11 +111,6 @@ namespace BHive
 	{
 		ImGui::BeginChild("Attributes", ImVec2(0, 0), true);
 		ImGui::Text("Attributes");
-		if (ImGui::DragFloat("", &fontFamily->m_Size, 1.0f, 0.1f, 360.0f))
-		{
-			fontFamily->Resize();
-		}
-
 		ImGui::EndChild();
 	}
 }

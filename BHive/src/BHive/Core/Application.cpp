@@ -27,23 +27,7 @@ namespace BHive
 
 		//pass window events to application
 		m_Window->SetEventCallback(BIND_EVENT(Application::OnEvent));
-
-
-		//Create default textures
-		uint8 WhiteTextureData[] = {0xff, 0xff, 0xff, 0xff, '\0'};
-		AssetManager::Add("White", Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
-
-		//Create default black texture
-		uint8 BlackTextureData[] = {0x00, 0x00, 0x00, 0xff, '\0'};
-		AssetManager::Add("Black", Texture2D::Create( 1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
-
-		uint8 BlueTextureData[] = {0x80, 0x80, 0xff, 0xff, '\0'};
-		AssetManager::Add("Blue", Texture2D::Create( 1, 1, GL_RGB8, GL_RGB, (void*)&BlueTextureData));
 	
-		LoadAssets();
-
-		Ref<Texture2D> m_WindowsIcon = AssetManager::Get<Texture2D>("folder");
-		m_Window->SetIcon(m_WindowsIcon);
 		m_Window->SetVSync(false);
 
 		Renderer::Init();
@@ -53,11 +37,23 @@ namespace BHive
 
 		PushOverlay(m_ImGuiLayer);
 
+		//Load default assets after everything is initialized
+		LoadAssets();
+
 		//Load Fonts
 		Ref<FontFamily> opensans = Make_Ref<FontFamily>();
-		opensans->AddFontToFamily("Regular", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Regular.ttf)");
-		opensans->AddFontToFamily("Bold", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Bold.ttf)");
-		opensans->AddFontToFamily("Italic", R"(..\BHive\Assets\Fonts\OpenSans\OpenSans-Italic.ttf)");
+		auto osrfont = AssetManager::Get<Font>("OpenSans-Regular");
+		auto osbfont = AssetManager::Get<Font>("OpenSans-Bold");
+		auto osifont = AssetManager::Get<Font>("OpenSans-Italic");
+
+		if (osrfont && osbfont && osifont)
+		{
+			opensans->AddFontToFamily("Regular", osrfont);
+			opensans->AddFontToFamily("Bold", osbfont);
+			opensans->AddFontToFamily("Italic", osifont);
+			
+		}	
+
 		AssetManager::Add("OpenSans", opensans);
 	}
 
@@ -163,11 +159,26 @@ namespace BHive
 
 	void Application::LoadAssets()
 	{	
+		//Create default textures
+		uint8 WhiteTextureData[] = { 0xff, 0xff, 0xff, 0xff, '\0' };
+		AssetManager::Add("White", Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA, (void*)&WhiteTextureData));
+
+		//Create default black texture
+		uint8 BlackTextureData[] = { 0x00, 0x00, 0x00, 0xff, '\0' };
+		AssetManager::Add("Black", Texture2D::Create(1, 1, GL_RGBA8, GL_RGBA, (void*)&BlackTextureData));
+
+		uint8 BlueTextureData[] = { 0x80, 0x80, 0xff, 0xff, '\0' };
+		AssetManager::Add("Blue", Texture2D::Create(1, 1, GL_RGB8, GL_RGB, (void*)&BlueTextureData));
+
 		BH_PROFILE_SCOPE("Load Engine Assets");
 		WinPath EngineAssetFolder("..\\BHive\\Assets");
 		WinPath SandBoxAssetFolder("..\\Sandbox\\Assets");
 		AssetImporter::ImportDirectoryContents(EngineAssetFolder);
 		AssetImporter::ImportDirectoryContents(SandBoxAssetFolder);
+
+		//Set window icon after loading texture
+		Ref<Texture2D> m_WindowsIcon = AssetManager::Get<Texture2D>("folder");
+		m_Window->SetIcon(m_WindowsIcon);
 	}
 
 }

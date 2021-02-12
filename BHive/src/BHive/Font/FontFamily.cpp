@@ -10,12 +10,11 @@ namespace BHive
 		m_Fonts = font.m_Fonts;
 	}
 
-	void FontFamily::AddFontToFamily(const std::string& name, const WinPath& file)
+	void FontFamily::AddFontToFamily(const std::string& name, Ref<Font>& font)
 	{
 		if(!DoesFontExist(name))
 		{ 
-			Ref<Font> font = LoadFont(file, m_Size);
-			FontAttributes attr = {name, font, file};
+			FontAttributes attr = {name, font};
 			m_Fonts.insert({name, attr});
 			return;
 		}
@@ -62,19 +61,6 @@ namespace BHive
 		if(hasFontWithNewName) BH_CORE_WARN("Cannnot rename font to font that already exists");
 	}
 
-	void FontFamily::Resize(float size)
-	{
-		for (auto& font : m_Fonts)
-		{
-			LoadFont(font.second.m_FilePath, size);
-		}
-	}
-
-	void FontFamily::Resize()
-	{
-		Resize(m_Size);
-	}
-
 	bool FontFamily::DoesFontExist(const std::string& name)
 	{
 		auto font = m_Fonts.find(name);
@@ -86,11 +72,8 @@ namespace BHive
 		if(file.Empty()) return nullptr;
 
 		m_Size = size;
-		ImGuiIO& io = ImGui::GetIO();
-		ImFont* font = io.Fonts->AddFontFromFileTTF(file.c_str(), size);
-
-		Ref<Font> fontAsset = AssetManager::CreateAsset<Font>(file.GetName(), font);
-		return fontAsset;
+		
+		return Font::Create(file);
 	}
 
 }

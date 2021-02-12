@@ -5,6 +5,7 @@
 #include "Renderer/Shader.h"
 #include "Renderer/Texture.h"
 #include "Renderer/Model/Model.h"
+#include "Font/Font.h"
 #include "Managers/AssetManagers.h"
 
 namespace BHive
@@ -49,6 +50,10 @@ namespace BHive
 		else if (Model::IsExtensionSupported(ext))
 		{
 			importSuccessful = OnImport<Model>(path, assetRef, importstatus);
+		}
+		else if(Font::IsExtensionSupported(ext))
+		{
+			importSuccessful = OnImport<Font>(path, assetRef, importstatus);
 		}
 
 		if (importSuccessful)

@@ -19,14 +19,19 @@ namespace BHive
 		DEFINE_ASSET_BODY(Font, "Font")
 
 	public:
-		Font(){}
-		Font(ImFont* font)
-		{
-			m_Font = font;
-		}
+		Font();
+		Font(ImFont* font);
+
+		static Ref<Font> Create(const WinPath& path);
 
 		ImFont* m_Font;
 
 		std::map<ANSICHAR, FontCharacter> m_Characters;
+
+		static bool IsExtensionSupported(const std::string& ext);
+
+	private:
+		static std::vector<std::string> s_SupportedExtensions;
+		static float s_DefaultSize;
 	};
 }

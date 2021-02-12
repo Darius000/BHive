@@ -15,13 +15,10 @@ namespace BHive
 
 		using Fonts = std::unordered_map<std::string, FontAttributes>;
 		
-		void AddFontToFamily(const std::string& name, const WinPath& file);
+		void AddFontToFamily(const std::string& name, Ref<Font>& font);
 		void ReplaceFont(const std::string& name, const WinPath& filepath);
 		void RemoveFromFamily(const std::string& name);
 		void RenameFont(const std::string& name, const std::string& newname);
-		void Resize(float size);
-		//Call after changing size
-		void Resize();
 		//const Fonts& GetFonts() const { return m_Fonts; }
 		Fonts& GetFonts() { return m_Fonts;}
 
