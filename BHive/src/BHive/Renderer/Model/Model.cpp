@@ -4,7 +4,6 @@
 
 namespace BHive
 {
-
 	Model::Model(const Ref<FMesh>& mesh)
 	{
 		AddMesh(0 , mesh);

@@ -4,16 +4,21 @@
 
 namespace BHive
 {
-	class PopUp
+	class PopUp 
 	{
 	public:
-		PopUp(const char* label);
+		PopUp() = default;
+		PopUp(const std::string& label, const uint64& id);
 
-		virtual void OnImGuiRender();
-		void OpenPopup();
+		virtual void OnRender();
+		
+		bool IsOpen() const { return m_IsOpen; }
+		uint64 GetID() const { return m_ID; }
 
 	protected:
-		const char* m_Label;
-		bool m_IsOpen = false;
+		std::string m_Label;
+		bool m_IsOpen = true;
+		bool m_IsRendering = false;
+		uint64 m_ID;
 	};
 }
