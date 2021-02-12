@@ -9,32 +9,32 @@ BHive is a work in progress game engine that was created orginally for learning 
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_6.png?raw=true)
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_7.png?raw=true)
 
-##Viewport
+## Viewport
 Different bloom and HDR settings
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_8.png?raw=true)
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_9.png?raw=true)
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_10.png?raw=true)
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_11.png?raw=true)
 
-##Editors
-###Meshes
+## Editors
+### Meshes
 Texture viewer still a work in progress
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_12.png?raw=true)
 
-##Textures
+## Textures
 Editor to modify .glsl shading files
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_13.png?raw=true)
 
-##Meshes
+## Meshes
 Mesh Detail viewer still a work in progress
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_14.png?raw=true)
 
-##Translation Gizmo
+## Translation Gizmo
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_15.png?raw=true)
 
-##Rotation Gizmo
+## Rotation Gizmo
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_16.png?raw=true)
 
-##Scale Gizmo
+## Scale Gizmo
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_17.png?raw=true)
 
