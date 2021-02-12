@@ -64,7 +64,6 @@
 #include "BHive/Object/Script.h"
 #include "BHive/Core/Types/Array.h"
 
-
 //#include <assimp/Importer.hpp>
 //#include <assimp/scene.h>
 //#include <assimp/postprocess.h>

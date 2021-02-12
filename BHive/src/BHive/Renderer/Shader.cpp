@@ -31,4 +31,13 @@ namespace BHive
 		BH_CORE_ASSERT(false, "Unknown API");
 		return nullptr;
 	}
+
+	bool Shader::IsExtensionSupported(const BString ext)
+	{
+		return std::find(s_SupportedExtension.begin(), s_SupportedExtension.end(), ext) !=
+			s_SupportedExtension.end();
+	}
+
+	std::vector<std::string> Shader::s_SupportedExtension = { "glsl" };
+
 }

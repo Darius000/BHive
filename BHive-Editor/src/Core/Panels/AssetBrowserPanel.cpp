@@ -145,7 +145,7 @@ namespace BHive
 			std::string file = FileDialog::OpenFile("All\0*.*\0""Object\0*.obj\0");
 			if (!file.empty())
 			{
-				Import(file.c_str());
+				AssetImporter::Import(file.c_str());
 			}
 		}
 

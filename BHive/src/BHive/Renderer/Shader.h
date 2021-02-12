@@ -44,10 +44,14 @@ namespace BHive
 		static Ref<Shader> Create(const WinPath& filePath);
 		static Ref<Shader> Create(const BName& name, const BString& vertexSrc, const BString& fragmentSrc);
 
+		static bool IsExtensionSupported(const BString ext);
+
 	protected:
 		ShaderSource m_Sources = {{ShaderType::VertexShader, ""}, {ShaderType::FragmentShader, ""}};
 		ShaderIDs m_Ids;
-		
+
+	private:
+		static std::vector<std::string> s_SupportedExtension;
 		
 		friend class ShaderEditorCustomizationDetails;
 		friend class Material;

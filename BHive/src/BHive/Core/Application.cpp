@@ -8,10 +8,10 @@
 #include "BHive/Renderer/RenderCommands.h"
 #include "BHive/Core/Input.h"
 #include "BHive/Renderer/Shader.h"
-#include "BHive/Managers/AssetLoader.h"
 #include "BHive/Managers/AssetManagers.h"
 #include "Platforms/Opengl/OpenGLTexture.h"
 #include "BHive/Font/FontFamily.h"
+#include "BHive/Importer/AssetImporter.h"
 
 namespace BHive
 {
@@ -166,9 +166,8 @@ namespace BHive
 		BH_PROFILE_SCOPE("Load Engine Assets");
 		WinPath EngineAssetFolder("..\\BHive\\Assets");
 		WinPath SandBoxAssetFolder("..\\Sandbox\\Assets");
-		m_ApplicationAssetLoader = Make_Scope<AssetLoader>();
-		m_ApplicationAssetLoader->OpenDirectory(EngineAssetFolder);
-		m_ApplicationAssetLoader->OpenDirectory(SandBoxAssetFolder);
+		AssetImporter::ImportDirectoryContents(EngineAssetFolder);
+		AssetImporter::ImportDirectoryContents(SandBoxAssetFolder);
 	}
 
 }

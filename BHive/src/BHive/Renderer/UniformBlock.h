@@ -13,7 +13,7 @@ namespace BHive
 		UniformBlock(const UniformBlock&) = default;
 		UniformBlock(const ANSICHAR* name, size_t blocksize, BindingPoint binding);
 
-		void Bind(const Ref<Shader>& shader);
+		void Bind(const Ref<class Shader>& shader);
 
 		template<typename T>
 		void SendData(size_t offset, const T* uniform);

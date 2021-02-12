@@ -4,7 +4,6 @@
 #include "BHive/Platforms/Windows/Window.h"
 #include "BHive/Core/LayerStack.h"
 #include "BHive/Layers/ImGuiLayer.h"
-#include "BHive/Managers/AssetLoader.h"
 
 namespace BHive
 {
@@ -27,7 +26,6 @@ namespace BHive
 		static inline Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() { return *m_Window; }
 		inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
-		AssetLoader* GetAssetLoader() { return m_ApplicationAssetLoader.get(); }
 
 	private:
 		bool OnWindowClosed(WindowCloseEvent& e);
@@ -41,10 +39,6 @@ namespace BHive
 
 		bool m_Minimized = false;
 		bool m_Running = true;
-
-		//Asset Loader
-		Scope<AssetLoader> m_ApplicationAssetLoader;
-
 	private:
 		static Application* s_Instance;
 

@@ -5,7 +5,7 @@
 #include "BHive/Renderer/VertexArray.h"
 #include "BHive/Platforms/Opengl/OpenGLShader.h"
 #include "BHive/Renderer/Texture.h"
-#include "BHive/Renderer/Model/Mesh.h"
+#include "BHive/Renderer/Model/Model.h"
 #include "TypeTraits.h"
 
 namespace BHive

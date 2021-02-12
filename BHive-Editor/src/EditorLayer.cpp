@@ -76,8 +76,8 @@ namespace BHive
 		auto CubeMapMaterial = AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
 
 
-		Import("Import/Meshes/Cube.obj");
-		Import("Import/Meshes/CubeFlipped.obj");
+		AssetImporter::Import("Import/Meshes/Cube.obj");
+		AssetImporter::Import("Import/Meshes/CubeFlipped.obj");
 
 		auto planeMesh =  Make_Ref<Plane>(5.0f, 5.0f);
 		auto triangleMesh = Make_Ref<Triangle>(10.0f, 10.0f);
