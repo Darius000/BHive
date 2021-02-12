@@ -147,14 +147,25 @@ namespace BHive
 			m_IsUsingGizmo = ImGuizmo::IsUsing();
 			if (m_IsUsingGizmo)
 			{
-				FVector3 translation = {};
-				Rotator rotation = {};
-				FVector3 scale = {};
-				if (MatrixLibrary::DecomposeMatrixToTransform(transform, translation, rotation, scale))
-				{
+				//Take the new transform and get the position, scale and rotation (using quaternions)
+				glm::vec3 translation, scale, skew;
+				glm::vec4 perspective;
+				glm::quat orientation;
+				if(glm::decompose(transform, scale, orientation, translation, skew, perspective))
+				{ 
+					auto angles = glm::eulerAngles(orientation);
+
+					Rotator rotation;
+					rotation.roll = MathLibrary::ToDegrees(angles.x);
+					rotation.yaw = MathLibrary::ToDegrees(angles.y);
+					rotation.pitch = MathLibrary::ToDegrees(angles.z);
+
+					FVector3 newposition = {translation.x, translation.y, translation.z};
+					FVector3 newscale = {scale.x, scale.y, scale.z};
+
 					Rotator deltaRotation = rotation - tc.m_Transform.GetRotation();
 					Rotator newRotation = tc.m_Transform.GetRotation() + deltaRotation;
-					tc.m_Transform = Transform(translation, newRotation, scale);
+					tc.m_Transform = Transform(newposition, newRotation, newscale);		
 				}
 			}
 		}
