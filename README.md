@@ -17,24 +17,15 @@ Different bloom and HDR settings
 ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_11.png?raw=true)
 
 ## Editors
-### Meshes
-Texture viewer still a work in progress
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_12.png?raw=true)
-
 ## Textures
-Editor to modify .glsl shading files
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_13.png?raw=true)
+Texture viewer still a work in progress ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_12.png?raw=true)
+## Shaders
+Editor to modify .glsl shading files![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_13.png?raw=true)
+### Meshes
+Mesh viewer still a work in progress ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_14.png?raw=true)
 
-## Meshes
-Mesh Detail viewer still a work in progress
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_14.png?raw=true)
-
-## Translation Gizmo
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_15.png?raw=true)
-
-## Rotation Gizmo
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_16.png?raw=true)
-
-## Scale Gizmo
-![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_17.png?raw=true)
+## Gizmos
+1. ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_15.png?raw=true)
+2. ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_16.png?raw=true)
+3. ![alt text](https://github.com/Darius000/BHive/blob/develop/Previews/Screenshot_17.png?raw=true)
 
