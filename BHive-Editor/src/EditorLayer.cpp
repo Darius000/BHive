@@ -24,10 +24,7 @@ namespace BHive
 
 	void EditorLayer::OnAttach()
 	{
-		FrameBufferSpecification fbSpec;
-		fbSpec.Width = 1280;
-		fbSpec.Height = 720;
-
+	
 		//Register Component Class Property Details
 		EditorClassRegistry::RegisterClassDetails("TransformComponent", Make_Ref<TransformComponentDetails>());
 		EditorClassRegistry::RegisterClassDetails("TagComponent", Make_Ref<TagComponentDetails>());
@@ -50,76 +47,10 @@ namespace BHive
 		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("Shader", Make_Ref<ShaderEditorCustomizationDetails>());
 		EditorClassRegistry::RegisterEditorCustomizationDetailsForAsset("FontFamily", Make_Ref<FontEditorCustomizationDetails>());
 
-		Scene* scene = SceneManager::CreateScene("Default");
-
-
-		auto WorldDefaultMat = AssetManager::CreateAsset<Material>("WorldDefault", AssetManager::Get<Shader>("BlinnPhong"));
-		WorldDefaultMat->SetParameter("material.diffuse", FVector3(.5f));
-
-		AssetManager::CreateAsset<Material>("Blinn Phong Material", AssetManager::Get<Shader>("BlinnPhong"));
-		AssetManager::CreateAsset<Material>("Material2", AssetManager::Get<Shader>("BlinnPhong"));
-		AssetManager::CreateAsset<Material>("Toon Mat Test", AssetManager::Get<Shader>("Toon"));
-
-		std::array<WinPath, 6> faces = 
-		{
-			"Import/skybox/right.jpg",
-			"Import/skybox/left.jpg",
-			"Import/skybox/top.jpg",
-			"Import/skybox/bottom.jpg",
-			"Import/skybox/front.jpg",
-			"Import/skybox/back.jpg"
-		};
-
-		//CubeMap
-		auto CubeMap = CubeTexture::Create("Cube Map", faces);
-		AssetManager::Add<CubeTexture>("Cube Map", CubeMap);
-		auto CubeMapMaterial = AssetManager::CreateAsset<Material>("CubeMapMaterial", AssetManager::Get<Shader>("CubeMap"));
-
-
-		AssetImporter::Import("Import/Meshes/Cube.obj");
-		AssetImporter::Import("Import/Meshes/CubeFlipped.obj");
-
-		auto planeMesh =  Make_Ref<Plane>(5.0f, 5.0f);
-		auto triangleMesh = Make_Ref<Triangle>(10.0f, 10.0f);
-
-		AssetManager::Add<Model>("Triangle" , triangleMesh);
-		AssetManager::Add<Model>("Plane" , planeMesh);
-
-		auto& PlaneEnt = scene->CreateEntity("Plane");
-		auto& planeRC = PlaneEnt.AddComponent<RenderComponent>();
-		planeRC.m_Model = planeMesh;
-
-		auto& tri = scene->CreateEntity("Triangle");
-		tri.AddComponent<RenderComponent>();
-
-		auto& renderComponent1 = tri.GetComponent<RenderComponent>();
-		renderComponent1.m_Model = AssetManager::Get<Model>("Triangle");
-
-		auto cube = scene->CreateEntity("Cube");
-		auto& cubetransform = cube.GetComponent<TransformComponent>().m_Transform;
-			
-		auto& rendercomponent2 = cube.AddComponent<RenderComponent>();
-		rendercomponent2.m_Model = AssetManager::Get<Model>("Cube");
-
-		PlaneEnt.GetComponent<TransformComponent>().m_Transform.SetPosition(0.0f, 0.0f, 6.0f);
-		auto& script = PlaneEnt.AddComponent<NativeScriptComponent>();
-		script.Bind<OrbitScript>();
-
-		scene->CreateEntity("Directional Light").AddComponent<DirectionalLightComponent>();
-
-		scene->CreateEntity("Point Light").AddComponent<PointLightComponent>();
-
-		auto& skybox = scene->CreateEntity("Sky Box");
-		skybox.AddComponent<RenderComponent>();
-		skybox.GetComponent<RenderComponent>().m_Model = AssetManager::Get<Model>("CubeFlipped");
-		skybox.GetComponent<RenderComponent>().m_Model->GetMesh(0)->SetMaterial(CubeMapMaterial);
-		skybox.GetComponent<TransformComponent>().m_Transform.SetScale(300.0f);
-
-		SceneManager::SetActiveScene("Default");
 		Renderer2D::Init();
 
-		m_Viewport = Make_Ref<Viewport>(fbSpec, SceneManager::GetActiveScene());
-	
+		LoadDefaultScene();
+
 		//Open the default panels
 		EditorStack::Get()->OpenPanel<ViewportPanel>(std::string("MainViewport"), m_Viewport);
 		EditorStack::Get()->OpenPanel<SceneHierarchyPanel>(SceneManager::GetActiveScene());
@@ -131,7 +62,7 @@ namespace BHive
 	{
 		BH_PROFILE_FUNCTION();
 
-		m_Viewport->OnUpdate(time);
+		if(m_Viewport) m_Viewport->OnUpdate(time);
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -242,6 +173,45 @@ namespace BHive
 
 			ImGui::EndMenuBar();
 		}
+	}
+
+	void EditorLayer::LoadDefaultScene()
+	{
+		Scene* scene = SceneManager::CreateScene("Default");
+
+		auto WorldDefaultMat = AssetManager::CreateAsset<Material>("WorldDefault", AssetManager::Get<Shader>("BlinnPhong"));
+
+		std::array<WinPath, 6> faces =
+		{
+			"Import/skybox/right.jpg",
+			"Import/skybox/left.jpg",
+			"Import/skybox/top.jpg",
+			"Import/skybox/bottom.jpg",
+			"Import/skybox/front.jpg",
+			"Import/skybox/back.jpg"
+		};
+
+		//CubeMap
+		auto CubeMap = CubeTexture::Create("Cube Map", faces);
+		AssetManager::Add<CubeTexture>("Cube Map", CubeMap);
+		auto CubeMapMaterial = AssetManager::CreateAsset<Material>("Sky Box Material", AssetManager::Get<Shader>("CubeMap"));
+
+		AssetImporter::Import("Import/Meshes/CubeFlipped.obj");
+
+		auto cube = AssetManager::Get<Model>("CubeFlipped");
+		cube->GetMesh(0)->SetMaterial(CubeMapMaterial);
+
+		auto& skybox = scene->CreateEntity("Sky Box");
+		skybox.AddComponent<RenderComponent>();
+		skybox.GetComponent<RenderComponent>().m_Model = cube;
+		skybox.GetComponent<TransformComponent>().m_Transform.SetScale(300.0f);
+
+		SceneManager::SetActiveScene("Default");
+
+		FrameBufferSpecification fbSpec;
+		fbSpec.Width = 1920;
+		fbSpec.Height = 1080;
+		m_Viewport = Make_Ref<Viewport>(fbSpec, SceneManager::GetActiveScene());
 	}
 
 	void EditorLayer::OnDetach()

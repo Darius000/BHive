@@ -34,37 +34,45 @@ namespace BHive
 
 	void AssetImporter::Import(const WinPath& path)
 	{
+		ImportInternal(path);
+	}
+
+	void AssetImporter::ImportInternal(const WinPath& path)
+	{
 		const BString ext = path.GetExtension();
-		ESuccess importstatus = ESuccess::InProgress;
 		Ref<IAssetType> assetRef = nullptr;
-		bool importSuccessful = false;
 
 		if (Shader::IsExtensionSupported(ext))
 		{
-			importSuccessful = OnImport<Shader>(path, assetRef, importstatus);
+			OnImport<Shader>(path, assetRef);
 		}
 		else if (Texture::IsExtensionSupported(ext))
 		{
-			importSuccessful = OnImport<Texture2D>(path, assetRef, importstatus);
+			OnImport<Texture2D>(path, assetRef);
 		}
 		else if (Model::IsExtensionSupported(ext))
 		{
-			importSuccessful = OnImport<Model>(path, assetRef, importstatus);
+			OnImport<Model>(path, assetRef);
 		}
 		else if(Font::IsExtensionSupported(ext))
 		{
-			importSuccessful = OnImport<Font>(path, assetRef, importstatus);
+			OnImport<Font>(path, assetRef);
 		}
 
-		if (importSuccessful)
+		if (s_ImportStatus == ESuccess::Sucess)
 		{
+			
 			AssetManager::Add(path.GetName(), assetRef);
 
-			BH_CORE_INFO("Successfully Imported {0}", path.GetName());
-
-			return;
+			BH_CORE_INFO("Successfully Imported {0}", path.GetName());			
+		}
+		else
+		{
+			BH_CORE_ERROR("Asset failed to import from {0}", path.c_str());
 		}
 
-		BH_CORE_ERROR("Asset failed to import from {0}", path.c_str());
+		s_ImportStatus = ESuccess::None;
 	}
+
+	ESuccess AssetImporter::s_ImportStatus;
 }

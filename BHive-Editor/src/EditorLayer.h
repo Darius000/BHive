@@ -2,8 +2,6 @@
 
 #include "BHive.h"
 
-
-
 namespace BHive
 { 
 	class EditorLayer : public Layer
@@ -23,6 +21,7 @@ namespace BHive
 	private:
 		//Editor Windows
 		void DisplayMenuBar();
+		void LoadDefaultScene();
 
 	private:
 

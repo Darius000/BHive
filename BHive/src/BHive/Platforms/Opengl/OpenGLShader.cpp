@@ -201,10 +201,12 @@ namespace BHive
 
 	void OpenGLShader::Compile()
 	{
-		id = glCreateProgram();
+		
 		BH_CORE_ASSERT(m_Sources.size() <= 2, "Only support 2  shaders for now!");
 
 		std::array<uint32, 2> glShaderIDs;
+
+		id = glCreateProgram();
 
 		uint32 index = 0;
 		for (auto& kv : m_Sources)
