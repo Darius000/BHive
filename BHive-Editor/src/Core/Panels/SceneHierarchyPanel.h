@@ -22,7 +22,7 @@ namespace BHive
 	private:
 		//Draw entity dropdown node in panel
 		void DrawEntityNode(Entity entity);
-		
+		void CreateNewEmptyEntity();
 
 	private:
 		Scene* m_SceneContext = nullptr;

@@ -19,7 +19,12 @@ namespace Reflection
 		using FunctionCallback = void(*)(T);
 
 	public:
-		Property(){}
+		Property()
+			:value(0)
+		{
+		
+		}
+
 		Property(const std::string& propertyName, T* val, T defaultValue = (T)0,
 			PropertyTags tags = (PropertyTags)0, 
 			PropertyMetaData metaData = (PropertyMetaData)0, FunctionCallback callback = nullptr)

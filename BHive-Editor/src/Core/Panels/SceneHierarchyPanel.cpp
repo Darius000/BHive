@@ -20,10 +20,10 @@ namespace BHive
 	void SceneHierarchyPanel::OnRenderMenuBar()
 	{
 		//Add buttons to add or delete entity
-
+		//Create entity and set it as the selected
 		if (ImGui::Button("Add Entity"))
 		{
-			m_SceneContext->CreateEntity("Empty Entity");
+			CreateNewEmptyEntity();
 		}
 
 		if (ImGui::Button("Delete Entity"))
@@ -52,8 +52,10 @@ namespace BHive
 		//Right click on blank space
 		if (ImGui::BeginPopupContextWindow((const char*)0, 1, false))
 		{
-			if(ImGui::MenuItem("Create Entity"))
-				m_SceneContext->CreateEntity("Empty Entity");
+			if (ImGui::MenuItem("Create Entity"))
+			{
+				CreateNewEmptyEntity();
+			}
 
 			ImGui::EndPopup();
 		}
@@ -93,6 +95,12 @@ namespace BHive
 			m_SceneContext->DeleteEntity(entity);
 			m_SelectedContext = {};
 		}
+	}
+
+	void SceneHierarchyPanel::CreateNewEmptyEntity()
+	{
+		auto& newEntity = m_SceneContext->CreateEntity("Empty Entity");
+		m_SelectedContext = newEntity;
 	}
 
 	Entity SceneHierarchyPanel::m_SelectedContext;

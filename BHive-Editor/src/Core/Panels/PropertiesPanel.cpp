@@ -122,6 +122,10 @@ namespace BHive
 					{
 						entity.AddComponent<DirectionalLightComponent>();
 					}
+					else if (name == "SpotLightComponent")
+					{
+						entity.AddComponent<SpotLightComponent>();
+					}
 					else if (name == "CameraComponent")
 					{
 						entity.AddComponent<CameraComponent>();

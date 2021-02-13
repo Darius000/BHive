@@ -27,6 +27,7 @@
 #include "BHive/Renderer/Model/Plane.h"
 #include "BHive/Renderer/Model/Triangle.h"
 #include "BHive/Renderer/Model/Quad.h"
+#include "BHive/Renderer/Model/Cube.h"
 
 //---------Importer-----------------
 #include "BHive/Importer/AssetImporter.h"

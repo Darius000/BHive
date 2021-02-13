@@ -38,6 +38,7 @@ namespace BHive
 		ClassRegistry::RegisterClassName("TagComponent");
 		ClassRegistry::RegisterClassName("DirectionalLightComponent");
 		ClassRegistry::RegisterClassName("PointLightComponent");
+		ClassRegistry::RegisterClassName("SpotLightComponent");
 		ClassRegistry::RegisterClassName("CameraComponent");
 		ClassRegistry::RegisterClassName("RenderComponent");
 		ClassRegistry::RegisterClassName("NativeScriptComponent");
@@ -206,6 +207,14 @@ namespace BHive
 		skybox.GetComponent<RenderComponent>().m_Model = cube;
 		skybox.GetComponent<TransformComponent>().m_Transform.SetScale(300.0f);
 
+		auto& sun = scene->CreateEntity("Sun");
+		sun.AddComponent<DirectionalLightComponent>();
+		sun.GetComponent<TransformComponent>().m_Transform.SetRotation({-45.0f, 0.0f, 0.0f});
+
+		auto& entity = scene->CreateEntity("Cube Test");
+		entity.AddComponent<RenderComponent>();
+		entity.GetComponent<RenderComponent>().m_Model = AssetManager::CreateAsset<Cube>("Cube Test", 10.0f);
+	
 		SceneManager::SetActiveScene("Default");
 
 		FrameBufferSpecification fbSpec;
