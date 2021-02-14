@@ -3,7 +3,8 @@
 namespace BHive
 {
 	ImGuiPanel::ImGuiPanel(const std::string& label, ImGuiWindowFlags flags, uint64 id, bool runtimecreated)
-		:m_Label(label), m_Flags(flags), m_RuntimeCreated(runtimecreated), m_ID(id)
+		:m_Label(label), m_Flags(flags), m_RuntimeCreated(runtimecreated), m_ID(id), m_WindowPadding(10.0f, 10.0f),
+		m_FramePadding(5.0f, 5.0f)
 	{
 		
 	}
@@ -15,6 +16,8 @@ namespace BHive
 
 	void ImGuiPanel::OnBeginWindow()
 	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, {m_WindowPadding.x, m_WindowPadding.y});
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, {m_FramePadding.x, m_FramePadding.y});
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 0.0f);
 		if(m_RuntimeCreated) 
@@ -46,6 +49,7 @@ namespace BHive
 		if(ImGui::BeginMenuBar())
 		{ 
 			OnRenderMenuBar();
+
 			ImGui::EndMenuBar();
 		}
 		OnRenderWindow();
@@ -54,7 +58,7 @@ namespace BHive
 
 	void ImGuiPanel::OnEndWindow()
 	{
-		ImGui::PopStyleVar(2);
+		ImGui::PopStyleVar(4);
 		ImGui::PopID();
 		ImGui::End();	
 	}

@@ -37,6 +37,10 @@ namespace BHive
 		virtual void OnUnFocused();
 		bool IsFocusedAndHoverd() const;
 
+	protected:
+		FVector2 m_WindowPadding;
+		FVector2 m_FramePadding;
+
 	private:
 		bool m_IsOpen = true;
 

@@ -7,8 +7,12 @@ namespace BHive
 {
 
 	ViewportPanel::ViewportPanel(const std::string& label, Ref<Viewport> viewport, uint64 id)
-		:ImGuiPanel(label, ImGuiWindowFlags_MenuBar, id), m_Viewport(viewport)
+		:ImGuiPanel(label, 0, id), m_Viewport(viewport)
 	{
+
+		m_WindowPadding = {0 , 0};
+		//m_FramePadding = {0, 0};
+
 		if (viewport && viewport->m_Scene)
 		{
 			auto& camTransform = viewport->m_Scene->m_DefaultSceneView.m_Transform;
@@ -20,25 +24,11 @@ namespace BHive
 
 	void ViewportPanel::OnRenderMenuBar()
 	{
-		ImGui::PushMultiItemsWidths(6, ImGui::CalcItemWidth());
-		ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
-		ImGui::SameLine();
-		ImGui::Checkbox("HDR", &m_Viewport->m_HDR);
-		ImGui::SameLine();
-		ImGui::Checkbox("Bloom", &m_Viewport->m_Bloom);
-		ImGui::SameLine();
-		ImGui::InputFloat("Pan Speed", &m_PanSpeed);
-		ImGui::SameLine();
-		ImGui::InputFloat("Zoom Speed", &m_ZoomSpeed);
-		ImGui::SameLine();
-		ImGui::InputFloat("Orbital Speed", &m_OrbitalSpeed);		
-		ImGui::PopItemWidth();
+		
 	}
 
 	void ViewportPanel::OnRenderWindow()
 	{		
-		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
-
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 
 		if (m_ViewportSize != *((FVector2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
@@ -60,12 +50,11 @@ namespace BHive
 		ImGui::Image((void*)*QuadFrameBuffer, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 		//Gizmos
-
 		RenderGizmo({ImGui::GetWindowPos().x, ImGui::GetWindowPos().y}, {windowWidth, windowHeight});
-	
-		//uint32 finalcolor = m_Viewport->m_QuadColorAttachment;
-		//uint32 depthcolors = m_Viewport->m_DepthAttachment;
-		
+
+		//Settings
+		RenderSettingsChildWindow();
+
 		ImGui::EndGroup();
 
 		//Add Button Overlay
@@ -91,35 +80,6 @@ namespace BHive
 			m_GizmoMode = ImGuizmo::MODE::WORLD;
 		ImGui::PopItemWidth();
 		ImGui::EndGroup();*/
-
-		/*int32 i = 0;
-		for (auto& GBuffer: m_Viewport->m_GBufferAttributes)
-		{
-			ImGui::BeginGroup();
-			ImGui::Text("%s", GBufferTypeNames[(size_t)GBuffer.first]);
-			ImGui::Image((void*)GBuffer.second.m_Texture, ImVec2(m_ViewportSize.x / 2.0f, m_ViewportSize.y / 2.0f), ImVec2(0, 1), ImVec2(1, 0));
-			ImGui::EndGroup();
-			if (i % 2 == 0)
-			{
-				ImGui::SameLine();
-			}
-			i++;
-		}
-
-		for (uint32 i : m_Viewport->m_PingPongBlur)
-		{
-			ImGui::BeginGroup();
-			ImGui::Text("PingPong %d", i);
-			ImGui::Image((void*)i, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
-			ImGui::EndGroup();
-		}
-
-		ImGui::BeginGroup();
-		ImGui::Text("Depth");
-		ImGui::Image((void*)depthcolors, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
-		ImGui::EndGroup();*/
-
-		ImGui::PopStyleVar();
 	}
 
 	void ViewportPanel::RenderGizmo(const FVector2& windowPos, const FVector2& windowSize)
@@ -169,6 +129,67 @@ namespace BHive
 				}
 			}
 		}
+	}
+
+	void ViewportPanel::RenderSettingsChildWindow()
+	{
+		auto arrowtexture = AssetManager::Get<Texture2D>("LeftArrow");
+
+		const float maxSize = 400.0f;
+		const float collapsebuttonSize = 20.0f;
+		static float percentage = 0.0f;
+		static bool isCollapsed = true;
+		const ImVec2 currentSize = {maxSize * percentage, m_ViewportSize.y * .95f};
+		const ImVec2 mainWindowpadding = ImGui::GetCurrentWindow()->WindowPadding;
+
+		ImGui::SetCursorPos({ (m_ViewportSize.x + mainWindowpadding.x) - (currentSize.x + 
+			(collapsebuttonSize * (1.0f - percentage) )) ,
+			m_ViewportSize.y - (currentSize.y + mainWindowpadding.y)});
+
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f , 0.0f));
+
+		ImGui::BeginChild("Settings", currentSize, false);
+			
+		//Draw collapse button image	
+		if (ImGui::ImageButton((void*)*arrowtexture, { collapsebuttonSize , collapsebuttonSize },
+			{ 0,1 }, { 1,0 }, 0))
+		{
+			//Start transition 
+			percentage = isCollapsed ? 1.0f : 0.0f;
+			isCollapsed = !isCollapsed;
+		}
+	
+		//Draw settings window
+		ImGui::SetCursorPos(ImVec2(collapsebuttonSize, 0.0f));
+
+		ImGui::PushStyleVar(ImGuiStyleVar_::ImGuiStyleVar_WindowPadding, ImVec2(10,10));
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(.1f, .1f, .1f, 1.0f));
+		ImGui::BeginChild("Settings##Viewport", ImGui::GetContentRegionAvail(), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
+		
+		ImGui::Text("HDR Settings");
+		ImGui::Separator();
+		ImGui::Checkbox("HDR", &m_Viewport->m_HDR);
+		ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
+		
+		ImGui::Text("Bloom Settings");
+		ImGui::Separator();
+		ImGui::Checkbox("Bloom", &m_Viewport->m_Bloom);
+		
+		ImGui::Text("Camera Settings");
+		ImGui::Separator();
+		ImGui::InputFloat("Pan Speed", &m_PanSpeed);
+		ImGui::InputFloat("Zoom Speed", &m_ZoomSpeed);
+		ImGui::InputFloat("Orbital Speed", &m_OrbitalSpeed);
+	
+		ImGui::PopStyleVar();
+
+		ImGui::EndChild();
+		
+		ImGui::PopStyleColor();
+			
+		ImGui::EndChild();
+	
+		ImGui::PopStyleColor();
 	}
 
 	bool ViewportPanel::OnMouseScrolled(MouseScrolledEvent& e)
