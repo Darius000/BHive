@@ -8,7 +8,8 @@ namespace BHive
 		glEnable(GL_DEPTH_TEST);
 		//glDepthFunc(GL_ALWAYS);
 		glEnable(GL_MULTISAMPLE);
-		glLineWidth(1.0f);
+		glLineWidth(m_LineWidth);
+		glPointSize(m_PointSize);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_BLEND);
 		EnableBackFaceCulling(true);
@@ -65,4 +66,10 @@ namespace BHive
 	{
 		glBindTextureUnit(slot, 0);
 	}
+
+	float OpenGLRendererAPI::m_LineWidth = 3.0f;
+
+
+	float OpenGLRendererAPI::m_PointSize = 10.0f;
+
 }

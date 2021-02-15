@@ -104,6 +104,9 @@ namespace BHive
 		case GL_FLOAT_VEC3:
 			glGetUniformfv(ShaderID, glGetUniformLocation(ShaderID, name), *Cast<Vec3Uniform>(uniform)->m_Value);
 			break;
+		case GL_FLOAT_VEC4:
+			glGetUniformfv(ShaderID, glGetUniformLocation(ShaderID, name), *Cast<Vec4Uniform>(uniform)->m_Value);
+			break;
 		case GL_SAMPLER_2D:
 		case GL_SAMPLER_CUBE:
 			break;
@@ -127,6 +130,8 @@ namespace BHive
 			return new Vec3Uniform();
 		case GL_FLOAT_VEC2:
 			return new Vec2Uniform();
+		case GL_FLOAT_VEC4:
+			return new Vec4Uniform();
 		case GL_SAMPLER_2D:
 			return new SamplerUniform();
 		case GL_SAMPLER_CUBE:
@@ -140,7 +145,7 @@ namespace BHive
 	{
 		if (uniform == nullptr) return;
 
-		switch (uniform->GetType().UniformType)
+		switch (uniform->GetType())
 		{
 		case ShaderUniformTypes::Float:
 			SetUniformImpl<ShaderUniformTypes::Float>(name, uniform);
@@ -156,6 +161,9 @@ namespace BHive
 			break;
 		case ShaderUniformTypes::Vec3:
 			SetUniformImpl<ShaderUniformTypes::Vec3>(name, uniform);
+			break;
+		case ShaderUniformTypes::Vec4:
+			SetUniformImpl<ShaderUniformTypes::Vec4>(name, uniform);
 			break;
 		case ShaderUniformTypes::Sampler:
 			SetUniformImpl<ShaderUniformTypes::Sampler>(name, uniform);

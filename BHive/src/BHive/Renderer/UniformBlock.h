@@ -16,18 +16,18 @@ namespace BHive
 		void Bind(const Ref<class Shader>& shader);
 
 		template<typename T>
-		void SendData(size_t offset, const T* uniform);
-
+		void SendData(size_t offset, const T& uniform);
+		
 		BlockID m_Id;
 		const ANSICHAR* m_Name;
 		BindingPoint m_Binding;
 	};
 
 	template<typename T>
-	void UniformBlock::SendData(size_t offset, const T* uniform)
+	void UniformBlock::SendData(size_t offset, const T& uniform)
 	{
 		glBindBuffer(GL_UNIFORM_BUFFER, m_Id);
-		glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), (void*)uniform);
+		glBufferSubData(GL_UNIFORM_BUFFER, offset, sizeof(T), (void*)&uniform);
 		glBindBuffer(GL_UNIFORM_BUFFER, 0);
 	}
 

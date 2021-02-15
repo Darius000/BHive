@@ -68,14 +68,19 @@ namespace BHive
 		}
 	}
 
-	/*void Scene::OnUpdateEditor(const Time& time, EditorCamera& Camera)
+	void Scene::OnUpdateEditor(const Time& time)
 	{
+		SendDefaultCameraParametersToShaders(time);
 
-	}*/
+		for (auto& system : RegisteredSystems::m_ComponentSystems)
+		{
+			system->OnUpdate(time, m_Registry);
+		}
+	}
 
 	void Scene::OnUpdateRuntime(const Time& time)
 	{
-		SendDefaultCameraParametersToShaders();
+		SendDefaultCameraParametersToShaders(time);
 
 		for (auto& system : RegisteredSystems::m_ComponentSystems)
 		{
@@ -143,7 +148,7 @@ namespace BHive
 		m_DefaultSceneView.m_Camera.SetPerspective({ 35.0f, .01f, 1000.0f });
 	}
 
-	void Scene::SendDefaultCameraParametersToShaders()
+	void Scene::SendDefaultCameraParametersToShaders(const Time& time)
 	{
 		auto& camera = m_DefaultSceneView.m_Camera;
 		auto& transform = m_DefaultSceneView.m_Transform;
@@ -155,23 +160,28 @@ namespace BHive
 		glm::mat4 m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 		
 		UniformBlock* matrices = m_MatrixBlocks["Matrices"];
-		matrices->SendData(0, &m_ViewProjectionMatrix);	
-		matrices->SendData(sizeof(glm::mat4), &m_ProjectionMatrix);
-		matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), &transform.GetPosition());
+		matrices->SendData(0, m_ViewProjectionMatrix);	
+		matrices->SendData(sizeof(glm::mat4), m_ProjectionMatrix);
+		matrices->SendData(sizeof(glm::mat4) + sizeof(Vector3<float>), transform.GetPosition());
 
 		auto cubeMatrices = m_MatrixBlocks["CubeMatrices"];
 		glm::mat4 m_View = glm::mat4(glm::mat3(m_ViewMatrix));
 		glm::mat4 m_CubeProjection = m_ProjectionMatrix * m_View;
-		cubeMatrices->SendData(0, &m_CubeProjection);
+		cubeMatrices->SendData(0, m_CubeProjection);
+
+		auto timeBlock = m_MatrixBlocks["Time"];
+		timeBlock->SendData(0, time.GetSeconds());
 	}
 
 	void Scene::InitializeUniformBlocks()
 	{
 		auto matricesBlock = new UniformBlock("Matrices", 2 * sizeof(glm::mat4) + sizeof(Vector3<float>), 0);
 		auto CubeProjectionBlock = new UniformBlock("CubeMatrices", sizeof(glm::mat4), 1);
+		auto TimeBlock = new UniformBlock("Time", sizeof(float), 2);
 
 		m_MatrixBlocks.insert({ matricesBlock->m_Name, matricesBlock });
 		m_MatrixBlocks.insert({CubeProjectionBlock->m_Name, CubeProjectionBlock});
+		m_MatrixBlocks.insert({TimeBlock->m_Name, TimeBlock});
 
 		for (auto matrixBlock : m_MatrixBlocks)
 		{

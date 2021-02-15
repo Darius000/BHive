@@ -3,6 +3,7 @@
 #include "Renderer/Renderer2D.h"
 #include "Platforms/Opengl/OpenglFramebuffer.h"
 #include "Renderer/Model/Quad.h"
+#include "Renderer/Model/Plane.h"
 
 namespace BHive
 {
@@ -40,6 +41,10 @@ namespace BHive
 		blurquad = Make_Ref<Quad>();
 		blurppm = AssetManager::CreateAsset<Material>("BluePPM", AssetManager::Get<Shader>("BlurPostProcessing"));
 		blurquad->GetMesh(0)->SetMaterial(blurppm);
+
+		m_Grid = Make_Ref<Plane>(10.0f, 10.0f);
+		m_GridMaterial = Make_Ref<Material>(Shader::Create("..\\BHive\\Assets\\Shaders\\2DGrid.glsl"));
+		m_Grid->GetMesh(0)->SetMaterial(m_GridMaterial);
 	}
 
 	Viewport::~Viewport()
@@ -57,13 +62,18 @@ namespace BHive
 	}
 
 	void Viewport::OnUpdate(const Time& time)
-	{
-		
+	{		
 		//render scene
 		RenderCommands::EnableDepthTest();
 		m_SceneFrameBuffer->Bind();
 		Renderer2D::Begin({0.1f, 0.1f, 0.1f, 1.0f});
-		m_Scene->OnUpdateRuntime(time);
+
+		//Draw Scene
+		m_Scene->OnUpdateEditor(time);
+
+		//Draw Scene Grid
+		DrawGrid();
+
 		Renderer2D::End();
 		m_SceneFrameBuffer->UnBind();
 	
@@ -120,6 +130,14 @@ namespace BHive
 		RenderCommands::UnBindTexture(7);
 		Renderer2D::End();
 		m_QuadFrameBuffer->UnBind();
+	}
+
+	void Viewport::DrawGrid()
+	{
+		m_GridMaterial->SetParameter("material.scale", m_GridSettings.m_Scale);
+		m_GridMaterial->SetParameter("material.lineColor", m_GridSettings.m_Color);
+
+		m_Grid->Render();
 	}
 
 	void Viewport::Resize(uint32 width, uint32 height)

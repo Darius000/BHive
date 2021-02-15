@@ -126,7 +126,7 @@ void main()
 	float shininess = texture(specularcolor, texcoord).a * 200.0f;
 	
 	LightColor L = CalculateLights(shininess, normal, fragPos, viewDirection, texcoord);
-	result = (L.diffuse  * ambient * albedo + L.specular  * specular ) * EnvironmentColor * L.color  + emission  ;
+	result = ambient + (L.diffuse  * albedo + L.specular  * specular ) * EnvironmentColor * L.color  + emission  ;
 
 	vec3 bloomcolor = texture(bloomtexture, texcoord).rgb;
 	if(bloom == true)

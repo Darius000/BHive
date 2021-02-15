@@ -49,6 +49,7 @@ namespace BHive
 		ImGui::BeginGroup();
 		ImGui::Image((void*)*QuadFrameBuffer, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
+		RenderGizmoButtons();
 		//Gizmos
 		RenderGizmo({ImGui::GetWindowPos().x, ImGui::GetWindowPos().y}, {windowWidth, windowHeight});
 
@@ -80,6 +81,43 @@ namespace BHive
 			m_GizmoMode = ImGuizmo::MODE::WORLD;
 		ImGui::PopItemWidth();
 		ImGui::EndGroup();*/
+	}
+
+	void ViewportPanel::RenderGizmoButtons()
+	{
+		const ImVec2 padding = {5, 5};
+		const ImVec2 buttonSize = ImVec2(30.0f, 30.0f);
+		const int32 numButtons = 4;
+		const ImVec2 windowSize = ImVec2(buttonSize.x + padding.x * 2.0f, 
+			buttonSize.y * numButtons + (padding.y * 2.0f * numButtons));
+		const ImVec2 mainWindowpadding = ImGui::GetCurrentWindow()->WindowPadding;
+
+		ImGui::SetCursorPos({ mainWindowpadding.x  + padding.x, m_ViewportSize.y * .5f - (windowSize. y * .5f) });
+
+		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.6f, 0.6f, 0.6f, .8f));
+		ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 2);
+
+		ImGui::BeginChild("Buttons", windowSize,   false);
+		
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,0));
+		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("selection"), buttonSize, ImVec2(0, 1), ImVec2(1,0)))
+			m_GizmoType = -1;
+
+		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("move"), buttonSize, ImVec2(0, 1), ImVec2(1, 0)))
+			m_GizmoType = ImGuizmo::OPERATION::TRANSLATE;
+
+		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("refresh"), buttonSize, ImVec2(0, 1), ImVec2(1, 0)))
+			m_GizmoType = ImGuizmo::OPERATION::ROTATE;
+
+		if (ImGui::ImageButton((void*)*AssetManager::Get<Texture2D>("scale"), buttonSize, ImVec2(0, 1), ImVec2(1, 0)))
+			m_GizmoType = ImGuizmo::OPERATION::SCALE;
+
+		ImGui::PopStyleVar();
+
+		ImGui::EndChild();
+
+		ImGui::PopStyleVar();
+		ImGui::PopStyleColor();
 	}
 
 	void ViewportPanel::RenderGizmo(const FVector2& windowPos, const FVector2& windowSize)
@@ -144,7 +182,7 @@ namespace BHive
 
 		ImGui::SetCursorPos({ (m_ViewportSize.x + mainWindowpadding.x) - (currentSize.x + 
 			(collapsebuttonSize * (1.0f - percentage) )) ,
-			m_ViewportSize.y - (currentSize.y + mainWindowpadding.y)});
+			m_ViewportSize.y - (currentSize.y + mainWindowpadding.y) + 10.0f});
 
 		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.0f, 0.0f, 0.0f , 0.0f));
 
@@ -166,20 +204,36 @@ namespace BHive
 		ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(.1f, .1f, .1f, 1.0f));
 		ImGui::BeginChild("Settings##Viewport", ImGui::GetContentRegionAvail(), false, ImGuiWindowFlags_AlwaysUseWindowPadding);
 		
-		ImGui::Text("HDR Settings");
+		if(ImGui::TreeNodeEx("HDR", ImGuiTreeNodeFlags_OpenOnArrow))
+		{ 
+			ImGui::Checkbox("Enabled", &m_Viewport->m_HDR);
+			ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
+			ImGui::TreePop();
+		}
 		ImGui::Separator();
-		ImGui::Checkbox("HDR", &m_Viewport->m_HDR);
-		ImGui::SliderFloat("Exposure", &m_Viewport->m_Exposure, 0.01f, 1.0f, "%.3f");
 		
-		ImGui::Text("Bloom Settings");
+		if (ImGui::TreeNodeEx("Bloom", ImGuiTreeNodeFlags_OpenOnArrow))
+		{
+			ImGui::Checkbox("Enabled", &m_Viewport->m_Bloom);
+			ImGui::TreePop();
+		}
 		ImGui::Separator();
-		ImGui::Checkbox("Bloom", &m_Viewport->m_Bloom);
 		
-		ImGui::Text("Camera Settings");
+		if (ImGui::TreeNodeEx("Camera", ImGuiTreeNodeFlags_OpenOnArrow))
+		{
+			ImGui::DragFloat("Pan Speed", &m_PanSpeed);
+			ImGui::DragFloat("Zoom Speed", &m_ZoomSpeed);
+			ImGui::DragFloat("Orbital Speed", &m_OrbitalSpeed);
+			ImGui::TreePop();
+		}
 		ImGui::Separator();
-		ImGui::InputFloat("Pan Speed", &m_PanSpeed);
-		ImGui::InputFloat("Zoom Speed", &m_ZoomSpeed);
-		ImGui::InputFloat("Orbital Speed", &m_OrbitalSpeed);
+		if (ImGui::TreeNodeEx("Grid", ImGuiTreeNodeFlags_OpenOnArrow))
+		{
+			ImGui::DragFloat("Scale", &m_Viewport->m_GridSettings.m_Scale);
+			ImGui::ColorEdit4("Color", *m_Viewport->m_GridSettings.m_Color);
+			ImGui::TreePop();
+		}
+		ImGui::Separator();
 	
 		ImGui::PopStyleVar();
 

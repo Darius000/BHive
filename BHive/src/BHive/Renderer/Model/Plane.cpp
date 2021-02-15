@@ -10,14 +10,14 @@ namespace BHive
 
 	}
 
-	Plane::Plane(float width, float height)
+	Plane::Plane(float width, float length)
 	{
 		std::vector<FVertex> m_Vertices =
 		{
-			FVertex({-width / 2.0f, -height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
-			FVertex({width / 2.0f, -height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
-			FVertex({width / 2.0f, height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 1.0f},	{0.0f, 0.0f, 1.0f}),
-			FVertex({-width / 2.0f, height / 2.0f, 0.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 1.0f},	{0.0f, 0.0f, 1.0f})
+			FVertex({-width / 2.0f, 0.0f,  length / 2.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({width / 2.0f, 0.0f , length / 2.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 0.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({width / 2.0f, 0.0f, -length / 2.0f},	{0.0f, 1.0f, 0.0f},		{1.0f, 1.0f},	{0.0f, 0.0f, 1.0f}),
+			FVertex({-width / 2.0f, 0.0f, -length / 2.0f},	{0.0f, 1.0f, 0.0f},		{0.0f, 1.0f},	{0.0f, 0.0f, 1.0f})
 		};
 
 

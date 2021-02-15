@@ -39,7 +39,7 @@ namespace BHive
 		Uniform* QueryUniformType(GLenum type);
 		void SetUniform(const std::string& name, Uniform* uniform);
 
-		template<ShaderUniformTypes Type>
+		template<ShaderUniformTypes>
 		inline void SetUniformImpl(const std::string& name, Uniform* uniform);
 
 	
@@ -78,6 +78,12 @@ namespace BHive
 	inline void Material::SetUniformImpl<ShaderUniformTypes::Vec3>(const std::string& name, Uniform* uniform)
 	{
 		m_Shader->SetVec3(name, Cast<Vec3Uniform>(uniform)->Get());
+	}
+
+	template<>
+	inline void Material::SetUniformImpl<ShaderUniformTypes::Vec4>(const std::string& name, Uniform* uniform)
+	{
+		m_Shader->SetVec4(name, Cast<Vec4Uniform>(uniform)->Get());
 	}
 
 	template<>
@@ -128,7 +134,7 @@ namespace BHive
 		BH_CORE_ERROR("Uniform Type must derive from template TypeUniform!");
 	}
 
-	template<ShaderUniformTypes Type>
+	template<ShaderUniformTypes>
 	inline void Material::SetUniformImpl(const std::string& name, Uniform* uniform)
 	{
 

@@ -8,7 +8,8 @@
 namespace BHive
 {
 	
-	static std::unordered_map<ShaderType, const char*> ShaderTypesToString = {{ShaderType::None,"None"}, {ShaderType::VertexShader, "Vertex"}, { ShaderType::FragmentShader,"Fragment"}};
+	static std::unordered_map<ShaderType, const char*> ShaderTypesToString = {{ShaderType::None,"None"}, 
+	{ShaderType::VertexShader, "Vertex"}, { ShaderType::FragmentShader,"Fragment"}, {ShaderType::GeometryShader, "Geometry"}};
 
 	class BHive_API Shader : public IAssetType
 	{
@@ -47,7 +48,7 @@ namespace BHive
 		static bool IsExtensionSupported(const std::string& ext);
 
 	protected:
-		ShaderSource m_Sources = {{ShaderType::VertexShader, ""}, {ShaderType::FragmentShader, ""}};
+		ShaderSource m_Sources;// = {{ShaderType::VertexShader, ""}, {ShaderType::FragmentShader, ""}};
 		ShaderIDs m_Ids;
 
 	private:

@@ -18,5 +18,8 @@ namespace BHive
 		void DisableDepthTest() override;
 		void BindTexture(uint32 slot, uint32 textureID) override;
 		void UnBindTexture(uint32 slot) override;
+		
+		static float m_LineWidth;
+		static float m_PointSize;
 	};
 }

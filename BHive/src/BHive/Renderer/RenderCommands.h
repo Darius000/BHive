@@ -57,7 +57,20 @@ namespace BHive
 			s_RendererAPI->UnBindTexture(slot);
 		}
 
+		inline static void EnableCulling()
+		{
+			s_RendererAPI->EnableBackFaceCulling(true);
+		}
+
+		inline static void DisableCulling()
+		{
+			s_RendererAPI->EnableBackFaceCulling(false);
+		}
+
 	private:
 		static RendererAPI* s_RendererAPI;
+
+	public:
+		
 	};
 }

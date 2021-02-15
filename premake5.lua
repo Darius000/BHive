@@ -115,7 +115,8 @@ project "BHive"
             "BH_PLATFORM_WINDOWS",
             "BH_BUILD_DLL",
             "GLFW_INCLUDE_NONE",
-            "_CRT_SECURE_NO_WARNING"
+            "_CRT_SECURE_NO_WARNING",
+             "PROJECT_DIR = $(ProjectDir)"
         }
 
 
@@ -176,6 +177,7 @@ project "Sandbox"
         defines
         {
             "BH_PLATFORM_WINDOWS",
+            "PROJECT_DIR = $(ProjectDir)"
         }
 
         filter "configurations:Debug"
@@ -238,6 +240,7 @@ project "BHive-Editor"
         defines
         {
             "BH_PLATFORM_WINDOWS",
+            "PROJECT_DIR = $(ProjectDir)"
         }
         
 

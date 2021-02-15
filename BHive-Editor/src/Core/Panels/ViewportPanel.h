@@ -15,6 +15,7 @@ namespace BHive
 
 		void OnRenderMenuBar() override;
 		void OnRenderWindow() override;
+		void RenderGizmoButtons();
 		void RenderGizmo(const FVector2& windowPos, const FVector2& windowSize);
 		void RenderSettingsChildWindow();
 

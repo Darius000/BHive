@@ -11,6 +11,8 @@ namespace BHive
 			return ShaderType::VertexShader;
 		if (type == "FRAGMENT" || type == "PIXEL")
 			return ShaderType::FragmentShader;
+		if(type == "GEOMETRY")
+			return ShaderType::GeometryShader;
 
 		BH_CORE_ASSERT(false, "Unkown shader type!");
 
@@ -126,6 +128,10 @@ namespace BHive
 			{
 				shaderType = "FRAGMENT";
 			}
+			else if (fileType == GL_GEOMETRY_SHADER)
+			{
+				shaderType = "GEOMETRY";
+			}
 
 			BH_CORE_ERROR("File: {0} , {1} ERROR::SHADER::COMPILATION_FAILED\n {2}", GetName(), shaderType, infoLog.data());
 		}
@@ -202,9 +208,10 @@ namespace BHive
 	void OpenGLShader::Compile()
 	{
 		
-		BH_CORE_ASSERT(m_Sources.size() <= 2, "Only support 2  shaders for now!");
+		BH_CORE_ASSERT(m_Sources.size() <= 3, "Only support 3  shaders for now!");
 
-		std::array<uint32, 2> glShaderIDs;
+		std::vector<uint32> glShaderIDs;
+		glShaderIDs.resize(m_Sources.size());
 
 		id = glCreateProgram();
 

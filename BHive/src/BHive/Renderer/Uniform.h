@@ -2,7 +2,7 @@
 
 namespace BHive
 { 
-#define SHADERTYPES(types)\
+#define SHADER_UNIFORM_TYPES(types)\
 	types(Bool),	\
 	types(Int)	,	  \
 	types(Float)	,  \
@@ -22,27 +22,17 @@ namespace BHive
 	types(Sampler)	,  \
 	types(SamplerCube)
 
-CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
+
+CREATE_ENUM_CLASS(ShaderUniformTypes, SHADER_UNIFORM_TYPES)
 
 	class Uniform;
-
-	class ShaderUniformType
-	{
-	public:
-		ShaderUniformType(ShaderUniformTypes type):UniformType(type){};
-		ShaderUniformTypes UniformType;
-
-		const bool operator==(const ShaderUniformType& other) const 
-		{
-			return UniformType == other.UniformType;
-		}
-	};
 
 	enum class ShaderType : unsigned int
 	{
 		None = 0,
 		FragmentShader = 0x8B30,
-		VertexShader = 0x8B31
+		VertexShader = 0x8B31,
+		GeometryShader = 0x8DD9
 	};
 
 	class Uniform
@@ -57,7 +47,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 		uint32 m_Size = 0;
 		std::string m_DisplayName = "";
 
-		virtual ShaderUniformType GetType() const = 0;
+		virtual const ShaderUniformTypes GetType() const = 0;
 		virtual void OnRenderGui() = 0;
 	};
 
@@ -77,7 +67,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 			m_Value = value; 
 		}
 
-		ShaderUniformType GetType() const override  = 0;
+		const ShaderUniformTypes GetType() const override  = 0;
 		void OnRenderGui() override = 0;
 	};
 
@@ -88,7 +78,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 		float max = 0.0f;
 		float speed = 1.0f;
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::Float; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Float; }
 
 		void OnRenderGui() override
 		{
@@ -101,7 +91,8 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 	public:
 		int32 m_SamplerIndex = 1;
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::Sampler; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Sampler; }
+
 		void OnRenderGui() override
 		{
 			auto textureID =  m_Value ? m_Value->GetRendererID() : -1;
@@ -138,7 +129,8 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 	public:
 		int32 m_SamplerIndex = 0;
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::SamplerCube; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::SamplerCube; }
+
 		void OnRenderGui() override
 		{
 			auto textureID = m_Value ? m_Value->GetRendererID() : -1;
@@ -174,7 +166,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 	{
 	public:
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::Bool; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Bool; }
 
 		void OnRenderGui() override
 		{
@@ -189,7 +181,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 		int max = 0;
 		float speed = 1.0f;
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::Int; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Int; }
 
 		void OnRenderGui() override
 		{
@@ -204,11 +196,23 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 		float max = 0.0f;
 		float speed = 1.0f;
 
-		ShaderUniformType GetType() const override{ return ShaderUniformTypes::Vec3; }
+		const ShaderUniformTypes GetType() const override{ return ShaderUniformTypes::Vec3; }
 
 		void OnRenderGui() override
 		{
 			ImGui::ColorEdit3(m_DisplayName.c_str(), *m_Value, 0);
+		}
+	};
+
+	class Vec4Uniform : public TypeUniform<Vector4<float>>
+	{
+		public:
+
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Vec4; }
+
+		void OnRenderGui() override
+		{
+			ImGui::ColorEdit4(m_DisplayName.c_str(), *m_Value, 0);
 		}
 	};
 
@@ -219,7 +223,7 @@ CREATE_ENUM_CLASS(ShaderUniformTypes, SHADERTYPES)
 		float max = 0.0f;
 		float speed = 1.0f;
 
-		ShaderUniformType GetType() const override { return ShaderUniformTypes::Vec2; }
+		const ShaderUniformTypes GetType() const override { return ShaderUniformTypes::Vec2; }
 
 		void OnRenderGui() override
 		{

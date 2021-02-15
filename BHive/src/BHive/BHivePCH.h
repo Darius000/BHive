@@ -73,4 +73,3 @@
 #endif // !BH_PLATFORM_WINDOWS
 
 #define DEGREE_ANGLES 1
-

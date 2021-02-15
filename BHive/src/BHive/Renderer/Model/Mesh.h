@@ -33,7 +33,8 @@ namespace BHive
 	public:
 		BName GetName() { return m_Name; }
 		Ref<Material> GetMaterial() { return m_Material; }
-		
+		const Ref<VertexArray> GetVertexArray() const { return m_VertexArray; }
+
 	private:
 		void CreateBuffers();
 

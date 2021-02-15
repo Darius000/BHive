@@ -92,10 +92,10 @@ namespace BHive
 	{
 		std::vector<FVertex> vertices =
 		{
-			FVertex(sizes[0], {0.0f, 1.0f, 0.0f},	{0.0f, 0.0f}, direction),
-			FVertex(sizes[1], {0.0f, 1.0f, 0.0f},	{1.0f, 0.0f}, direction),
-			FVertex(sizes[2], {0.0f, 1.0f, 0.0f},	{1.0f, 1.0f}, direction),
-			FVertex(sizes[3], {0.0f, 1.0f, 0.0f},	{0.0f, 1.0f}, direction)
+			FVertex(sizes[0], {0.0f, 0.0f, 0.0f},	{0.0f, 0.0f}, direction),
+			FVertex(sizes[1], {0.0f, 0.0f, 0.0f},	{1.0f, 0.0f}, direction),
+			FVertex(sizes[2], {0.0f, 0.0f, 0.0f},	{1.0f, 1.0f}, direction),
+			FVertex(sizes[3], {0.0f, 0.0f, 0.0f},	{0.0f, 1.0f}, direction)
 		};
 
 		//set indices to be offset by multiples of three

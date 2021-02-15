@@ -102,15 +102,12 @@ namespace BHive
 		// Dockspace
 		ImGuiIO& io = ImGui::GetIO();
 		ImGuiStyle& style = ImGui::GetStyle();
-		float windowMinSize = style.WindowMinSize.x;
 		style.WindowMinSize.x = 150.0f;
 		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
 			ImGuiID dockspace_id = ImGui::GetID("MyDockspace");
 			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), opt_flags);
 		}
-
-		style.WindowMinSize.x = windowMinSize;
 
 		DisplayMenuBar();
 		
@@ -213,7 +210,9 @@ namespace BHive
 
 		auto& entity = scene->CreateEntity("Cube Test");
 		entity.AddComponent<RenderComponent>();
-		entity.GetComponent<RenderComponent>().m_Model = AssetManager::CreateAsset<Cube>("Cube Test", 10.0f);
+		entity.GetComponent<RenderComponent>().m_Model = AssetManager::CreateAsset<Cube>("Cube Test");
+		AssetManager::CreateAsset<Plane>("Plane");
+		AssetManager::CreateAsset<Triangle>("Triangle");
 	
 		SceneManager::SetActiveScene("Default");
 

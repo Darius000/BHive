@@ -18,7 +18,6 @@ namespace BHive
 
 #define CREATE_ENUM_STRINGS(name, types) \
 	static const char* name##Strings[] = { types(CREATE_STRINGS) };\
-	//inline const char* name##ToString(name value) { return name##Strings[value]; }
 
 #define ENUM_OPERATORS(EnumClass, T)\
 	inline EnumClass operator |(EnumClass a, EnumClass b){return static_cast<EnumClass>(static_cast<T>(a) | static_cast<T>(b));};\

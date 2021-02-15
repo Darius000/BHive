@@ -28,6 +28,12 @@ namespace BHive
 
 	using GBufferAttributes = std::unordered_map<GBufferType, GBufferAttribute>;
 
+	struct ViewportGridSettings
+	{
+		float m_Scale = 126.0f;
+		FVector4 m_Color = FVector4(1.0f, 1.0f, 1.0f, 1.0f);
+	};
+
 	class Viewport
 	{
 	public:
@@ -38,6 +44,7 @@ namespace BHive
 		void OnUpdate(const Time& time);
 		Scene* GetScene(){ return m_Scene; }
 		
+		void DrawGrid();
 		
 		void Resize(uint32 width, uint32 height);
 	private:
@@ -50,6 +57,15 @@ namespace BHive
 		Ref<Material> blurppm;
 		Ref<Model> quad;
 		Ref<Model> blurquad;
+
+		/*Begin Viewport Grid*/
+		Ref<Model> m_Grid;
+
+		Ref<Material> m_GridMaterial;
+
+		ViewportGridSettings m_GridSettings;
+		/*End Viewport Grid*/
+
 		Scene* m_Scene = nullptr;
 		//Entity m_Camera;
 		float m_Exposure = 0.8f;

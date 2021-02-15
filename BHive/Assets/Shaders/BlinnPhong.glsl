@@ -170,7 +170,7 @@ void main()
 	//AO
 	float AO = textures.AOTexture.set ? texture(textures.AOTexture.texture, texcoord).r : 1.0f;
 
-	ambientcolor = vec4(vec3(AO), 1.0);
+	ambientcolor = vec4(material.ambient * vec3(AO), 1.0);
 
 	normalcolor = vec4(normal, 1.0);
 	positioncolor = vec4(FragPos, 1.0);

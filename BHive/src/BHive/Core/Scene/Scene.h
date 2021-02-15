@@ -26,7 +26,7 @@ namespace BHive
 		void DeleteEntity(Entity entity);
 
 		void OnBegin();
-		//void OnUpdateEditor(const Time& time, EditorCamera& Camera);
+		void OnUpdateEditor(const Time& time);
 		void OnUpdateRuntime(const Time& time);
 		void OnEnd();
 
@@ -34,7 +34,7 @@ namespace BHive
 
 	private:
 		void InitializeCamera(const FVector3& position);
-		void SendDefaultCameraParametersToShaders();
+		void SendDefaultCameraParametersToShaders(const Time& time);
 		void InitializeUniformBlocks();
 
 	public:
@@ -56,6 +56,7 @@ namespace BHive
 		RenderSystem m_RenderSystem;
 
 		friend class SceneHierarchyPanel;
+		friend class Viewport;
 	};
 
 	class SceneManager
