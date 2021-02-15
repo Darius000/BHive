@@ -6,7 +6,6 @@ namespace BHive
 	void OpenGLRendererAPI::Init()
 	{
 		glEnable(GL_DEPTH_TEST);
-		//glDepthFunc(GL_ALWAYS);
 		glEnable(GL_MULTISAMPLE);
 		glLineWidth(m_LineWidth);
 		glPointSize(m_PointSize);
