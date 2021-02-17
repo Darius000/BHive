@@ -6,8 +6,8 @@
 namespace BHive
 {
 
-	OpenglFramebuffer::OpenglFramebuffer(const FrameBufferSpecification& spec)
-		:m_Specification(spec)
+	OpenglFramebuffer::OpenglFramebuffer(const std::string& name, const FrameBufferSpecification& spec)
+		:m_Specification(spec), m_Name(name)
 	{
 		glCreateFramebuffers(1, &m_RendererID);
 	}
@@ -18,7 +18,7 @@ namespace BHive
 		glDeleteTextures(1, &m_ColorAttachment);
 	}
 
-	void OpenglFramebuffer::Invalidate()
+	void OpenglFramebuffer::InValidate()
 	{
 		if (m_RendererID)
 		{
@@ -38,6 +38,8 @@ namespace BHive
 			m_Specification.Height , 0, m_Format, m_Type, nullptr);
 
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
+
+		CheckFrameBufferStatus();
 
 	}
 
@@ -64,13 +66,20 @@ namespace BHive
 		m_Specification.Width = width;
 		m_Specification.Height = height;
 
-		Invalidate();
+		InValidate();
 	}
 
 	void OpenglFramebuffer::CheckFrameBufferStatus() const
 	{
-		if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			BH_CORE_ERROR("Framebuffer is incomplete");
+		EFrameBufferStatus status = (EFrameBufferStatus)glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+		if ( status != EFrameBufferStatus::Complete)
+		{
+			BH_CORE_ERROR("{0} Framebuffer Status {1} , ID = {2}", m_Name, FrameBufferToStrings[status], m_RendererID );
+			return;
+		}
+
+		BH_CORE_INFO("{0} Framebuffer Status {1} , ID = {2}",m_Name, FrameBufferToStrings[status], m_RendererID);
 	}
 
 }

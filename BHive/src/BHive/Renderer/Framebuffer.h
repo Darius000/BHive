@@ -7,7 +7,7 @@ namespace BHive
 	struct FrameBufferSpecification
 	{
 		uint32 Width = 0, Height = 0;
-		uint32 Samples = 1;
+		uint32 Samples = 8;
 
 		bool SwapChainTarget = false;
 	};
@@ -18,6 +18,7 @@ namespace BHive
 		virtual ~FrameBuffer(){}
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
+		virtual void InValidate() = 0;
 	
 		virtual uint32 GetRenderID() const = 0;
 		virtual uint32 GetColorAttachmentRendererID() const = 0;
@@ -27,7 +28,8 @@ namespace BHive
 		//virtual FrameBufferSpecification& GetSpecification() = 0;
 		virtual const FrameBufferSpecification& GetSpecification() const = 0;
 
-		static Ref<FrameBuffer> Create(const FrameBufferSpecification& spec);
+		static Ref<FrameBuffer> Create(const std::string& name, const FrameBufferSpecification& spec);
+		static Ref<FrameBuffer> CreateMultiSample(const std::string& name, const FrameBufferSpecification& spec);
 
 		operator void*() const { return (void*)(uintPtr)GetColorAttachmentRendererID(); }
 	};
@@ -41,7 +43,7 @@ namespace BHive
 		void Bind() override;
 		void UnBind() override;
 		void Resize(uint32 width, uint32 height) override;
-		void InValidate();
+		void InValidate() override;
 		uint32 GetColorAttachmentRendererID() const override { return m_DepthAttachment; }
 		const FrameBufferSpecification& GetSpecification() const override { return m_Specification; }
 

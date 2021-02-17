@@ -5,15 +5,32 @@
 
 namespace BHive
 {
+	enum class EFrameBufferStatus : int
+	{
+		Complete = GL_FRAMEBUFFER_COMPLETE,
+		InComplete_Attachment = GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT,
+		Missing_Attachment = GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT,
+		UnSupported = GL_FRAMEBUFFER_UNSUPPORTED,
+		IncompleteDimensions = 36057
+	};
+
+	static std::unordered_map<EFrameBufferStatus, const char*> FrameBufferToStrings = {
+		{EFrameBufferStatus::Complete , "Complete"},
+		{EFrameBufferStatus::InComplete_Attachment, "InComplete_Attachment"},
+		{EFrameBufferStatus::Missing_Attachment, "Missing_Attachment"},
+		{EFrameBufferStatus::UnSupported, "UnSupported"},
+		{EFrameBufferStatus::IncompleteDimensions, "IncompleteDimensions"}
+	};
+
 	using RendererID = uint32;
 
 	class OpenglFramebuffer : public FrameBuffer
 	{
 	public:
-		OpenglFramebuffer(const FrameBufferSpecification& spec);
+		OpenglFramebuffer(const std::string& name, const FrameBufferSpecification& spec);
 		virtual ~OpenglFramebuffer();
 
-		void Invalidate();
+		void InValidate() override;
 
 		void Bind() override;
 		void UnBind() override;
@@ -29,15 +46,13 @@ namespace BHive
 		uint32 m_Type = GL_UNSIGNED_BYTE;
 
 
-	private:
-
+	protected:
 		RendererID m_RendererID = 0;
 		
-		RendererID m_MultiSampleRenderID = 0;
-		uint32 m_multisampleAttachment = 0;
 		uint32 m_ColorAttachment = 0;
+
+		std::string m_Name;
 		
-		uint32 samples = 8;
 		FrameBufferSpecification m_Specification;
 
 		friend class Viewport;

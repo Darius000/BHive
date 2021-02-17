@@ -40,14 +40,14 @@ namespace BHive
 		}
 
 
-		auto QuadFrameBuffer = m_Viewport->m_QuadFrameBuffer;
+		auto FrameBuffer = m_Viewport->m_MultiSampledFrameBuffer;
 
 		float windowWidth = (float)ImGui::GetWindowWidth();
 		float windowHeight = (float)ImGui::GetWindowHeight();
 
 		//ImGui::SetCursorPos({0.0f, 0.0f});
 		ImGui::BeginGroup();
-		ImGui::Image((void*)*QuadFrameBuffer, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		ImGui::Image((void*)*FrameBuffer, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 		RenderGizmoButtons();
 		//Gizmos
@@ -215,6 +215,17 @@ namespace BHive
 		if (ImGui::TreeNodeEx("Bloom", ImGuiTreeNodeFlags_OpenOnArrow))
 		{
 			ImGui::Checkbox("Enabled", &m_Viewport->m_Bloom);
+			ImGui::TreePop();
+		}
+		ImGui::Separator();
+
+		if (ImGui::TreeNodeEx("MultiSampling", ImGuiTreeNodeFlags_OpenOnArrow))
+		{
+			static int samples = (int)m_Viewport->m_NumSamples;
+			if(ImGui::InputInt("Samples", &samples))
+			{
+				m_Viewport->m_NumSamples = (uint32)MathLibrary::Clamp(samples, 0, samples);
+			}
 			ImGui::TreePop();
 		}
 		ImGui::Separator();

@@ -27,23 +27,22 @@ namespace BHive
 			{GBufferType::TexCoord, positionnormalAttr},
 		};
 
-		m_QuadFrameBuffer = FrameBuffer::Create(specs);
-		m_SceneFrameBuffer = FrameBuffer::Create(specs);
-		m_PingPongFrameBuffer[0] = FrameBuffer::Create(specs);
-		m_PingPongFrameBuffer[1] = FrameBuffer::Create(specs);
+		m_QuadFrameBuffer = FrameBuffer::Create("Quad", specs);
+		m_SceneFrameBuffer = FrameBuffer::Create("Scene", specs);
+		m_PingPongFrameBuffer[0] = FrameBuffer::Create("Blur PP 0", specs);
+		m_PingPongFrameBuffer[1] = FrameBuffer::Create("Blur PP 1", specs);
+		m_MultiSampledFrameBuffer = FrameBuffer::Create("MultiSample PP", specs);
 
-		Resize(specs.Width, specs.Height);
+		//Resize(specs.Width, specs.Height);
 
-		quad = Make_Ref<Quad>();
-		ppm = AssetManager::CreateAsset<Material>("PPM", AssetManager::Get<Shader>("PostProcessing"));
-		quad->GetMesh(0)->SetMaterial(ppm);
+		m_Quad = Make_Ref<Quad>();
 
-		blurquad = Make_Ref<Quad>();
-		blurppm = AssetManager::CreateAsset<Material>("BluePPM", AssetManager::Get<Shader>("BlurPostProcessing"));
-		blurquad->GetMesh(0)->SetMaterial(blurppm);
+		m_FinalResult = AssetManager::Get<Shader>("PostProcessing");
+		m_BloomPostProcessing = AssetManager::Get<Shader>("BlurPostProcessing");
+		m_MultiSampleShader = AssetManager::Get<Shader>("MultiSample");
 
 		m_Grid = Make_Ref<Plane>(10.0f, 10.0f);
-		m_GridMaterial = Make_Ref<Material>(Shader::Create("..\\BHive\\Assets\\Shaders\\2DGrid.glsl"));
+		m_GridMaterial = Make_Ref<Material>(Shader::Create(R"(..\BHive\Assets\Shaders\2DGrid.glsl)"));
 		m_Grid->GetMesh(0)->SetMaterial(m_GridMaterial);
 	}
 
@@ -76,20 +75,23 @@ namespace BHive
 
 		Renderer2D::End();
 		m_SceneFrameBuffer->UnBind();
-	
+
 		RenderCommands::DisableDepthTest();
+
+	
+		//Add Bloom Post Processing
 		bool horizontal = true, first_iteration = true;
 		int amount = 10;
 		for (int i = 0; i < amount; i++)
 		{
 			m_PingPongFrameBuffer[horizontal]->Bind();
 			Renderer2D::Begin({0.0, 0.0, 0.0, 0.0});
-			auto blurppm = blurquad->GetMesh(0)->GetMaterial()->GetShader();
-			blurppm->Bind();
-			blurppm->SetBool("horizontal", horizontal);
-			blurppm->SetInt("image", 8);
+			//auto blurppm = blurquad->GetMesh(0)->GetMaterial()->GetShader();
+			m_BloomPostProcessing->Bind();
+			m_BloomPostProcessing->SetBool("horizontal", horizontal);
+			m_BloomPostProcessing->SetInt("image", 8);
 			RenderCommands::BindTexture(8, first_iteration ? m_GBufferAttributes[GBufferType::Emission].m_Texture : m_PingPongFrameBuffer[!horizontal]->GetColorAttachmentRendererID()/*m_PingPongBlur[!horizontal]*/);
-			blurquad->Render();
+			Renderer2D::Draw(m_Quad->GetMesh(0)->GetVertexArray());
 			horizontal = !horizontal;
 			if(first_iteration)
 				first_iteration = false;
@@ -101,22 +103,20 @@ namespace BHive
 		m_PingPongFrameBuffer[1]->UnBind();
 
 		//render quad
-		RenderCommands::DisableDepthTest();
 		m_QuadFrameBuffer->Bind();
 		Renderer2D::Begin({0.0, 0.0, 0.0, 0.0});	
-		auto ppshader = quad->GetMesh(0)->GetMaterial()->GetShader();
-		ppshader->Bind();
-		ppshader->SetInt("albedocolor", 6);
-		ppshader->SetInt("specularcolor", 7);
-		ppshader->SetInt("ambientcolor", 8);
-		ppshader->SetInt("emissioncolor", 9);
-		ppshader->SetInt("normalcolor", 10);
-		ppshader->SetInt("positioncolor", 11);
-		ppshader->SetInt("bloomtexture", 12);
-		ppshader->SetInt("environmentColor", 13);
-		ppshader->SetBool("hdr", m_HDR);
-		ppshader->SetBool("bloom", m_Bloom);
-		ppshader->SetFloat("exposure", m_Exposure);
+		m_FinalResult->Bind();
+		m_FinalResult->SetInt("albedocolor", 6);
+		m_FinalResult->SetInt("specularcolor", 7);
+		m_FinalResult->SetInt("ambientcolor", 8);
+		m_FinalResult->SetInt("emissioncolor", 9);
+		m_FinalResult->SetInt("normalcolor", 10);
+		m_FinalResult->SetInt("positioncolor", 11);
+		m_FinalResult->SetInt("bloomtexture", 12);
+		m_FinalResult->SetInt("environmentColor", 13);
+		m_FinalResult->SetBool("hdr", m_HDR);
+		m_FinalResult->SetBool("bloom", m_Bloom);
+		m_FinalResult->SetFloat("exposure", m_Exposure);
 		RenderCommands::BindTexture(6, m_GBufferAttributes[GBufferType::Albedo].m_Texture);
 		RenderCommands::BindTexture(7, m_GBufferAttributes[GBufferType::Specular].m_Texture);
 		RenderCommands::BindTexture(8, m_GBufferAttributes[GBufferType::Ambient].m_Texture);
@@ -125,11 +125,23 @@ namespace BHive
 		RenderCommands::BindTexture(11, m_GBufferAttributes[GBufferType::Position].m_Texture);
 		RenderCommands::BindTexture(12, m_PingPongFrameBuffer[!horizontal]->GetColorAttachmentRendererID());
 		RenderCommands::BindTexture(13, (uint32)AssetManager::Get<CubeTexture>("Cube Map")->GetRendererID());
-		quad->Render();
+		Renderer2D::Draw(m_Quad->GetMesh(0)->GetVertexArray());
 		RenderCommands::UnBindTexture(6);
 		RenderCommands::UnBindTexture(7);
 		Renderer2D::End();
-		m_QuadFrameBuffer->UnBind();
+		m_QuadFrameBuffer->UnBind();	
+
+		//////Apply Multi sampling
+		m_MultiSampledFrameBuffer->Bind();
+		Renderer2D::Begin({ 0.0f, 0.0f, 0.0f, 0.0f });
+		m_MultiSampleShader->Bind();
+		m_MultiSampleShader->SetInt("scene", 6);
+		m_MultiSampleShader->SetInt("numSamples", (int)m_NumSamples);
+		RenderCommands::BindTexture(6, m_QuadFrameBuffer->GetColorAttachmentRendererID());
+		Renderer2D::Draw(m_Quad->GetMesh(0)->GetVertexArray());
+		RenderCommands::UnBindTexture(6);
+		Renderer2D::End();
+		m_MultiSampledFrameBuffer->UnBind();
 	}
 
 	void Viewport::DrawGrid()
@@ -194,12 +206,14 @@ namespace BHive
 		glDrawBuffers((GLsizei)m_GBufferAttributes.size(), attachments.data());
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			BH_CORE_ERROR("Framebuffer is incomplete");
+			BH_CORE_ERROR("Depth Framebuffer is incomplete");
 
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);	
 
+		
 		m_PingPongFrameBuffer[0]->Resize(width, height);
 		m_PingPongFrameBuffer[1]->Resize(width, height);
+		m_MultiSampledFrameBuffer->Resize(width, height);
 	}
 
 }

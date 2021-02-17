@@ -52,11 +52,12 @@ namespace BHive
 		Ref<FrameBuffer> m_SceneFrameBuffer;
 		Ref<FrameBuffer> m_QuadFrameBuffer;
 		Ref<FrameBuffer> m_PingPongFrameBuffer[2];
+		Ref<FrameBuffer> m_MultiSampledFrameBuffer;
 		
-		Ref<Material> ppm;
-		Ref<Material> blurppm;
-		Ref<Model> quad;
-		Ref<Model> blurquad;
+		Ref<Shader> m_FinalResult;
+		Ref<Shader> m_BloomPostProcessing;
+		Ref<Shader> m_MultiSampleShader;
+		Ref<Model> m_Quad;
 
 		/*Begin Viewport Grid*/
 		Ref<Model> m_Grid;
@@ -71,6 +72,8 @@ namespace BHive
 		float m_Exposure = 0.8f;
 		bool m_HDR = true;
 		bool m_Bloom = true;
+
+		uint32 m_NumSamples = 16;
 
 		friend class ViewportPanel;
 	
